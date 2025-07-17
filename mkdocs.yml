@@ -34,7 +34,15 @@ markdown_extensions:
 - abbr
 - pymdownx.snippets
 plugins:
-- search
+  - search
+  - mkdocs-glossary-plugin: # 新しく追加するプラグイン
+      glossary_dirs:
+        - assets/test_material # glossary.md があるディレクトリ
+      # もしツールチップではなく、用語をリンクに変換したい場合は以下も設定
+      tooltip: true # これをtrueにするとツールチップが有効になります
+                      # data-md-tooltip属性を使う場合は不要かもしれません
+      # link_glossary_terms: true # これをtrueにすると用語集の用語が自動的にリンクになります
+      # replace_links: true # ツールチップとリンクの同時利用で必要になる場合があります
 nav:
 - ホーム: assets/test_material/index.md
 - 第1章 システムテスト概要: assets/test_material/chapter_01_system_test_overview.md
@@ -44,4 +52,4 @@ nav:
 - 第5章 統合テスト: assets/test_material/chapter_05_integration_test.md
 - 用語集: assets/test_material/glossary.md
 extra_css:
-- assets/custom.css
+  - assets/custom.css
