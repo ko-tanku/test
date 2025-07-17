@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>詳細テストレポート</title>
+
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                body {
+                    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                    background-color: #ffffff;
+                    padding: 20px;
+                    height: 100vh;
+                    overflow: auto;
+                }
+                
+                .table-container {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    overflow: hidden;
+                }
+                
+                .table-title {
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 20px;
+                    color: #2E7D32;
+                    background-color: #f8f9fa;
+                    border-bottom: 2px solid #2E7D32;
+                }
+                
+                .table-responsive {
+                    width: 100%;
+                    overflow-x: auto;
+                    overflow-y: auto;
+                    max-height: calc(100vh - 120px);
+                }
+                
+                #table_test_complex_table {
+                    width: 100%;
+                    min-width: 600px;
+                    border-collapse: collapse;
+                    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                    font-size: 13px;
+                    background-color: white;
+                }
+                
+                #table_test_complex_table th {
+                    background-color: #2E7D32;
+                    color: #ffffff;
+                    padding: 10px 15px;
+                    text-align: left;
+                    font-weight: bold;
+                    border: 1px solid #dee2e6;
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                }
+                
+                #table_test_complex_table td {
+                    padding: 10px 15px;
+                    border: 1px solid #dee2e6;
+                    text-align: left;
+                    vertical-align: top;
+                }
+                
+                #table_test_complex_table tr:nth-child(even) {
+                    background-color: #f8f9fa;
+                }
+                
+                #table_test_complex_table tr:nth-child(odd) {
+                    background-color: #ffffff;
+                }
+                
+                #table_test_complex_table tr:hover {
+                    background-color: rgba(25, 118, 210, 0.1);
+                }
+                
+                @media (max-width: 768px) {
+                    body {
+                        padding: 10px;
+                    }
+                    
+                    #table_test_complex_table {
+                        font-size: 12px;
+                        min-width: 500px;
+                    }
+                    
+                    #table_test_complex_table th,
+                    #table_test_complex_table td {
+                        padding: 8px 12px;
+                    }
+                    
+                    .table-title {
+                        font-size: 16px;
+                        padding: 15px;
+                    }
+                }
+            </style>
+            
+</head>
+<body>
+<div class="table-container">
+<div class="table-title">詳細テストレポート</div>
+<div class="table-responsive">
+<table id="table_test_complex_table">
+<thead>
+<tr>
+<th>テストケース</th>
+<th>実行結果</th>
+<th>実行時間</th>
+<th>CPU使用率</th>
+<th>メモリ使用量</th>
+<th>カバレッジ</th>
+<th>エラーメッセージ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC001: 基本機能テスト</td>
+<td>✅ PASS</td>
+<td>0.5s</td>
+<td>12%</td>
+<td>1.2MB</td>
+<td>95%</td>
+<td></td>
+</tr>
+<tr>
+<td>TC002: エラーハンドリング</td>
+<td>❌ FAIL</td>
+<td>1.2s</td>
+<td>45%</td>
+<td>3.5MB</td>
+<td>78%</td>
+<td>Assertion failed: expected &#x27;test&#x27; but got &#x27;prod&#x27;</td>
+</tr>
+<tr>
+<td>TC003: パフォーマンステスト</td>
+<td>⚠️ WARNING</td>
+<td>15.3s</td>
+<td>89%</td>
+<td>15.7MB</td>
+<td>N/A</td>
+<td>Performance degradation detected</td>
+</tr>
+<tr>
+<td>TC004: セキュリティテスト</td>
+<td>✅ PASS</td>
+<td>3.7s</td>
+<td>23%</td>
+<td>2.1MB</td>
+<td>85%</td>
+<td></td>
+</tr>
+<tr>
+<td>TC005: 統合テスト</td>
+<td>✅ PASS</td>
+<td>8.9s</td>
+<td>67%</td>
+<td>8.9MB</td>
+<td>92%</td>
+<td></td>
+</tr>
+<tr>
+<td>TC006: UIテスト</td>
+<td>🔄 RUNNING</td>
+<td>2.1s</td>
+<td>34%</td>
+<td>4.3MB</td>
+<td>88%</td>
+<td>Test in progress...</td>
+</tr>
+<tr>
+<td>TC007: APIテスト</td>
+<td>✅ PASS</td>
+<td>0.8s</td>
+<td>18%</td>
+<td>1.8MB</td>
+<td>91%</td>
+<td></td>
+</tr>
+<tr>
+<td>TC008: データベーステスト</td>
+<td>⏸️ SKIPPED</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Test skipped due to dependency failure</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

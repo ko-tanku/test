@@ -1,0 +1,25 @@
+/* カスタムスタイル */
+.md-content iframe {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ツールチップスタイル */
+[data-md-tooltip] {
+    cursor: help;
+    border-bottom: 1px dotted #666;
+    text-decoration: none;
+    color: inherit;
+}
+
+[data-md-tooltip]:hover {
+    border-bottom-color: #1976d2;
+    color: #1976d2;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 768px) {
+    .md-content iframe {
+        height: 400px !important;
+    }
+}

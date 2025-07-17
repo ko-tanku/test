@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プロジェクト進捗管理（レスポンシブ対応）</title>
+
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                body {
+                    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                    background-color: #ffffff;
+                    padding: 20px;
+                    height: 100vh;
+                    overflow: auto;
+                }
+                
+                .table-container {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    overflow: hidden;
+                }
+                
+                .table-title {
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 20px;
+                    color: #2E7D32;
+                    background-color: #f8f9fa;
+                    border-bottom: 2px solid #2E7D32;
+                }
+                
+                .table-responsive {
+                    width: 100%;
+                    overflow-x: auto;
+                    overflow-y: auto;
+                    max-height: calc(100vh - 120px);
+                }
+                
+                #table_test_responsive_table {
+                    width: 100%;
+                    min-width: 600px;
+                    border-collapse: collapse;
+                    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                    font-size: 14px;
+                    background-color: white;
+                }
+                
+                #table_test_responsive_table th {
+                    background-color: #2E7D32;
+                    color: #ffffff;
+                    padding: 10px 15px;
+                    text-align: left;
+                    font-weight: bold;
+                    border: 1px solid #dee2e6;
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                }
+                
+                #table_test_responsive_table td {
+                    padding: 10px 15px;
+                    border: 1px solid #dee2e6;
+                    text-align: left;
+                    vertical-align: top;
+                }
+                
+                #table_test_responsive_table tr:nth-child(even) {
+                    background-color: #f8f9fa;
+                }
+                
+                #table_test_responsive_table tr:nth-child(odd) {
+                    background-color: #ffffff;
+                }
+                
+                #table_test_responsive_table tr:hover {
+                    background-color: rgba(25, 118, 210, 0.1);
+                }
+                
+                @media (max-width: 768px) {
+                    body {
+                        padding: 10px;
+                    }
+                    
+                    #table_test_responsive_table {
+                        font-size: 12px;
+                        min-width: 500px;
+                    }
+                    
+                    #table_test_responsive_table th,
+                    #table_test_responsive_table td {
+                        padding: 8px 12px;
+                    }
+                    
+                    .table-title {
+                        font-size: 16px;
+                        padding: 15px;
+                    }
+                }
+            
+                @media (max-width: 768px) {
+                    #table_test_responsive_table th,
+                    #table_test_responsive_table td {
+                        display: none;
+                    }
+                    
+                    #table_test_responsive_table th:nth-child(1),
+                    #table_test_responsive_table td:nth-child(1),
+                    #table_test_responsive_table th:nth-child(2),
+                    #table_test_responsive_table td:nth-child(2),
+                    #table_test_responsive_table th:nth-child(3),
+                    #table_test_responsive_table td:nth-child(3) {
+                        display: table-cell;
+                    }
+                }
+                </style>
+            
+</head>
+<body>
+<div class="table-container">
+<div class="table-title">プロジェクト進捗管理（レスポンシブ対応）</div>
+<div class="table-responsive">
+<table id="table_test_responsive_table">
+<thead>
+<tr>
+<th>機能名</th>
+<th>ステータス</th>
+<th>優先度</th>
+<th>担当者</th>
+<th>期限</th>
+<th>進捗</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ドキュメント生成</td>
+<td>✅ 完了</td>
+<td>高</td>
+<td>田中</td>
+<td>2024-01-15</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>図表生成</td>
+<td>✅ 完了</td>
+<td>高</td>
+<td>佐藤</td>
+<td>2024-01-20</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>表生成</td>
+<td>✅ 完了</td>
+<td>中</td>
+<td>鈴木</td>
+<td>2024-01-25</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>用語管理</td>
+<td>✅ 完了</td>
+<td>中</td>
+<td>田中</td>
+<td>2024-01-30</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>テンプレート</td>
+<td>🔄 進行中</td>
+<td>低</td>
+<td>佐藤</td>
+<td>2024-02-05</td>
+<td>60%</td>
+</tr>
+<tr>
+<td>設定管理</td>
+<td>📋 計画中</td>
+<td>低</td>
+<td>鈴木</td>
+<td>2024-02-10</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
