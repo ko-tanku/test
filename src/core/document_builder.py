@@ -251,7 +251,7 @@ class DocumentBuilder:
         self, 
         component_path: Path, 
         width: str = "100%", 
-        height: str = "600px"  # デフォルト高さを増加
+        height: str = "600px"
     ) -> None:
         """
         生成されたHTMLコンポーネントをMarkdownに埋め込む
@@ -270,26 +270,25 @@ class DocumentBuilder:
                 relative_path = component_path.relative_to(PATHS["docs_dir"])
                 unix_path = relative_path.as_posix()
                 
-                # MkDocsでは、assetsディレクトリへの参照は絶対パスで
-                if unix_path.startswith('assets/'):
+                # MkDocsサイトルートからの絶対パスに変換
+                if not unix_path.startswith('/'):
                     unix_path = '/' + unix_path
-                
+                    
             except ValueError:
-                # 相対パス変換に失敗した場合はファイル名のみ
-                unix_path = component_path.name
-                self.logger.warning(f"Could not create relative path for {component_path}, using filename only")
+                # 相対パス変換に失敗した場合
+                unix_path = '/' + component_path.name
+                self.logger.warning(f"Could not create relative path for {component_path}")
             
-            # レスポンシブなiframeコンテナを生成
+            # Material for MkDocsと互換性のあるHTML埋め込み
             iframe_html = f'''
-    <div style="width: 100%; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div class="chart-container" style="width: 100%; margin: 20px 0;">
         <iframe 
             src="{unix_path}" 
-            width="100%" 
+            width="{width}" 
             height="{height}" 
             frameborder="0" 
             allowfullscreen
-            style="display: block; border: none; background: white;"
-            scrolling="no">
+            style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
         </iframe>
     </div>'''
             
@@ -299,31 +298,15 @@ class DocumentBuilder:
             
         except Exception as e:
             self.logger.error(f"Failed to add HTML component reference: {e}")
-            # フォールバック: リンクとして追加
-            self._add_content(f"[{component_path.name}を表示]({unix_path})")
-            self._add_content("")
+            # フォールバック: 直接リンクとして追加
+            try:
+                relative_path = component_path.relative_to(PATHS["docs_dir"])
+                link_path = '/' + relative_path.as_posix()
+                self._add_content(f"[📊 {component_path.stem}を新しいタブで開く]({link_path}){{:target=\"_blank\"}}")
+            except:
+                self._add_content(f"[📊 {component_path.name}]({component_path.name})")
+            self._add_content("")    
 
-    def add_admonition(
-        self, 
-        type: str, 
-        title: str, 
-        content: str, 
-        collapsible: bool = False
-    ) -> None:
-        """
-        MkDocs MaterialテーマのAdmonitionブロックを追加
-        
-        Args:
-            type: 注記タイプ
-            title: 注記タイトル
-            content: 注記内容
-            collapsible: 折りたたみ可能かどうか
-        """
-        admonition_markdown = generate_admonition_markdown(type, title, content, collapsible)
-        
-        self._ensure_empty_line()
-        self._add_content(admonition_markdown)
-    
     def add_tabbed_block(self, tabs_data: Dict[str, str]) -> None:
         """
         MkDocs MaterialテーマのTabbedブロックを追加
@@ -456,3 +439,4 @@ class DocumentBuilder:
             self._add_content(f"{key}: {value}")
         self._add_content("---")
         self._add_content("")
+

@@ -284,12 +284,23 @@ class KnowledgeManager:
                 
                 doc_builder.add_paragraph(" | ".join(term_links))
             
+            # 最後に全用語のabbreviation定義を追加
+            doc_builder.add_heading("Abbreviations定義", 2)
+            doc_builder.add_paragraph("以下の定義により、サイト全体でツールチップが有効になります。")
+            
+            # 全用語のabbreviation定義を生成
+            doc_builder._add_content("")
+            for term_name, term_obj in self.terms.items():
+                abbr_definition = f"*[{term_name}]: {term_obj.definition}"
+                doc_builder._add_content(abbr_definition)
+            doc_builder._add_content("")
+            
             # ファイルを保存
             output_path = doc_builder.save_markdown(filename)
             
             self.logger.info(f"Glossary generated: {output_path}")
             
-            return output_path
+            return output_path            
             
         except Exception as e:
             self.logger.error(f"Failed to generate glossary: {e}")

@@ -1,25 +1,34 @@
-/* カスタムスタイル */
-.md-content iframe {
+/* ツールチップのスタイル改善 */
+abbr[title] {
+    cursor: help;
+    text-decoration: none;
+    border-bottom: 1px dotted #1976d2;
+    color: #1976d2;
+}
+
+abbr[title]:hover {
+    border-bottom: 2px solid #1976d2;
+    background-color: rgba(25, 118, 210, 0.1);
+}
+
+/* 図表コンテナのスタイル */
+.chart-container {
+    margin: 20px 0;
+    padding: 0;
     border-radius: 8px;
+    overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* ツールチップスタイル */
-[data-md-tooltip] {
-    cursor: help;
-    border-bottom: 1px dotted #666;
-    text-decoration: none;
-    color: inherit;
-}
-
-[data-md-tooltip]:hover {
-    border-bottom-color: #1976d2;
-    color: #1976d2;
+.chart-container iframe {
+    display: block;
+    width: 100%;
+    border: none;
 }
 
 /* レスポンシブ調整 */
 @media (max-width: 768px) {
-    .md-content iframe {
+    .chart-container iframe {
         height: 400px !important;
     }
 }
