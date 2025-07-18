@@ -1,45 +1,48 @@
-docs_dir: docs
-markdown_extensions:
-- admonition
-- pymdownx.details
-- pymdownx.superfences
-- pymdownx.highlight
-- pymdownx.tabbed
-- attr_list
-- md_in_html
-- footnotes
-- tables
-- toc
-- abbr
-- pymdownx.snippets
-nav:
-  ホーム: index.md
-  用語集: glossary.md
-  第1章 システムテスト概要: chapter_01_system_test_overview.md
-  第2章 図表生成テスト: chapter_02_chart_generation_test.md
-  第3章 表生成テスト: chapter_03_table_generation_test.md
-  第4章 用語管理テスト: chapter_04_knowledge_management_test.md
-  第5章 統合テスト: chapter_05_integration_test.md
-plugins:
-- search
-site_author: MkDocs Materials Generator
-site_description: MkDocs Materials Generator の動作確認用テスト資料
-site_dir: site
 site_name: テスト資料
+site_description: MkDocs Materials Generator の動作確認用テスト資料
+site_author: MkDocs Materials Generator
+docs_dir: docs
+site_dir: site
 theme:
+  name: material
+  language: ja
+  palette:
+    scheme: default
+    primary: blue
+    accent: amber
   features:
   - navigation.tabs
   - navigation.top
   - navigation.tracking
   - search.suggest
   - search.highlight
-  - search.share
-  - toc.integrate
-  - content.code.annotate
   - content.tooltips
-  language: ja
-  name: material
-  palette:
-    accent: orange
-    primary: green
-    scheme: default
+markdown_extensions:
+- admonition
+- pymdownx.details
+- pymdownx.superfences
+- pymdownx.highlight
+- 'pymdownx.tabbed:'
+- alternate_style: true
+- attr_list
+- md_in_html
+- footnotes
+- tables
+- 'toc:'
+- permalink: true
+plugins:
+- search
+- search:
+    lang: ja
+nav:
+- Home: index.md
+- テスト資料:
+  - 目次: assets/test_material/index.md
+  - '第1章: システムテスト概要': assets/test_material/chapter_01_system_test_overview.md
+  - '第2章: 図表生成テスト': assets/test_material/chapter_02_chart_generation_test.md
+  - '第3章: 表生成テスト': assets/test_material/chapter_03_table_generation_test.md
+  - '第4章: 用語管理テスト': assets/test_material/chapter_04_knowledge_management_test.md
+  - '第5章: 統合テスト': assets/test_material/chapter_05_integration_test.md
+  - 用語集: assets/test_material/glossary.md
+extra_css:
+- css/custom.css

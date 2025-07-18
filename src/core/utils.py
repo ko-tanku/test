@@ -19,43 +19,43 @@ logger = logging.getLogger(__name__)
 def slugify(text: str) -> str:
     """
     テキストをURLフレンドリーなスラッグに変換
-    
+
     Args:
         text: 変換対象のテキスト
-        
+
     Returns:
         スラッグ化されたテキスト
     """
     if not text:
         return ""
-    
+
     # Unicodeの正規化
     text = unicodedata.normalize('NFKC', text)
-    
+
     # 小文字変換
     text = text.lower()
-    
+
     # 日本語文字を除去し、英数字とハイフンのみを許可
     text = re.sub(r'[^\w\s-]', '', text)
     text = re.sub(r'[-\s]+', '-', text)
-    
+
     # 前後のハイフンを削除
     text = text.strip('-')
-    
+
     # 空文字列の場合はデフォルト値を返す
     if not text:
         return "untitled"
-    
+
     return text
 
 
 def hex_to_rgb(hex_color: str) -> tuple:
     """
     HEXカラーコードをRGBタプルに変換
-    
+
     Args:
         hex_color: HEXカラーコード (#RRGGBB形式)
-        
+
     Returns:
         RGBタプル (r, g, b)
     """
@@ -63,7 +63,7 @@ def hex_to_rgb(hex_color: str) -> tuple:
         hex_color = hex_color.lstrip('#')
         if len(hex_color) != 6:
             raise ValueError("Invalid hex color format")
-        
+
         return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
     except Exception as e:
         logger.warning(f"Invalid hex color '{hex_color}': {e}")
@@ -73,10 +73,10 @@ def hex_to_rgb(hex_color: str) -> tuple:
 def rgb_to_hex(rgb_color: tuple) -> str:
     """
     RGBタプルをHEXカラーコードに変換
-    
+
     Args:
         rgb_color: RGBタプル (r, g, b)
-        
+
     Returns:
         HEXカラーコード
     """
@@ -91,18 +91,18 @@ def rgb_to_hex(rgb_color: tuple) -> str:
 def apply_matplotlib_japanese_font(font_family: Optional[List[str]] = None) -> bool:
     """
     Matplotlibで日本語フォントを設定
-    
+
     Args:
         font_family: フォントファミリーのリスト
-        
+
     Returns:
         設定が成功したかどうか
     """
     if font_family is None:
         font_family = ["Meiryo", "Yu Gothic", "Hiragino Sans", "Noto Sans CJK JP", "DejaVu Sans"]
-    
+
     success = False
-    
+
     for font_name in font_family:
         try:
             # フォントが利用可能かチェック
@@ -115,207 +115,253 @@ def apply_matplotlib_japanese_font(font_family: Optional[List[str]] = None) -> b
         except Exception as e:
             logger.warning(f"Failed to set font '{font_name}': {e}")
             continue
-    
+
     if not success:
-        logger.warning("No Japanese font found, using default font")
-        plt.rcParams['font.family'] = 'sans-serif'
-    
-    # その他のMatplotlib設定
+        logger.warning("No Japanese font found. Using default font with fallback.")
+        plt.rcParams['font.family'] = ['sans-serif']
+        plt.rcParams['font.sans-serif'] = font_family
+
+    # マイナス記号の文字化けを防ぐ
     plt.rcParams['axes.unicode_minus'] = False
-    
+
     return success
 
 
 def create_html_tag(tag: str, content: Any = "", attributes: Optional[Dict[str, str]] = None) -> str:
     """
     汎用HTMLタグを生成
-    
+
     Args:
-        tag: HTMLタグ名
-        content: タグ内容
-        attributes: タグ属性の辞書
-        
+        tag: タグ名
+        content: コンテンツ
+        attributes: 属性辞書
+
     Returns:
         HTMLタグ文字列
     """
     if attributes is None:
         attributes = {}
-    
-    # 属性文字列を構築
+
+    # 属性を文字列に変換
     attr_str = ""
-    if attributes:
-        attr_parts = []
-        for key, value in attributes.items():
-            escaped_value = html.escape(str(value), quote=True)
-            attr_parts.append(f'{key}="{escaped_value}"')
-        attr_str = " " + " ".join(attr_parts)
-    
-    # コンテンツをエスケープ
-    escaped_content = html.escape(str(content)) if content else ""
-    
-    # 自己閉じタグの場合
-    if tag in ['br', 'hr', 'img', 'input', 'meta', 'link']:
-        return f"<{tag}{attr_str} />"
-    
-    return f"<{tag}{attr_str}>{escaped_content}</{tag}>"
+    for key, value in attributes.items():
+        # 属性値をエスケープ
+        escaped_value = html.escape(str(value), quote=True)
+        attr_str += f' {key}="{escaped_value}"'
+
+    # コンテンツをエスケープ（HTMLタグが含まれる場合はエスケープしない）
+    if isinstance(content, str) and not re.search(r'<[^>]+>', content):
+        content = html.escape(content)
+
+    return f"<{tag}{attr_str}>{content}</{tag}>"
 
 
 def generate_admonition_markdown(
-    type: str, 
-    title: str, 
-    content: str, 
+    type: str,
+    title: str,
+    content: str,
     collapsible: bool = False
 ) -> str:
     """
     MkDocs Materialの注記ブロックMarkdownを生成
-    
+
     Args:
-        type: 注記タイプ (note, warning, info, etc.)
-        title: 注記タイトル
-        content: 注記内容
-        collapsible: 折りたたみ可能かどうか
-        
+        type: 注記タイプ (note, info, tip, warning, danger, etc.)
+        title: タイトル
+        content: コンテンツ
+        collapsible: 折りたたみ可能にするか
+
     Returns:
-        Markdown文字列
+        Markdownテキスト
     """
-    # 注記タイプの正規化
-    valid_types = [
-        'note', 'abstract', 'info', 'tip', 'success', 'question', 
-        'warning', 'failure', 'danger', 'bug', 'example', 'quote'
-    ]
-    
-    if type not in valid_types:
-        logger.warning(f"Invalid admonition type '{type}', using 'note'")
-        type = 'note'
-    
-    # 開始マーカー
-    marker = "???" if collapsible else "!!!"
-    
-    # タイトルの処理
-    title_part = f' "{title}"' if title else ""
-    
-    # コンテンツをインデント
-    indented_content = "\n".join(f"    {line}" for line in content.split("\n"))
-    
-    return f'{marker} {type}{title_part}\n\n{indented_content}\n'
+    # 注記のベースシンタックス
+    if collapsible:
+        # 折りたたみ可能な注記
+        admonition = f'??? {type} "{title}"\n'
+    else:
+        # 通常の注記
+        admonition = f'!!! {type} "{title}"\n'
+
+    # コンテンツを適切にインデント
+    indented_content = '\n'.join(
+        f'    {line}' if line.strip() else ''
+        for line in content.split('\n')
+    )
+
+    return admonition + indented_content
 
 
 def generate_tabbed_markdown(tabs_data: Dict[str, str]) -> str:
     """
     MkDocs MaterialのタブブロックMarkdownを生成
-    
+
     Args:
-        tabs_data: タブ名とコンテンツの辞書
-        
+        tabs_data: タブデータ辞書 {タブ名: コンテンツ}
+
     Returns:
-        Markdown文字列
+        Markdownテキスト
     """
     if not tabs_data:
         return ""
-    
-    tab_blocks = []
-    
-    for tab_name, content in tabs_data.items():
+
+    tabbed_content = []
+
+    for i, (tab_name, content) in enumerate(tabs_data.items()):
         # タブヘッダー
-        tab_header = f'=== "{tab_name}"'
-        
-        # コンテンツをインデント
-        indented_content = "\n".join(f"    {line}" for line in content.split("\n"))
-        
-        tab_blocks.append(f"{tab_header}\n\n{indented_content}")
-    
-    return "\n\n".join(tab_blocks) + "\n"
+        if i == 0:
+            # 最初のタブは選択状態にする
+            tabbed_content.append(f'=== "{tab_name}"')
+        else:
+            tabbed_content.append(f'\n=== "{tab_name}"')
+
+        # コンテンツを適切にインデント（4スペース）
+        indented_content = '\n'.join(
+            f'    {line}' if line.strip() else ''
+            for line in content.split('\n')
+        )
+
+        tabbed_content.append('')  # 空行
+        tabbed_content.append(indented_content)
+
+    return '\n'.join(tabbed_content)
 
 
-def ensure_directory_exists(path: Union[str, Path]) -> Path:
+def ensure_directory_exists(directory: Path) -> Path:
     """
-    ディレクトリが存在しない場合は作成
-    
+    ディレクトリが存在することを確認し、存在しない場合は作成
+
     Args:
-        path: ディレクトリパス
-        
+        directory: ディレクトリパス
+
     Returns:
-        Pathオブジェクト
+        ディレクトリパス
     """
-    path = Path(path)
     try:
-        path.mkdir(parents=True, exist_ok=True)
-        logger.info(f"Directory ensured: {path}")
+        directory = Path(directory)
+        directory.mkdir(parents=True, exist_ok=True)
+        return directory
     except Exception as e:
-        logger.error(f"Failed to create directory '{path}': {e}")
+        logger.error(f"Failed to create directory '{directory}': {e}")
         raise
-    
-    return path
 
 
-def safe_filename(filename: str) -> str:
+def safe_filename(filename: str, max_length: int = 255) -> str:
     """
     ファイル名を安全な形式に変換
-    
+
     Args:
         filename: 元のファイル名
-        
+        max_length: 最大長
+
     Returns:
         安全なファイル名
     """
-    # 危険文字を除去
-    safe_chars = re.sub(r'[<>:"/\\|?*]', '_', filename)
-    
-    # 連続するアンダースコアを1つにまとめる
-    safe_chars = re.sub(r'_+', '_', safe_chars)
-    
-    # 前後のピリオドとスペースを削除
-    safe_chars = safe_chars.strip('. ')
-    
+    # 特殊文字を除去または置換
+    filename = re.sub(r'[<>:"/\\|?*]', '_', filename)
+
+    # 制御文字を除去
+    filename = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', filename)
+
+    # 前後の空白とピリオドを削除
+    filename = filename.strip('. ')
+
     # 空文字列の場合はデフォルト値
-    if not safe_chars:
-        return "untitled"
-    
-    return safe_chars
+    if not filename:
+        filename = "untitled"
+
+    # 長さ制限
+    if len(filename) > max_length:
+        # 拡張子を保持
+        name_parts = filename.rsplit('.', 1)
+        if len(name_parts) == 2:
+            name, ext = name_parts
+            max_name_length = max_length - len(ext) - 1
+            filename = f"{name[:max_name_length]}.{ext}"
+        else:
+            filename = filename[:max_length]
+
+    return filename
+
+
+def validate_url_path(url_path: str) -> bool:
+    """
+    URLパスが有効かチェック
+
+    Args:
+        url_path: URLパス
+
+    Returns:
+        有効かどうか
+    """
+    try:
+        # 基本的なURLパスパターン
+        pattern = r'^[a-zA-Z0-9\-._~:/?#\[\]@!$&\'()*+,;=]+$'
+
+        if not re.match(pattern, url_path):
+            return False
+
+        # 危険なパターンをチェック
+        dangerous_patterns = [
+            r'\.\.',  # ディレクトリトラバーサル
+            r'^/',    # 絶対パス
+            r'://',   # プロトコル
+        ]
+
+        for pattern in dangerous_patterns:
+            if re.search(pattern, url_path):
+                return False
+
+        return True
+
+    except Exception as e:
+        logger.warning(f"URL path validation error: {e}")
+        return False
 
 
 def format_file_size(size_bytes: int) -> str:
     """
     ファイルサイズを人間が読みやすい形式に変換
-    
+
     Args:
-        size_bytes: バイト数
-        
+        size_bytes: バイト単位のサイズ
+
     Returns:
-        フォーマット済みサイズ文字列
+        フォーマットされたサイズ文字列
     """
-    if size_bytes < 1024:
-        return f"{size_bytes} B"
-    elif size_bytes < 1024**2:
-        return f"{size_bytes / 1024:.1f} KB"
-    elif size_bytes < 1024**3:
-        return f"{size_bytes / (1024**2):.1f} MB"
-    else:
-        return f"{size_bytes / (1024**3):.1f} GB"
+    for unit in ['B', 'KB', 'MB', 'GB']:
+        if size_bytes < 1024.0:
+            return f"{size_bytes:.2f} {unit}"
+        size_bytes /= 1024.0
+
+    return f"{size_bytes:.2f} TB"
 
 
-def validate_url_path(path: str) -> bool:
+def sanitize_html_content(content: str) -> str:
     """
-    URLパスの妥当性を検証
-    
+    HTMLコンテンツをサニタイズ
+
     Args:
-        path: 検証対象のパス
-        
+        content: HTMLコンテンツ
+
     Returns:
-        妥当性の真偽値
+        サニタイズされたコンテンツ
     """
-    if not path:
-        return False
-    
-    # 危険な文字パターンをチェック
-    dangerous_patterns = [
-        r'\.\./',  # ディレクトリトラバーサル
-        r'[<>:"|?*]',  # 特殊文字
-        r'^[./]',  # 先頭のドットやスラッシュ
-    ]
-    
-    for pattern in dangerous_patterns:
-        if re.search(pattern, path):
-            return False
-    
-    return True
+    # 基本的なHTMLエスケープ
+    return html.escape(content)
+
+
+# エクスポート
+__all__ = [
+    'slugify',
+    'hex_to_rgb',
+    'rgb_to_hex',
+    'apply_matplotlib_japanese_font',
+    'create_html_tag',
+    'generate_admonition_markdown',
+    'generate_tabbed_markdown',
+    'ensure_directory_exists',
+    'safe_filename',
+    'validate_url_path',
+    'format_file_size',
+    'sanitize_html_content'
+]

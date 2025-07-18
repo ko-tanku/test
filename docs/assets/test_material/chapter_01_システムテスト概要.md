@@ -1,8 +1,8 @@
 ---
-title: システムテスト概要
-description: テスト資料 - システムテスト概要
+title: "システムテスト概要"
+description: "テスト資料 - システムテスト概要"
 chapter_number: 1
-material: テスト資料
+material: "テスト資料"
 ---
 
 # 第1章 システムテスト概要
@@ -42,12 +42,10 @@ material: テスト資料
 
 !!! info "設定状態"
 
-    
-    **プロジェクトルート**: C:\Users\subka\Documents\my-project  
-    **ドキュメントディレクトリ**: C:\Users\subka\Documents\my-project\docs  
-    **アセットディレクトリ**: C:\Users\subka\Documents\my-project\docs\assets  
-    **テスト資料ディレクトリ**: C:\Users\subka\Documents\my-project\docs\assets\test_material
-    
+    **プロジェクトルート**: C:\Users\ko-iwai\Documents\newcomer_education
+    **ドキュメントディレクトリ**: C:\Users\ko-iwai\Documents\newcomer_education\docs
+    **アセットディレクトリ**: C:\Users\ko-iwai\Documents\newcomer_education\docs\assets
+    **テスト資料ディレクトリ**: C:\Users\ko-iwai\Documents\newcomer_education\docs\assets\test_material
 
 
 ## 依存関係確認
@@ -70,12 +68,10 @@ material: テスト資料
 
 ---
 
-[📚 目次](index.md) | [📖 用語集](glossary.md) | [次の章: 図表生成テスト →](chapter_02_chart_generation_test.md)
+[📚 目次](index.md) | [📖 用語集](glossary.md) | [次の章: 図表生成テスト →](chapter_02_図表生成テスト.md)
 
 !!! info "章の情報"
 
-    
-                                        **章番号**: 1  
-                                        **所要時間**: 15分  
-                                        **難易度**: 基本
-                                        
+                                **章番号**: 1
+                                **所要時間**: 15分
+                                **難易度**: 基本

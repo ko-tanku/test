@@ -1,16 +1,59 @@
-# タスクの状態遷移シミュレーション
+# MkDocs Materials Generator
 
-OSにおけるタスクの状態遷移をインタラクティブに体験しましょう。
+このサイトは、MkDocs Materials Generator によって自動生成された学習資料のデモサイトです。
 
-<iframe src="assets/embeds/task-transition-embed.html" width="100%" height="900px" frameborder="0"></iframe>
+## システム情報
 
+- **バージョン**: 1.0.0
+- **最終更新**: 2025-07-18 17:32:34
+- **作者**: MkDocs Materials Generator
 
-上記のシミュレーションは、タスクが「実行可能状態」「実行状態」「待機状態」の間をどのように遷移するかを示しています。
-ボタンをクリックして、状態変化を試してみてください。
+## 利用可能な資料
 
+### 📚 テスト資料
 
+MkDocs Materials Generator の全機能をテストするための資料です。
 
+- [テスト資料を見る](assets/test_material/index.md)
 
+## 機能一覧
 
-<iframe src="assets/embeds/task-transition-embed_.html" width="100%" height="900px" frameborder="0"></iframe>
+このシステムは以下の機能を提供します：
 
+1. **Markdownコンテンツ生成**
+   - 見出し、段落、リスト、コードブロック
+   - Material for MkDocsの拡張機能（Admonition、Tabs）
+   - 専門用語のツールチップ
+
+2. **図表生成**
+   - Matplotlib/Seabornによる静的図表
+   - Plotlyによるインタラクティブ図表
+   - カスタム描画関数のサポート
+
+3. **表生成**
+   - 基本的なHTMLテーブル
+   - スタイル付きテーブル
+   - 検索・ソート機能付きテーブル
+
+4. **用語管理**
+   - 専門用語の一元管理
+   - 自動用語集生成
+   - ツールチップ機能
+
+## 使い方
+
+### 1. プレビューサーバーの起動
+
+```bash
+mkdocs serve
+'''
+### 2. 静的サイトのビルド
+```bash
+mkdocs build
+'''
+
+### 3. 新しい資料の追加
+src/materials/ディレクトリに新しいモジュールを作成し、BaseContentManagerを継承してください。
+
+!!! info "お問い合わせ"
+このシステムに関するお問い合わせは、GitHubのIssueでお願いします。

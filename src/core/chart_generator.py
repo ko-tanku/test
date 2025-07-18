@@ -31,11 +31,11 @@ class ChartGenerator:
     """
     図表を生成し、HTMLファイルとして出力するためのクラス
     """
-    
+
     def __init__(self, colors: Optional[Dict[str, str]] = None, styles: Optional[Dict[str, Any]] = None):
         """
         初期化
-        
+
         Args:
             colors: カスタムカラー辞書
             styles: カスタムスタイル辞書
@@ -44,27 +44,27 @@ class ChartGenerator:
         self.styles = {**BASE_CHART_STYLES, **(styles or {})}
         self.output_dir = ensure_directory_exists(PATHS["charts_dir"])
         self.logger = logging.getLogger(__name__ + ".ChartGenerator")
-        
+
         # 日本語フォントの設定
         apply_matplotlib_japanese_font(self.styles.get("font_family"))
-        
+
         # Seabornスタイルの設定
         sns.set_palette(self.styles.get("colors", sns.color_palette()))
-    
+
     def _save_mpl_figure_to_html(
-        self, 
-        fig: mpl_figure.Figure, 
-        output_path: Path, 
+        self,
+        fig: mpl_figure.Figure,
+        output_path: Path,
         embed_png: bool = True
     ) -> Path:
         """
         Matplotlibの図をHTMLファイルとして保存
-        
+
         Args:
             fig: Matplotlibの図オブジェクト
             output_path: 出力パス
             embed_png: PNGを埋め込むかどうか
-            
+
         Returns:
             保存されたファイルのパス
         """
@@ -73,115 +73,98 @@ class ChartGenerator:
                 # PNGをBase64エンコード
                 buffer = BytesIO()
                 fig.savefig(
-                    buffer, 
-                    format='png', 
+                    buffer,
+                    format='png',
                     dpi=self.styles.get("figure_dpi", 100),
                     bbox_inches='tight',
                     transparent=self.styles.get("transparent_bg", True)
                 )
                 buffer.seek(0)
-                
+
                 # Base64エンコード
                 img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
                 buffer.close()
-                
+
                 # レスポンシブHTMLテンプレート
                 html_content = f"""
-    <!DOCTYPE html>
-    <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Chart</title>
-        <style>
-            * {{
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }}
-            body {{
-                font-family: {self.styles.get("font_family", ["Arial"])[0]};
-                background-color: #ffffff;
-                padding: 10px;
-                height: 100vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }}
-            .chart-container {{
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: white;
-            }}
-            .chart-image {{
-                max-width: 100%;
-                max-height: 100%;
-                width: auto;
-                height: auto;
-                object-fit: contain;
-                border: none;
-            }}
-            @media (max-width: 768px) {{
-                body {{
-                    padding: 5px;
-                }}
-            }}
-        </style>
-    </head>
-    <body>
-        <div class="chart-container">
-            <img src="data:image/png;base64,{img_base64}" alt="Chart" class="chart-image">
-        </div>
-    </body>
-    </html>
-    """
-            
-            # HTMLファイルに保存
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            
-            self.logger.info(f"Chart saved as HTML: {output_path}")
-            
-            # 図を閉じる
-            plt.close(fig)
-            
-            return output_path
-            
-        except Exception as e:
-            self.logger.error(f"Failed to save chart as HTML: {e}")
-            plt.close(fig)
-            raise
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart</title>
+    <style>
+        body {{
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }}
+        .chart-container {{
+            max-width: 100%;
+            text-align: center;
+        }}
+        .chart-container img {{
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }}
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <img src="data:image/png;base64,{img_base64}" alt="Chart">
+    </div>
+</body>
+</html>
+"""
 
+                # HTMLファイルを保存
+                with open(output_path, 'w', encoding='utf-8') as f:
+                    f.write(html_content)
+
+                self.logger.info(f"Chart saved as HTML: {output_path}")
+
+                return output_path
+
+        except Exception as e:
+            self.logger.error(f"Failed to save matplotlib figure: {e}")
+            raise
+        finally:
+            plt.close(fig)
 
     def create_simple_line_chart(
-        self, 
-        data: Union[pd.DataFrame, Dict[str, List]], 
-        x_col: str, 
-        y_col: str, 
-        title: str, 
-        xlabel: str, 
-        ylabel: str, 
+        self,
+        data: Union[pd.DataFrame, Dict],
+        x_col: str,
+        y_col: str,
+        title: str,
+        xlabel: str,
+        ylabel: str,
         output_filename: str,
         use_plotly: bool = False
     ) -> Path:
         """
         シンプルな折れ線グラフを生成
-        
+
         Args:
-            data: データ（DataFrame or Dict）
-            x_col: X軸の列名
-            y_col: Y軸の列名
+            data: データ（DataFrameまたは辞書）
+            x_col: X軸カラム名
+            y_col: Y軸カラム名
             title: グラフタイトル
             xlabel: X軸ラベル
             ylabel: Y軸ラベル
             output_filename: 出力ファイル名
-            use_plotly: Plotlyを使用するかどうか
-            
+            use_plotly: Plotlyを使用するか
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
             # データの準備
@@ -189,89 +172,110 @@ class ChartGenerator:
                 df = pd.DataFrame(data)
             else:
                 df = data
-            
-            # 安全なファイル名
+
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
+
             if use_plotly:
-                # Plotlyで作成
+                # Plotlyで生成
                 fig = go.Figure()
-                
                 fig.add_trace(go.Scatter(
                     x=df[x_col],
                     y=df[y_col],
                     mode='lines+markers',
                     name=y_col,
-                    line=dict(color=self.colors.get("primary", "#1976d2"), width=self.styles.get("line_width", 2)),
-                    marker=dict(size=self.styles.get("marker_size", 6))
+                    line=dict(
+                        color=self.styles['colors'][0],
+                        width=self.styles.get('line_width', 2)
+                    ),
+                    marker=dict(
+                        size=self.styles.get('marker_size', 6)
+                    )
                 ))
-                
+
                 fig.update_layout(
                     title=title,
                     xaxis_title=xlabel,
                     yaxis_title=ylabel,
-                    font=dict(family=self.styles.get("font_family", ["Arial"])[0], size=self.styles.get("font_size_axis", 10)),
-                    showlegend=True,
-                    plot_bgcolor='white',
-                    paper_bgcolor='white'
+                    font=dict(
+                        family=self.styles.get('font_family', ['Arial'])[0],
+                        size=self.styles.get('font_size_axis', 10)
+                    ),
+                    title_font_size=self.styles.get('font_size_title', 14),
+                    hovermode='x unified',
+                    showlegend=True
                 )
-                
-                return self.create_interactive_plotly_chart(fig, safe_name)
-            
+
+                # HTMLとして保存
+                fig.write_html(
+                    output_path,
+                    include_plotlyjs='cdn',
+                    config={'displayModeBar': True}
+                )
+
             else:
-                # Matplotlibで作成
-                fig, ax = plt.subplots(figsize=self.styles.get("figsize", (10, 6)))
-                
+                # Matplotlibで生成
+                fig, ax = plt.subplots(figsize=self.styles.get('figsize', (10, 6)))
+
                 ax.plot(
-                    df[x_col], 
-                    df[y_col], 
-                    color=self.colors.get("primary", "#1976d2"),
-                    linewidth=self.styles.get("line_width", 2),
+                    df[x_col],
+                    df[y_col],
+                    color=self.styles['colors'][0],
+                    linewidth=self.styles.get('line_width', 2),
                     marker='o',
-                    markersize=self.styles.get("marker_size", 6)
+                    markersize=self.styles.get('marker_size', 6),
+                    label=y_col
                 )
-                
-                ax.set_title(title, fontsize=self.styles.get("font_size_title", 14))
-                ax.set_xlabel(xlabel, fontsize=self.styles.get("font_size_axis", 10))
-                ax.set_ylabel(ylabel, fontsize=self.styles.get("font_size_axis", 10))
-                ax.grid(True, alpha=self.styles.get("grid_alpha", 0.3))
-                
-                return self._save_mpl_figure_to_html(fig, output_path)
-                
+
+                ax.set_title(title, fontsize=self.styles.get('font_size_title', 14))
+                ax.set_xlabel(xlabel, fontsize=self.styles.get('font_size_axis', 10))
+                ax.set_ylabel(ylabel, fontsize=self.styles.get('font_size_axis', 10))
+
+                ax.grid(True, alpha=self.styles.get('grid_alpha', 0.3))
+                ax.legend(fontsize=self.styles.get('font_size_legend', 9))
+
+                # タイトなレイアウト
+                plt.tight_layout()
+
+                # HTMLとして保存
+                output_path = self._save_mpl_figure_to_html(fig, output_path)
+
+            return output_path
+
         except Exception as e:
             self.logger.error(f"Failed to create line chart: {e}")
             raise
-    
+
     def create_bar_chart(
-        self, 
-        data: Union[pd.DataFrame, Dict[str, List]], 
-        x_col: str, 
-        y_col: str, 
-        title: str, 
-        xlabel: str, 
-        ylabel: str, 
+        self,
+        data: Union[pd.DataFrame, Dict],
+        x_col: str,
+        y_col: str,
+        title: str,
+        xlabel: str,
+        ylabel: str,
         output_filename: str,
         use_plotly: bool = False
     ) -> Path:
         """
         棒グラフを生成
-        
+
         Args:
-            data: データ（DataFrame or Dict）
-            x_col: X軸の列名
-            y_col: Y軸の列名
+            data: データ（DataFrameまたは辞書）
+            x_col: X軸カラム名
+            y_col: Y軸カラム名
             title: グラフタイトル
             xlabel: X軸ラベル
             ylabel: Y軸ラベル
             output_filename: 出力ファイル名
-            use_plotly: Plotlyを使用するかどうか
-            
+            use_plotly: Plotlyを使用するか
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
             # データの準備
@@ -279,158 +283,205 @@ class ChartGenerator:
                 df = pd.DataFrame(data)
             else:
                 df = data
-            
-            # 安全なファイル名
+
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
+
             if use_plotly:
-                # Plotlyで作成
+                # Plotlyで生成
                 fig = go.Figure()
-                
                 fig.add_trace(go.Bar(
                     x=df[x_col],
                     y=df[y_col],
                     name=y_col,
-                    marker=dict(color=self.colors.get("primary", "#1976d2"))
+                    marker_color=self.styles['colors'][0],
+                    text=df[y_col],
+                    textposition='auto'
                 ))
-                
+
                 fig.update_layout(
                     title=title,
                     xaxis_title=xlabel,
                     yaxis_title=ylabel,
-                    font=dict(family=self.styles.get("font_family", ["Arial"])[0], size=self.styles.get("font_size_axis", 10)),
-                    showlegend=False,
-                    plot_bgcolor='white',
-                    paper_bgcolor='white'
+                    font=dict(
+                        family=self.styles.get('font_family', ['Arial'])[0],
+                        size=self.styles.get('font_size_axis', 10)
+                    ),
+                    title_font_size=self.styles.get('font_size_title', 14),
+                    showlegend=False
                 )
-                
-                return self.create_interactive_plotly_chart(fig, safe_name)
-            
+
+                # HTMLとして保存
+                fig.write_html(
+                    output_path,
+                    include_plotlyjs='cdn',
+                    config={'displayModeBar': True}
+                )
+
             else:
-                # Matplotlibで作成
-                fig, ax = plt.subplots(figsize=self.styles.get("figsize", (10, 6)))
-                
+                # Matplotlibで生成
+                fig, ax = plt.subplots(figsize=self.styles.get('figsize', (10, 6)))
+
                 bars = ax.bar(
-                    df[x_col], 
-                    df[y_col], 
-                    color=self.colors.get("primary", "#1976d2"),
-                    alpha=0.7
+                    df[x_col],
+                    df[y_col],
+                    color=self.styles['colors'][0],
+                    alpha=0.8
                 )
-                
-                ax.set_title(title, fontsize=self.styles.get("font_size_title", 14))
-                ax.set_xlabel(xlabel, fontsize=self.styles.get("font_size_axis", 10))
-                ax.set_ylabel(ylabel, fontsize=self.styles.get("font_size_axis", 10))
-                ax.grid(True, alpha=self.styles.get("grid_alpha", 0.3))
-                
-                return self._save_mpl_figure_to_html(fig, output_path)
-                
+
+                # 値をバーの上に表示
+                for bar in bars:
+                    height = bar.get_height()
+                    ax.text(
+                        bar.get_x() + bar.get_width()/2.,
+                        height,
+                        f'{height:.1f}',
+                        ha='center',
+                        va='bottom',
+                        fontsize=self.styles.get('font_size_legend', 9)
+                    )
+
+                ax.set_title(title, fontsize=self.styles.get('font_size_title', 14))
+                ax.set_xlabel(xlabel, fontsize=self.styles.get('font_size_axis', 10))
+                ax.set_ylabel(ylabel, fontsize=self.styles.get('font_size_axis', 10))
+
+                ax.grid(True, alpha=self.styles.get('grid_alpha', 0.3), axis='y')
+
+                # X軸ラベルの回転（必要に応じて）
+                plt.xticks(rotation=45, ha='right')
+
+                # タイトなレイアウト
+                plt.tight_layout()
+
+                # HTMLとして保存
+                output_path = self._save_mpl_figure_to_html(fig, output_path)
+
+            return output_path
+
         except Exception as e:
             self.logger.error(f"Failed to create bar chart: {e}")
             raise
-    
+
     def create_custom_figure(
-        self, 
-        drawing_function: Callable, 
-        output_filename: str, 
+        self,
+        drawing_function: Callable,
+        output_filename: str,
         **kwargs: Any
     ) -> Path:
         """
         カスタム描画関数を使用して図を生成
-        
+
         Args:
             drawing_function: 描画関数（ax, colors, styles, **kwargs を受け取る）
             output_filename: 出力ファイル名
-            **kwargs: 描画関数に渡す追加引数
-            
+            **kwargs: 描画関数に渡す追加の引数
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
-            # 安全なファイル名
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
+
             # 図を作成
-            fig, ax = plt.subplots(figsize=self.styles.get("figsize", (10, 6)))
-            
-            # 描画関数を呼び出し
-            drawing_function(ax=ax, colors=self.colors, styles=self.styles, **kwargs)
-            
-            return self._save_mpl_figure_to_html(fig, output_path)
-            
+            fig, ax = plt.subplots(figsize=self.styles.get('figsize', (10, 6)))
+
+            # カスタム描画関数を実行
+            try:
+                drawing_function(ax, self.colors, self.styles, **kwargs)
+            except Exception as e:
+                self.logger.error(f"Error in custom drawing function: {e}")
+                raise
+
+            # タイトなレイアウト
+            plt.tight_layout()
+
+            # HTMLとして保存
+            output_path = self._save_mpl_figure_to_html(fig, output_path)
+
+            return output_path
+
         except Exception as e:
             self.logger.error(f"Failed to create custom figure: {e}")
             raise
-    
+
     def create_interactive_plotly_chart(
-        self, 
-        plotly_figure: go.Figure, 
+        self,
+        plotly_figure: go.Figure,
         output_filename: str
     ) -> Path:
         """
-        PlotlyのFigureオブジェクトをインタラクティブなHTMLファイルとして保存
-        
+        PlotlyのFigureオブジェクトをHTMLとして保存
+
         Args:
             plotly_figure: PlotlyのFigureオブジェクト
             output_filename: 出力ファイル名
-            
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
-            # 安全なファイル名
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
-            # HTMLファイルとして保存
-            pio.write_html(
-                plotly_figure, 
-                str(output_path),
-                full_html=True,
-                include_plotlyjs='cdn',
-                config={'displayModeBar': True, 'responsive': True}
+
+            # デフォルトのレイアウト設定を適用
+            plotly_figure.update_layout(
+                font=dict(
+                    family=self.styles.get('font_family', ['Arial'])[0],
+                    size=self.styles.get('font_size_axis', 10)
+                ),
+                title_font_size=self.styles.get('font_size_title', 14)
             )
-            
+
+            # HTMLとして保存
+            plotly_figure.write_html(
+                output_path,
+                include_plotlyjs='cdn',
+                config={'displayModeBar': True}
+            )
+
             self.logger.info(f"Interactive chart saved: {output_path}")
-            
+
             return output_path
-            
+
         except Exception as e:
-            self.logger.error(f"Failed to create interactive chart: {e}")
+            self.logger.error(f"Failed to save Plotly chart: {e}")
             raise
-    
+
     def create_pie_chart(
-        self, 
-        data: Union[pd.DataFrame, Dict[str, List]], 
-        labels_col: str, 
-        values_col: str, 
-        title: str, 
+        self,
+        data: Union[pd.DataFrame, Dict],
+        labels_col: str,
+        values_col: str,
+        title: str,
         output_filename: str,
         use_plotly: bool = False
     ) -> Path:
         """
         円グラフを生成
-        
+
         Args:
-            data: データ（DataFrame or Dict）
-            labels_col: ラベル列名
-            values_col: 値列名
+            data: データ（DataFrameまたは辞書）
+            labels_col: ラベルカラム名
+            values_col: 値カラム名
             title: グラフタイトル
             output_filename: 出力ファイル名
-            use_plotly: Plotlyを使用するかどうか
-            
+            use_plotly: Plotlyを使用するか
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
             # データの準備
@@ -438,118 +489,182 @@ class ChartGenerator:
                 df = pd.DataFrame(data)
             else:
                 df = data
-            
-            # 安全なファイル名
+
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
+
             if use_plotly:
-                # Plotlyで作成
-                fig = go.Figure()
-                
-                fig.add_trace(go.Pie(
+                # Plotlyで生成
+                fig = go.Figure(data=[go.Pie(
                     labels=df[labels_col],
                     values=df[values_col],
-                    name=title
-                ))
-                
+                    hole=.3,
+                    marker=dict(colors=self.styles['colors'])
+                )])
+
                 fig.update_layout(
                     title=title,
-                    font=dict(family=self.styles.get("font_family", ["Arial"])[0], size=self.styles.get("font_size_axis", 10)),
-                    showlegend=True
+                    font=dict(
+                        family=self.styles.get('font_family', ['Arial'])[0],
+                        size=self.styles.get('font_size_axis', 10)
+                    ),
+                    title_font_size=self.styles.get('font_size_title', 14)
                 )
-                
-                return self.create_interactive_plotly_chart(fig, safe_name)
-            
+
+                # HTMLとして保存
+                fig.write_html(
+                    output_path,
+                    include_plotlyjs='cdn',
+                    config={'displayModeBar': True}
+                )
+
             else:
-                # Matplotlibで作成
-                fig, ax = plt.subplots(figsize=self.styles.get("figsize", (10, 6)))
-                
-                colors = self.styles.get("colors", ["#1976d2", "#4caf50", "#ff9800", "#f44336"])
-                
+                # Matplotlibで生成
+                fig, ax = plt.subplots(figsize=(8, 8))
+
                 wedges, texts, autotexts = ax.pie(
-                    df[values_col], 
-                    labels=df[labels_col], 
-                    colors=colors,
+                    df[values_col],
+                    labels=df[labels_col],
+                    colors=self.styles['colors'][:len(df)],
                     autopct='%1.1f%%',
                     startangle=90
                 )
-                
-                ax.set_title(title, fontsize=self.styles.get("font_size_title", 14))
-                
-                return self._save_mpl_figure_to_html(fig, output_path)
-                
+
+                # テキストのフォントサイズ設定
+                for text in texts:
+                    text.set_fontsize(self.styles.get('font_size_legend', 9))
+                for autotext in autotexts:
+                    autotext.set_fontsize(self.styles.get('font_size_legend', 9))
+                    autotext.set_color('white')
+                    autotext.set_weight('bold')
+
+                ax.set_title(title, fontsize=self.styles.get('font_size_title', 14))
+
+                # HTMLとして保存
+                output_path = self._save_mpl_figure_to_html(fig, output_path)
+
+            return output_path
+
         except Exception as e:
             self.logger.error(f"Failed to create pie chart: {e}")
             raise
-    
-    def create_heatmap(
-        self, 
-        data: Union[pd.DataFrame, np.ndarray], 
-        title: str, 
+
+    def create_scatter_plot(
+        self,
+        data: Union[pd.DataFrame, Dict],
+        x_col: str,
+        y_col: str,
+        title: str,
+        xlabel: str,
+        ylabel: str,
         output_filename: str,
+        color_col: Optional[str] = None,
+        size_col: Optional[str] = None,
         use_plotly: bool = False
     ) -> Path:
         """
-        ヒートマップを生成
-        
+        散布図を生成
+
         Args:
-            data: データ（DataFrame or ndarray）
+            data: データ（DataFrameまたは辞書）
+            x_col: X軸カラム名
+            y_col: Y軸カラム名
             title: グラフタイトル
+            xlabel: X軸ラベル
+            ylabel: Y軸ラベル
             output_filename: 出力ファイル名
-            use_plotly: Plotlyを使用するかどうか
-            
+            color_col: 色分けカラム名（オプション）
+            size_col: サイズカラム名（オプション）
+            use_plotly: Plotlyを使用するか
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
-            # 安全なファイル名
+            # データの準備
+            if isinstance(data, dict):
+                df = pd.DataFrame(data)
+            else:
+                df = data
+
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
+
             if use_plotly:
-                # Plotlyで作成
+                # Plotlyで生成
                 fig = go.Figure()
-                
-                if isinstance(data, pd.DataFrame):
-                    fig.add_trace(go.Heatmap(
-                        z=data.values,
-                        x=data.columns,
-                        y=data.index,
-                        colorscale='Viridis'
-                    ))
-                else:
-                    fig.add_trace(go.Heatmap(
-                        z=data,
-                        colorscale='Viridis'
-                    ))
-                
+
+                fig.add_trace(go.Scatter(
+                    x=df[x_col],
+                    y=df[y_col],
+                    mode='markers',
+                    marker=dict(
+                        size=df[size_col] if size_col else 8,
+                        color=df[color_col] if color_col else self.styles['colors'][0],
+                        colorscale='Viridis' if color_col else None,
+                        showscale=True if color_col else False
+                    ),
+                    text=df.index,
+                    hovertemplate='%{text}<br>X: %{x}<br>Y: %{y}<extra></extra>'
+                ))
+
                 fig.update_layout(
                     title=title,
-                    font=dict(family=self.styles.get("font_family", ["Arial"])[0], size=self.styles.get("font_size_axis", 10))
+                    xaxis_title=xlabel,
+                    yaxis_title=ylabel,
+                    font=dict(
+                        family=self.styles.get('font_family', ['Arial'])[0],
+                        size=self.styles.get('font_size_axis', 10)
+                    ),
+                    title_font_size=self.styles.get('font_size_title', 14)
                 )
-                
-                return self.create_interactive_plotly_chart(fig, safe_name)
-            
+
+                # HTMLとして保存
+                fig.write_html(
+                    output_path,
+                    include_plotlyjs='cdn',
+                    config={'displayModeBar': True}
+                )
+
             else:
-                # Matplotlibで作成
-                fig, ax = plt.subplots(figsize=self.styles.get("figsize", (10, 6)))
-                
-                if isinstance(data, pd.DataFrame):
-                    sns.heatmap(data, ax=ax, cmap='viridis', annot=True, fmt='.2f')
-                else:
-                    sns.heatmap(data, ax=ax, cmap='viridis', annot=True, fmt='.2f')
-                
-                ax.set_title(title, fontsize=self.styles.get("font_size_title", 14))
-                
-                return self._save_mpl_figure_to_html(fig, output_path)
-                
+                # Matplotlibで生成
+                fig, ax = plt.subplots(figsize=self.styles.get('figsize', (10, 6)))
+
+                scatter = ax.scatter(
+                    df[x_col],
+                    df[y_col],
+                    c=df[color_col] if color_col else self.styles['colors'][0],
+                    s=df[size_col] if size_col else 50,
+                    alpha=0.6,
+                    cmap='viridis' if color_col else None
+                )
+
+                if color_col:
+                    cbar = plt.colorbar(scatter, ax=ax)
+                    cbar.set_label(color_col, fontsize=self.styles.get('font_size_axis', 10))
+
+                ax.set_title(title, fontsize=self.styles.get('font_size_title', 14))
+                ax.set_xlabel(xlabel, fontsize=self.styles.get('font_size_axis', 10))
+                ax.set_ylabel(ylabel, fontsize=self.styles.get('font_size_axis', 10))
+
+                ax.grid(True, alpha=self.styles.get('grid_alpha', 0.3))
+
+                # タイトなレイアウト
+                plt.tight_layout()
+
+                # HTMLとして保存
+                output_path = self._save_mpl_figure_to_html(fig, output_path)
+
+            return output_path
+
         except Exception as e:
-            self.logger.error(f"Failed to create heatmap: {e}")
+            self.logger.error(f"Failed to create scatter plot: {e}")
             raise

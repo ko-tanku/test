@@ -21,11 +21,11 @@ class TableGenerator:
     """
     表データを生成し、HTMLファイルとして出力するためのクラス
     """
-    
+
     def __init__(self, colors: Optional[Dict[str, str]] = None, styles: Optional[Dict[str, Any]] = None):
         """
         初期化
-        
+
         Args:
             colors: カスタムカラー辞書
             styles: カスタムスタイル辞書
@@ -34,30 +34,30 @@ class TableGenerator:
         self.styles = {**BASE_TABLE_STYLES, **(styles or {})}
         self.output_dir = ensure_directory_exists(PATHS["tables_dir"])
         self.logger = logging.getLogger(__name__ + ".TableGenerator")
-    
+
     def _generate_html_table_string(
-        self, 
-        df: pd.DataFrame, 
-        table_id: str, 
-        title: str = "", 
+        self,
+        df: pd.DataFrame,
+        table_id: str,
+        title: str = "",
         custom_styles: Optional[Dict[str, str]] = None
     ) -> str:
         """
         Pandas DataFrameからHTMLテーブル文字列を生成
-        
+
         Args:
             df: データフレーム
             table_id: テーブルの一意ID
             title: テーブルタイトル
             custom_styles: カスタムスタイル辞書
-            
+
         Returns:
             HTMLテーブル文字列
         """
         try:
             # スタイル設定
             table_styles = {**self.styles, **(custom_styles or {})}
-            
+
             # CSSスタイルを構築（レスポンシブ対応）
             css_styles = f"""
             <style>
@@ -66,7 +66,7 @@ class TableGenerator:
                     padding: 0;
                     box-sizing: border-box;
                 }}
-                
+
                 body {{
                     font-family: {table_styles.get('font_family', 'Arial')};
                     background-color: #ffffff;
@@ -74,7 +74,7 @@ class TableGenerator:
                     height: 100vh;
                     overflow: auto;
                 }}
-                
+
                 .table-container {{
                     width: 100%;
                     height: 100%;
@@ -83,584 +83,639 @@ class TableGenerator:
                     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
                     overflow: hidden;
                 }}
-                
+
                 .table-title {{
                     font-size: 18px;
                     font-weight: bold;
-                    padding: 20px;
-                    color: {table_styles.get('header_bg_color', '#1976d2')};
-                    background-color: #f8f9fa;
-                    border-bottom: 2px solid {table_styles.get('header_bg_color', '#1976d2')};
+                    padding: 16px;
+                    background-color: #f5f5f5;
+                    border-bottom: 1px solid #e0e0e0;
                 }}
-                
+
                 .table-responsive {{
-                    width: 100%;
                     overflow-x: auto;
-                    overflow-y: auto;
-                    max-height: calc(100vh - 120px);
-                }}
-                
-                #{table_id} {{
                     width: 100%;
-                    min-width: 600px;
-                    border-collapse: collapse;
-                    font-family: {table_styles.get('font_family', 'Arial')};
-                    font-size: {table_styles.get('font_size', '14px')};
-                    background-color: white;
                 }}
-                
-                #{table_id} th {{
+
+                table#table_{table_id} {{
+                    width: 100%;
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    font-size: {table_styles.get('font_size', '14px')};
+                }}
+
+                table#table_{table_id} th {{
                     background-color: {table_styles.get('header_bg_color', '#1976d2')};
                     color: {table_styles.get('header_text_color', '#ffffff')};
-                    padding: {table_styles.get('cell_padding', '12px 16px')};
+                    padding: {table_styles.get('cell_padding', '8px 12px')};
                     text-align: left;
                     font-weight: bold;
-                    border: 1px solid {table_styles.get('border_color', '#e0e0e0')};
+                    border-bottom: 2px solid {table_styles.get('border_color', '#e0e0e0')};
                     position: sticky;
                     top: 0;
                     z-index: 10;
                 }}
-                
-                #{table_id} td {{
-                    padding: {table_styles.get('cell_padding', '12px 16px')};
-                    border: 1px solid {table_styles.get('border_color', '#e0e0e0')};
-                    text-align: left;
-                    vertical-align: top;
+
+                table#table_{table_id} td {{
+                    padding: {table_styles.get('cell_padding', '8px 12px')};
+                    border-bottom: {table_styles.get('border_width', '1px')} solid {table_styles.get('border_color', '#e0e0e0')};
                 }}
-                
-                #{table_id} tr:nth-child(even) {{
-                    background-color: {table_styles.get('row_even_bg_color', '#f8f9fa')};
+
+                table#table_{table_id} tr:nth-child(even) {{
+                    background-color: {table_styles.get('row_even_bg_color', '#f5f5f5')};
                 }}
-                
-                #{table_id} tr:nth-child(odd) {{
+
+                table#table_{table_id} tr:nth-child(odd) {{
                     background-color: {table_styles.get('row_odd_bg_color', '#ffffff')};
                 }}
-                
-                #{table_id} tr:hover {{
-                    background-color: rgba(25, 118, 210, 0.1);
+
+                table#table_{table_id} tr:hover {{
+                    background-color: #e3f2fd;
+                    transition: background-color 0.2s;
                 }}
-                
-                @media (max-width: 768px) {{
+
+                /* レスポンシブデザイン */
+                @media screen and (max-width: 768px) {{
+                    .table-container {{
+                        border-radius: 0;
+                    }}
+
                     body {{
-                        padding: 10px;
+                        padding: 0;
                     }}
-                    
-                    #{table_id} {{
+
+                    table#table_{table_id} {{
                         font-size: 12px;
-                        min-width: 500px;
                     }}
-                    
-                    #{table_id} th,
-                    #{table_id} td {{
-                        padding: 8px 12px;
-                    }}
-                    
-                    .table-title {{
-                        font-size: 16px;
-                        padding: 15px;
+
+                    table#table_{table_id} th,
+                    table#table_{table_id} td {{
+                        padding: 6px 8px;
                     }}
                 }}
             </style>
             """
-            
-            # テーブルHTMLを構築
-            html_parts = []
-            
-            # 完全なHTMLドキュメント
-            html_parts.append('<!DOCTYPE html>')
-            html_parts.append('<html lang="ja">')
-            html_parts.append('<head>')
-            html_parts.append('<meta charset="UTF-8">')
-            html_parts.append('<meta name="viewport" content="width=device-width, initial-scale=1.0">')
-            html_parts.append(f'<title>{html.escape(title) if title else "Table"}</title>')
-            html_parts.append(css_styles)
-            html_parts.append('</head>')
-            html_parts.append('<body>')
-            
-            # コンテナ開始
-            html_parts.append('<div class="table-container">')
-            
-            # タイトル
-            if title:
-                escaped_title = html.escape(title)
-                html_parts.append(f'<div class="table-title">{escaped_title}</div>')
-            
-            # レスポンシブラッパー
-            html_parts.append('<div class="table-responsive">')
-            
-            # テーブル開始
-            html_parts.append(f'<table id="{table_id}">')
-            
-            # ヘッダー
-            html_parts.append('<thead>')
-            html_parts.append('<tr>')
-            for col in df.columns:
-                escaped_col = html.escape(str(col))
-                html_parts.append(f'<th>{escaped_col}</th>')
-            html_parts.append('</tr>')
-            html_parts.append('</thead>')
-            
-            # ボディ
-            html_parts.append('<tbody>')
-            for _, row in df.iterrows():
-                html_parts.append('<tr>')
-                for value in row:
-                    escaped_value = html.escape(str(value))
-                    html_parts.append(f'<td>{escaped_value}</td>')
-                html_parts.append('</tr>')
-            html_parts.append('</tbody>')
-            
-            # テーブル終了
-            html_parts.append('</table>')
-            html_parts.append('</div>')  # table-responsive
-            html_parts.append('</div>')  # table-container
-            html_parts.append('</body>')
-            html_parts.append('</html>')
-            
-            return '\n'.join(html_parts)
-            
-        except Exception as e:
-            self.logger.error(f"Failed to generate HTML table: {e}")
-            raise    
 
-        
+            # HTMLテーブルを生成
+            html_table = df.to_html(
+                index=False,
+                table_id=f"table_{table_id}",
+                escape=True,
+                classes=table_styles.get('class_name', 'mkdocs-table')
+            )
+
+            # 完全なHTML文書を構築
+            html_content = f"""
+            <!DOCTYPE html>
+            <html lang="ja">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>{title}</title>
+                {css_styles}
+            </head>
+            <body>
+                <div class="table-container">
+                    {f'<div class="table-title">{html.escape(title)}</div>' if title else ''}
+                    <div class="table-responsive">
+                        {html_table}
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+
+            return html_content
+
+        except Exception as e:
+            self.logger.error(f"Failed to generate HTML table string: {e}")
+            raise
+
     def create_basic_table(
-        self, 
-        headers: List[str], 
-        rows: List[List[Any]], 
-        title: str, 
+        self,
+        headers: List[str],
+        rows: List[List[Any]],
+        title: str = "",
         output_filename: str = "basic_table.html",
         custom_styles: Optional[Dict[str, str]] = None
     ) -> Path:
         """
         基本的なテーブルを生成
-        
+
         Args:
-            headers: テーブルヘッダー
-            rows: テーブルの行データ
+            headers: ヘッダー行
+            rows: データ行のリスト
             title: テーブルタイトル
             output_filename: 出力ファイル名
-            custom_styles: カスタムスタイル辞書
-            
+            custom_styles: カスタムスタイル
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
-            # データフレームを作成
+            # DataFrameを作成
             df = pd.DataFrame(rows, columns=headers)
-            
-            # 安全なファイル名
+
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
-            # テーブルIDを生成
-            table_id = f"table_{safe_name.replace('.html', '').replace('-', '_')}"
-            
+
             # HTMLを生成
-            html_content = self._generate_html_table_string(df, table_id, title, custom_styles)
-            
+            html_content = self._generate_html_table_string(
+                df,
+                table_id=safe_name.replace('.html', ''),
+                title=title,
+                custom_styles=custom_styles
+            )
+
             # ファイルに保存
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(html_content)
-            
+
             self.logger.info(f"Basic table saved: {output_path}")
-            
+
             return output_path
-            
+
         except Exception as e:
             self.logger.error(f"Failed to create basic table: {e}")
             raise
-    
+
     def create_comparison_table(
-        self, 
-        categories: List[str], 
-        items: List[str], 
-        data: List[List[Any]], 
-        title: str, 
+        self,
+        categories: List[str],
+        items: List[str],
+        data: List[List[Any]],
+        title: str = "",
         output_filename: str = "comparison_table.html",
         custom_styles: Optional[Dict[str, str]] = None
     ) -> Path:
         """
         比較表を生成
-        
+
         Args:
-            categories: カテゴリー（列ヘッダー）
-            items: アイテム（行ヘッダー）
-            data: 比較データ（2次元配列）
+            categories: カテゴリ（列）のリスト
+            items: 項目（行）のリスト
+            data: データ行列
             title: テーブルタイトル
             output_filename: 出力ファイル名
-            custom_styles: カスタムスタイル辞書
-            
+            custom_styles: カスタムスタイル
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
-            # データフレームを作成
-            df = pd.DataFrame(data, columns=categories, index=items)
-            
-            # インデックスをリセットして列として扱う
+            # DataFrameを作成
+            df = pd.DataFrame(data, index=items, columns=categories)
             df.reset_index(inplace=True)
-            df.rename(columns={'index': 'アイテム'}, inplace=True)
-            
-            # 安全なファイル名
+            df.rename(columns={'index': '項目'}, inplace=True)
+
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
-            # テーブルIDを生成
-            table_id = f"table_{safe_name.replace('.html', '').replace('-', '_')}"
-            
+
             # HTMLを生成
-            html_content = self._generate_html_table_string(df, table_id, title, custom_styles)
-            
+            html_content = self._generate_html_table_string(
+                df,
+                table_id=safe_name.replace('.html', ''),
+                title=title,
+                custom_styles=custom_styles
+            )
+
             # ファイルに保存
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(html_content)
-            
+
             self.logger.info(f"Comparison table saved: {output_path}")
-            
+
             return output_path
-            
+
         except Exception as e:
             self.logger.error(f"Failed to create comparison table: {e}")
             raise
-    
+
+    def create_data_table(
+        self,
+        data: Union[List[Dict], pd.DataFrame],
+        title: str = "",
+        output_filename: str = "data_table.html",
+        sortable: bool = True,
+        searchable: bool = True,
+        custom_styles: Optional[Dict[str, str]] = None
+    ) -> Path:
+        """
+        検索・ソート機能付きデータテーブルを生成
+
+        Args:
+            data: データ（辞書のリストまたはDataFrame）
+            title: テーブルタイトル
+            output_filename: 出力ファイル名
+            sortable: ソート可能にするか
+            searchable: 検索可能にするか
+            custom_styles: カスタムスタイル
+
+        Returns:
+            生成されたファイルのパス
+        """
+        try:
+            # DataFrameに変換
+            if isinstance(data, list):
+                df = pd.DataFrame(data)
+            else:
+                df = data
+
+            # ファイル名を安全な形式に変換
+            safe_name = safe_filename(output_filename)
+            if not safe_name.endswith('.html'):
+                safe_name += '.html'
+
+            output_path = self.output_dir / safe_name
+            table_id = safe_name.replace('.html', '')
+
+            # スタイル設定
+            table_styles = {**self.styles, **(custom_styles or {})}
+
+            # HTMLテーブルを生成
+            html_table = df.to_html(
+                index=False,
+                table_id=f"table_{table_id}",
+                escape=True,
+                classes=table_styles.get('class_name', 'mkdocs-table')
+            )
+
+            # JavaScriptコード（検索・ソート機能）
+            js_code = ""
+            if searchable or sortable:
+                js_code = f"""
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {{
+                    const table = document.getElementById('table_{table_id}');
+                    const tbody = table.querySelector('tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+                    {"// 検索機能" if searchable else ""}
+                    {f'''
+                    const searchInput = document.getElementById('search_{table_id}');
+                    if (searchInput) {{
+                        searchInput.addEventListener('input', function(e) {{
+                            const searchTerm = e.target.value.toLowerCase();
+                            rows.forEach(row => {{
+                                const text = row.textContent.toLowerCase();
+                                row.style.display = text.includes(searchTerm) ? '' : 'none';
+                            }});
+                        }});
+                    }}
+                    ''' if searchable else ''}
+
+                    {"// ソート機能" if sortable else ""}
+                    {f'''
+                    const headers = table.querySelectorAll('th');
+                    headers.forEach((header, index) => {{
+                        header.style.cursor = 'pointer';
+                        header.style.userSelect = 'none';
+
+                        let sortOrder = 0; // 0: なし, 1: 昇順, -1: 降順
+
+                        header.addEventListener('click', function() {{
+                            sortOrder = sortOrder === 1 ? -1 : 1;
+
+                            // ソートインジケータを更新
+                            headers.forEach(h => h.textContent = h.textContent.replace(/ ▲| ▼/g, ''));
+                            header.textContent += sortOrder === 1 ? ' ▲' : ' ▼';
+
+                            // 行をソート
+                            const sortedRows = rows.sort((a, b) => {{
+                                const aValue = a.cells[index].textContent.trim();
+                                const bValue = b.cells[index].textContent.trim();
+
+                                // 数値かどうか判定
+                                const aNum = parseFloat(aValue);
+                                const bNum = parseFloat(bValue);
+
+                                if (!isNaN(aNum) && !isNaN(bNum)) {{
+                                    return (aNum - bNum) * sortOrder;
+                                }}
+
+                                // 文字列として比較
+                                return aValue.localeCompare(bValue) * sortOrder;
+                            }});
+
+                            // DOMを更新
+                            tbody.innerHTML = '';
+                            sortedRows.forEach(row => tbody.appendChild(row));
+                        }});
+                    }});
+                    ''' if sortable else ''}
+                }});
+                </script>
+                """
+
+            # CSSスタイル
+            css_styles = f"""
+            <style>
+                * {{
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }}
+
+                body {{
+                    font-family: {table_styles.get('font_family', 'Arial')};
+                    background-color: #ffffff;
+                    padding: 20px;
+                    min-height: 100vh;
+                }}
+
+                .search-container {{
+                    margin-bottom: 20px;
+                }}
+
+                .search-input {{
+                    width: 100%;
+                    max-width: 400px;
+                    padding: 10px 15px;
+                    font-size: 14px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    outline: none;
+                }}
+
+                .search-input:focus {{
+                    border-color: {table_styles.get('header_bg_color', '#1976d2')};
+                    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+                }}
+
+                .table-container {{
+                    width: 100%;
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    overflow: hidden;
+                }}
+
+                .table-title {{
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 16px;
+                    background-color: #f5f5f5;
+                    border-bottom: 1px solid #e0e0e0;
+                }}
+
+                .table-responsive {{
+                    overflow-x: auto;
+                    width: 100%;
+                }}
+
+                table#table_{table_id} {{
+                    width: 100%;
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    font-size: {table_styles.get('font_size', '14px')};
+                }}
+
+                table#table_{table_id} th {{
+                    background-color: {table_styles.get('header_bg_color', '#1976d2')};
+                    color: {table_styles.get('header_text_color', '#ffffff')};
+                    padding: {table_styles.get('cell_padding', '8px 12px')};
+                    text-align: left;
+                    font-weight: bold;
+                    border-bottom: 2px solid {table_styles.get('border_color', '#e0e0e0')};
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                    white-space: nowrap;
+                }}
+
+                table#table_{table_id} td {{
+                    padding: {table_styles.get('cell_padding', '8px 12px')};
+                    border-bottom: {table_styles.get('border_width', '1px')} solid {table_styles.get('border_color', '#e0e0e0')};
+                }}
+
+                table#table_{table_id} tr:nth-child(even) {{
+                    background-color: {table_styles.get('row_even_bg_color', '#f5f5f5')};
+                }}
+
+                table#table_{table_id} tr:nth-child(odd) {{
+                    background-color: {table_styles.get('row_odd_bg_color', '#ffffff')};
+                }}
+
+                table#table_{table_id} tr:hover {{
+                    background-color: #e3f2fd;
+                    transition: background-color 0.2s;
+                }}
+
+                /* ソート可能なヘッダーのスタイル */
+                {"table#table_" + table_id + " th:hover { background-color: #1565c0; }" if sortable else ""}
+
+                /* レスポンシブデザイン */
+                @media screen and (max-width: 768px) {{
+                    body {{
+                        padding: 10px;
+                    }}
+
+                    .table-container {{
+                        border-radius: 0;
+                    }}
+
+                    table#table_{table_id} {{
+                        font-size: 12px;
+                    }}
+
+                    table#table_{table_id} th,
+                    table#table_{table_id} td {{
+                        padding: 6px 8px;
+                    }}
+                }}
+            </style>
+            """
+
+            # 完全なHTML文書を構築
+            html_content = f"""
+            <!DOCTYPE html>
+            <html lang="ja">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>{title}</title>
+                {css_styles}
+            </head>
+            <body>
+                {f'''<div class="search-container">
+                    <input type="text" id="search_{table_id}" class="search-input" placeholder="テーブルを検索...">
+                </div>''' if searchable else ''}
+
+                <div class="table-container">
+                    {f'<div class="table-title">{html.escape(title)}</div>' if title else ''}
+                    <div class="table-responsive">
+                        {html_table}
+                    </div>
+                </div>
+
+                {js_code}
+            </body>
+            </html>
+            """
+
+            # ファイルに保存
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(html_content)
+
+            self.logger.info(f"Data table saved: {output_path}")
+
+            return output_path
+
+        except Exception as e:
+            self.logger.error(f"Failed to create data table: {e}")
+            raise
+
     def create_styled_table(
-        self, 
-        df: pd.DataFrame, 
-        title: str, 
-        output_filename: str,
+        self,
+        df: pd.DataFrame,
+        title: str = "",
+        output_filename: str = "styled_table.html",
         style_config: Optional[Dict[str, Any]] = None
     ) -> Path:
         """
-        スタイル付きテーブルを生成
-        
+        カスタムスタイル付きテーブルを生成
+
         Args:
             df: データフレーム
             title: テーブルタイトル
             output_filename: 出力ファイル名
             style_config: スタイル設定辞書
-            
+                - highlight_rows: ハイライトする行のインデックスリスト
+                - highlight_cols: ハイライトする列名リスト
+                - cell_colors: セル別の背景色辞書
+
         Returns:
-            保存されたファイルのパス
+            生成されたファイルのパス
         """
         try:
-            # 安全なファイル名
+            # ファイル名を安全な形式に変換
             safe_name = safe_filename(output_filename)
             if not safe_name.endswith('.html'):
                 safe_name += '.html'
-            
+
             output_path = self.output_dir / safe_name
-            
-            # テーブルIDを生成
-            table_id = f"table_{safe_name.replace('.html', '').replace('-', '_')}"
-            
-            # スタイル設定を適用
-            custom_styles = {}
-            if style_config:
-                # セルの背景色変更
-                if 'cell_colors' in style_config:
-                    cell_colors = style_config['cell_colors']
-                    # カスタムCSSを追加
-                    custom_styles.update(cell_colors)
-                
-                # その他のスタイル設定
-                if 'font_size' in style_config:
-                    custom_styles['font_size'] = style_config['font_size']
-                if 'header_bg_color' in style_config:
-                    custom_styles['header_bg_color'] = style_config['header_bg_color']
-            
+            table_id = safe_name.replace('.html', '')
+
+            # スタイル設定
+            style_config = style_config or {}
+
+            # DataFrameのスタイル設定
+            styled_df = df.style
+
+            # 行のハイライト
+            if 'highlight_rows' in style_config:
+                for row_idx in style_config['highlight_rows']:
+                    styled_df = styled_df.set_properties(
+                        subset=pd.IndexSlice[row_idx, :],
+                        **{'background-color': self.colors.get('warning', '#ff9800')}
+                    )
+
+            # 列のハイライト
+            if 'highlight_cols' in style_config:
+                for col in style_config['highlight_cols']:
+                    if col in df.columns:
+                        styled_df = styled_df.set_properties(
+                            subset=[col],
+                            **{'background-color': self.colors.get('info', '#2196f3'),
+                               'color': 'white'}
+                        )
+
+            # セル別の色設定
+            if 'cell_colors' in style_config:
+                for (row, col), color in style_config['cell_colors'].items():
+                    if row in df.index and col in df.columns:
+                        styled_df = styled_df.set_properties(
+                            subset=pd.IndexSlice[row, col],
+                            **{'background-color': color}
+                        )
+
             # HTMLを生成
-            html_content = self._generate_html_table_string(df, table_id, title, custom_styles)
-            
+            styled_html = styled_df.to_html(
+                table_id=f"table_{table_id}",
+                escape=True
+            )
+
+            # CSSスタイル
+            css_styles = f"""
+            <style>
+                body {{
+                    font-family: {self.styles.get('font_family', 'Arial')};
+                    padding: 20px;
+                    background-color: #ffffff;
+                }}
+
+                .table-container {{
+                    width: 100%;
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    overflow: hidden;
+                }}
+
+                .table-title {{
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 16px;
+                    background-color: #f5f5f5;
+                    border-bottom: 1px solid #e0e0e0;
+                }}
+
+                table#table_{table_id} {{
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: {self.styles.get('font_size', '14px')};
+                }}
+
+                table#table_{table_id} th {{
+                    background-color: {self.styles.get('header_bg_color', '#1976d2')};
+                    color: {self.styles.get('header_text_color', '#ffffff')};
+                    padding: {self.styles.get('cell_padding', '8px 12px')};
+                    text-align: left;
+                    font-weight: bold;
+                }}
+
+                table#table_{table_id} td {{
+                    padding: {self.styles.get('cell_padding', '8px 12px')};
+                    border: 1px solid {self.styles.get('border_color', '#e0e0e0')};
+                }}
+            </style>
+            """
+
+            # 完全なHTML文書
+            html_content = f"""
+            <!DOCTYPE html>
+            <html lang="ja">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>{title}</title>
+                {css_styles}
+            </head>
+            <body>
+                <div class="table-container">
+                    {f'<div class="table-title">{html.escape(title)}</div>' if title else ''}
+                    {styled_html}
+                </div>
+            </body>
+            </html>
+            """
+
             # ファイルに保存
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(html_content)
-            
+
             self.logger.info(f"Styled table saved: {output_path}")
-            
+
             return output_path
-            
+
         except Exception as e:
             self.logger.error(f"Failed to create styled table: {e}")
-            raise
-    
-    def create_data_table(
-        self, 
-        data: Union[List[Dict[str, Any]], pd.DataFrame], 
-        title: str, 
-        output_filename: str,
-        sortable: bool = True,
-        searchable: bool = True
-    ) -> Path:
-        """
-        データテーブル（ソート・検索機能付き）を生成
-        
-        Args:
-            data: データ（List of Dict or DataFrame）
-            title: テーブルタイトル
-            output_filename: 出力ファイル名
-            sortable: ソート機能を有効にするか
-            searchable: 検索機能を有効にするか
-            
-        Returns:
-            保存されたファイルのパス
-        """
-        try:
-            # データフレームに変換
-            if isinstance(data, list):
-                df = pd.DataFrame(data)
-            else:
-                df = data
-            
-            # 安全なファイル名
-            safe_name = safe_filename(output_filename)
-            if not safe_name.endswith('.html'):
-                safe_name += '.html'
-            
-            output_path = self.output_dir / safe_name
-            
-            # テーブルIDを生成
-            table_id = f"table_{safe_name.replace('.html', '').replace('-', '_')}"
-            
-            # JavaScriptライブラリを含むHTMLを生成
-            js_libraries = ""
-            if sortable or searchable:
-                js_libraries = """
-                <script src="https://cdn.jsdelivr.net/npm/sortable-tablesort@1.3.0/sortable.min.js"></script>
-                <style>
-                    .search-container {
-                        margin-bottom: 15px;
-                    }
-                    .search-input {
-                        width: 100%;
-                        max-width: 300px;
-                        padding: 8px 12px;
-                        border: 1px solid #ddd;
-                        border-radius: 4px;
-                        font-size: 14px;
-                    }
-                    .sortable th {
-                        cursor: pointer;
-                        user-select: none;
-                    }
-                    .sortable th:hover {
-                        background-color: rgba(255, 255, 255, 0.1);
-                    }
-                </style>
-                """
-            
-            # 検索機能のHTML
-            search_html = ""
-            if searchable:
-                search_html = f"""
-                <div class="search-container">
-                    <input type="text" id="search_{table_id}" class="search-input" placeholder="テーブルを検索...">
-                </div>
-                """
-            
-            # 基本HTMLを生成
-            base_html = self._generate_html_table_string(df, table_id, title)
-            
-            # JavaScriptを追加
-            js_script = ""
-            if sortable or searchable:
-                js_script = f"""
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {{
-                        const table = document.getElementById('{table_id}');
-                        
-                        // ソート機能
-                        if (table && {str(sortable).lower()}) {{
-                            table.classList.add('sortable');
-                            Sortable.initTable(table);
-                        }}
-                        
-                        // 検索機能
-                        if ({str(searchable).lower()}) {{
-                            const searchInput = document.getElementById('search_{table_id}');
-                            const tbody = table.querySelector('tbody');
-                            const rows = tbody.querySelectorAll('tr');
-                            
-                            searchInput.addEventListener('input', function(e) {{
-                                const searchTerm = e.target.value.toLowerCase();
-                                
-                                rows.forEach(row => {{
-                                    const text = row.textContent.toLowerCase();
-                                    if (text.includes(searchTerm)) {{
-                                        row.style.display = '';
-                                    }} else {{
-                                        row.style.display = 'none';
-                                    }}
-                                }});
-                            }});
-                        }}
-                    }});
-                </script>
-                """
-            
-            # HTMLを組み立て
-            html_parts = base_html.split('<body>')
-            if len(html_parts) == 2:
-                html_content = html_parts[0].replace('</head>', f"{js_libraries}</head>") + \
-                                '<body>' + search_html + html_parts[1].replace('</body>', f"{js_script}</body>")
-            else:
-                html_content = base_html
-            
-            # ファイルに保存
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            
-            self.logger.info(f"Data table saved: {output_path}")
-            
-            return output_path
-            
-        except Exception as e:
-            self.logger.error(f"Failed to create data table: {e}")
-            raise
-    
-    def create_responsive_table(
-        self, 
-        df: pd.DataFrame, 
-        title: str, 
-        output_filename: str,
-        mobile_columns: Optional[List[str]] = None
-    ) -> Path:
-        """
-        レスポンシブテーブルを生成
-        
-        Args:
-            df: データフレーム
-            title: テーブルタイトル
-            output_filename: 出力ファイル名
-            mobile_columns: モバイル表示時に表示する列
-            
-        Returns:
-            保存されたファイルのパス
-        """
-        try:
-            # 安全なファイル名
-            safe_name = safe_filename(output_filename)
-            if not safe_name.endswith('.html'):
-                safe_name += '.html'
-            
-            output_path = self.output_dir / safe_name
-            
-            # テーブルIDを生成
-            table_id = f"table_{safe_name.replace('.html', '').replace('-', '_')}"
-            
-            # モバイル用の列を決定
-            if mobile_columns is None:
-                mobile_columns = df.columns[:3].tolist()  # デフォルトで最初の3列
-            
-            # カスタムスタイルを追加
-            responsive_styles = {
-                **self.styles,
-                'responsive_css': f"""
-                @media (max-width: 768px) {{
-                    #{table_id} th,
-                    #{table_id} td {{
-                        display: none;
-                    }}
-                    
-                    #{table_id} th:nth-child(1),
-                    #{table_id} td:nth-child(1),
-                    #{table_id} th:nth-child(2),
-                    #{table_id} td:nth-child(2),
-                    #{table_id} th:nth-child(3),
-                    #{table_id} td:nth-child(3) {{
-                        display: table-cell;
-                    }}
-                }}
-                """
-            }
-            
-            # HTMLを生成
-            html_content = self._generate_html_table_string(df, table_id, title, responsive_styles)
-            
-            # レスポンシブCSSを追加
-            html_content = html_content.replace(
-                '</style>',
-                f"{responsive_styles['responsive_css']}</style>"
-            )
-            
-            # ファイルに保存
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            
-            self.logger.info(f"Responsive table saved: {output_path}")
-            
-            return output_path
-            
-        except Exception as e:
-            self.logger.error(f"Failed to create responsive table: {e}")
-            raise
-    
-    def create_pivot_table(
-        self, 
-        df: pd.DataFrame, 
-        index: str, 
-        columns: str, 
-        values: str, 
-        title: str, 
-        output_filename: str,
-        aggfunc: str = 'mean'
-    ) -> Path:
-        """
-        ピボットテーブルを生成
-        
-        Args:
-            df: データフレーム
-            index: インデックス列
-            columns: 列名
-            values: 値列
-            title: テーブルタイトル
-            output_filename: 出力ファイル名
-            aggfunc: 集約関数
-            
-        Returns:
-            保存されたファイルのパス
-        """
-        try:
-            # ピボットテーブルを作成
-            pivot_df = pd.pivot_table(
-                df, 
-                index=index, 
-                columns=columns, 
-                values=values, 
-                aggfunc=aggfunc,
-                fill_value=0
-            )
-            
-            # インデックスをリセット
-            pivot_df.reset_index(inplace=True)
-            
-            # 安全なファイル名
-            safe_name = safe_filename(output_filename)
-            if not safe_name.endswith('.html'):
-                safe_name += '.html'
-            
-            output_path = self.output_dir / safe_name
-            
-            # テーブルIDを生成
-            table_id = f"table_{safe_name.replace('.html', '').replace('-', '_')}"
-            
-            # HTMLを生成
-            html_content = self._generate_html_table_string(pivot_df, table_id, title)
-            
-            # ファイルに保存
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            
-            self.logger.info(f"Pivot table saved: {output_path}")
-            
-            return output_path
-            
-        except Exception as e:
-            self.logger.error(f"Failed to create pivot table: {e}")
             raise

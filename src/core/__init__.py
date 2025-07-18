@@ -14,7 +14,7 @@ from . import content_manager
 
 __all__ = [
     "base_config",
-    "config", 
+    "config",
     "utils",
     "document_builder",
     "chart_generator",
