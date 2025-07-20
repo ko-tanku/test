@@ -1,350 +1,138 @@
 """
-Test Material Terms
-テスト資料で使用する専門用語の定義
+テスト資料用の専門用語、FAQ、TIPSデータ
+coreの専門用語管理機能をテストするためのダミーデータ
 """
 
-from typing import List
-import sys
-from pathlib import Path
+from src.core.knowledge_manager import Term, FaqItem, TipItem
 
-# プロジェクトルートをsys.pathに追加
-project_root = Path(__file__).resolve().parents[3]
-if str(project_root) not in sys.path:
-    sys.path.insert(0, str(project_root))
-
-from src.core.knowledge_manager import Term
-
-# テスト資料で使用する専門用語
-TEST_MATERIAL_TERMS: List[Term] = [
-    # システム関連用語
+# テスト用専門用語リスト
+TEST_TERMS = [
     Term(
         term="MkDocs",
-        definition="Pythonで書かれた静的サイトジェネレータ。Markdownファイルから美しいドキュメントサイトを生成する。",
-        category="システム",
-        first_chapter="システムテスト概要",
-        related_terms=["Markdown", "Material for MkDocs"]
+        definition="Pythonベースの静的サイトジェネレータ。Markdownファイルから美しいドキュメントサイトを生成する。",
+        category="基本ツール",
+        related_terms=["Markdown", "静的サイトジェネレータ"],
+        first_chapter="第1章",
+        context_snippets=[
+            "MkDocsは設定が簡単で、すぐに使い始められます。",
+            "MkDocs Materialテーマを使用すると、より洗練されたデザインになります。"
+        ]
     ),
-    
-    Term(
-        term="Material for MkDocs",
-        definition="MkDocsのテーマの一つ。Googleのマテリアルデザインに基づいた美しいドキュメントサイトを作成できる。",
-        category="システム",
-        first_chapter="システムテスト概要",
-        related_terms=["MkDocs", "マテリアルデザイン"]
-    ),
-    
     Term(
         term="Markdown",
-        definition="軽量マークアップ言語の一つ。プレーンテキストで書かれた文書をHTMLに変換する。",
-        category="システム",
-        first_chapter="システムテスト概要",
-        related_terms=["HTML", "プレーンテキスト"]
+        definition="軽量マークアップ言語の一つ。プレーンテキストで記述し、HTMLに変換できる。",
+        category="基本ツール",
+        related_terms=["MkDocs", "HTML"],
+        first_chapter="第1章",
+        context_snippets=[
+            "Markdownは読みやすく書きやすい記法です。",
+            "# 見出し1、## 見出し2のように記述します。"
+        ]
     ),
-    
-    Term(
-        term="DocumentBuilder",
-        definition="Markdownコンテンツを構築するためのクラス。見出し、段落、リストなどの要素を生成する。",
-        category="コンポーネント",
-        first_chapter="システムテスト概要",
-        related_terms=["Markdown", "コンテンツ生成"]
-    ),
-    
-    # 図表関連用語
-    Term(
-        term="ChartGenerator",
-        definition="様々な種類の図表を生成し、HTMLファイルとして出力するクラス。MatplotlibやPlotlyを使用する。",
-        category="コンポーネント",
-        first_chapter="図表生成テスト",
-        related_terms=["Matplotlib", "Plotly", "図表"]
-    ),
-    
-    Term(
-        term="Matplotlib",
-        definition="Pythonの描画ライブラリ。静的な図表を生成するために使用される。",
-        category="ライブラリ",
-        first_chapter="図表生成テスト",
-        related_terms=["Python", "図表", "Seaborn"]
-    ),
-    
-    Term(
-        term="Plotly",
-        definition="インタラクティブな図表を生成するためのライブラリ。ズームやホバーなどの機能を提供する。",
-        category="ライブラリ",
-        first_chapter="図表生成テスト",
-        related_terms=["インタラクティブ", "図表", "JavaScript"]
-    ),
-    
-    Term(
-        term="Seaborn",
-        definition="Matplotlibベースの統計データ可視化ライブラリ。美しい統計グラフを簡単に作成できる。",
-        category="ライブラリ",
-        first_chapter="図表生成テスト",
-        related_terms=["Matplotlib", "統計", "可視化"]
-    ),
-    
-    Term(
-        term="折れ線グラフ",
-        definition="データの変化を線で表したグラフ。時系列データの表示に適している。",
-        category="図表",
-        first_chapter="図表生成テスト",
-        related_terms=["時系列", "データ可視化"]
-    ),
-    
-    Term(
-        term="棒グラフ",
-        definition="データを棒の長さで表現するグラフ。カテゴリ別の比較に適している。",
-        category="図表",
-        first_chapter="図表生成テスト",
-        related_terms=["比較", "カテゴリ"]
-    ),
-    
-    Term(
-        term="円グラフ",
-        definition="データを円の扇形で表現するグラフ。全体に対する割合を示すのに適している。",
-        category="図表",
-        first_chapter="図表生成テスト",
-        related_terms=["割合", "比率"]
-    ),
-    
-    # 表関連用語
-    Term(
-        term="TableGenerator",
-        definition="様々な形式の表データを生成し、HTMLファイルとして出力するクラス。",
-        category="コンポーネント",
-        first_chapter="表生成テスト",
-        related_terms=["HTML", "テーブル", "データ"]
-    ),
-    
-    Term(
-        term="HTML",
-        definition="HyperText Markup Language。Webページを作成するためのマークアップ言語。",
-        category="技術",
-        first_chapter="表生成テスト",
-        related_terms=["Web", "マークアップ"]
-    ),
-    
-    Term(
-        term="CSS",
-        definition="Cascading Style Sheets。HTMLの見た目を装飾するためのスタイルシート言語。",
-        category="技術",
-        first_chapter="表生成テスト",
-        related_terms=["HTML", "スタイル"]
-    ),
-    
-    Term(
-        term="レスポンシブデザイン",
-        definition="異なる画面サイズに対応して、レイアウトが自動調整されるデザイン手法。",
-        category="技術",
-        first_chapter="表生成テスト",
-        related_terms=["モバイル", "デザイン"]
-    ),
-    
-    Term(
-        term="pandas",
-        definition="Pythonのデータ分析ライブラリ。DataFrame構造を使ってデータを効率的に処理できる。",
-        category="ライブラリ",
-        first_chapter="表生成テスト",
-        related_terms=["Python", "データ分析", "DataFrame"]
-    ),
-    
-    # 用語管理関連用語
-    Term(
-        term="KnowledgeManager",
-        definition="専門用語を一元的に管理し、用語集を生成するためのクラス。",
-        category="コンポーネント",
-        first_chapter="用語管理テスト",
-        related_terms=["用語集", "専門用語"]
-    ),
-    
-    Term(
-        term="用語集",
-        definition="専門用語とその定義をまとめた辞書的な資料。学習支援に重要な役割を果たす。",
-        category="文書",
-        first_chapter="用語管理テスト",
-        related_terms=["専門用語", "辞書"]
-    ),
-    
     Term(
         term="ツールチップ",
-        definition="マウスオーバーやタップ時に表示される小さなポップアップ。追加情報を提供する。",
-        category="UI",
-        first_chapter="用語管理テスト",
-        related_terms=["UI", "ポップアップ"]
+        definition="要素にマウスオーバーした際に表示される小さな説明ウィンドウ。",
+        category="UI要素",
+        related_terms=["ホバー", "ポップアップ"],
+        first_chapter="第2章",
+        context_snippets=[
+            "ツールチップを使うと、追加情報を省スペースで提供できます。"
+        ]
     ),
-    
     Term(
-        term="スラッグ",
-        definition="URLやアンカーリンクで使用される文字列。特殊文字を除去し、ハイフンで区切られる。",
-        category="技術",
-        first_chapter="用語管理テスト",
-        related_terms=["URL", "アンカー"]
+        term="静的サイトジェネレータ",
+        definition="事前にHTMLファイルを生成し、サーバーでの動的な処理を必要としないWebサイトを作成するツール。",
+        category="基本ツール",
+        related_terms=["MkDocs", "Hugo", "Jekyll"],
+        first_chapter="第1章"
     ),
-    
-    # 統合テスト関連用語
     Term(
-        term="統合テスト",
-        definition="複数のモジュールやコンポーネントを組み合わせて行うテスト。システム全体の動作を確認する。",
-        category="テスト",
-        first_chapter="統合テスト",
-        related_terms=["モジュール", "システムテスト"]
+        term="インタラクティブ図表",
+        definition="ユーザーの操作に応じて動的に変化する図表。ホバー、クリック、ドラッグなどの操作が可能。",
+        category="ビジュアライゼーション",
+        related_terms=["Plotly", "D3.js"],
+        first_chapter="第3章"
     ),
-    
     Term(
-        term="単体テスト",
-        definition="個別のモジュールや関数の動作を確認するテスト。最小単位でのテストを行う。",
-        category="テスト",
-        first_chapter="統合テスト",
-        related_terms=["モジュール", "関数"]
+        term="Plotly",
+        definition="Pythonで美しいインタラクティブな図表を作成できるライブラリ。",
+        category="ライブラリ",
+        related_terms=["インタラクティブ図表", "データビジュアライゼーション"],
+        first_chapter="第3章"
     ),
-    
     Term(
-        term="パフォーマンステスト",
-        definition="システムの性能や処理速度を測定するテスト。負荷テストも含む。",
-        category="テスト",
-        first_chapter="統合テスト",
-        related_terms=["性能", "負荷"]
+        term="HTMLエスケープ",
+        definition='HTMLで特殊な意味を持つ文字（<, >, ", &など）を文字実体参照に変換すること。',
+        category="Web技術",
+        related_terms=["セキュリティ", "XSS"],
+        first_chapter="第2章",
+        context_snippets=[
+            'HTMLエスケープにより、"<script>"のような文字列を安全に表示できます。'
+        ]
     ),
-    
     Term(
-        term="エラーハンドリング",
-        definition="プログラム実行中に発生するエラーを適切に処理する仕組み。",
-        category="技術",
-        first_chapter="統合テスト",
-        related_terms=["エラー", "例外処理"]
-    ),
-    
-    # 技術共通用語
-    Term(
-        term="Python",
-        definition="汎用プログラミング言語。読みやすく書きやすい構文が特徴。",
-        category="プログラミング",
-        first_chapter="システムテスト概要",
-        related_terms=["プログラミング言語"]
-    ),
-    
-    Term(
-        term="JSON",
-        definition="JavaScript Object Notation。データ交換形式の一つ。軽量で人間にも読みやすい。",
-        category="技術",
-        first_chapter="システムテスト概要",
-        related_terms=["データ", "JavaScript"]
-    ),
-    
-    Term(
-        term="YAML",
-        definition="YAML Ain't Markup Language。設定ファイルによく使われる人間が読みやすいデータ形式。",
-        category="技術",
-        first_chapter="システムテスト概要",
-        related_terms=["設定", "データ形式"]
-    ),
-    
-    Term(
-        term="Base64",
-        definition="バイナリデータをテキストで表現するためのエンコーディング方式。",
-        category="技術",
-        first_chapter="図表生成テスト",
-        related_terms=["エンコーディング", "バイナリ"]
-    ),
-    
-    Term(
-        term="SVG",
-        definition="Scalable Vector Graphics。ベクター形式の画像フォーマット。拡大縮小しても劣化しない。",
-        category="技術",
-        first_chapter="図表生成テスト",
-        related_terms=["ベクター", "画像"]
-    ),
-    
-    Term(
-        term="JavaScript",
-        definition="Webブラウザで動作するプログラミング言語。動的なWebページを作成できる。",
-        category="プログラミング",
-        first_chapter="図表生成テスト",
-        related_terms=["Web", "ブラウザ"]
-    ),
-    
-    Term(
-        term="CDN",
-        definition="Content Delivery Network。コンテンツを効率的に配信するためのネットワーク。",
-        category="技術",
-        first_chapter="図表生成テスト",
-        related_terms=["ネットワーク", "配信"]
-    ),
-    
-    Term(
-        term="iframe",
-        definition="HTMLで他のページを埋め込むためのタグ。外部コンテンツを表示できる。",
-        category="技術",
-        first_chapter="図表生成テスト",
-        related_terms=["HTML", "埋め込み"]
+        term="レスポンシブデザイン",
+        definition="画面サイズに応じて自動的にレイアウトが調整されるデザイン手法。",
+        category="UI/UX",
+        related_terms=["CSS", "メディアクエリ"],
+        first_chapter="第3章"
     )
 ]
 
-def get_test_terms() -> List[Term]:
-    """
-    テスト資料の専門用語リストを取得
-    
-    Returns:
-        専門用語のリスト
-    """
-    return TEST_MATERIAL_TERMS
+# テスト用FAQリスト
+TEST_FAQ_ITEMS = [
+    FaqItem(
+        question="MkDocsとSphinxの違いは何ですか？",
+        answer="MkDocsはMarkdownベースでシンプルな設定が特徴です。一方、SphinxはreStructuredTextを使用し、より複雑なドキュメント構造に対応できます。",
+        category="基本概念"
+    ),
+    FaqItem(
+        question="ツールチップが表示されません。どうすればよいですか？",
+        answer="MkDocs Materialテーマの`content.tooltips`機能が有効になっているか確認してください。また、`attr_list`と`abbr`拡張機能も必要です。",
+        category="トラブルシューティング"
+    ),
+    FaqItem(
+        question="図表のサイズを調整するにはどうすればよいですか？",
+        answer="ChartGeneratorの`figsize`パラメータで調整できます。また、HTMLに埋め込む際の`width`と`height`属性でも制御可能です。",
+        category="カスタマイズ"
+    ),
+    FaqItem(
+        question="日本語フォントが文字化けします。",
+        answer="Matplotlibの日本語フォント設定を確認してください。`japanize-matplotlib`パッケージをインストールするか、手動でフォントを設定する必要があります。",
+        category="トラブルシューティング"
+    ),
+    FaqItem(
+        question="生成されたサイトをGitHub Pagesで公開できますか？",
+        answer="はい、可能です。`mkdocs gh-deploy`コマンドを使用すると、自動的にGitHub Pagesにデプロイされます。",
+        category="デプロイメント"
+    )
+]
 
-def get_terms_by_category(category: str) -> List[Term]:
-    """
-    カテゴリ別の専門用語を取得
-    
-    Args:
-        category: カテゴリ名
-        
-    Returns:
-        指定カテゴリの専門用語リスト
-    """
-    return [term for term in TEST_MATERIAL_TERMS if term.category == category]
-
-def get_terms_by_chapter(chapter_title: str) -> List[Term]:
-    """
-    章別の専門用語を取得
-    
-    Args:
-        chapter_title: 章タイトル
-        
-    Returns:
-        指定章の専門用語リスト
-    """
-    return [term for term in TEST_MATERIAL_TERMS if term.first_chapter == chapter_title]
-
-def get_all_categories() -> List[str]:
-    """
-    全カテゴリを取得
-    
-    Returns:
-        カテゴリ名のリスト
-    """
-    return list(set(term.category for term in TEST_MATERIAL_TERMS))
-
-def validate_terms() -> List[str]:
-    """
-    用語の妥当性を検証
-    
-    Returns:
-        エラーメッセージのリスト
-    """
-    errors = []
-    
-    # 重複チェック
-    term_names = [term.term for term in TEST_MATERIAL_TERMS]
-    duplicates = [name for name in set(term_names) if term_names.count(name) > 1]
-    if duplicates:
-        errors.append(f"Duplicate terms found: {duplicates}")
-    
-    # 定義の存在チェック
-    for term in TEST_MATERIAL_TERMS:
-        if not term.definition.strip():
-            errors.append(f"Empty definition for term: {term.term}")
-    
-    # 関連用語の存在チェック
-    for term in TEST_MATERIAL_TERMS:
-        for related_term in term.related_terms:
-            if related_term not in term_names:
-                errors.append(f"Related term '{related_term}' not found for term: {term.term}")
-    
-    return errors
+# テスト用TIPSリスト
+TEST_TIP_ITEMS = [
+    TipItem(
+        title="Markdownの効率的な書き方",
+        content="VSCodeなどのエディタでMarkdownプレビュー機能を使用すると、リアルタイムで結果を確認しながら執筆できます。",
+        category="執筆のコツ"
+    ),
+    TipItem(
+        title="図表の最適化",
+        content="Web表示用の図表は、DPIを150程度に設定し、ファイルサイズと品質のバランスを取ることをお勧めします。",
+        category="パフォーマンス"
+    ),
+    TipItem(
+        title="用語の一貫性を保つ",
+        content="KnowledgeManagerを活用して専門用語を一元管理することで、資料全体で用語の定義と表記を統一できます。",
+        category="品質管理"
+    ),
+    TipItem(
+        title="インタラクティブ要素の適切な使用",
+        content="すべての図表をインタラクティブにする必要はありません。ユーザーが操作する価値がある場合にのみ使用しましょう。",
+        category="UI/UX"
+    ),
+    TipItem(
+        title="mkdocs serveの活用",
+        content="`mkdocs serve`コマンドを使用すると、ローカルでサイトをプレビューでき、ファイルの変更が自動的に反映されます。",
+        category="開発効率"
+    )
+]

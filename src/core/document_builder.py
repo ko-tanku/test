@@ -1,404 +1,388 @@
 """
-Document builder for MkDocs Materials Generator
-Markdownコンテンツを構築するためのクラス
+Markdownコンテンツを構築するためのビルダークラス
+MkDocs Materialテーマの拡張機能をサポート
 """
 
-import logging
 import re
-import html
+import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Union
+from typing import Dict, List, Any, Optional
+from html import escape
 
 from .utils import (
-    slugify, ensure_directory_exists, safe_filename, validate_url_path,
-    generate_admonition_markdown, generate_tabbed_markdown
+    generate_admonition_markdown,
+    generate_tabbed_markdown
 )
 
 logger = logging.getLogger(__name__)
 
 
 class DocumentBuilder:
-    """
-    Markdownドキュメントを構築するためのクラス
-    """
-
+    """Markdownドキュメントを構築するビルダークラス"""
+    
     def __init__(self, output_dir: Path):
         """
         初期化
-
+        
         Args:
             output_dir: Markdownファイル出力先のベースディレクトリ
         """
-        self.output_dir = ensure_directory_exists(output_dir)
-        self.content_buffer: List[str] = []
-        self.logger = logging.getLogger(__name__ + ".DocumentBuilder")
-
-    def _add_content(self, content: str) -> None:
+        self.output_dir = Path(output_dir)
+        self.content_buffer = []
+        
+    def clear_content(self):
+        """現在構築中のMarkdownコンテンツの内部バッファをクリア"""
+        self.content_buffer = []
+        
+    def get_content(self) -> str:
         """
-        コンテンツバッファに追加
-
-        Args:
-            content: 追加するコンテンツ
+        構築された現在のMarkdownコンテンツを文字列として返す
+        
+        Returns:
+            Markdownコンテンツ文字列
         """
-        self.content_buffer.append(content)
-
-    def _ensure_empty_line(self) -> None:
-        """
-        最後の行が空行でない場合は空行を追加
-        """
-        if self.content_buffer and self.content_buffer[-1].strip():
-            self.content_buffer.append("")
-
+        return '\n'.join(self.content_buffer)
+        
     def save_markdown(self, filename: str) -> Path:
         """
-        構築中のMarkdownコンテンツをファイルとして保存
-
+        現在のコンテンツをMarkdownファイルとして保存
+        
         Args:
-            filename: 保存するファイル名
-
+            filename: 保存するファイル名（相対パス）
+            
         Returns:
-            保存されたファイルのパス
+            保存されたファイルのPathオブジェクト
         """
-        try:
-            # ファイル名を安全な形式に変換
-            safe_name = safe_filename(filename)
-            if not safe_name.endswith('.md'):
-                safe_name += '.md'
-
-            output_path = self.output_dir / safe_name
-
-            # コンテンツを結合
-            content = "\n".join(self.content_buffer)
-
-            # ファイルに保存
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(content)
-
-            # バッファをクリア
-            self.content_buffer.clear()
-
-            self.logger.info(f"Markdown file saved: {output_path}")
-
-            return output_path
-
-        except Exception as e:
-            self.logger.error(f"Failed to save markdown file '{filename}': {e}")
-            raise
-
-    def add_metadata(self, metadata: Dict[str, Any]) -> None:
+        file_path = self.output_dir / filename
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        content = self.get_content()
+        file_path.write_text(content, encoding='utf-8')
+        
+        logger.info(f"Markdownファイルを保存しました: {file_path}")
+        
+        # バッファをクリア
+        self.clear_content()
+        
+        return file_path
+        
+    def add_heading(self, text: str, level: int):
         """
-        YAMLフロントマターを追加
-
-        Args:
-            metadata: メタデータ辞書
-        """
-        self._add_content("---")
-        for key, value in metadata.items():
-            if isinstance(value, str):
-                # 文字列の場合はエスケープ
-                value = value.replace('"', '\\"')
-                self._add_content(f'{key}: "{value}"')
-            else:
-                self._add_content(f"{key}: {value}")
-        self._add_content("---")
-        self._ensure_empty_line()
-
-    def add_heading(self, text: str, level: int) -> None:
-        """
-        見出しを追加
-
+        Markdownの見出しを追加
+        
         Args:
             text: 見出しテキスト
-            level: 見出しレベル (1-6)
+            level: 見出しレベル（1-6）
+            
+        Raises:
+            ValueError: レベルが1-6の範囲外の場合
         """
         if not 1 <= level <= 6:
-            self.logger.warning(f"Invalid heading level {level}. Using level 1.")
-            level = 1
-
-        self._ensure_empty_line()
-        self._add_content(f"{'#' * level} {text}")
-        self._ensure_empty_line()
-
-    def add_paragraph(self, text: str) -> None:
+            raise ValueError(f"見出しレベルは1-6の範囲で指定してください: {level}")
+        
+        prefix = '#' * level
+        self.content_buffer.append(f"{prefix} {text}")
+        self.content_buffer.append("")  # 見出しの後に空行を追加
+        
+    def add_paragraph(self, text: str):
         """
-        段落を追加
-
+        段落テキストを追加
+        
         Args:
-            text: 段落テキスト
+            text: 段落のテキスト
         """
-        self._ensure_empty_line()
-        self._add_content(text)
-        self._ensure_empty_line()
-
+        self.content_buffer.append(text)
+        self.content_buffer.append("")  # 段落の後に厳密に1つの空行を追加
+        
     def add_paragraph_with_tooltips(
-        self,
-        text: str,
-        terms_info: Dict[str, Dict[str, str]]
-    ) -> None:
+        self, text: str, terms_info: Dict[str, Dict[str, str]]
+    ):
         """
-        ツールチップ付き段落を追加
-
+        専門用語にツールチップを付与した段落を追加
+        
         Args:
-            text: 段落テキスト
-            terms_info: 用語情報辞書 {"用語": {"tooltip_text": "説明"}}
+            text: 段落のテキスト
+            terms_info: 用語情報の辞書 {用語: {"tooltip_text": "ツールチップ内容"}}
         """
-        if not terms_info:
-            self.add_paragraph(text)
-            return
-
-        # 用語を長い順にソート（長い用語から置換することで部分一致を防ぐ）
-        sorted_terms = sorted(terms_info.keys(), key=len, reverse=True)
-
-        # テキストを処理
-        processed_text = text
-
-        for term in sorted_terms:
-            tooltip_text = terms_info[term].get("tooltip_text", "")
-            if not tooltip_text:
-                continue
-
-            # ツールチップテキストをHTMLエスケープ
-            escaped_tooltip = html.escape(tooltip_text).replace('"', '&quot;')
-
-            # 既存のMarkdownリンクを保護
-            # 一時的なプレースホルダーに置換
-            link_pattern = r'\[([^\]]+)\]\([^\)]+\)'
-            links = re.findall(link_pattern, processed_text)
-            placeholders = {}
-
-            for i, link in enumerate(links):
-                placeholder = f"{{{{LINK_PLACEHOLDER_{i})}}}}"
-                placeholders[placeholder] = link
-                processed_text = processed_text.replace(link, placeholder, 1)
-
-            # 単語境界を使用して用語を置換
-            # 日本語の場合は単語境界が機能しないため、別の方法を使用
-            if re.search(r'[ぁ-んァ-ン一-龥]', term):
-                # 日本語を含む場合
-                pattern = re.escape(term)
-            else:
-                # 英語の場合
-                pattern = r'\b' + re.escape(term) + r'\b'
-
-            # ツールチップ構文に置換
-            tooltip_syntax = f'<span data-md-tooltip="{escaped_tooltip}">{term}</span>'
-            processed_text = re.sub(pattern, tooltip_syntax, processed_text)
-
-            # プレースホルダーを元に戻す
-            for placeholder, link in placeholders.items():
-                processed_text = processed_text.replace(placeholder, link)
-
-        self.add_paragraph(processed_text)
-
-    def add_code_block(self, code: str, lang: str = "python") -> None:
+        # 既存のMarkdownリンクを保護するためのパターン
+        link_pattern = r'\[([^\]]+)\]\([^)]+\)'
+        protected_links = []
+        
+        # 既存のリンクを一時的に置換
+        def protect_link(match):
+            protected_links.append(match.group(0))
+            return f"__PROTECTED_LINK_{len(protected_links) - 1}__"
+        
+        text_with_protected_links = re.sub(link_pattern, protect_link, text)
+        
+        # 用語をツールチップ付きリンクに置換
+        for term, info in terms_info.items():
+            tooltip_text = info.get("tooltip_text", "")
+            # HTMLエスケープ
+            escaped_tooltip = escape(tooltip_text)
+            # 改行を&#10;に置換
+            escaped_tooltip = escaped_tooltip.replace('\n', '&#10;')
+            
+            # 単語境界を使用して部分文字列の誤置換を防ぐ
+            pattern = r'\b' + re.escape(term) + r'\b'
+            replacement = f'[{term}]("" "{escaped_tooltip}")'
+            text_with_protected_links = re.sub(
+                pattern, replacement, text_with_protected_links
+            )
+        
+        # 保護していたリンクを復元
+        for i, protected_link in enumerate(protected_links):
+            text_with_protected_links = text_with_protected_links.replace(
+                f"__PROTECTED_LINK_{i}__", protected_link
+            )
+        
+        self.add_paragraph(text_with_protected_links)
+        
+    def add_code_block(self, code: str, lang: str = "python"):
         """
         コードブロックを追加
-
+        
         Args:
-            code: コード
-            lang: 言語
+            code: コード文字列
+            lang: 言語指定
         """
-        self._ensure_empty_line()
-        self._add_content(f"```{lang}")
-        self._add_content(code)
-        self._add_content("```")
-        self._ensure_empty_line()
-
-    def add_unordered_list(self, items: List[str]) -> None:
+        self.content_buffer.append(f"```{lang}")
+        self.content_buffer.append(code)
+        self.content_buffer.append("```")
+        self.content_buffer.append("")
+        
+    def add_unordered_list(self, items: List[str]):
         """
-        箇条書きリストを追加
-
+        順不同リストを追加
+        
         Args:
-            items: リスト項目
+            items: リスト項目のリスト
         """
-        self._ensure_empty_line()
         for item in items:
-            self._add_content(f"- {item}")
-        self._ensure_empty_line()
-
-    def add_ordered_list(self, items: List[str]) -> None:
+            self.content_buffer.append(f"- {item}")
+        self.content_buffer.append("")
+        
+    def add_ordered_list(self, items: List[str]):
         """
-        番号付きリストを追加
-
+        順序付きリストを追加
+        
         Args:
-            items: リスト項目
+            items: リスト項目のリスト
         """
-        self._ensure_empty_line()
         for i, item in enumerate(items, 1):
-            self._add_content(f"{i}. {item}")
-        self._ensure_empty_line()
-
-    def add_quote(self, text: str) -> None:
+            self.content_buffer.append(f"{i}. {item}")
+        self.content_buffer.append("")
+        
+    def add_quote(self, text: str):
         """
         引用ブロックを追加
-
+        
         Args:
             text: 引用テキスト
         """
-        self._ensure_empty_line()
         for line in text.split('\n'):
-            self._add_content(f"> {line}")
-        self._ensure_empty_line()
-
-    def add_table(self, headers: List[str], rows: List[List[Any]]) -> None:
-        """
-        Markdownテーブルを追加
-
-        Args:
-            headers: ヘッダー行
-            rows: データ行のリスト
-        """
-        self._ensure_empty_line()
-
-        # ヘッダー行
-        header_row = "| " + " | ".join(str(h) for h in headers) + " |"
-        self._add_content(header_row)
-
-        # 区切り行
-        separator_row = "| " + " | ".join("---" for _ in headers) + " |"
-        self._add_content(separator_row)
-
-        # データ行
-        for row in rows:
-            # 行の要素数を調整
-            adjusted_row = list(row) + [""] * (len(headers) - len(row))
-            data_row = "| " + " | ".join(str(cell) for cell in adjusted_row[:len(headers)]) + " |"
-            self._add_content(data_row)
-
-        self._ensure_empty_line()
-
+            self.content_buffer.append(f"> {line}")
+        self.content_buffer.append("")
+        
     def add_image_reference(
-        self,
-        alt_text: str,
-        image_path: Path,
-        title: Optional[str] = None
-    ) -> None:
+        self, alt_text: str, image_path: Path, title: Optional[str] = None
+    ):
         """
         画像参照を追加
-
+        
         Args:
             alt_text: 代替テキスト
-            image_path: 画像パス
+            image_path: 画像ファイルのパス
             title: タイトル（オプション）
         """
         # Unixスタイルパスに変換
-        unix_path = image_path.as_posix()
-
+        path_str = image_path.as_posix()
+        
         if title:
-            self._add_content(f'![{alt_text}]({unix_path} "{title}")')
+            self.content_buffer.append(f'![{alt_text}]({path_str} "{title}")')
         else:
-            self._add_content(f'![{alt_text}]({unix_path})')
-        self._ensure_empty_line()
-
+            self.content_buffer.append(f'![{alt_text}]({path_str})')
+        self.content_buffer.append("")
+        
     def add_html_component_reference(
-        self,
-        component_path: Path,
-        width: str = "100%",
-        height: str = "400px"
-    ) -> None:
+        self, component_path: Path, width: str = "100%", height: str = "400px"
+    ):
         """
-        HTMLコンポーネント（図表や表）の埋め込み
-
+        HTML図表や表をiframeで埋め込む
+        
         Args:
-            component_path: コンポーネントのパス
-            width: 幅
-            height: 高さ
+            component_path: HTMLファイルのパス
+            width: 幅の指定
+            height: 高さの指定
         """
-        # 相対パスを計算
-        try:
-            # output_dirからの相対パスを計算
-            relative_path = Path(component_path).relative_to(self.output_dir.parent)
-        except ValueError:
-            # 相対パス計算に失敗した場合は絶対パスを使用
-            relative_path = component_path
-
         # Unixスタイルパスに変換
-        unix_path = relative_path.as_posix()
-
-        # iframeタグを生成
-        iframe_html = f'<iframe src="{unix_path}" width="{width}" height="{height}" frameborder="0" style="border: 1px solid #e0e0e0; border-radius: 4px;"></iframe>'
-
-        self._ensure_empty_line()
-        self._add_content(iframe_html)
-        self._ensure_empty_line()
-
+        path_str = component_path.as_posix()
+        
+        iframe_html = (
+            f'<iframe src="{path_str}" '
+            f'width="{width}" height="{height}" '
+            f'style="border: 1px solid #ddd; border-radius: 4px;">'
+            f'</iframe>'
+        )
+        self.content_buffer.append(iframe_html)
+        self.content_buffer.append("")
+        
     def add_admonition(
-        self,
-        type: str,
-        title: str,
-        content: str,
-        collapsible: bool = False
-    ) -> None:
+        self, type: str, title: str, content: str, collapsible: bool = False
+    ):
         """
-        Material for MkDocsの注記ブロックを追加
-
+        MkDocs MaterialのAdmonitionブロックを追加
+        
         Args:
-            type: 注記タイプ
+            type: 注記のタイプ
             title: タイトル
-            content: コンテンツ
-            collapsible: 折りたたみ可能か
+            content: 内容
+            collapsible: 折りたたみ可能にするか
         """
         admonition_md = generate_admonition_markdown(type, title, content, collapsible)
-        self._ensure_empty_line()
-        self._add_content(admonition_md)
-        self._ensure_empty_line()
-
-    def add_tabbed_block(self, tabs_data: Dict[str, str]) -> None:
+        self.content_buffer.append(admonition_md)
+        
+    def add_tabbed_block(self, tabs_data: Dict[str, str]):
         """
-        Material for MkDocsのタブブロックを追加
-
+        MkDocs MaterialのTabbedブロックを追加
+        
         Args:
-            tabs_data: タブデータ辞書
+            tabs_data: タブデータの辞書
         """
         tabbed_md = generate_tabbed_markdown(tabs_data)
-        self._ensure_empty_line()
-        self._add_content(tabbed_md)
-        self._ensure_empty_line()
-
-    def add_horizontal_rule(self) -> None:
-        """
-        水平線を追加
-        """
-        self._ensure_empty_line()
-        self._add_content("---")
-        self._ensure_empty_line()
-
-    def add_raw_markdown(self, markdown_string: str) -> None:
+        self.content_buffer.append(tabbed_md)
+        
+    def add_horizontal_rule(self):
+        """水平線を追加"""
+        self.content_buffer.append("---")
+        self.content_buffer.append("")
+        
+    def add_raw_markdown(self, markdown_string: str):
         """
         生のMarkdown文字列を追加
-
+        
         Args:
             markdown_string: Markdown文字列
         """
-        self._add_content(markdown_string)
-
-    def add_link(self, text: str, url: str, title: Optional[str] = None) -> None:
+        self.content_buffer.append(markdown_string)
+        
+    def add_icon_with_tooltip(self, icon_name: str, tooltip_text: str):
         """
-        リンクを追加
-
+        Material Design Iconsにツールチップを付与
+        
         Args:
-            text: リンクテキスト
-            url: URL
-            title: タイトル（オプション）
+            icon_name: アイコン名
+            tooltip_text: ツールチップテキスト
         """
-        if title:
-            link_md = f'[{text}]({url} "{title}")'
-        else:
-            link_md = f'[{text}]({url})'
-
-        self._add_content(link_md)
-
-    def add_footnote(self, reference: str, content: str) -> None:
+        escaped_tooltip = escape(tooltip_text)
+        icon_md = f':material-{icon_name}:{{ title="{escaped_tooltip}" }}'
+        self.content_buffer.append(icon_md)
+        self.content_buffer.append("")
+        
+    def add_abbreviation_definition(self, abbr: str, full_form: str):
         """
-        脚注を追加
-
+        略語の定義を追加
+        
         Args:
-            reference: 参照名
-            content: 脚注内容
+            abbr: 略語
+            full_form: フルスペルまたは説明
         """
-        # 本文中の参照
-        self._add_content(f"[^{reference}]")
-
-        # 脚注定義（ドキュメントの最後に追加される）
-        self._ensure_empty_line()
-        self._add_content(f"[^{reference}]: {content}")
+        self.content_buffer.append(f"*[{abbr}]: {full_form}")
+        self.content_buffer.append("")
+        
+    def add_quiz_question(self, question_data: Dict[str, Any]):
+        """
+        クイズ問題を追加（mkdocs-quiz-plugin形式）
+        
+        Args:
+            question_data: 問題データの辞書
+        """
+        # クイズプラグインの形式に従って生成
+        lines = ["??? question \"クイズ\""]
+        lines.append(f"    {question_data['question']}")
+        lines.append("")
+        
+        for i, option in enumerate(question_data['options']):
+            prefix = "[x]" if i == question_data['correct'] else "[ ]"
+            lines.append(f"    {prefix} {option}")
+        
+        if 'hint' in question_data:
+            lines.append("")
+            lines.append(f"    ??? tip \"ヒント\"")
+            lines.append(f"        {question_data['hint']}")
+        
+        if 'explanation' in question_data:
+            lines.append("")
+            lines.append(f"    ??? success \"解説\"")
+            lines.append(f"        {question_data['explanation']}")
+        
+        self.content_buffer.extend(lines)
+        self.content_buffer.append("")
+        
+    def add_faq_item(self, question: str, answer: str, collapsible: bool = True):
+        """
+        FAQ項目を追加
+        
+        Args:
+            question: 質問
+            answer: 回答
+            collapsible: 折りたたみ可能にするか
+        """
+        self.add_admonition("question", question, answer, collapsible)
+        
+    def add_tip_item(self, title: str, content: str, collapsible: bool = True):
+        """
+        TIPS項目を追加
+        
+        Args:
+            title: タイトル
+            content: 内容
+            collapsible: 折りたたみ可能にするか
+        """
+        self.add_admonition("tip", title, content, collapsible)
+        
+    def add_code_block_with_static_output(
+        self, code: str, output: str, lang: str = "python", output_label: str = "実行結果"
+    ):
+        """
+        コードブロックと静的な実行結果を追加
+        
+        Args:
+            code: コード
+            output: 実行結果
+            lang: 言語
+            output_label: 出力ラベル
+        """
+        self.add_code_block(code, lang)
+        self.add_admonition("success", output_label, f"```\n{output}\n```", False)
+        
+    def add_summary_section(self, title: str, points: List[str]):
+        """
+        学習の要点（サマリー）セクションを追加
+        
+        Args:
+            title: セクションタイトル
+            points: 要点のリスト
+        """
+        content = "\n".join(f"- {point}" for point in points)
+        self.add_admonition("note", title, content, False)
+        
+    def add_recommendation_section(self, title: str, items: List[Dict[str, str]]):
+        """
+        関連資料や次のステップのレコメンデーションを追加
+        
+        Args:
+            title: セクションタイトル
+            items: レコメンデーション項目のリスト [{"text": "表示テキスト", "link": "URL"}]
+        """
+        lines = []
+        for item in items:
+            text = item.get("text", "")
+            link = item.get("link", "")
+            if link:
+                lines.append(f"- [{text}]({link})")
+            else:
+                lines.append(f"- {text}")
+        
+        content = "\n".join(lines)
+        self.add_admonition("info", title, content, False)

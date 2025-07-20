@@ -1,352 +1,349 @@
 """
-Test Material Charts
-テスト資料で使用する図表の生成
+テスト資料用の図表生成ロジック
+core.chart_generatorの機能を網羅的にテスト
 """
 
-import sys
-from pathlib import Path
-import logging
-from typing import Dict, List, Any, Optional
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-
-# プロジェクトルートをsys.pathに追加
-project_root = Path(__file__).resolve().parents[3]
-if str(project_root) not in sys.path:
-    sys.path.insert(0, str(project_root))
+from pathlib import Path
+from typing import Dict, Any
 
 from src.core.chart_generator import ChartGenerator
-from src.core.config import PATHS
-from test_material_config import get_test_colors, get_test_chart_styles
-
-logger = logging.getLogger(__name__)
 
 
-class TestMaterialCharts:
+def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) -> Dict[str, Path]:
     """
-    テスト資料用の図表生成クラス
+    テスト用の全図表を生成
+    
+    Args:
+        chart_gen: ChartGeneratorインスタンス
+        output_base_path: 出力先ベースパス
+        
+    Returns:
+        生成されたファイルパスの辞書
     """
-
-    def __init__(self):
-        """
-        初期化
-        """
-        # テスト用の設定を取得
-        self.colors = get_test_colors()
-        self.chart_styles = get_test_chart_styles()
-
-        # 出力ディレクトリを設定
-        self.output_dir = PATHS["test_material_charts_dir"]
-
-        # ChartGeneratorを初期化
-        self.chart_generator = ChartGenerator(self.colors, self.chart_styles)
-
-        # 出力先を変更
-        self.chart_generator.output_dir = self.output_dir
-
-        self.logger = logging.getLogger(__name__ + ".TestMaterialCharts")
-
-    def generate_line_chart_test(self) -> Path:
-        """
-        折れ線グラフのテストを生成
-
-        Returns:
-            生成されたファイルのパス
-        """
-        try:
-            # テストデータ
-            data = {
-                'x': list(range(1, 11)),
-                'y': [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-            }
-
-            output_path = self.chart_generator.create_simple_line_chart(
-                data=data,
-                x_col='x',
-                y_col='y',
-                title='線形関数のテスト (y = 2x)',
-                xlabel='X軸',
-                ylabel='Y軸',
-                output_filename='test_line_chart.html',
-                use_plotly=False
-            )
-
-            self.logger.info(f"Line chart test generated: {output_path}")
-
-            return output_path
-
-        except Exception as e:
-            self.logger.error(f"Failed to generate line chart test: {e}")
-            raise
-
-    def generate_bar_chart_test(self) -> Path:
-        """
-        棒グラフのテストを生成
-
-        Returns:
-            生成されたファイルのパス
-        """
-        try:
-            # テストデータ
-            data = {
-                'categories': ['テスト1', 'テスト2', 'テスト3', 'テスト4', 'テスト5'],
-                'values': [85, 92, 78, 96, 89]
-            }
-
-            output_path = self.chart_generator.create_bar_chart(
-                data=data,
-                x_col='categories',
-                y_col='values',
-                title='テスト結果の比較',
-                xlabel='テスト項目',
-                ylabel='スコア',
-                output_filename='test_bar_chart.html',
-                use_plotly=False
-            )
-
-            self.logger.info(f"Bar chart test generated: {output_path}")
-
-            return output_path
-
-        except Exception as e:
-            self.logger.error(f"Failed to generate bar chart test: {e}")
-            raise
-
-    def generate_pie_chart_test(self) -> Path:
-        """
-        円グラフのテストを生成
-
-        Returns:
-            生成されたファイルのパス
-        """
-        try:
-            # テストデータ
-            data = {
-                'labels': ['成功', '失敗', '保留', 'スキップ'],
-                'values': [75, 15, 8, 2]
-            }
-
-            output_path = self.chart_generator.create_pie_chart(
-                data=data,
-                labels_col='labels',
-                values_col='values',
-                title='テスト結果の分布',
-                output_filename='test_pie_chart.html',
-                use_plotly=False
-            )
-
-            self.logger.info(f"Pie chart test generated: {output_path}")
-
-            return output_path
-
-        except Exception as e:
-            self.logger.error(f"Failed to generate pie chart test: {e}")
-            raise
-
-    def generate_interactive_chart_test(self) -> Path:
-        """
-        インタラクティブチャートのテストを生成
-
-        Returns:
-            生成されたファイルのパス
-        """
-        try:
-            # Plotlyでインタラクティブな折れ線グラフを作成
-            x_data = list(range(1, 21))
-            y1_data = [np.sin(x * 0.5) for x in x_data]
-            y2_data = [np.cos(x * 0.5) for x in x_data]
-
-            fig = go.Figure()
-
-            # 複数の線を追加
-            fig.add_trace(go.Scatter(
-                x=x_data,
-                y=y1_data,
-                mode='lines+markers',
-                name='sin(0.5x)',
-                line=dict(color=self.colors['primary'], width=3),
-                marker=dict(size=8)
-            ))
-
-            fig.add_trace(go.Scatter(
-                x=x_data,
-                y=y2_data,
-                mode='lines+markers',
-                name='cos(0.5x)',
-                line=dict(color=self.colors['secondary'], width=3),
-                marker=dict(size=8)
-            ))
-
-            # レイアウト設定
-            fig.update_layout(
-                title='三角関数のインタラクティブ表示',
-                xaxis_title='X',
-                yaxis_title='Y',
-                hovermode='x unified',
-                showlegend=True,
-                template='plotly_white'
-            )
-
-            output_path = self.chart_generator.create_interactive_plotly_chart(
-                plotly_figure=fig,
-                output_filename='test_interactive_chart.html'
-            )
-
-            self.logger.info(f"Interactive chart test generated: {output_path}")
-
-            return output_path
-
-        except Exception as e:
-            self.logger.error(f"Failed to generate interactive chart test: {e}")
-            raise
-
-    def generate_custom_figure_test(self) -> Path:
-        """
-        カスタム図表のテストを生成
-
-        Returns:
-            生成されたファイルのパス
-        """
-        try:
-            def draw_block_diagram(ax, colors, styles, **kwargs):
-                """ブロック図を描画する関数"""
-                # ブロックを描画
-                blocks = [
-                    {'x': 0.1, 'y': 0.7, 'w': 0.2, 'h': 0.15, 'label': '入力', 'color': colors['info']},
-                    {'x': 0.4, 'y': 0.7, 'w': 0.2, 'h': 0.15, 'label': '処理', 'color': colors['primary']},
-                    {'x': 0.7, 'y': 0.7, 'w': 0.2, 'h': 0.15, 'label': '出力', 'color': colors['success']},
-                    {'x': 0.4, 'y': 0.3, 'w': 0.2, 'h': 0.15, 'label': 'エラー処理', 'color': colors['danger']}
-                ]
-
-                for block in blocks:
-                    rect = plt.Rectangle(
-                        (block['x'], block['y']),
-                        block['w'],
-                        block['h'],
-                        facecolor=block['color'],
-                        edgecolor='black',
-                        linewidth=2
-                    )
-                    ax.add_patch(rect)
-
-                    # ラベルを追加
-                    ax.text(
-                        block['x'] + block['w']/2,
-                        block['y'] + block['h']/2,
-                        block['label'],
-                        ha='center',
-                        va='center',
-                        fontsize=12,
-                        color='white',
-                        weight='bold'
-                    )
-
-                # 矢印を描画
-                arrows = [
-                    {'start': (0.3, 0.775), 'end': (0.4, 0.775)},
-                    {'start': (0.6, 0.775), 'end': (0.7, 0.775)},
-                    {'start': (0.5, 0.7), 'end': (0.5, 0.45)}
-                ]
-
-                for arrow in arrows:
-                    ax.annotate(
-                        '',
-                        xy=arrow['end'],
-                        xytext=arrow['start'],
-                        arrowprops=dict(
-                            arrowstyle='->',
-                            color='black',
-                            lw=2
-                        )
-                    )
-
-                # 軸の設定
-                ax.set_xlim(0, 1)
-                ax.set_ylim(0, 1)
-                ax.set_aspect('equal')
-                ax.axis('off')
-                ax.set_title('システムフロー図', fontsize=16, pad=20)
-
-            output_path = self.chart_generator.create_custom_figure(
-                drawing_function=draw_block_diagram,
-                output_filename='test_custom_figure.html'
-            )
-
-            self.logger.info(f"Custom figure test generated: {output_path}")
-
-            return output_path
-
-        except Exception as e:
-            self.logger.error(f"Failed to generate custom figure test: {e}")
-            raise
-
-    def generate_scatter_plot_test(self) -> Path:
-        """
-        散布図のテストを生成
-
-        Returns:
-            生成されたファイルのパス
-        """
-        try:
-            # ランダムなテストデータを生成
-            np.random.seed(42)
-            n_points = 50
-
-            data = pd.DataFrame({
-                'x': np.random.randn(n_points),
-                'y': np.random.randn(n_points),
-                'category': np.random.choice(['A', 'B', 'C'], n_points),
-                'size': np.random.randint(20, 100, n_points)
-            })
-
-            # カテゴリを数値に変換（色分け用）
-            data['color_value'] = data['category'].map({'A': 0, 'B': 1, 'C': 2})
-
-            output_path = self.chart_generator.create_scatter_plot(
-                data=data,
-                x_col='x',
-                y_col='y',
-                title='ランダムデータの散布図',
-                xlabel='X値',
-                ylabel='Y値',
-                output_filename='test_scatter_plot.html',
-                color_col='color_value',
-                size_col='size',
-                use_plotly=True
-            )
-
-            self.logger.info(f"Scatter plot test generated: {output_path}")
-
-            return output_path
-
-        except Exception as e:
-            self.logger.error(f"Failed to generate scatter plot test: {e}")
-            raise
-
-    def generate_all_chart_tests(self) -> List[Path]:
-        """
-        全ての図表テストを生成
-
-        Returns:
-            生成されたファイルのパスリスト
-        """
-        generated_files = []
-
-        try:
-            # 各種図表を生成
-            generated_files.append(self.generate_line_chart_test())
-            generated_files.append(self.generate_bar_chart_test())
-            generated_files.append(self.generate_pie_chart_test())
-            generated_files.append(self.generate_interactive_chart_test())
-            generated_files.append(self.generate_custom_figure_test())
-            generated_files.append(self.generate_scatter_plot_test())
-
-            self.logger.info(f"All chart tests generated: {len(generated_files)} files")
-
-            return generated_files
-
-        except Exception as e:
-            self.logger.error(f"Failed to generate all chart tests: {e}")
-            raise
+    generated_files = {}
+    
+    # 出力ディレクトリの作成
+    charts_dir = output_base_path / "charts"
+    charts_dir.mkdir(parents=True, exist_ok=True)
+    
+    # 1. シンプルなMatplotlib折れ線グラフ
+    x_data = list(range(10))
+    y_data = [x**2 for x in x_data]
+    data = {"x": x_data, "y": y_data}
+    
+    file_path = charts_dir / chart_gen.create_simple_line_chart(
+        data, "x", "y",
+        "二次関数のグラフ",
+        "X値",
+        "Y値 (X²)",
+        "matplotlib_line_chart.html"
+    )
+    generated_files["matplotlib_line"] = file_path
+    
+    # 2. シンプルなMatplotlib棒グラフ
+    categories = ["A", "B", "C", "D", "E"]
+    values = [23, 45, 56, 78, 32]
+    bar_data = {"category": categories, "value": values}
+    
+    file_path = charts_dir / chart_gen.create_bar_chart(
+        bar_data, "category", "value",
+        "カテゴリ別データ",
+        "カテゴリ",
+        "値",
+        "matplotlib_bar_chart.html"
+    )
+    generated_files["matplotlib_bar"] = file_path
+    
+    # 3. Plotlyインタラクティブ折れ線グラフ
+    x_interactive = np.linspace(0, 2*np.pi, 100)
+    y_sin = np.sin(x_interactive)
+    y_cos = np.cos(x_interactive)
+    interactive_data = {"x": x_interactive.tolist(), "sin": y_sin.tolist(), "cos": y_cos.tolist()}
+    
+    # 複数系列のPlotlyグラフ
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=interactive_data["x"], y=interactive_data["sin"], 
+                            mode='lines', name='sin(x)', line=dict(width=3)))
+    fig.add_trace(go.Scatter(x=interactive_data["x"], y=interactive_data["cos"], 
+                            mode='lines', name='cos(x)', line=dict(width=3)))
+    fig.update_layout(
+        title="三角関数のインタラクティブグラフ",
+        xaxis_title="ラジアン",
+        yaxis_title="値",
+        hovermode='x unified'
+    )
+    
+    file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
+        fig, "plotly_trigonometric.html"
+    )
+    generated_files["plotly_line"] = file_path
+    
+    # 4. Plotlyインタラクティブ棒グラフ
+    file_path = charts_dir / chart_gen.create_bar_chart(
+        bar_data, "category", "value",
+        "インタラクティブ棒グラフ",
+        "カテゴリ",
+        "値",
+        "plotly_bar_chart.html",
+        use_plotly=True
+    )
+    generated_files["plotly_bar"] = file_path
+    
+    # 5. カスタム描画関数によるMatplotlib図
+    def draw_custom_diagram(ax, colors, styles, **kwargs):
+        """カスタム図形を描画"""
+        # 円を描画
+        circle = plt.Circle((0.5, 0.5), 0.3, color=colors["info"], alpha=0.7)
+        ax.add_patch(circle)
+        
+        # 矢印を描画
+        ax.arrow(0.1, 0.1, 0.3, 0.3, head_width=0.05, head_length=0.05, 
+                fc=colors["success"], ec=colors["success"])
+        
+        # テキストを追加
+        ax.text(0.5, 0.5, 'カスタム図形', ha='center', va='center', 
+                fontsize=styles["font_size_title"], fontweight='bold')
+        
+        # 軸の設定
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1)
+        ax.set_aspect('equal')
+        ax.set_title("カスタム描画のデモ", fontsize=styles["font_size_title"])
+        ax.grid(True, alpha=styles["grid_alpha"])
+    
+    file_path = charts_dir / chart_gen.create_custom_figure(
+        draw_custom_diagram, "custom_diagram.html"
+    )
+    generated_files["custom_diagram"] = file_path
+    
+    # 6. Plotlyによる状態遷移デモ
+    fig = go.Figure()
+    
+    # 初期状態のデータ
+    initial_x = [1, 2, 3, 4, 5]
+    initial_y = [10, 15, 13, 17, 20]
+    
+    # 複数の状態のデータ
+    states = [
+        {"x": initial_x, "y": initial_y, "name": "状態1"},
+        {"x": initial_x, "y": [12, 18, 15, 20, 25], "name": "状態2"},
+        {"x": initial_x, "y": [8, 12, 10, 14, 18], "name": "状態3"}
+    ]
+    
+    # 各状態のトレースを追加
+    for i, state in enumerate(states):
+        fig.add_trace(go.Bar(
+            x=state["x"],
+            y=state["y"],
+            name=state["name"],
+            visible=(i == 0)  # 最初の状態のみ表示
+        ))
+    
+    # ボタンの作成
+    buttons = []
+    for i, state in enumerate(states):
+        visible = [False] * len(states)
+        visible[i] = True
+        buttons.append(dict(
+            label=state["name"],
+            method="update",
+            args=[{"visible": visible}]
+        ))
+    
+    fig.update_layout(
+        title="クリックで状態遷移するグラフ",
+        updatemenus=[dict(
+            buttons=buttons,
+            direction="down",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=0.1,
+            xanchor="left",
+            y=1.15,
+            yanchor="top"
+        )],
+        xaxis_title="項目",
+        yaxis_title="値"
+    )
+    
+    file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
+        fig, "state_transition_demo.html"
+    )
+    generated_files["state_transition"] = file_path
+    
+    # 7. Plotlyによるドロップダウンフィルタリングデモ
+    fig = go.Figure()
+    
+    # 複数のデータセット
+    datasets = {
+        "2022年": {"x": ["Q1", "Q2", "Q3", "Q4"], "y": [100, 120, 115, 140]},
+        "2023年": {"x": ["Q1", "Q2", "Q3", "Q4"], "y": [110, 135, 125, 155]},
+        "2024年": {"x": ["Q1", "Q2", "Q3", "Q4"], "y": [120, 145, 140, 170]}
+    }
+    
+    # 全データセットのトレースを追加
+    for i, (year, data) in enumerate(datasets.items()):
+        fig.add_trace(go.Scatter(
+            x=data["x"],
+            y=data["y"],
+            mode='lines+markers',
+            name=year,
+            visible=(i == 0),  # 最初のデータセットのみ表示
+            line=dict(width=3),
+            marker=dict(size=10)
+        ))
+    
+    # ドロップダウンメニューの作成
+    dropdown_buttons = []
+    for i, year in enumerate(datasets.keys()):
+        visible = [False] * len(datasets)
+        visible[i] = True
+        dropdown_buttons.append(dict(
+            label=year,
+            method="update",
+            args=[{"visible": visible}, {"title": f"{year}の四半期別売上"}]
+        ))
+    
+    fig.update_layout(
+        title="2022年の四半期別売上",
+        updatemenus=[dict(
+            buttons=dropdown_buttons,
+            direction="down",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=1.0,
+            xanchor="right",
+            y=1.15,
+            yanchor="top"
+        )],
+        xaxis_title="四半期",
+        yaxis_title="売上（百万円）"
+    )
+    
+    file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
+        fig, "dropdown_filter_demo.html"
+    )
+    generated_files["dropdown_filter"] = file_path
+    
+    # 8. スライダーによるパラメータ調整デモ
+    fig = go.Figure()
+    
+    # パラメータ範囲
+    x = np.linspace(0, 2*np.pi, 100)
+    
+    # 異なる振幅でのサイン波
+    amplitudes = [0.5, 1.0, 1.5, 2.0, 2.5]
+    
+    for amp in amplitudes:
+        y = amp * np.sin(x)
+        fig.add_trace(go.Scatter(
+            x=x,
+            y=y,
+            mode='lines',
+            name=f'振幅 {amp}',
+            visible=(amp == 1.0)  # 振幅1.0のみ初期表示
+        ))
+    
+    # スライダーの作成
+    steps = []
+    for i, amp in enumerate(amplitudes):
+        visible = [False] * len(amplitudes)
+        visible[i] = True
+        step = dict(
+            method="update",
+            args=[{"visible": visible}],
+            label=f"{amp}"
+        )
+        steps.append(step)
+    
+    sliders = [dict(
+        active=1,  # 初期値は振幅1.0
+        currentvalue={"prefix": "振幅: "},
+        pad={"t": 50},
+        steps=steps
+    )]
+    
+    fig.update_layout(
+        title="スライダーで振幅を調整",
+        sliders=sliders,
+        xaxis_title="ラジアン",
+        yaxis_title="振幅"
+    )
+    
+    file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
+        fig, "slider_parameter_demo.html"
+    )
+    generated_files["slider_parameter"] = file_path
+    
+    # 9. アニメーションGIFの生成
+    frames = []
+    
+    for i in range(10):
+        fig, ax = plt.subplots(figsize=(6, 4))
+        
+        # 時間変化するデータ
+        t = np.linspace(0, 2*np.pi, 100)
+        y = np.sin(t + i * np.pi / 5)
+        
+        ax.plot(t, y, 'b-', linewidth=2)
+        ax.set_xlim(0, 2*np.pi)
+        ax.set_ylim(-1.5, 1.5)
+        ax.set_title(f"正弦波のアニメーション (フレーム {i+1}/10)")
+        ax.set_xlabel("時間")
+        ax.set_ylabel("振幅")
+        ax.grid(True, alpha=0.3)
+        
+        frames.append(fig)
+    
+    file_path = charts_dir / chart_gen.create_animation_gif(
+        frames, "sine_wave_animation.gif", fps=2
+    )
+    generated_files["animation_gif"] = file_path
+    
+    # 10. マウスホバーで詳細情報表示（Plotly）
+    # 散布図データ
+    np.random.seed(42)
+    n_points = 50
+    scatter_data = {
+        "x": np.random.randn(n_points),
+        "y": np.random.randn(n_points),
+        "size": np.random.randint(10, 50, n_points),
+        "label": [f"Point {i+1}" for i in range(n_points)]
+    }
+    
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=scatter_data["x"],
+        y=scatter_data["y"],
+        mode='markers',
+        marker=dict(
+            size=scatter_data["size"],
+            color=scatter_data["size"],
+            colorscale='Viridis',
+            showscale=True,
+            colorbar=dict(title="サイズ")
+        ),
+        text=scatter_data["label"],
+        hovertemplate='<b>%{text}</b><br>' +
+                      'X: %{x:.2f}<br>' +
+                      'Y: %{y:.2f}<br>' +
+                      'サイズ: %{marker.size}<br>' +
+                      '<extra></extra>'
+    ))
+    
+    fig.update_layout(
+        title="マウスホバーで詳細情報を表示",
+        xaxis_title="X座標",
+        yaxis_title="Y座標",
+        hovermode='closest'
+    )
+    
+    file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
+        fig, "hover_details_demo.html"
+    )
+    generated_files["hover_details"] = file_path
+    
+    return generated_files
