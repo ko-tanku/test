@@ -92,7 +92,11 @@ class TestMaterialContentManager(BaseContentManager):
         generated_files.append(self._generate_chapter_from_data(
             chapter5_data, "chapter05.md", charts_dir, tables_dir
         ))
-
+        # 第5章（新機能統合テスト）
+        chapter6_data = self._create_chapter6()
+        generated_files.append(self._generate_chapter_from_data(
+            chapter6_data, "chapter06.md", charts_dir, tables_dir
+        ))
         # 用語集、FAQ、TIPSページ生成（test_material内）
         self.doc_builder.output_dir = self.output_base_dir
         generated_files.append(self.generate_glossary())
@@ -795,3 +799,266 @@ class TestMaterialContentManager(BaseContentManager):
                 }
             ]
         }
+    
+    def _create_chapter6(self) -> Dict[str, Any]:
+            """第6章: アセット機能統合テスト（新機能）"""
+            return {
+                'title': '第6章: アセット機能統合テスト',
+                'overview': 'AssetGeneratorとMkDocsManagerの全機能をテストします。',
+                'sections': [
+                    {
+                        'title': 'CSS動的生成テスト',
+                        'contents': [
+                            {
+                                'type': 'text',
+                                'text': '以下は動的に生成されたCSSの効果をテストする要素です。'
+                            },
+                            {
+                                'type': 'html_block',
+                                'html': '''
+                                <div class="quiz-container" data-quiz-id="css-test-1">
+                                    <div class="quiz-question">CSS生成機能のテスト</div>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option" data-index="0">オプション1（デフォルトスタイル）</div>
+                                        <div class="quiz-option" data-index="1">オプション2（ホバー効果あり）</div>
+                                        <div class="quiz-option" data-index="2">オプション3（アニメーション付き）</div>
+                                    </div>
+                                </div>
+                                '''
+                            },
+                            {
+                                'type': 'admonition',
+                                'admonition_type': 'info',
+                                'title': 'テーマ切り替えテスト',
+                                'text': '以下のボタンでテーマを切り替えできます。',
+                                'collapsible': False
+                            },
+                            {
+                                'type': 'html_block',
+                                'html': '''
+                                <div style="margin: 20px 0; text-align: center;">
+                                    <button onclick="switchTheme('default')" style="margin: 5px;">デフォルト</button>
+                                    <button onclick="switchTheme('dark')" style="margin: 5px;">ダーク</button>
+                                    <button onclick="switchTheme('high_contrast')" style="margin: 5px;">高コントラスト</button>
+                                </div>
+                                
+                                <script>
+                                function switchTheme(theme) {
+                                    const link = document.querySelector('link[href*="custom"]');
+                                    if (link) {
+                                        const newHref = theme === 'default' ? 'custom.css' : `custom_${theme}.css`;
+                                        link.href = newHref;
+                                    }
+                                }
+                                </script>
+                                '''
+                            }
+                        ]
+                    },
+                    {
+                        'title': 'JavaScript機能テスト',
+                        'contents': [
+                            {
+                                'type': 'text',
+                                'text': '動的に生成されたJavaScript機能をテストします。'
+                            },
+                            {
+                                'type': 'html_block',
+                                'html': '''
+                                <div class="learning-animation" id="js-test-animation">
+                                    <h4>インタラクティブ要素テスト</h4>
+                                    <p>この要素は画面に表示された時にアニメーションします。</p>
+                                    <div class="animate-child">子要素1（遅延アニメーション）</div>
+                                    <div class="animate-child">子要素2（遅延アニメーション）</div>
+                                    <div class="animate-child">子要素3（遅延アニメーション）</div>
+                                </div>
+                                
+                                <button class="animation-trigger" data-target="js-test-animation" data-animation="bounce-in">
+                                    アニメーション再実行
+                                </button>
+                                '''
+                            },
+                            {
+                                'type': 'text',
+                                'text': '学習進度追跡機能のテスト:'
+                            },
+                            {
+                                'type': 'html_block',
+                                'html': '''
+                                <div style="margin: 20px 0;">
+                                    <button onclick="testProgressTracking()">進度テスト実行</button>
+                                    <button onclick="showProgress()">現在の進度表示</button>
+                                    <button onclick="resetProgress()">進度リセット</button>
+                                    <div id="progress-display" style="margin-top: 10px; padding: 10px; background: #f0f0f0; border-radius: 4px;"></div>
+                                </div>
+                                
+                                <script>
+                                function testProgressTracking() {
+                                    if (window.LearningMaterial && window.LearningMaterial.api) {
+                                        window.LearningMaterial.api.markChapterComplete();
+                                        alert('第6章完了をマークしました！');
+                                    } else {
+                                        alert('学習進度システムが見つかりません');
+                                    }
+                                }
+                                
+                                function showProgress() {
+                                    const display = document.getElementById('progress-display');
+                                    const progress = JSON.parse(localStorage.getItem('learning_progress') || '{}');
+                                    display.innerHTML = '<strong>学習進度:</strong><br>' + JSON.stringify(progress, null, 2);
+                                }
+                                
+                                function resetProgress() {
+                                    if (window.LearningMaterial && window.LearningMaterial.api) {
+                                        window.LearningMaterial.api.resetProgress();
+                                        alert('学習進度をリセットしました');
+                                        showProgress();
+                                    }
+                                }
+                                </script>
+                                '''
+                            }
+                        ]
+                    },
+                    {
+                        'title': 'MkDocs設定管理テスト',
+                        'contents': [
+                            {
+                                'type': 'text',
+                                'text': 'MkDocsManagerによる設定管理機能の動作確認です。'
+                            },
+                            {
+                                'type': 'code_block',
+                                'language': 'yaml',
+                                'code': '''# 自動生成されたmkdocs.yml設定例
+    site_name: MkDocs Learning Material Generator
+    theme:
+    name: material
+    palette:
+        - media: "(prefers-color-scheme: light)"
+        scheme: default
+        primary: blue
+        accent: cyan
+        toggle:
+            icon: material/brightness-7
+            name: ダークモードに切り替え
+        - media: "(prefers-color-scheme: dark)"
+        scheme: slate
+        primary: blue
+        accent: cyan
+        toggle:
+            icon: material/brightness-4
+            name: ライトモードに切り替え
+    features:
+        - navigation.tabs
+        - navigation.sections
+        - content.tooltips
+        - content.code.copy
+
+    extra_css:
+    - custom.css
+    - custom_dark.css
+    - custom_high_contrast.css
+    - animations.css
+
+    extra_javascript:
+    - custom.js
+    - interactive.js
+    - quiz.js
+    - animations.js
+    '''
+                            },
+                            {
+                                'type': 'admonition',
+                                'admonition_type': 'success',
+                                'title': '設定検証結果',
+                                'text': '''設定ファイルの検証が正常に完了しました：
+                                
+    - ナビゲーション構造: ✅ 正常
+    - アセットファイル: ✅ 存在確認済み
+    - プラグイン設定: ✅ 正常
+    - マークダウン拡張: ✅ 正常''',
+                                'collapsible': True
+                            }
+                        ]
+                    },
+                    {
+                        'title': 'アセット更新機能テスト',
+                        'contents': [
+                            {
+                                'type': 'text',
+                                'text': 'アセットファイルの動的更新機能をテストします。'
+                            },
+                            {
+                                'type': 'html_block',
+                                'html': '''
+                                <div style="border: 2px solid #2196F3; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                                    <h4>動的スタイル更新テスト</h4>
+                                    <p>以下のボタンで追加CSSを適用/解除できます。</p>
+                                    <button onclick="applyAdditionalCSS()">追加CSS適用</button>
+                                    <button onclick="removeAdditionalCSS()">追加CSS削除</button>
+                                    
+                                    <div id="dynamic-style-test" style="margin-top: 15px; padding: 15px; background: #f5f5f5;">
+                                        このエリアにスタイルが適用されます
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                function applyAdditionalCSS() {
+                                    const style = document.createElement('style');
+                                    style.id = 'dynamic-test-style';
+                                    style.textContent = `
+                                        #dynamic-style-test {
+                                            background: linear-gradient(45deg, #FF6B6B, #4ECDC4) !important;
+                                            color: white !important;
+                                            transform: scale(1.05);
+                                            transition: all 0.3s ease;
+                                        }
+                                    `;
+                                    document.head.appendChild(style);
+                                }
+                                
+                                function removeAdditionalCSS() {
+                                    const style = document.getElementById('dynamic-test-style');
+                                    if (style) {
+                                        style.remove();
+                                    }
+                                }
+                                </script>
+                                '''
+                            }
+                        ]
+                    },
+                    {
+                        'title': '統合機能総合テスト',
+                        'contents': [
+                            {
+                                'type': 'quiz',
+                                'question_data': {
+                                    'question': 'AssetGeneratorとMkDocsManagerの主な利点は何ですか？',
+                                    'options': [
+                                        '手動でのファイル管理が必要',
+                                        '動的なアセット生成と設定管理の自動化',
+                                        '静的なファイルのみ対応'
+                                    ],
+                                    'correct': 1,
+                                    'hint': '自動化がキーワードです',
+                                    'explanation': '動的生成により、効率的で一貫性のあるアセット管理が可能になります。'
+                                }
+                            },
+                            {
+                                'type': 'summary',
+                                'title': '第6章で確認した機能',
+                                'points': [
+                                    'CSS テンプレートの動的生成とテーマ切り替え',
+                                    'JavaScript 機能の自動統合とインタラクティブ要素',
+                                    'MkDocs設定の自動管理と検証',
+                                    'アセットファイルの更新と履歴管理',
+                                    '学習進度追跡とローカルストレージ活用',
+                                    '設定の妥当性検証とエラーハンドリング'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }

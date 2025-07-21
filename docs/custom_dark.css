@@ -3,9 +3,9 @@
 :root {
     --primary-color: #1976D2;
     --secondary-color: #FFC107;
-    --background-color: #ffffff;
-    --text-color: #333333;
-    --tooltip-bg: #263238;
+    --background-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --tooltip-bg: #424242;
     --tooltip-text: #ffffff;
     --quiz-correct: #4CAF50;
     --quiz-incorrect: #F44336;

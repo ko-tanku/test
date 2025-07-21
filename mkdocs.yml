@@ -1,26 +1,18 @@
-site_name: MkDocs Learning Material Generator
-site_description: インタラクティブな学習資料を自動生成するシステム
-repo_url: https://github.com/example/mkdocs-learning-material
-repo_name: mkdocs-learning-material
-theme:
-  name: material
-  palette:
-    primary: blue-grey
-    accent: cyan
-  features:
-  - navigation.tabs
-  - search.suggest
-  - toc.integrate
-  - header.autohide
-  - announce.dismiss
-  - content.tooltips
-  locale: ja
+extra: {}
+extra_css:
+- custom_high_contrast.css
+- custom.css
+- custom_dark.css
+extra_javascript:
+- quiz.js
+- custom.js
 markdown_extensions:
 - admonition
 - pymdownx.details
 - pymdownx.superfences
 - pymdownx.highlight
 - pymdownx.tabbed
+- pymdownx.tasklist
 - attr_list
 - md_in_html
 - footnotes
@@ -28,12 +20,8 @@ markdown_extensions:
 - fenced_code
 - abbr
 - pymdownx.snippets
-plugins: []
-extra_javascript:
-- custom.js
-extra_css:
-- custom.css
-extra: {}
+- pymdownx.emoji
+- pymdownx.keys
 nav:
 - IT・組み込み技術入門:
   - ホーム: test_material/index.md
@@ -42,6 +30,43 @@ nav:
   - '第3章: 図表': test_material/documents/chapter03.md
   - '第4章: 演習': test_material/documents/chapter04.md
   - '第5章: 統合テスト': test_material/documents/chapter05.md
+  - '第6章: アセット機能テスト': test_material/documents/chapter06.md
   - 用語集: test_material/glossary.md
   - FAQ: test_material/faq.md
   - TIPS: test_material/tips.md
+plugins:
+- search
+repo_name: mkdocs-learning-material
+repo_url: https://github.com/example/mkdocs-learning-material
+site_description: インタラクティブな学習資料を自動生成するシステム
+site_name: MkDocs Learning Material Generator
+theme:
+  features:
+  - navigation.tabs
+  - navigation.sections
+  - navigation.expand
+  - navigation.top
+  - search.suggest
+  - search.highlight
+  - toc.integrate
+  - header.autohide
+  - content.tooltips
+  - content.code.copy
+  - content.code.annotate
+  locale: ja
+  name: material
+  palette:
+  - accent: cyan
+    media: '(prefers-color-scheme: light)'
+    primary: blue
+    scheme: default
+    toggle:
+      icon: material/brightness-7
+      name: ダークモードに切り替え
+  - accent: cyan
+    media: '(prefers-color-scheme: dark)'
+    primary: blue
+    scheme: slate
+    toggle:
+      icon: material/brightness-4
+      name: ライトモードに切り替え

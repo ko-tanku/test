@@ -1,71 +1,101 @@
-// docs/custom.js
+// docs/custom.js - 自動生成ファイル
 
-document.addEventListener('DOMContentLoaded', function () {
-    // ページ内のすべてのオートハイトIframeを処理
-    const iframes = document.querySelectorAll('iframe.auto-height-iframe');
-
-    iframes.forEach(iframe => {
-        // Iframeがロードされたときに高さを調整
-        iframe.onload = function () {
-            try {
-                // Iframe内部のドキュメントの高さを取得
-                // 同一オリジンポリシーにより、異なるドメインのコンテンツでは動作しません
-                const innerDoc = iframe.contentWindow.document.body;
-                if (innerDoc) {
-                    // スクロール高さを取得し、少し余裕を持たせる
-                    const height = innerDoc.scrollHeight + 20; // 20pxは余白
+(function() {
+    'use strict';
+    
+    // DOM読み込み完了時の初期化
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('カスタムスクリプト初期化完了');
+        initializeComponents();
+    });
+    
+    function initializeComponents() {
+        // 各種コンポーネントの初期化
+        initTooltips();
+        initResponsiveElements();
+    }
+    
+    function initTooltips() {
+        const tooltips = document.querySelectorAll('.custom-tooltip');
+        tooltips.forEach(function(tooltip) {
+            tooltip.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.classList.toggle('is-clicked');
+            });
+        });
+    }
+    
+    function initResponsiveElements() {
+        // レスポンシブ要素の初期化
+        const iframes = document.querySelectorAll('iframe.auto-height-iframe');
+        iframes.forEach(function(iframe) {
+            iframe.onload = function() {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const height = iframeDoc.body.scrollHeight;
                     iframe.style.height = height + 'px';
+                } catch (e) {
+                    console.warn('iframe高さ調整に失敗:', e);
                 }
-            } catch (e) {
-                console.warn('Cannot access iframe content due to same-origin policy:', e);
-                // クロスオリジンポリシーによりアクセスできない場合、固定高さをフォールバックとして設定
-                iframe.style.height = '400px'; // 例えばデフォルトの高さ
-            }
-        };
+            };
+        });
+    }
+    
+    // グローバルユーティリティ関数
+    window.MkDocsUtils = {
+        refreshTooltips: function() {
+            initTooltips();
+        },
+        
+        refreshIframes: function() {
+            initResponsiveElements();
+        }
+    };
+})();
 
-        // Iframeがすでにロードされている場合の初期調整
-        // ブラウザによってはonloadが発火しない場合があるため、既にロード済みなら手動で実行
-        if (iframe.contentWindow && iframe.contentWindow.document.readyState === 'complete') {
-            iframe.onload();
+
+/* 追加コンテンツ */
+
+// 学習材料追加機能
+
+// テーマ切り替え機能
+function switchTheme(theme) {
+    const links = document.querySelectorAll('link[href*="custom"]');
+    links.forEach(link => {
+        if (link.href.includes('custom')) {
+            const newHref = theme === 'default' ? 'custom.css' : `custom_${theme}.css`;
+            link.href = link.href.replace(/custom[^.]*\.css/, newHref);
         }
     });
+    
+    // テーマ保存
+    localStorage.setItem('preferred_theme', theme);
+    console.log(`テーマを${theme}に切り替えました`);
+}
+
+// 学習進度追跡
+function markChapterComplete(chapterNum) {
+    const key = `chapter_${chapterNum}_completed`;
+    localStorage.setItem(key, 'true');
+    console.log(`第${chapterNum}章を完了としてマークしました`);
+}
+
+function getCompletedChapters() {
+    const completed = [];
+    for (let i = 1; i <= 6; i++) {
+        if (localStorage.getItem(`chapter_${i}_completed`)) {
+            completed.push(i);
+        }
+    }
+    return completed;
+}
+
+// ページ読み込み時にテーマを復元
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('preferred_theme');
+    if (savedTheme && savedTheme !== 'default') {
+        switchTheme(savedTheme);
+    }
 });
 
-// docs/js/custom.js
-
-// docs/js/custom.js
-
-document.addEventListener('DOMContentLoaded', function () {
-    const tooltips = document.querySelectorAll('.custom-tooltip');
-
-    tooltips.forEach(tooltip => {
-        tooltip.addEventListener('click', function (event) {
-            event.stopPropagation(); // ドキュメントクリックでの非表示を防ぐため、イベント伝播を停止
-
-            // ★ここから追加・修正するロジック★
-            // クリックされたツールチップが既に開いている場合は閉じる
-            if (this.classList.contains('is-clicked')) {
-                this.classList.remove('is-clicked');
-            } else {
-                // 他のすべてのツールチップを閉じる
-                tooltips.forEach(otherTooltip => {
-                    if (otherTooltip !== this) { // クリックされたツールチップ自身以外
-                        otherTooltip.classList.remove('is-clicked');
-                    }
-                });
-                // クリックされたツールチップを開く
-                this.classList.add('is-clicked');
-            }
-            // ★ここまで追加・修正するロジック★
-        });
-    });
-
-    // ツールチップ以外の場所をクリックしたら、開いているツールチップを閉じる
-    document.addEventListener('click', function (event) {
-        tooltips.forEach(tooltip => {
-            if (tooltip.classList.contains('is-clicked') && !tooltip.contains(event.target)) {
-                tooltip.classList.remove('is-clicked');
-            }
-        });
-    });
-});
+console.log('学習材料システム初期化完了');
