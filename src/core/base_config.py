@@ -23,6 +23,59 @@ MEANING_COLORS = {
     "info": "#00BCD4"      # Material Design Cyan 500
 }
 
+# Material Design Icons辞書（確実に表示されるアイコンのみ）
+MATERIAL_ICONS = {
+    # システム・ハードウェア関連
+    "memory": "memory",
+    "speed": "speed",
+    "cpu": "developer_board",
+    "storage": "storage",
+    "device": "devices",
+    "hardware": "build",
+    "circuit": "cable",
+    
+    # 学習・情報関連
+    "help": "help",
+    "info": "info",
+    "question": "help_outline",
+    "tip": "lightbulb_outline",
+    "warning": "warning",
+    "error": "error",
+    "success": "check_circle",
+    
+    # ナビゲーション・UI関連
+    "home": "home",
+    "menu": "menu",
+    "settings": "settings",
+    "search": "search",
+    "bookmark": "bookmark",
+    "favorite": "favorite",
+    
+    # 学習コンテンツ関連
+    "book": "book",
+    "school": "school",
+    "quiz": "quiz",
+    "assignment": "assignment",
+    "grade": "grade",
+    "library": "local_library",
+    
+    # 技術・開発関連
+    "code": "code",
+    "bug": "bug_report",
+    "terminal": "terminal",
+    "api": "api",
+    "database": "storage",
+    "cloud": "cloud",
+    
+    # 組み込み・IoT関連
+    "sensor": "sensors",
+    "microchip": "memory",
+    "robot": "precision_manufacturing",
+    "automation": "autorenew",
+    "control": "tune",
+    "signal": "graphic_eq"
+}
+
 # 汎用的な図表スタイル設定
 BASE_CHART_STYLES = {
     "font_family": ['Meiryo', 'Yu Gothic', 'Meiryo', 'TakaoGothic', 'IPAexGothic', 'IPA Gothic', 'sans-serif'],

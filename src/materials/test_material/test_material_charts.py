@@ -58,7 +58,6 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
         "matplotlib_bar_chart.html",
         output_dir=charts_dir
     )
-    print(f"⭐{file_path}")
     generated_files["matplotlib_bar"] = file_path
     
     # 3. Plotlyインタラクティブ折れ線グラフ

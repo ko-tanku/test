@@ -153,7 +153,6 @@ class ChartGenerator:
             output_path = output_dir / safe_filename
         else:
             output_path = Path(safe_filename)
-        print(f"⭐{output_path}")
         try:
             if use_plotly:
                 # Plotlyで生成
@@ -383,7 +382,7 @@ class ChartGenerator:
         except Exception as e:
             logger.error(f"Plotly図表の保存中にエラーが発生しました: {e}")
             raise
-            
+
     def create_animation_gif(
         self, frames: List[Any], output_filename: str, fps: int = 10, output_dir: Path = None,
     ) -> Path:
@@ -394,6 +393,7 @@ class ChartGenerator:
             frames: フレームのリスト（Matplotlib FigureまたはPIL Image）
             output_filename: 出力ファイル名
             fps: フレームレート
+            output_dir: 出力ディレクトリ
             
         Returns:
             生成されたファイルのパス
@@ -429,15 +429,14 @@ class ChartGenerator:
                     
             # GIFとして保存
             if images:
-                imageio.mimsave(output_path, images, fps=fps)
+                imageio.mimsave(str(output_path), images, fps=fps)
                 logger.info(f"アニメーションGIFを保存しました: {output_path}")
                 
             return output_path
             
         except Exception as e:
             logger.error(f"アニメーションGIFの生成中にエラーが発生しました: {e}")
-            raise
-# 既存のメソッドに加えて以下を追加
+            raise# 既存のメソッドに加えて以下を追加
 
     def create_scatter_chart(
         self,
@@ -836,7 +835,18 @@ class ChartGenerator:
     def create_animation_from_data(
         self, frames_data: List[Dict], config: Dict, output_filename: str, output_dir: Path = None
     ) -> Path:
-        """データからアニメーションGIFを生成"""
+        """
+        データからアニメーションGIFを生成
+        
+        Args:
+            frames_data: フレームデータのリスト
+            config: 設定辞書
+            output_filename: 出力ファイル名
+            output_dir: 出力ディレクトリ
+            
+        Returns:
+            生成されたGIFファイルのパス
+        """
         safe_filename = slugify(output_filename.replace('.gif', '')) + '.gif'
         
         if output_dir:
@@ -850,34 +860,48 @@ class ChartGenerator:
             for frame_data in frames_data:
                 fig, ax = plt.subplots(figsize=self.styles["figsize"])
                 
-                # フレームのタイプに応じて描画
+                # フレームデータの取得
+                x_data = frame_data.get('x', [])
+                y_data = frame_data.get('y', [])
                 frame_type = frame_data.get('type', 'line')
-                if frame_type == 'line':
-                    ax.plot(frame_data['x'], frame_data['y'], 
-                        linewidth=self.styles["line_width"])
-                elif frame_type == 'scatter':
-                    ax.scatter(frame_data['x'], frame_data['y'], 
-                            s=50, alpha=0.6)
                 
-                ax.set_xlim(config.get('xlim', (None, None)))
-                ax.set_ylim(config.get('ylim', (None, None)))
+                # グラフタイプに応じて描画
+                if frame_type == 'line':
+                    ax.plot(x_data, y_data, 
+                        linewidth=self.styles["line_width"],
+                        color=self.colors["info"])
+                elif frame_type == 'scatter':
+                    ax.scatter(x_data, y_data, 
+                        s=50, alpha=0.6, color=self.colors["info"])
+                elif frame_type == 'bar':
+                    ax.bar(x_data, y_data, 
+                        color=self.colors["info"], alpha=0.7)
+                
+                # 軸の設定
+                xlim = config.get('xlim', (0, 10))
+                ylim = config.get('ylim', (0, 10))
+                ax.set_xlim(xlim)
+                ax.set_ylim(ylim)
                 ax.set_title(frame_data.get('title', config.get('title', '')))
                 ax.set_xlabel(config.get('xlabel', ''))
                 ax.set_ylabel(config.get('ylabel', ''))
                 ax.grid(True, alpha=self.styles["grid_alpha"])
                 
+                plt.tight_layout()
                 frames.append(fig)
             
             # GIFとして保存
-            self.create_animation_gif(
-                frames, 
-                output_filename, 
-                fps=config.get('fps', 2),
-                output_dir=output_dir
-            )
-            
-            return output_path
-            
+            if frames:
+                return self.create_animation_gif(
+                    frames, 
+                    output_filename, 
+                    fps=config.get('fps', 2),
+                    output_dir=output_dir
+                )
+            else:
+                logger.warning("生成するフレームがありません")
+                return output_path
+                
         except Exception as e:
-            logger.error(f"アニメーションGIFの生成中にエラーが発生しました: {e}")
+            logger.error(f"アニメーションデータからのGIF生成中にエラーが発生しました: {e}")
             raise

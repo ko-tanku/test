@@ -13,6 +13,7 @@ from .utils import (
     generate_admonition_markdown,
     generate_tabbed_markdown
 )
+from .config import MATERIAL_ICONS
 
 logger = logging.getLogger(__name__)
 
@@ -116,7 +117,6 @@ class DocumentBuilder:
         text_with_protected_links = re.sub(link_pattern, protect_link, text)
         
         # 用語をツールチップ付きリンクに置換
-        # 各用語について、テキスト内で初回に登場した箇所のみを置換します。
         for term, info in terms_info.items():
             tooltip_text = info.get("tooltip_text", "")
             # HTMLエスケープ
@@ -124,13 +124,12 @@ class DocumentBuilder:
             # 改行を&#10;に置換
             escaped_tooltip = escaped_tooltip.replace('\n', '&#10;')
 
-            # 修正: 前後の単語関係なく、正確な用語の文字列をマッチさせ、初回のみ置換
+            # 正確な用語の文字列をマッチさせ、初回のみ置換
             pattern = re.escape(term)
             replacement = f'<span class="custom-tooltip" data-tooltip="{escaped_tooltip}">{term}</span>'
             text_with_protected_links = re.sub(
-                pattern, replacement, text_with_protected_links, count=1 # ここで初回のみ置換を指定
+                pattern, replacement, text_with_protected_links, count=1
             )
-
         
         # 保護していたリンクを復元
         for i, protected_link in enumerate(protected_links):
@@ -182,7 +181,6 @@ class DocumentBuilder:
             text: 引用テキスト
         """
         for line in text.split('\n'):
-            line = escape(line)
             self.content_buffer.append(f"> {line}")
         self.content_buffer.append("")
         
@@ -207,7 +205,7 @@ class DocumentBuilder:
         self.content_buffer.append("")
 
     def add_html_component_reference(
-        self, component_path: Path, width: str = "100%", height: Optional[str] = "400px" # heightをOptionalに
+        self, component_path: Path, width: str = "100%", height: Optional[str] = "400px"
     ):
         """
         HTML図表や表をiframeで埋め込む
@@ -225,16 +223,13 @@ class DocumentBuilder:
         
         iframe_html = (
             f'<iframe src="{path_str}" '
-            f'width="{width}" {height_attr} ' # height_attr を埋め込む
+            f'width="{width}" {height_attr} '
             f'style="border: 1px solid #ddd; border-radius: 4px;" '
-            f'scrolling="no" class="auto-height-iframe">' # scrolling="no" と class を追加
+            f'scrolling="no" class="auto-height-iframe">'
             f'</iframe>'
         )
         self.content_buffer.append(iframe_html)
         self.content_buffer.append("")
-
-    def add_markdown_content(self, content: str): # 必要に応じて追加
-        self.content_buffer.append(content)
         
     def add_admonition(
         self, type: str, title: str, content: str, collapsible: bool = False
@@ -280,11 +275,15 @@ class DocumentBuilder:
         Material Design Iconsにツールチップを付与
         
         Args:
-            icon_name: アイコン名
+            icon_name: アイコン名（辞書のキー）
             tooltip_text: ツールチップテキスト
         """
         escaped_tooltip = escape(tooltip_text)
-        icon_md = f':material-{icon_name}:{{ title="{escaped_tooltip}" }}'
+        
+        # アイコン辞書から実際のアイコン名を取得
+        actual_icon = MATERIAL_ICONS.get(icon_name, "help")  # デフォルトはhelp
+        
+        icon_md = f':material-{actual_icon}:{{ title="{escaped_tooltip}" }}'
         self.content_buffer.append(icon_md)
         self.content_buffer.append("")
         
@@ -296,34 +295,78 @@ class DocumentBuilder:
             abbr: 略語
             full_form: フルスペルまたは説明
         """
-        self.content_buffer.append(f"*[{abbr}]: {full_form}")
+        replacement = f'<span class="custom-tooltip" data-tooltip="{full_form}">{abbr}</span>'
+        self.content_buffer.append(replacement)
         self.content_buffer.append("")
         
     def add_quiz_question(self, question_data: Dict[str, Any]):
         """
-        クイズ問題を追加（mkdocs-quiz-plugin形式）
+        改良されたクイズ問題を追加（問題を最初から表示）
         
         Args:
             question_data: 問題データの辞書
         """
-        # クイズプラグインの形式に従って生成
-        lines = ["??? question \"クイズ\""]
-        lines.append(f"    {question_data['question']}")
+        lines = []
+        
+        # 問題セクション
+        lines.append("!!! question \"クイズ\"")
+        lines.append(f"    **問題**: {question_data['question']}")
         lines.append("")
         
-        for i, option in enumerate(question_data['options']):
-            prefix = "[x]" if i == question_data['correct'] else "[ ]"
-            lines.append(f"    {prefix} {option}")
+        # 選択肢に番号を付けて表示
+        lines.append("    **選択肢**:")
+        for i, option in enumerate(question_data['options'], 1):
+            lines.append(f"    {i}. {option}")
+        lines.append("")
         
+        # ヒント（折りたたみ式）
         if 'hint' in question_data:
-            lines.append("")
-            lines.append(f"    ??? tip \"ヒント\"")
+            lines.append("    ??? tip \"ヒント\"")
             lines.append(f"        {question_data['hint']}")
-        
-        if 'explanation' in question_data:
             lines.append("")
-            lines.append(f"    ??? success \"解説\"")
-            lines.append(f"        {question_data['explanation']}")
+        
+        # 解説（折りたたみ式、正解を含む）
+        if 'explanation' in question_data:
+            correct_num = question_data.get('correct', 0) + 1  # 0ベースから1ベースに変換
+            lines.append("    ??? success \"解説\"")
+            lines.append(f"        **正解**: {correct_num}")
+            lines.append("")
+            lines.append(f"        **解説**: {question_data['explanation']}")
+        
+        self.content_buffer.extend(lines)
+        self.content_buffer.append("")
+        
+    def add_exercise_question(self, exercise_data: Dict[str, Any]):
+        """
+        演習問題を統一フォーマットで追加
+        
+        Args:
+            exercise_data: 演習問題データの辞書
+        """
+        difficulty_map = {
+            'easy': ('tip', '初級'),
+            'medium': ('question', '中級'),
+            'hard': ('warning', '上級')
+        }
+        
+        difficulty = exercise_data.get('difficulty', 'medium')
+        adm_type, difficulty_label = difficulty_map.get(difficulty, ('question', '中級'))
+        
+        lines = []
+        lines.append(f"!!! {adm_type} \"演習問題（{difficulty_label}）\"")
+        lines.append(f"    **問題**: {exercise_data.get('question', '')}")
+        lines.append("")
+        
+        # 解答（折りたたみ式）
+        if 'answer' in exercise_data:
+            lines.append("    ??? success \"解答\"")
+            lines.append(f"        **解答**: {exercise_data.get('answer', '')}")
+            lines.append("")
+        
+        # 解説（折りたたみ式）
+        if 'explanation' in exercise_data:
+            lines.append("    ??? info \"解説\"")
+            lines.append(f"        **解説**: {exercise_data.get('explanation', '')}")
         
         self.content_buffer.extend(lines)
         self.content_buffer.append("")

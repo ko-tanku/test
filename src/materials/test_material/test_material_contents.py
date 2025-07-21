@@ -86,7 +86,13 @@ class TestMaterialContentManager(BaseContentManager):
         generated_files.append(self._generate_chapter_from_data(
             chapter4_data, "chapter04.md", charts_dir, tables_dir
         ))
-        
+
+        # 第5章（新機能統合テスト）
+        chapter5_data = self._create_chapter5()
+        generated_files.append(self._generate_chapter_from_data(
+            chapter5_data, "chapter05.md", charts_dir, tables_dir
+        ))
+
         # 用語集、FAQ、TIPSページ生成（test_material内）
         self.doc_builder.output_dir = self.output_base_dir
         generated_files.append(self.generate_glossary())
@@ -149,38 +155,9 @@ class TestMaterialContentManager(BaseContentManager):
                 charts_dir,
                 tables_dir
             )
-            
-        # 演習問題
-        if 'exercises' in chapter_data:
-            self.doc_builder.add_heading("演習問題", 2)
-            for exercise in chapter_data['exercises']:
-                self._process_exercise(exercise)
                 
         return self.doc_builder.save_markdown(filename)
-        
-    def _process_exercise(self, exercise: Dict[str, Any]):
-        """演習問題を処理"""
-        difficulty_map = {
-            'easy': 'tip',
-            'medium': 'question',
-            'hard': 'warning'
-        }
-        
-        difficulty = exercise.get('difficulty', 'medium')
-        adm_type = difficulty_map.get(difficulty, 'question')
-        
-        content = f"**問題**: {exercise.get('question', '')}\n\n"
-        if 'answer' in exercise:
-            content += f"**解答**: {exercise.get('answer', '')}\n\n"
-        if 'explanation' in exercise:
-            content += f"**解説**: {exercise.get('explanation', '')}"
-            
-        self.doc_builder.add_admonition(
-            adm_type,
-            f"演習問題（{difficulty}）",
-            content,
-            collapsible=True
-        )
+    
         
     def _create_chapter1(self) -> Dict[str, Any]:
         """第1章: プログラミングの基礎"""
@@ -594,26 +571,227 @@ class TestMaterialContentManager(BaseContentManager):
                             'collapsible': True
                         }
                     ]
-                }
-            ],
-            'exercises': [
+                },
+                {
+                    'title': '演習問題',
+                    'contents': [
                         {
+                            'type': 'exercises',
+                            'question_data': {
                             'question': 'エレベーターの制御システムはハードリアルタイムですか、ソフトリアルタイムですか？理由も説明してください。',
                             'answer': 'ハードリアルタイムシステム。扉の開閉制御や非常停止などは、決められた時間内に確実に動作しなければ人命に関わるため。',
                             'explanation': 'エレベーターは安全性が最優先されるシステムで、タイミングの遅れは許されません。',
                             'difficulty': 'medium'
+                            }
                         },
                         {
+                            'type': 'exercises',
+                            'question_data': {
                             'question': '車載ECUでプリエンプションが無効だとどのような問題が起きる可能性がありますか？',
                             'answer': 'エアバッグの展開やABSの作動など、緊急性の高い処理が通常処理の終了を待つ必要があり、致命的な遅延が発生する可能性がある。',
                             'explanation': '車載システムでは、安全に関わる処理が最優先で実行される必要があります。',
                             'difficulty': 'hard'
+                            }
                         },
                         {
+                            'type': 'exercises',
+                            'question_data': {
                             'question': 'ソフトリアルタイムシステムの例を3つ挙げてください。',
                             'answer': '1. 動画ストリーミング 2. オンラインゲーム 3. 音声通話アプリ',
                             'explanation': 'これらは多少の遅延があっても機能は継続しますが、品質が低下します。',
                             'difficulty': 'easy'
+                            }
+                        }
+                    ]
+                },
+            ]
+        }
+    
+    def _create_chapter5(self) -> Dict[str, Any]:
+        """第5章: 全機能統合テスト（新機能含む）"""
+        terms = self._get_chapter_terms("第5章")
+        
+        return {
+            'title': '第5章: 全機能統合テスト',
+            'overview': '全ての実装済み機能を網羅的にテストします。',
+            'sections': [
+                {
+                    'title': 'ツールチップ機能の詳細テスト',
+                    'contents': [
+                        {
+                            'type': 'text_with_tooltips',
+                            'text': 'マイコンはセンサーからの入力を処理し、アクチュエータを制御します。RTOSを使用することで複雑なタスク管理が可能になります。',
+                            'terms': terms
+                        },
+                        {
+                            'type': 'text_with_tooltips',
+                            'text': 'PWM制御によりモーターの回転速度を調整し、I2C通信でセンサーデータを取得します。',
+                            'terms': terms
+                        }
+                    ]
+                },
+                {
+                    'title': 'アイコン・略語ツールチップテスト',
+                    'contents': [
+                        {
+                            'type': 'icon_tooltip',
+                            'icon_name': 'memory',
+                            'tooltip_text': 'メモリ使用量を表示'
+                        },
+                        {
+                            'type': 'icon_tooltip', 
+                            'icon_name': 'speed',
+                            'tooltip_text': 'CPU使用率を監視'
+                        },
+                        {
+                            'type': 'abbreviation',
+                            'abbr': 'MCU',
+                            'full_form': 'Microcontroller Unit - マイクロコントローラユニット'
+                        },
+                        {
+                            'type': 'abbreviation',
+                            'abbr': 'GPIO',
+                            'full_form': 'General Purpose Input/Output - 汎用入出力ポート'
+                        }
+                    ]
+                },
+                {
+                    'title': 'アニメーション図表テスト',
+                    'contents': [
+                        {
+                            'type': 'chart',
+                            'chart_type': 'animation',
+                            'data': {
+                                'frames': [
+                                    {'x': [1, 2, 3, 4, 5], 'y': [1, 4, 2, 3, 5], 'title': 'フレーム 1', 'type': 'line'},
+                                    {'x': [1, 2, 3, 4, 5], 'y': [2, 3, 5, 1, 4], 'title': 'フレーム 2', 'type': 'line'},
+                                    {'x': [1, 2, 3, 4, 5], 'y': [5, 1, 3, 4, 2], 'title': 'フレーム 3', 'type': 'line'},
+                                    {'x': [1, 2, 3, 4, 5], 'y': [3, 5, 1, 2, 4], 'title': 'フレーム 4', 'type': 'line'},
+                                    {'x': [1, 2, 3, 4, 5], 'y': [4, 2, 4, 5, 1], 'title': 'フレーム 5', 'type': 'line'}
+                                ]
+                            },
+                            'config': {
+                                'title': 'データ変化のアニメーション',
+                                'xlabel': 'サンプル',
+                                'ylabel': '値',
+                                'filename': 'data_animation',
+                                'fps': 1,
+                                'xlim': [0, 6],
+                                'ylim': [0, 6]
+                            },
+                            'caption': '図5-1: 時系列データの変化をアニメーションで表示'
+                        }
+                    ]
+                },
+                {
+                    'title': 'クイズ・FAQ・TIPS統合テスト',
+                    'contents': [
+                        {
+                            'type': 'quiz',
+                            'question_data': {
+                                'question': 'RTOSの主な特徴は何ですか？',
+                                'options': [
+                                    'リアルタイム性の保証',
+                                    'グラフィック処理の高速化',
+                                    'ネットワーク通信の最適化',
+                                    'データベース管理'
+                                ],
+                                'correct': 0,
+                                'hint': 'RTOSはReal-Time Operating Systemの略です',
+                                'explanation': 'RTOSは決められた時間内に処理を完了することを保証するオペレーティングシステムです。'
+                            }
+                        },
+                        {
+                            'type': 'quiz',
+                            'question_data': {
+                                'question': 'I2C通信の特徴として正しいものは？',
+                                'options': [
+                                    '2本の信号線で通信',
+                                    '1本の信号線で通信', 
+                                    '4本の信号線で通信',
+                                    '8本の信号線で通信'
+                                ],
+                                'correct': 0,
+                                'hint': 'I2CはSDAとSCLの2本の線を使用します',
+                                'explanation': 'I2C通信はSDA（データ線）とSCL（クロック線）の2本で通信を行います。'
+                            }
+                        },
+                        {
+                            'type': 'quiz',
+                            'question_data': {
+                                'question': 'マイコンの主要な構成要素でないものは？',
+                                'options': [
+                                    'CPU',
+                                    'RAM',
+                                    'プリンター',
+                                    'I/Oポート'
+                                ],
+                                'correct': 2,
+                                'hint': 'マイコンは組み込みシステム用の小型コンピュータです',
+                                'explanation': 'マイコンはCPU、メモリ、I/Oポートを1つのチップに集積した小型コンピュータです。プリンターは外部機器です。'
+                            }
+                        }
+                    ]
+                },
+                {
+                    'title': '学習サマリーと関連資料',
+                    'contents': [
+                        {
+                            'type': 'summary',
+                            'title': '第5章で学んだ重要事項',
+                            'points': [
+                                'ツールチップ機能により用語理解が向上',
+                                'アニメーション図表で動的な現象を可視化',
+                                'クイズ機能で理解度の確認が可能',
+                                'FAQ・TIPSで自主学習を支援'
+                            ]
+                        },
+                        {
+                            'type': 'recommendations',
+                            'title': '関連資料と次のステップ',
+                            'items': [
+                                {'text': '第1章: プログラミング基礎の復習', 'link': 'chapter01.md'},
+                                {'text': '第2章: 組み込みシステム概要', 'link': 'chapter02.md'},
+                                {'text': '第3章: ハードウェア理解', 'link': 'chapter03.md'},
+                                {'text': '第4章: 演習問題に挑戦', 'link': 'chapter04.md'},
+                                {'text': '用語集で知識を体系化', 'link': '../glossary.md'},
+                                {'text': 'FAQで疑問を解決', 'link': '../faq.md'}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    'title': '高度なインタラクティブ図表',
+                    'contents': [
+                        {
+                            'type': 'chart',
+                            'chart_type': 'interactive',
+                            'data': {
+                                'datasets': {
+                                    'CPU使用率': {
+                                        'x': [0, 1, 2, 3, 4, 5],
+                                        'y': [20, 45, 78, 56, 32, 67]
+                                    },
+                                    'メモリ使用率': {
+                                        'x': [0, 1, 2, 3, 4, 5], 
+                                        'y': [15, 28, 45, 52, 38, 44]
+                                    },
+                                    'ディスク使用率': {
+                                        'x': [0, 1, 2, 3, 4, 5],
+                                        'y': [5, 8, 12, 15, 18, 22]
+                                    }
+                                }
+                            },
+                            'config': {
+                                'interactive_type': 'dropdown_filter',
+                                'title': 'システムリソース監視',
+                                'xlabel': '時間（分）',
+                                'ylabel': '使用率（%）',
+                                'filename': 'system_resource_monitor'
+                            },
+                            'caption': '図5-2: ドロップダウンでリソース種別を切り替え'
                         }
                     ]
                 }
+            ]
+        }

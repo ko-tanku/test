@@ -33,13 +33,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // docs/js/custom.js
 
+// docs/js/custom.js
+
 document.addEventListener('DOMContentLoaded', function () {
     const tooltips = document.querySelectorAll('.custom-tooltip');
 
     tooltips.forEach(tooltip => {
         tooltip.addEventListener('click', function (event) {
             event.stopPropagation(); // ドキュメントクリックでの非表示を防ぐため、イベント伝播を停止
-            this.classList.toggle('is-clicked'); // 'is-clicked' クラスをトグル
+
+            // ★ここから追加・修正するロジック★
+            // クリックされたツールチップが既に開いている場合は閉じる
+            if (this.classList.contains('is-clicked')) {
+                this.classList.remove('is-clicked');
+            } else {
+                // 他のすべてのツールチップを閉じる
+                tooltips.forEach(otherTooltip => {
+                    if (otherTooltip !== this) { // クリックされたツールチップ自身以外
+                        otherTooltip.classList.remove('is-clicked');
+                    }
+                });
+                // クリックされたツールチップを開く
+                this.classList.add('is-clicked');
+            }
+            // ★ここまで追加・修正するロジック★
         });
     });
 

@@ -66,6 +66,7 @@ def update_mkdocs_config(material_config: Dict[str, Any]) -> None:
                 {"第2章: ツールチップ": "test_material/documents/chapter02.md"},
                 {"第3章: 図表": "test_material/documents/chapter03.md"},
                 {"第4章: 演習": "test_material/documents/chapter04.md"},
+                {"第5章: 統合テスト": "test_material/documents/chapter05.md"},
                 {"用語集": "test_material/glossary.md"},
                 {"FAQ": "test_material/faq.md"},
                 {"TIPS": "test_material/tips.md"}

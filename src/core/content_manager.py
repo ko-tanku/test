@@ -67,7 +67,29 @@ class BaseContentManager(ABC):
                 f"テンプレートディレクトリが見つかりません: {template_dir}"
             )
             self.jinja_env = None
+
+    def render_template(self, template_name: str, context: Dict[str, Any]) -> str:
+        """
+        Jinja2テンプレートをレンダリング
+        
+        Args:
+            template_name: テンプレートファイル名
+            context: テンプレートに渡すデータ
             
+        Returns:
+            レンダリング済みMarkdown文字列
+        """
+        if not self.jinja_env:
+            logger.warning("Jinja2環境が初期化されていません")
+            return ""
+            
+        try:
+            template = self.jinja_env.get_template(template_name)
+            return template.render(**context)
+        except Exception as e:
+            logger.error(f"テンプレートレンダリングエラー: {e}")
+            return ""
+        
     def _register_material_terms(self, terms_list: List[Term]):
         """
         専門用語を一括登録
@@ -280,6 +302,10 @@ class BaseContentManager(ABC):
             elif content_type == 'quiz':
                 question_data = item.get('question_data', {})
                 self.doc_builder.add_quiz_question(question_data)
+            elif content_type == 'exercises':
+
+                question_data = item.get('question_data', {})
+                self.doc_builder.add_exercise_question(question_data)
                 
             elif content_type == 'image':
                 alt_text = item.get('alt_text', '')
@@ -306,9 +332,22 @@ class BaseContentManager(ABC):
                 items_list = item.get('items', [])
                 self.doc_builder.add_recommendation_section(title, items_list)
                 
+            elif content_type == 'icon_tooltip':
+                icon_name = item.get('icon_name', 'help')
+                tooltip_text = item.get('tooltip_text', '')
+                self.doc_builder.add_icon_with_tooltip(icon_name, tooltip_text)
+                
+            elif content_type == 'abbreviation':
+                abbr = item.get('abbr', '')
+                full_form = item.get('full_form', '')
+                self.doc_builder.add_abbreviation_definition(abbr, full_form)
+
+
+
     def _process_chart(self, chart_config: Dict[str, Any], output_dir: Path):
         """
         図表設定を処理して生成・埋め込み
+        全てのチャートタイプに対応
         
         Args:
             chart_config: 図表の設定
@@ -316,20 +355,28 @@ class BaseContentManager(ABC):
         """
         chart_type = chart_config.get('chart_type', 'line')
         config = chart_config.get('config', {})
+        data = chart_config.get('data', {})
+        chart_path = None
         
-        if chart_type == 'custom':
-            plot_function = config.get('plot_function')
-            if plot_function:
-                filename = config.get('filename', 'custom_chart.html')
-                chart_path = self.chart_gen.create_custom_figure(
-                    plot_function, filename, output_dir=output_dir
-                )
-            else:
-                logger.warning("カスタムチャートに描画関数が指定されていません")
-                return
-        else:
-            data = chart_config.get('data', {})
-            if chart_type == 'line':
+        try:
+            # ファイル名の正規化
+            filename = config.get('filename', f'{chart_type}_chart')
+            if not filename.endswith('.html'):
+                filename += '.html'
+            
+            if chart_type == 'custom':
+                # カスタム描画関数による図表
+                plot_function = config.get('plot_function')
+                if plot_function:
+                    chart_path = self.chart_gen.create_custom_figure(
+                        plot_function, filename, output_dir=output_dir
+                    )
+                else:
+                    logger.warning("カスタムチャートに描画関数が指定されていません")
+                    return
+                    
+            elif chart_type == 'line':
+                # 折れ線グラフ
                 chart_path = self.chart_gen.create_simple_line_chart(
                     data, 
                     config.get('x_col', 'x'),
@@ -337,11 +384,13 @@ class BaseContentManager(ABC):
                     config.get('title', ''),
                     config.get('xlabel', ''),
                     config.get('ylabel', ''),
-                    config.get('filename', 'line_chart.html'),
+                    filename,
                     config.get('use_plotly', False),
                     output_dir
                 )
+                
             elif chart_type == 'bar':
+                # 棒グラフ
                 chart_path = self.chart_gen.create_bar_chart(
                     data,
                     config.get('x_col', 'x'),
@@ -349,50 +398,210 @@ class BaseContentManager(ABC):
                     config.get('title', ''),
                     config.get('xlabel', ''),
                     config.get('ylabel', ''),
-                    config.get('filename', 'bar_chart.html'),
+                    filename,
                     config.get('use_plotly', False),
                     output_dir
                 )
-        
-        if 'chart_path' in locals():
-            caption = chart_config.get('caption', '')
-            if caption:
-                self.doc_builder.add_paragraph(f"**{caption}**")
-            
-            # documentsフォルダから2階層上がってchartsフォルダへ
-            relative_path = Path("../..") / "charts" / chart_path.name
-            self.doc_builder.add_html_component_reference(
-                relative_path,
-                '100%',  # 幅は100%
-                 None  # 高さは固定（スクロール防止）
-            )
+                
+            elif chart_type == 'pie':
+                # 円グラフ
+                chart_path = self.chart_gen.create_pie_chart(
+                    data,
+                    config.get('values_col', 'values'),
+                    config.get('labels_col', 'labels'),
+                    config.get('title', ''),
+                    filename,
+                    config.get('use_plotly', False),
+                    output_dir
+                )
+                
+            elif chart_type == 'scatter':
+                # 散布図（既存メソッドがある場合）
+                if hasattr(self.chart_gen, 'create_scatter_chart'):
+                    chart_path = self.chart_gen.create_scatter_chart(
+                        data,
+                        config.get('x_col', 'x'),
+                        config.get('y_col', 'y'),
+                        config.get('title', ''),
+                        config.get('xlabel', ''),
+                        config.get('ylabel', ''),
+                        filename,
+                        config.get('use_plotly', False),
+                        output_dir
+                    )
+                else:
+                    logger.warning(f"散布図メソッドが実装されていません")
+                    
+
+            elif chart_type == 'animation':
+                # アニメーションGIF生成
+                frames_data = data.get('frames', [])
+                if frames_data:
+                    # GIFファイル名に変更
+                    gif_filename = filename.replace('.html', '.gif')
+                    chart_path = self.chart_gen.create_animation_from_data(
+                        frames_data, config, gif_filename, output_dir
+                    )
+                    
+                    # GIFファイルの場合は画像参照として埋め込み
+                    if chart_path and chart_path.suffix == '.gif':
+                        caption = chart_config.get('caption', '')
+                        if caption:
+                            self.doc_builder.add_paragraph(f"**{caption}**")
+                        
+                        # GIFファイルは画像として埋め込み（相対パス修正）
+                        relative_path = Path("../../charts") / chart_path.name
+                        self.doc_builder.add_image_reference(
+                            "アニメーション図表", relative_path
+                        )
+                        logger.debug(f"アニメーションGIF埋め込み成功: {chart_path.name}")
+                        return  # 早期リターン（通常のiframe処理をスキップ）
+                else:
+                    logger.warning("アニメーション用のフレームデータが見つかりません")
+                    
+            elif chart_type == 'interactive':
+                # インタラクティブチャートの分岐処理
+                interactive_type = config.get('interactive_type', 'state_transition')
+                
+                if interactive_type == 'state_transition':
+                    chart_path = self.chart_gen.create_state_transition_chart(
+                        data, config, filename, output_dir
+                    )
+                elif interactive_type == 'dropdown_filter':
+                    chart_path = self.chart_gen.create_dropdown_filter_chart(
+                        data, config, filename, output_dir
+                    )
+                elif interactive_type == 'slider':
+                    chart_path = self.chart_gen.create_slider_chart(
+                        data, config, filename, output_dir
+                    )
+                elif interactive_type == 'hover_details':
+                    chart_path = self.chart_gen.create_hover_details_chart(
+                        data, config, filename, output_dir
+                    )
+                else:
+                    logger.warning(f"サポートされていないインタラクティブタイプ: {interactive_type}")
+                    
+            else:
+                logger.warning(f"サポートされていないチャートタイプ: {chart_type}")
+                    
+            # 図表が正常に生成された場合の共通処理（アニメーション以外）
+            if chart_path is not None:
+                # キャプションの追加
+                caption = chart_config.get('caption', '')
+                if caption:
+                    self.doc_builder.add_paragraph(f"**{caption}**")
+                
+                # iframeタグの生成と埋め込み
+                relative_path = Path("../../charts") / chart_path.name
+                self.doc_builder.add_html_component_reference(
+                    relative_path,
+                    '100%',  # 幅は100%
+                    None     # 高さは自動調整
+                )
+                
+                logger.debug(f"図表埋め込み成功: {chart_path.name}")
+            else:
+                logger.error(f"図表生成失敗 - タイプ: {chart_type}, 設定: {config}")
+                    
+        except Exception as e:
+            logger.error(f"図表処理中にエラーが発生しました: {e}")
 
     def _process_table(self, table_config: Dict[str, Any], output_dir: Path):
         """
         表設定を処理して生成・埋め込み
+        全ての表タイプに対応
+        
+        Args:
+            table_config: 表の設定
+            output_dir: 出力ディレクトリ
         """
         table_type = table_config.get('table_type', 'basic')
-        headers = table_config.get('headers', [])
-        rows = table_config.get('rows', [])
         title = table_config.get('title', '')
-        filename = table_config.get('filename', 'table.html') + '.html'
+        table_path = None
         
-        if table_type == 'basic':
-            table_path = self.table_gen.create_basic_table(
-                headers, rows, title, filename, output_dir=output_dir
-            )
-        elif table_type == 'comparison':
-            categories = table_config.get('categories', [])
-            items = table_config.get('items', [])
-            data = table_config.get('data', [])
-            table_path = self.table_gen.create_comparison_table(
-                categories, items, data, title, filename, output_dir=output_dir
-            )
+        try:
+            # ファイル名の正規化
+            filename = table_config.get('filename', f'{table_type}_table')
+            if not filename.endswith('.html'):
+                filename += '.html'
             
-        if 'table_path' in locals():
-            relative_path = Path("../..") / "tables" / table_path.name
-            self.doc_builder.add_html_component_reference(
-                relative_path,
-                '100%',
-                 None  # 表も固定高さ
-            )
+            # カスタムスタイルの取得
+            custom_styles = table_config.get('custom_styles', None)
+            
+            if table_type == 'basic':
+                # 基本的な表
+                headers = table_config.get('headers', [])
+                rows = table_config.get('rows', [])
+                
+                table_path = self.table_gen.create_basic_table(
+                    headers, rows, title, filename, 
+                    custom_styles, output_dir=output_dir
+                )
+                
+            elif table_type == 'comparison':
+                # 比較表
+                categories = table_config.get('categories', [])
+                items = table_config.get('items', [])
+                data = table_config.get('data', [])
+                
+                table_path = self.table_gen.create_comparison_table(
+                    categories, items, data, title, filename,
+                    custom_styles, output_dir=output_dir
+                )
+                
+            elif table_type == 'wide':
+                # 幅広表（横スクロール対応）
+                headers = table_config.get('headers', [])
+                rows = table_config.get('rows', [])
+                
+                # 幅広表用のカスタムスタイルを自動設定
+                wide_styles = custom_styles or {}
+                wide_styles.update({
+                    'table_layout': 'auto',
+                    'overflow_x': 'auto'
+                })
+                
+                table_path = self.table_gen.create_basic_table(
+                    headers, rows, title, filename,
+                    wide_styles, output_dir=output_dir
+                )
+                
+            elif table_type == 'styled':
+                # スタイル付き表（カスタムスタイル重視）
+                headers = table_config.get('headers', [])
+                rows = table_config.get('rows', [])
+                
+                table_path = self.table_gen.create_basic_table(
+                    headers, rows, title, filename,
+                    custom_styles, output_dir=output_dir
+                )
+                
+            else:
+                logger.warning(f"サポートされていない表タイプ: {table_type}")
+                
+            # 表が正常に生成された場合の共通処理
+            if table_path is not None:
+                # キャプションの追加
+                caption = table_config.get('caption', '')
+                if caption:
+                    self.doc_builder.add_paragraph(f"**{caption}**")
+                
+                # iframeタグの生成と埋め込み
+                # documentsフォルダから2階層上がってtablesフォルダへの相対パス
+                relative_path = Path("../..") / "tables" / table_path.name
+                self.doc_builder.add_html_component_reference(
+                    relative_path,
+                    '100%',  # 幅は100%
+                    None     # 高さは自動調整
+                )
+                
+                logger.debug(f"表埋め込み成功: {table_path.name}")
+            else:
+                logger.error(f"表生成失敗 - タイプ: {table_type}, 設定: {table_config}")
+                section_title = table_config.get('caption', '不明なセクション')
+                logger.error(f"セクション「{section_title}」の表が生成されませんでした")
+                
+        except Exception as e:
+            logger.error(f"表処理中にエラーが発生しました: {e}")
+            logger.error(f"表タイプ: {table_type}, 設定: {table_config}")
