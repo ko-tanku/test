@@ -25,7 +25,7 @@ MEANING_COLORS = {
 
 # 汎用的な図表スタイル設定
 BASE_CHART_STYLES = {
-    "font_family": ['Yu Gothic', 'Meiryo', 'TakaoGothic', 'IPAexGothic', 'IPA Gothic', 'sans-serif'],
+    "font_family": ['Meiryo', 'Yu Gothic', 'Meiryo', 'TakaoGothic', 'IPAexGothic', 'IPA Gothic', 'sans-serif'],
     "font_size_title": 16,
     "font_size_label": 12,
     "line_width": 2,
@@ -88,8 +88,12 @@ MKDOCS_SITE_CONFIG = {
     "plugins": [
         # "mkdocs-quiz-plugin"  # 必要に応じてコメントアウトを解除
     ],
-    "extra_javascript": [],
-    "extra_css": [],
+    "extra_javascript": [
+        "custom.js"
+    ],
+    "extra_css": [
+        "custom.css"
+    ],
     "extra": {
         # "analytics": {
         #     "provider": "google",

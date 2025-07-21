@@ -26,7 +26,7 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
     generated_files = {}
     
     # 出力ディレクトリの作成
-    charts_dir = output_base_path / "charts"
+    charts_dir = output_base_path
     charts_dir.mkdir(parents=True, exist_ok=True)
     
     # 1. シンプルなMatplotlib折れ線グラフ
@@ -39,7 +39,9 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
         "二次関数のグラフ",
         "X値",
         "Y値 (X²)",
-        "matplotlib_line_chart.html"
+        "matplotlib_line_chart.html",
+        output_dir=charts_dir
+        
     )
     generated_files["matplotlib_line"] = file_path
     
@@ -53,8 +55,10 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
         "カテゴリ別データ",
         "カテゴリ",
         "値",
-        "matplotlib_bar_chart.html"
+        "matplotlib_bar_chart.html",
+        output_dir=charts_dir
     )
+    print(f"⭐{file_path}")
     generated_files["matplotlib_bar"] = file_path
     
     # 3. Plotlyインタラクティブ折れ線グラフ
@@ -77,7 +81,8 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
     )
     
     file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
-        fig, "plotly_trigonometric.html"
+        fig, "plotly_trigonometric.html",
+        output_dir=charts_dir
     )
     generated_files["plotly_line"] = file_path
     
@@ -88,7 +93,8 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
         "カテゴリ",
         "値",
         "plotly_bar_chart.html",
-        use_plotly=True
+        use_plotly=True,
+        output_dir=charts_dir
     )
     generated_files["plotly_bar"] = file_path
     
@@ -115,10 +121,70 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
         ax.grid(True, alpha=styles["grid_alpha"])
     
     file_path = charts_dir / chart_gen.create_custom_figure(
-        draw_custom_diagram, "custom_diagram.html"
+        draw_custom_diagram, "custom_diagram.html",
+        output_dir=charts_dir
     )
     generated_files["custom_diagram"] = file_path
+
+
+    def draw_embedded_system(ax, colors, styles, **kwargs):
+        """組み込みシステムの構成図を描画"""
+        import matplotlib.patches as patches
+        
+        # CPU
+        cpu_rect = patches.Rectangle((0.3, 0.6), 0.4, 0.3, 
+                                    facecolor=colors["info"], 
+                                    edgecolor='black', linewidth=2)
+        ax.add_patch(cpu_rect)
+        ax.text(0.5, 0.75, 'CPU\n(マイコン)', ha='center', va='center', 
+                fontsize=styles["font_size_label"], fontweight='bold')
+        
+        # メモリ
+        mem_rect = patches.Rectangle((0.05, 0.3), 0.2, 0.2,
+                                    facecolor=colors["success"],
+                                    edgecolor='black', linewidth=2)
+        ax.add_patch(mem_rect)
+        ax.text(0.15, 0.4, 'メモリ', ha='center', va='center',
+                fontsize=styles["font_size_label"])
+        
+        # センサー
+        sensor_rect = patches.Rectangle((0.75, 0.7), 0.2, 0.15,
+                                       facecolor=colors["warning"],
+                                       edgecolor='black', linewidth=2)
+        ax.add_patch(sensor_rect)
+        ax.text(0.85, 0.775, 'センサー', ha='center', va='center',
+                fontsize=styles["font_size_label"])
+        
+        # アクチュエータ
+        act_rect = patches.Rectangle((0.75, 0.45), 0.2, 0.15,
+                                    facecolor=colors["danger"],
+                                    edgecolor='black', linewidth=2)
+        ax.add_patch(act_rect)
+        ax.text(0.85, 0.525, 'アクチュ\nエータ', ha='center', va='center',
+                fontsize=styles["font_size_label"])
+        
+        # 矢印（接続）
+        ax.arrow(0.25, 0.45, 0.05, 0.15, head_width=0.02, head_length=0.02,
+                fc='black', ec='black')
+        ax.arrow(0.7, 0.75, 0.05, 0.025, head_width=0.02, head_length=0.02,
+                fc='black', ec='black')
+        ax.arrow(0.7, 0.7, 0.05, -0.075, head_width=0.02, head_length=0.02,
+                fc='black', ec='black')
+        
+        # 軸の設定
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1)
+        ax.set_aspect('equal')
+        ax.set_title("組み込みシステムの基本構成", fontsize=styles["font_size_title"])
+        ax.axis('off')  # 軸を非表示
     
+    # カスタム組み込みシステム図を生成
+    file_path = charts_dir / chart_gen.create_custom_figure(
+        draw_embedded_system, "embedded_system_diagram.html",
+        output_dir=charts_dir
+    )
+    generated_files["embedded_system"] = file_path
+
     # 6. Plotlyによる状態遷移デモ
     fig = go.Figure()
     
@@ -170,7 +236,8 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
     )
     
     file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
-        fig, "state_transition_demo.html"
+        fig, "state_transition_demo.html",
+        output_dir=charts_dir
     )
     generated_files["state_transition"] = file_path
     
@@ -224,7 +291,8 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
     )
     
     file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
-        fig, "dropdown_filter_demo.html"
+        fig, "dropdown_filter_demo.html",
+        output_dir=charts_dir
     )
     generated_files["dropdown_filter"] = file_path
     
@@ -274,7 +342,8 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
     )
     
     file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
-        fig, "slider_parameter_demo.html"
+        fig, "slider_parameter_demo.html",
+        output_dir=charts_dir
     )
     generated_files["slider_parameter"] = file_path
     
@@ -299,7 +368,8 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
         frames.append(fig)
     
     file_path = charts_dir / chart_gen.create_animation_gif(
-        frames, "sine_wave_animation.gif", fps=2
+        frames, "sine_wave_animation.gif", fps=2,
+        output_dir=charts_dir
     )
     generated_files["animation_gif"] = file_path
     
@@ -342,7 +412,8 @@ def create_all_test_charts(chart_gen: ChartGenerator, output_base_path: Path) ->
     )
     
     file_path = charts_dir / chart_gen.create_interactive_plotly_chart(
-        fig, "hover_details_demo.html"
+        fig, "hover_details_demo.html",
+        output_dir=charts_dir
     )
     generated_files["hover_details"] = file_path
     

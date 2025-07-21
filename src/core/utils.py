@@ -124,7 +124,7 @@ def apply_matplotlib_japanese_font(font_family: List[str] = None):
         )
     
     # 日本語の文字化けを防ぐ追加設定
-    plt.rcParams['font.sans-serif'] = font_family + ['DejaVu Sans']
+    plt.rcParams['font.sans-serif'] = font_family
     plt.rcParams['axes.unicode_minus'] = False
 
 

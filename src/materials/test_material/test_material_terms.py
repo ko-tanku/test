@@ -1,138 +1,158 @@
 """
 テスト資料用の専門用語、FAQ、TIPSデータ
-coreの専門用語管理機能をテストするためのダミーデータ
+IT・組み込み技術テーマ
 """
 
 from src.core.knowledge_manager import Term, FaqItem, TipItem
 
-# テスト用専門用語リスト
-TEST_TERMS = [
+# 組み込み技術用専門用語リスト
+EMBEDDED_TERMS = [
     Term(
-        term="MkDocs",
-        definition="Pythonベースの静的サイトジェネレータ。Markdownファイルから美しいドキュメントサイトを生成する。",
-        category="基本ツール",
-        related_terms=["Markdown", "静的サイトジェネレータ"],
-        first_chapter="第1章",
-        context_snippets=[
-            "MkDocsは設定が簡単で、すぐに使い始められます。",
-            "MkDocs Materialテーマを使用すると、より洗練されたデザインになります。"
-        ]
-    ),
-    Term(
-        term="Markdown",
-        definition="軽量マークアップ言語の一つ。プレーンテキストで記述し、HTMLに変換できる。",
-        category="基本ツール",
-        related_terms=["MkDocs", "HTML"],
-        first_chapter="第1章",
-        context_snippets=[
-            "Markdownは読みやすく書きやすい記法です。",
-            "# 見出し1、## 見出し2のように記述します。"
-        ]
-    ),
-    Term(
-        term="ツールチップ",
-        definition="要素にマウスオーバーした際に表示される小さな説明ウィンドウ。",
-        category="UI要素",
-        related_terms=["ホバー", "ポップアップ"],
+        term="マイコン",
+        definition="マイクロコントローラの略。CPU、メモリ、I/Oなどを1チップに集積した小型コンピュータ。",
+        category="ハードウェア",
+        related_terms=["CPU", "組み込みシステム", "SoC"],
         first_chapter="第2章",
         context_snippets=[
-            "ツールチップを使うと、追加情報を省スペースで提供できます。"
+            "マイコンは組み込みシステムの心臓部です。",
+            "8ビットから32ビットまで様々な種類があります。"
         ]
     ),
     Term(
-        term="静的サイトジェネレータ",
-        definition="事前にHTMLファイルを生成し、サーバーでの動的な処理を必要としないWebサイトを作成するツール。",
-        category="基本ツール",
-        related_terms=["MkDocs", "Hugo", "Jekyll"],
+        term="センサー",
+        definition="物理量（温度、圧力、光など）を電気信号に変換する素子。",
+        category="ハードウェア",
+        related_terms=["アクチュエータ", "A/D変換"],
+        first_chapter="第2章",
+        context_snippets=[
+            "センサーからの入力を処理して、適切な制御を行います。"
+        ]
+    ),
+    Term(
+        term="アクチュエータ",
+        definition="電気信号を物理的な動作（モーター回転、バルブ開閉など）に変換する装置。",
+        category="ハードウェア",
+        related_terms=["センサー", "サーボモーター"],
+        first_chapter="第2章"
+    ),
+    Term(
+        term="RTOS",
+        definition="Real-Time Operating System。リアルタイム性を保証するOS。",
+        category="ソフトウェア",
+        related_terms=["リアルタイムシステム", "スケジューリング"],
+        first_chapter="第4章",
+        context_snippets=[
+            "RTOSを使用することで、複雑なタスク管理が可能になります。"
+        ]
+    ),
+    Term(
+        term="割り込み",
+        definition="CPUの通常処理を一時中断して、緊急の処理を実行する仕組み。",
+        category="システム",
+        related_terms=["ISR", "プリエンプション"],
+        first_chapter="第3章"
+    ),
+    Term(
+        term="デバッガ",
+        definition="プログラムのバグを発見・修正するためのツール。",
+        category="開発ツール",
+        related_terms=["IDE", "エミュレータ"],
         first_chapter="第1章"
     ),
     Term(
-        term="インタラクティブ図表",
-        definition="ユーザーの操作に応じて動的に変化する図表。ホバー、クリック、ドラッグなどの操作が可能。",
-        category="ビジュアライゼーション",
-        related_terms=["Plotly", "D3.js"],
+        term="フラッシュメモリ",
+        definition="電源を切ってもデータが保持される不揮発性メモリ。プログラムの格納に使用。",
+        category="ハードウェア",
+        related_terms=["ROM", "EEPROM"],
         first_chapter="第3章"
     ),
     Term(
-        term="Plotly",
-        definition="Pythonで美しいインタラクティブな図表を作成できるライブラリ。",
-        category="ライブラリ",
-        related_terms=["インタラクティブ図表", "データビジュアライゼーション"],
+        term="PWM",
+        definition="Pulse Width Modulation。パルス幅変調。デジタル信号で擬似的にアナログ値を表現。",
+        category="制御技術",
+        related_terms=["D/A変換", "モーター制御"],
         first_chapter="第3章"
     ),
     Term(
-        term="HTMLエスケープ",
-        definition='HTMLで特殊な意味を持つ文字（<, >, ", &など）を文字実体参照に変換すること。',
-        category="Web技術",
-        related_terms=["セキュリティ", "XSS"],
-        first_chapter="第2章",
-        context_snippets=[
-            'HTMLエスケープにより、"<script>"のような文字列を安全に表示できます。'
-        ]
+        term="I2C",
+        definition="Inter-Integrated Circuit。シリアル通信プロトコルの一種。",
+        category="通信",
+        related_terms=["SPI", "UART"],
+        first_chapter="第3章"
     ),
     Term(
-        term="レスポンシブデザイン",
-        definition="画面サイズに応じて自動的にレイアウトが調整されるデザイン手法。",
-        category="UI/UX",
-        related_terms=["CSS", "メディアクエリ"],
-        first_chapter="第3章"
+        term="デッドライン",
+        definition="処理が完了すべき制限時間。リアルタイムシステムで重要な概念。",
+        category="リアルタイムシステム",
+        related_terms=["リアルタイム性", "レイテンシ"],
+        first_chapter="第4章"
     )
 ]
 
-# テスト用FAQリスト
-TEST_FAQ_ITEMS = [
+# 組み込み技術FAQリスト
+EMBEDDED_FAQ_ITEMS = [
     FaqItem(
-        question="MkDocsとSphinxの違いは何ですか？",
-        answer="MkDocsはMarkdownベースでシンプルな設定が特徴です。一方、SphinxはreStructuredTextを使用し、より複雑なドキュメント構造に対応できます。",
+        question="マイコンとマイクロプロセッサの違いは何ですか？",
+        answer="マイコンはCPU、メモリ、I/Oを1チップに集積していますが、マイクロプロセッサはCPU機能のみです。マイコンは組み込み用途、マイクロプロセッサはPC用途が主です。",
         category="基本概念"
     ),
     FaqItem(
-        question="ツールチップが表示されません。どうすればよいですか？",
-        answer="MkDocs Materialテーマの`content.tooltips`機能が有効になっているか確認してください。また、`attr_list`と`abbr`拡張機能も必要です。",
+        question="RTOSは必ず必要ですか？",
+        answer="小規模なシステムではベアメタルプログラミング（OS無し）でも十分です。複数のタスクを管理する必要がある場合にRTOSが有効です。",
+        category="システム設計"
+    ),
+    FaqItem(
+        question="組み込みプログラミングに最適な言語は？",
+        answer="C言語が最も一般的です。ハードウェア制御が可能で、実行効率が高いためです。最近はC++も使われます。",
+        category="プログラミング"
+    ),
+    FaqItem(
+        question="デバッグが難しいです。良い方法はありますか？",
+        answer="1. LEDやシリアル出力でのprintf デバッグ 2. JTAGデバッガの使用 3. オシロスコープでの信号確認 4. 段階的なテスト実施",
         category="トラブルシューティング"
     ),
     FaqItem(
-        question="図表のサイズを調整するにはどうすればよいですか？",
-        answer="ChartGeneratorの`figsize`パラメータで調整できます。また、HTMLに埋め込む際の`width`と`height`属性でも制御可能です。",
-        category="カスタマイズ"
+        question="消費電力を削減する方法は？",
+        answer="1. クロック周波数の低減 2. スリープモードの活用 3. 不要な周辺機能の停止 4. 効率的なアルゴリズムの使用",
+        category="省電力設計"
     ),
     FaqItem(
-        question="日本語フォントが文字化けします。",
-        answer="Matplotlibの日本語フォント設定を確認してください。`japanize-matplotlib`パッケージをインストールするか、手動でフォントを設定する必要があります。",
-        category="トラブルシューティング"
-    ),
-    FaqItem(
-        question="生成されたサイトをGitHub Pagesで公開できますか？",
-        answer="はい、可能です。`mkdocs gh-deploy`コマンドを使用すると、自動的にGitHub Pagesにデプロイされます。",
-        category="デプロイメント"
+        question="組み込みシステムのセキュリティ対策は？",
+        answer="1. ファームウェアの暗号化 2. セキュアブート実装 3. 通信の暗号化 4. デバッグポートの無効化",
+        category="セキュリティ"
     )
 ]
 
-# テスト用TIPSリスト
-TEST_TIP_ITEMS = [
+# 組み込み技術TIPSリスト
+EMBEDDED_TIP_ITEMS = [
     TipItem(
-        title="Markdownの効率的な書き方",
-        content="VSCodeなどのエディタでMarkdownプレビュー機能を使用すると、リアルタイムで結果を確認しながら執筆できます。",
-        category="執筆のコツ"
+        title="割り込み処理は短く",
+        content="割り込みサービスルーチン（ISR）内では最小限の処理のみ行い、時間のかかる処理はメインループに委譲しましょう。",
+        category="プログラミング"
     ),
     TipItem(
-        title="図表の最適化",
-        content="Web表示用の図表は、DPIを150程度に設定し、ファイルサイズと品質のバランスを取ることをお勧めします。",
-        category="パフォーマンス"
+        title="volatile修飾子の重要性",
+        content="割り込みやハードウェアレジスタにアクセスする変数には必ずvolatile修飾子を付けて、コンパイラの最適化を防ぎましょう。",
+        category="プログラミング"
     ),
     TipItem(
-        title="用語の一貫性を保つ",
-        content="KnowledgeManagerを活用して専門用語を一元管理することで、資料全体で用語の定義と表記を統一できます。",
-        category="品質管理"
+        title="ウォッチドッグタイマーの活用",
+        content="システムの暴走を防ぐため、ウォッチドッグタイマーを設定し、定期的にリセットすることで信頼性を向上させます。",
+        category="信頼性"
     ),
     TipItem(
-        title="インタラクティブ要素の適切な使用",
-        content="すべての図表をインタラクティブにする必要はありません。ユーザーが操作する価値がある場合にのみ使用しましょう。",
-        category="UI/UX"
+        title="メモリマップを理解する",
+        content="使用するマイコンのメモリマップ（ROM、RAM、レジスタの配置）を理解することで、効率的なプログラミングが可能になります。",
+        category="システム理解"
     ),
     TipItem(
-        title="mkdocs serveの活用",
-        content="`mkdocs serve`コマンドを使用すると、ローカルでサイトをプレビューでき、ファイルの変更が自動的に反映されます。",
-        category="開発効率"
+        title="オシロスコープは必須ツール",
+        content="デジタル信号の波形を確認できるオシロスコープは、組み込み開発には欠かせません。タイミング問題の解析に威力を発揮します。",
+        category="開発ツール"
+    ),
+    TipItem(
+        title="状態遷移図を描く",
+        content="複雑な制御ロジックは、まず状態遷移図を描いてから実装すると、バグが減り保守性も向上します。",
+        category="設計手法"
     )
 ]

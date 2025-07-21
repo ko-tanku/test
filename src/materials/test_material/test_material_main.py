@@ -62,38 +62,25 @@ def update_mkdocs_config(material_config: Dict[str, Any]) -> None:
         test_material_nav = {
             material_config["title"]: [
                 {"ホーム": "test_material/index.md"},
-                {"第1章: 基本要素": "test_material/chapter01/index.md"},
-                {"第2章: ツールチップ": "test_material/chapter02/index.md"},
-                {"第3章: 図表": "test_material/chapter03/index.md"},
-                {"第4章: 演習": "test_material/chapter04/index.md"}
+                {"第1章: 基本要素": "test_material/documents/chapter01.md"},
+                {"第2章: ツールチップ": "test_material/documents/chapter02.md"},
+                {"第3章: 図表": "test_material/documents/chapter03.md"},
+                {"第4章: 演習": "test_material/documents/chapter04.md"},
+                {"用語集": "test_material/glossary.md"},
+                {"FAQ": "test_material/faq.md"},
+                {"TIPS": "test_material/tips.md"}
             ]
         }
-        
+
         # 既存のテスト資料項目を削除（重複防止）
         config['nav'] = [
             item for item in config['nav'] 
             if not isinstance(item, dict) or material_config["title"] not in item
         ]
-        
+
         # テスト資料を追加
         config['nav'].append(test_material_nav)
-        
-        # 共通ページも追加
-        common_pages = [
-            {"用語集": "glossary.md"},
-            {"FAQ": "faq.md"},
-            {"TIPS": "tips.md"}
-        ]
-        
-        # 共通ページの重複を防ぐ
-        for page in common_pages:
-            page_title = list(page.keys())[0]
-            if not any(
-                isinstance(item, dict) and page_title in item 
-                for item in config['nav']
-            ):
-                config['nav'].append(page)
-        
+
         # YAMLファイルに保存
         with open(mkdocs_yml_path, 'w', encoding='utf-8') as f:
             yaml.dump(config, f, default_flow_style=False, allow_unicode=True, sort_keys=False)

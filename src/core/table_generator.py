@@ -138,24 +138,19 @@ class TableGenerator:
         rows: List[List[Any]],
         title: str,
         output_filename: str = "basic_table.html",
-        custom_styles: Optional[Dict[str, str]] = None
+        custom_styles: Optional[Dict[str, str]] = None,
+        output_dir: Path = None  # この引数を追加
     ) -> Path:
         """
         基本的な表を生成
-        
-        Args:
-            headers: ヘッダーのリスト
-            rows: 行データのリスト
-            title: 表のタイトル
-            output_filename: 出力ファイル名
-            custom_styles: カスタムスタイル
-            
-        Returns:
-            生成されたファイルのパス
         """
         # ファイル名をスラッグ化
         safe_filename = slugify(output_filename.replace('.html', '')) + '.html'
-        output_path = Path(safe_filename)
+        
+        if output_dir:
+            output_path = output_dir / safe_filename
+        else:
+            output_path = Path(safe_filename)
         
         try:
             # DataFrameを作成
@@ -218,7 +213,8 @@ class TableGenerator:
         data: List[List[Any]],
         title: str,
         output_filename: str = "comparison_table.html",
-        custom_styles: Optional[Dict[str, str]] = None
+        custom_styles: Optional[Dict[str, str]] = None,
+        output_dir: Path = None  # この引数を追加
     ) -> Path:
         """
         比較表を生成
@@ -236,7 +232,11 @@ class TableGenerator:
         """
         # ファイル名をスラッグ化
         safe_filename = slugify(output_filename.replace('.html', '')) + '.html'
-        output_path = Path(safe_filename)
+        
+        if output_dir:
+            output_path = output_dir / safe_filename
+        else:
+            output_path = Path(safe_filename)
         
         try:
             # DataFrameを作成

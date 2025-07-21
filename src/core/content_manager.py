@@ -62,9 +62,155 @@ class BaseContentManager(ABC):
                 autoescape=select_autoescape(['html', 'xml'])
             )
         else:
-            logger.warning(f"テンプレートディレクトリが見つかりません: {template_dir}")
+            # テンプレートディレクトリが存在しない場合は警告
+            logger.warning(
+                f"テンプレートディレクトリが見つかりません: {template_dir}"
+            )
             self.jinja_env = None
             
+    def _register_material_terms(self, terms_list: List[Term]):
+        """
+        専門用語を一括登録
+        
+        Args:
+            terms_list: Termオブジェクトのリスト
+        """
+        self.knowledge_mgr.register_terms_batch(terms_list)
+        
+    def _register_faq_tips(self, faq_list: List[FaqItem], tip_list: List[TipItem]):
+        """
+        FAQとTIPSを一括登録
+        
+        Args:
+            faq_list: FaqItemオブジェクトのリスト
+            tip_list: TipItemオブジェクトのリスト
+        """
+        for faq in faq_list:
+            self.knowledge_mgr.register_faq_item(faq)
+        
+        for tip in tip_list:
+            self.knowledge_mgr.register_tip_item(tip)
+            
+    def _get_chapter_terms(self, chapter_title: str) -> Dict[str, Dict[str, str]]:
+        """
+        指定された章の用語情報を取得
+        
+        Args:
+            chapter_title: 章のタイトル
+            
+        Returns:
+            用語情報の辞書
+        """
+        return self.knowledge_mgr.get_terms_for_chapter(chapter_title)
+        
+    def generate_glossary(self) -> Path:
+        """
+        用語集を生成
+        
+        Returns:
+            生成されたファイルのパス
+        """
+        return self.knowledge_mgr.generate_glossary_markdown()
+        
+    def generate_faq_page(self) -> Path:
+        """
+        FAQページを生成
+        
+        Returns:
+            生成されたファイルのパス
+        """
+        return self.knowledge_mgr.generate_faq_markdown()
+        
+    def generate_tips_page(self) -> Path:
+        """
+        TIPSページを生成
+        
+        Returns:
+            生成されたファイルのパス
+        """
+        return self.knowledge_mgr.generate_tips_markdown()
+        
+    @abstractmethod
+    def generate_content(self) -> List[Path]:
+        """
+        資料全体のコンテンツを生成（継承クラスで実装必須）
+        
+        Returns:
+            生成されたMarkdownファイルのパスリスト
+        """
+        raise NotImplementedError("継承クラスでgenerate_contentメソッドを実装してください")
+        
+    def _create_chapter_template(
+        self, chapter_info: Dict[str, Any], chapter_func: Callable
+    ) -> Path:
+        """
+        各章のコンテンツを生成
+        
+        Args:
+            chapter_info: 章の情報
+            chapter_func: 章のコンテンツ生成関数
+            
+        Returns:
+            生成されたファイルのパス
+        """
+        # バッファをクリア
+        self.doc_builder.clear_content()
+        
+        # 章のタイトルを追加
+        self.doc_builder.add_heading(chapter_info.get("title", ""), 1)
+        
+        # Jinja2テンプレートを使用する場合
+        if self.jinja_env and "template" in chapter_info:
+            template = self.jinja_env.get_template(chapter_info["template"])
+            
+            # コンテキストデータを生成
+            context = chapter_func()
+            
+            # テンプレートをレンダリング
+            rendered_content = template.render(**context)
+            self.doc_builder.add_raw_markdown(rendered_content)
+        else:
+            # テンプレートを使用しない場合は直接生成
+            chapter_func()
+        
+        # ファイル保存
+        filename = chapter_info.get("filename", "chapter.md")
+        return self.doc_builder.save_markdown(filename)
+        
+    def _create_chapter_and_document_paths(
+        self, chapter_name: str, doc_name: str = None
+    ) -> Path:
+        """
+        章やドキュメントの出力パスを構築
+        
+        Args:
+            chapter_name: 章の名前
+            doc_name: ドキュメント名（オプション）
+            
+        Returns:
+            構築されたパス
+        """
+        chapter_path = self.output_base_dir / chapter_name
+        
+        if doc_name:
+            doc_path = chapter_path / "documents"
+            doc_path.mkdir(parents=True, exist_ok=True)
+            
+            # 関連ディレクトリも作成
+            (chapter_path / "charts").mkdir(parents=True, exist_ok=True)
+            (chapter_path / "tables").mkdir(parents=True, exist_ok=True)
+            
+            return doc_path / doc_name
+        else:
+            # 章のルートディレクトリを作成
+            chapter_path.mkdir(parents=True, exist_ok=True)
+            
+            # 関連ディレクトリも作成
+            (chapter_path / "charts").mkdir(parents=True, exist_ok=True)
+            (chapter_path / "tables").mkdir(parents=True, exist_ok=True)
+            
+            return chapter_path
+
     def _process_content_list(self, contents: List[Dict[str, Any]], charts_dir: Path, tables_dir: Path):
         """
         コンテンツリストを処理してMarkdownに変換
@@ -172,21 +318,19 @@ class BaseContentManager(ABC):
         config = chart_config.get('config', {})
         
         if chart_type == 'custom':
-            # カスタム描画関数を使用
             plot_function = config.get('plot_function')
             if plot_function:
                 filename = config.get('filename', 'custom_chart.html')
-                chart_path = output_dir / self.chart_gen.create_custom_figure(
+                chart_path = self.chart_gen.create_custom_figure(
                     plot_function, filename, output_dir=output_dir
-                ).name
+                )
             else:
                 logger.warning("カスタムチャートに描画関数が指定されていません")
                 return
         else:
-            # 標準的な図表タイプ
             data = chart_config.get('data', {})
             if chart_type == 'line':
-                chart_path = output_dir / self.chart_gen.create_simple_line_chart(
+                chart_path = self.chart_gen.create_simple_line_chart(
                     data, 
                     config.get('x_col', 'x'),
                     config.get('y_col', 'y'),
@@ -196,30 +340,36 @@ class BaseContentManager(ABC):
                     config.get('filename', 'line_chart.html'),
                     config.get('use_plotly', False),
                     output_dir
-                ).name
-            # 他のチャートタイプも同様に実装
-            
-        # 図表を埋め込み
+                )
+            elif chart_type == 'bar':
+                chart_path = self.chart_gen.create_bar_chart(
+                    data,
+                    config.get('x_col', 'x'),
+                    config.get('y_col', 'y'),
+                    config.get('title', ''),
+                    config.get('xlabel', ''),
+                    config.get('ylabel', ''),
+                    config.get('filename', 'bar_chart.html'),
+                    config.get('use_plotly', False),
+                    output_dir
+                )
+        
         if 'chart_path' in locals():
             caption = chart_config.get('caption', '')
             if caption:
                 self.doc_builder.add_paragraph(f"**{caption}**")
             
-            # 相対パスで参照
-            relative_path = Path("charts") / chart_path.name
+            # documentsフォルダから2階層上がってchartsフォルダへ
+            relative_path = Path("../..") / "charts" / chart_path.name
             self.doc_builder.add_html_component_reference(
                 relative_path,
-                str(chart_config.get('width', 100)) + '%',
-                str(chart_config.get('height', 500)) + 'px'
+                '100%',  # 幅は100%
+                 None  # 高さは固定（スクロール防止）
             )
-            
+
     def _process_table(self, table_config: Dict[str, Any], output_dir: Path):
         """
         表設定を処理して生成・埋め込み
-        
-        Args:
-            table_config: 表の設定
-            output_dir: 出力ディレクトリ
         """
         table_type = table_config.get('table_type', 'basic')
         headers = table_config.get('headers', [])
@@ -228,22 +378,21 @@ class BaseContentManager(ABC):
         filename = table_config.get('filename', 'table.html') + '.html'
         
         if table_type == 'basic':
-            table_path = output_dir / self.table_gen.create_basic_table(
+            table_path = self.table_gen.create_basic_table(
                 headers, rows, title, filename, output_dir=output_dir
-            ).name
+            )
         elif table_type == 'comparison':
             categories = table_config.get('categories', [])
             items = table_config.get('items', [])
             data = table_config.get('data', [])
-            table_path = output_dir / self.table_gen.create_comparison_table(
+            table_path = self.table_gen.create_comparison_table(
                 categories, items, data, title, filename, output_dir=output_dir
-            ).name
+            )
             
-        # 表を埋め込み
         if 'table_path' in locals():
-            relative_path = Path("tables") / table_path.name
+            relative_path = Path("../..") / "tables" / table_path.name
             self.doc_builder.add_html_component_reference(
                 relative_path,
                 '100%',
-                str(table_config.get('height', 400)) + 'px'
+                 None  # 表も固定高さ
             )

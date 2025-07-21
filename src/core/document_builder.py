@@ -116,26 +116,27 @@ class DocumentBuilder:
         text_with_protected_links = re.sub(link_pattern, protect_link, text)
         
         # 用語をツールチップ付きリンクに置換
+        # 各用語について、テキスト内で初回に登場した箇所のみを置換します。
         for term, info in terms_info.items():
             tooltip_text = info.get("tooltip_text", "")
             # HTMLエスケープ
             escaped_tooltip = escape(tooltip_text)
             # 改行を&#10;に置換
             escaped_tooltip = escaped_tooltip.replace('\n', '&#10;')
-            
-            # 単語境界を使用して部分文字列の誤置換を防ぐ
-            pattern = r'\b' + re.escape(term) + r'\b'
-            replacement = f'[{term}]("" "{escaped_tooltip}")'
+
+            # 修正: 前後の単語関係なく、正確な用語の文字列をマッチさせ、初回のみ置換
+            pattern = re.escape(term)
+            replacement = f'<span class="custom-tooltip" data-tooltip="{escaped_tooltip}">{term}</span>'
             text_with_protected_links = re.sub(
-                pattern, replacement, text_with_protected_links
+                pattern, replacement, text_with_protected_links, count=1 # ここで初回のみ置換を指定
             )
+
         
         # 保護していたリンクを復元
         for i, protected_link in enumerate(protected_links):
             text_with_protected_links = text_with_protected_links.replace(
                 f"__PROTECTED_LINK_{i}__", protected_link
             )
-        
         self.add_paragraph(text_with_protected_links)
         
     def add_code_block(self, code: str, lang: str = "python"):
@@ -181,6 +182,7 @@ class DocumentBuilder:
             text: 引用テキスト
         """
         for line in text.split('\n'):
+            line = escape(line)
             self.content_buffer.append(f"> {line}")
         self.content_buffer.append("")
         
@@ -203,9 +205,9 @@ class DocumentBuilder:
         else:
             self.content_buffer.append(f'![{alt_text}]({path_str})')
         self.content_buffer.append("")
-        
+
     def add_html_component_reference(
-        self, component_path: Path, width: str = "100%", height: str = "400px"
+        self, component_path: Path, width: str = "100%", height: Optional[str] = "400px" # heightをOptionalに
     ):
         """
         HTML図表や表をiframeで埋め込む
@@ -213,19 +215,26 @@ class DocumentBuilder:
         Args:
             component_path: HTMLファイルのパス
             width: 幅の指定
-            height: 高さの指定
+            height: 高さの指定 (Noneの場合、height属性は出力されない)
         """
         # Unixスタイルパスに変換
         path_str = component_path.as_posix()
         
+        # heightがNoneでない場合にのみheight属性を追加
+        height_attr = f'height="{height}"' if height is not None else ''
+        
         iframe_html = (
             f'<iframe src="{path_str}" '
-            f'width="{width}" height="{height}" '
-            f'style="border: 1px solid #ddd; border-radius: 4px;">'
+            f'width="{width}" {height_attr} ' # height_attr を埋め込む
+            f'style="border: 1px solid #ddd; border-radius: 4px;" '
+            f'scrolling="no" class="auto-height-iframe">' # scrolling="no" と class を追加
             f'</iframe>'
         )
         self.content_buffer.append(iframe_html)
         self.content_buffer.append("")
+
+    def add_markdown_content(self, content: str): # 必要に応じて追加
+        self.content_buffer.append(content)
         
     def add_admonition(
         self, type: str, title: str, content: str, collapsible: bool = False

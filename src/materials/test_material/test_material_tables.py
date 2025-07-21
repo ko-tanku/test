@@ -23,7 +23,7 @@ def create_all_test_tables(table_gen: TableGenerator, output_base_path: Path) ->
     generated_files = {}
     
     # 出力ディレクトリの作成
-    tables_dir = output_base_path / "tables"
+    tables_dir = output_base_path
     tables_dir.mkdir(parents=True, exist_ok=True)
     
     # 1. 基本的な表
@@ -38,7 +38,8 @@ def create_all_test_tables(table_gen: TableGenerator, output_base_path: Path) ->
     file_path = tables_dir / table_gen.create_basic_table(
         headers, rows,
         "基本的なツール一覧",
-        "basic_tools_table.html"
+        "basic_tools_table.html",
+        output_dir=tables_dir
     )
     generated_files["basic_table"] = file_path
     
@@ -56,7 +57,8 @@ def create_all_test_tables(table_gen: TableGenerator, output_base_path: Path) ->
     file_path = tables_dir / table_gen.create_comparison_table(
         categories, items, data,
         "静的サイトジェネレータ比較",
-        "ssg_comparison_table.html"
+        "ssg_comparison_table.html",
+        output_dir=tables_dir
     )
     generated_files["comparison_table"] = file_path
     
@@ -80,7 +82,8 @@ def create_all_test_tables(table_gen: TableGenerator, output_base_path: Path) ->
         headers, rows,
         "プロジェクトタスク管理表",
         "project_tasks_table.html",
-        custom_styles
+        custom_styles,
+        output_dir=tables_dir
     )
     generated_files["styled_table"] = file_path
     
@@ -94,7 +97,8 @@ def create_all_test_tables(table_gen: TableGenerator, output_base_path: Path) ->
     file_path = tables_dir / table_gen.create_basic_table(
         wide_headers, wide_rows,
         "横スクロール対応の幅広表",
-        "wide_scrollable_table.html"
+        "wide_scrollable_table.html",
+        output_dir=tables_dir
     )
     generated_files["wide_table"] = file_path
     
@@ -117,7 +121,8 @@ def create_all_test_tables(table_gen: TableGenerator, output_base_path: Path) ->
         headers, rows,
         "月次売上データ",
         "monthly_sales_table.html",
-        custom_styles
+        custom_styles,
+        output_dir=tables_dir
     )
     generated_files["numeric_table"] = file_path
     
@@ -134,7 +139,8 @@ def create_all_test_tables(table_gen: TableGenerator, output_base_path: Path) ->
     file_path = tables_dir / table_gen.create_basic_table(
         headers, rows,
         "機能一覧（アイコン付き）",
-        "features_with_icons_table.html"
+        "features_with_icons_table.html",
+        output_dir=tables_dir
     )
     generated_files["icon_table"] = file_path
     
