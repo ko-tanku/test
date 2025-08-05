@@ -1,24 +1,38 @@
 import React from 'react';
-import { useDrag } from 'react-dnd';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
-export default function Draggable({ id, children, onDragStart }) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: 'item',
-    item: { id },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
-
-  React.useEffect(() => {
-    if (isDragging && onDragStart) {
-      onDragStart(id);
+// Simple fallback draggable component that doesn't use react-dnd
+function SimpleDraggable({ id, children, onDragStart }) {
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData('text/plain', id || 'draggable-item');
+    if (onDragStart && typeof onDragStart === 'function') {
+      onDragStart(id || 'draggable-item');
     }
-  }, [isDragging, id, onDragStart]);
+  };
 
   return (
-    <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1, cursor: 'move' }}>
+    <div
+      draggable
+      onDragStart={handleDragStart}
+      style={{ 
+        cursor: 'move',
+        padding: '8px',
+        border: '2px dashed #ccc',
+        borderRadius: '4px',
+        backgroundColor: 'var(--ifm-color-emphasis-100)',
+        margin: '4px',
+        userSelect: 'none'
+      }}
+    >
       {children}
     </div>
+  );
+}
+
+export default function Draggable(props) {
+  return (
+    <BrowserOnly fallback={<div>Loading draggable...</div>}>
+      {() => <SimpleDraggable {...props} />}
+    </BrowserOnly>
   );
 }

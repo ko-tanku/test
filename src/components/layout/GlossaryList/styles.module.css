@@ -1,1 +1,103 @@
-.glossarylist {}
+.glossaryList {
+  margin: 1.5rem 0;
+}
+
+.glossaryTitle {
+  margin-bottom: 1rem;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.searchContainer {
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  font-size: 0.9rem;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-color-emphasis-800);
+  transition: border-color 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px var(--ifm-color-primary-lightest);
+}
+
+.glossaryContainer {
+  display: grid;
+  gap: 1rem;
+}
+
+.glossaryItem {
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  background-color: var(--ifm-background-color);
+  transition: box-shadow 0.2s ease;
+}
+
+.glossaryItem:hover {
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.glossaryTerm {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  margin: 0 0 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  padding-bottom: 0.25rem;
+}
+
+.glossaryDefinition {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.noResults {
+  text-align: center;
+  padding: 2rem;
+  color: var(--ifm-color-emphasis-600);
+  font-style: italic;
+}
+
+.searchResults {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: var(--ifm-border-radius);
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-700);
+  text-align: center;
+}
+
+/* Responsive layout */
+@media (min-width: 768px) {
+  .glossaryContainer {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .glossaryItem {
+    padding: 0.75rem;
+  }
+  
+  .glossaryTerm {
+    font-size: 1rem;
+  }
+  
+  .glossaryDefinition {
+    font-size: 0.875rem;
+  }
+}

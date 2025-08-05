@@ -1,1 +1,159 @@
-.fillintheblank {}
+.fillInTheBlank {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  background-color: var(--ifm-background-color);
+}
+
+.questionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.questionText {
+  margin: 0;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.answerInput {
+  padding: 0.75rem;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  font-size: 1rem;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-color-emphasis-800);
+  transition: all 0.2s ease;
+}
+
+.answerInput:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px var(--ifm-color-primary-lightest);
+}
+
+.answerInput.correct {
+  border-color: var(--ifm-color-success);
+  background-color: var(--ifm-color-success-lightest);
+}
+
+.answerInput.incorrect {
+  border-color: var(--ifm-color-danger);
+  background-color: var(--ifm-color-danger-lightest);
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--ifm-border-radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.submitButton {
+  background-color: var(--ifm-color-primary);
+  color: white;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.submitButton:disabled {
+  background-color: var(--ifm-color-emphasis-400);
+  cursor: not-allowed;
+}
+
+.hintButton {
+  background-color: var(--ifm-color-warning);
+  color: var(--ifm-color-emphasis-800);
+}
+
+.hintButton:hover {
+  background-color: var(--ifm-color-warning-dark);
+}
+
+.resetButton {
+  background-color: var(--ifm-color-secondary);
+  color: white;
+}
+
+.resetButton:hover {
+  background-color: var(--ifm-color-secondary-dark);
+}
+
+.hint {
+  padding: 0.75rem;
+  background-color: var(--ifm-color-warning-lightest);
+  border: 1px solid var(--ifm-color-warning-light);
+  border-radius: var(--ifm-border-radius);
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.9rem;
+}
+
+.feedback {
+  padding: 0.75rem;
+  border-radius: var(--ifm-border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.feedbackCorrect {
+  background-color: var(--ifm-color-success-lightest);
+  border: 1px solid var(--ifm-color-success-light);
+  color: var(--ifm-color-success-dark);
+}
+
+.feedbackIncorrect {
+  background-color: var(--ifm-color-danger-lightest);
+  border: 1px solid var(--ifm-color-danger-light);
+  color: var(--ifm-color-danger-dark);
+}
+
+.feedbackIcon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.explanation {
+  margin-top: 0.5rem;
+  font-weight: normal;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .fillInTheBlank {
+    padding: 1rem;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+  }
+  
+  .button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,53 @@
+- component: 'quizzes/ImageHotspotQuiz'
+  props:
+    src: '/img/docusaurus.png'
+    hotspots:
+      - x: 30
+        y: 40
+        width: 15
+        height: 15
+        content: '正解エリア'
+      - x: 60
+        y: 60
+        width: 15
+        height: 15
+        content: '不正解エリア'
+    correctHotspot: 0
+
+- component: 'quizzes/blocks/Question'
+  props:
+    text: 'これはサンプル問題テキストです。'
+
+- component: 'quizzes/blocks/AnswerOption'
+  props:
+    text: '選択肢A'
+    onSelect: 'console.log'
+    isSelected: false
+
+- component: 'quizzes/blocks/AnswerOption'
+  props:
+    text: '選択肢B'
+    onSelect: 'console.log'
+    isSelected: true
+
+- component: 'quizzes/blocks/FeedbackMessage'
+  props:
+    isCorrect: true
+    message: '正解です！よくできました。'
+
+- component: 'quizzes/blocks/FeedbackMessage'
+  props:
+    isCorrect: false
+    message: '不正解です。もう一度考えてみてください。'
+
+- component: 'diagrams/blocks/Draggable'
+  props:
+    id: 'draggable1'
+    children: 'ドラッグ可能要素'
+    onDragStart: 'console.log'
+
+- component: 'diagrams/blocks/Droppable'
+  props:
+    id: 'droppable1'
+    children: 'ドロップエリア'
+    onDrop: 'console.log'

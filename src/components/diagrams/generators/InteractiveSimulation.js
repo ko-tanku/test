@@ -8,7 +8,7 @@ export default function InteractiveSimulation({ initialValue, onValueChange }) {
 
   const handleSliderChange = (e) => {
     setValue(e.target.value);
-    if (onValueChange) {
+    if (onValueChange && typeof onValueChange === 'function') {
       onValueChange(e.target.value);
     }
   };

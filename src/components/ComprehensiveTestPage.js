@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 
 // プロジェクトで使用する全てのカスタムコンポーネントを動的にインポートするためのマップ
 const componentMap = {
+  // 既存コンポーネント
   'layout/Callout': React.lazy(() => import('./layout/Callout')),
   'ui/CodeBlock': React.lazy(() => import('./ui/CodeBlock')),
   'ui/Button': React.lazy(() => import('./ui/Button')),
@@ -27,6 +28,108 @@ const componentMap = {
   'quizzes/Essay': React.lazy(() => import('./quizzes/Essay')),
   'quizzes/DragAndDropQuiz': React.lazy(() => import('./quizzes/DragAndDropQuiz')),
   'quizzes/MatchingPairs': React.lazy(() => import('./quizzes/MatchingPairs')),
+  
+  // 新規追加 - UIコンポーネント
+  'ui/Input': React.lazy(() => import('./ui/Input')),
+  'ui/Modal': React.lazy(() => import('./ui/Modal')),
+  'ui/Pagination': React.lazy(() => import('./ui/Pagination')),
+  'ui/Tooltip': React.lazy(() => import('./ui/Tooltip')),
+  'ui/MathDisplay': React.lazy(() => import('./ui/MathDisplay')),
+  
+  // 新規追加 - レイアウトコンポーネント
+  'layout/Breadcrumbs': React.lazy(() => import('./layout/Breadcrumbs')),
+  'layout/CheckList': React.lazy(() => import('./layout/CheckList')),
+  'layout/ComparisonTable': React.lazy(() => import('./layout/ComparisonTable')),
+  'layout/FaqList': React.lazy(() => import('./layout/FaqList')),
+  'layout/GlossaryList': React.lazy(() => import('./layout/GlossaryList')),
+  'layout/LearningObjectives': React.lazy(() => import('./layout/LearningObjectives')),
+  'layout/LearningProgress': React.lazy(() => import('./layout/LearningProgress')),
+  'layout/ThemeToggle': React.lazy(() => import('./layout/ThemeToggle')),
+  'layout/FontSizeChanger': React.lazy(() => import('./layout/FontSizeChanger')),
+  'layout/ResponsiveIframe': React.lazy(() => import('./layout/ResponsiveIframe')),
+  
+  // 新規追加 - 図表コンポーネント (generators)
+  'diagrams/generators/FlowchartGenerator': React.lazy(() => import('./diagrams/generators/FlowchartGenerator')),
+  'diagrams/generators/ImageHighlighter': React.lazy(() => import('./diagrams/generators/ImageHighlighter')),
+  'diagrams/generators/InteractiveTimeline': React.lazy(() => import('./diagrams/generators/InteractiveTimeline')),
+  'diagrams/generators/InteractiveSimulation': React.lazy(() => import('./diagrams/generators/InteractiveSimulation')),
+  
+  // 新規追加 - 図表コンポーネント (blocks)
+  'diagrams/blocks/Node': React.lazy(() => import('./diagrams/blocks/Node')),
+  'diagrams/blocks/Slider': React.lazy(() => import('./diagrams/blocks/Slider')),
+  'diagrams/blocks/TimelineEvent': React.lazy(() => import('./diagrams/blocks/TimelineEvent')),
+  'diagrams/blocks/SvgShape': React.lazy(() => import('./diagrams/blocks/SvgShape')),
+  'diagrams/blocks/TextLabel': React.lazy(() => import('./diagrams/blocks/TextLabel')),
+  'diagrams/blocks/Hotspot': React.lazy(() => import('./diagrams/blocks/Hotspot')),
+  'diagrams/blocks/Draggable': React.lazy(() => import('./diagrams/blocks/Draggable')),
+  'diagrams/blocks/Droppable': React.lazy(() => import('./diagrams/blocks/Droppable')),
+  
+  // 新規追加 - クイズコンポーネント
+  'quizzes/ImageHotspotQuiz': React.lazy(() => import('./quizzes/ImageHotspotQuiz')),
+  'quizzes/blocks/Question': React.lazy(() => import('./quizzes/blocks/Question')),
+  'quizzes/blocks/AnswerOption': React.lazy(() => import('./quizzes/blocks/AnswerOption')),
+  'quizzes/blocks/FeedbackMessage': React.lazy(() => import('./quizzes/blocks/FeedbackMessage')),
+  'quizzes/QuizWrapper': React.lazy(() => import('./quizzes/QuizWrapper')),
+  
+  // 新規追加 - 高度なUIコンポーネント（20個）
+  'ui/Dropdown': React.lazy(() => import('./ui/Dropdown')),
+  'ui/Badge': React.lazy(() => import('./ui/Badge')),
+  'ui/Alert': React.lazy(() => import('./ui/Alert')),
+  'ui/Spinner': React.lazy(() => import('./ui/Spinner')),
+  'ui/Skeleton': React.lazy(() => import('./ui/Skeleton')),
+  'ui/Avatar': React.lazy(() => import('./ui/Avatar')),
+  'ui/Rating': React.lazy(() => import('./ui/Rating')),
+  'ui/Switch': React.lazy(() => import('./ui/Switch')),
+  'ui/RadioGroup': React.lazy(() => import('./ui/RadioGroup')),
+  'ui/CheckboxGroup': React.lazy(() => import('./ui/CheckboxGroup')),
+  'ui/DatePicker': React.lazy(() => import('./ui/DatePicker')),
+  'ui/TimePicker': React.lazy(() => import('./ui/TimePicker')),
+  'ui/ColorPicker': React.lazy(() => import('./ui/ColorPicker')),
+  'ui/RangeSlider': React.lazy(() => import('./ui/RangeSlider')),
+  'ui/FileUpload': React.lazy(() => import('./ui/FileUpload')),
+  'ui/SearchBox': React.lazy(() => import('./ui/SearchBox')),
+  'ui/TagInput': React.lazy(() => import('./ui/TagInput')),
+  'ui/NumberInput': React.lazy(() => import('./ui/NumberInput')),
+  'ui/TextEditor': React.lazy(() => import('./ui/TextEditor')),
+  'ui/Calendar': React.lazy(() => import('./ui/Calendar')),
+  
+  // 学習支援インタラクティブ機能
+  'interactive/Timeline': React.lazy(() => import('./interactive/Timeline')),
+  'interactive/Gallery': React.lazy(() => import('./interactive/Gallery')),
+  'interactive/Carousel': React.lazy(() => import('./interactive/Carousel')),
+  'interactive/Slideshow': React.lazy(() => import('./interactive/Slideshow')),
+  'interactive/ZoomImage': React.lazy(() => import('./interactive/ZoomImage')),
+  'interactive/VideoPlayer': React.lazy(() => import('./interactive/VideoPlayer')),
+  'interactive/AudioPlayer': React.lazy(() => import('./interactive/AudioPlayer')),
+  'interactive/CodeRunner': React.lazy(() => import('./interactive/CodeRunner')),
+  'interactive/Calculator': React.lazy(() => import('./interactive/Calculator')),
+  'interactive/Counter': React.lazy(() => import('./interactive/Counter')),
+  'interactive/Timer': React.lazy(() => import('./interactive/Timer')),
+  'interactive/Stopwatch': React.lazy(() => import('./interactive/Stopwatch')),
+  
+  // 学習支援機能
+  'special/LazyLoad': React.lazy(() => import('./special/LazyLoad')),
+  'special/StickyHeader': React.lazy(() => import('./special/StickyHeader')),
+  'special/BackToTop': React.lazy(() => import('./special/BackToTop')),
+  'special/PrintView': React.lazy(() => import('./special/PrintView')),
+  'special/FullscreenToggle': React.lazy(() => import('./special/FullscreenToggle')),
+  
+  // 学習支援ゲーム（教育効果のあるもののみ）
+  'games/MemoryGame': React.lazy(() => import('./games/MemoryGame')),
+  'games/WordSearch': React.lazy(() => import('./games/WordSearch')),
+  'games/Puzzle': React.lazy(() => import('./games/Puzzle')),
+  
+  // 新規追加 - データ表示・分析（5個）
+  'data/StatCard': React.lazy(() => import('./data/StatCard')),
+  'data/MetricDisplay': React.lazy(() => import('./data/MetricDisplay')),
+  'data/TrendChart': React.lazy(() => import('./data/TrendChart')),
+  'data/DataTable': React.lazy(() => import('./data/DataTable')),
+  'data/Dashboard': React.lazy(() => import('./data/Dashboard')),
+  
+  // 学習効果向上コンポーネント
+  'learning/FlashcardSystem': React.lazy(() => import('./learning/FlashcardSystem')),
+  'learning/KnowledgeCheck': React.lazy(() => import('./learning/KnowledgeCheck')),
+  'learning/NoteTaking': React.lazy(() => import('./learning/NoteTaking')),
 };
 
 function ComprehensiveTestPage({ pageData }) {

@@ -6,7 +6,10 @@
       "Bash(npm start)",
       "Bash(PYTHONPATH=scripts/core python scripts/courses/comprehensive-test/build.py)",
       "Bash(npm install:*)",
-      "Bash(npm start:*)"
+      "Bash(npm start:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run start:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

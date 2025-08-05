@@ -464,5 +464,560 @@
         }
       }
     ]
+  },
+  {
+    "id": "layout-test",
+    "title": "レイアウトコンポーネントテスト",
+    "description": "各種レイアウトコンポーネントの動作テスト",
+    "slug": "/layout-test",
+    "prose_content": "# レイアウトコンポーネントテスト\n\n## 5.1 ナビゲーションコンポーネント\n\n### パンくずリスト\n階層ナビゲーションの表示テストです。\n\n### テーマ切り替え\nライト/ダークモード切り替え機能のテストです。\n\n## 5.2 コンテンツ整理コンポーネント\n\n### チェックリスト\nタスクリストの表示と管理テストです。\n\n### 比較表\n機能や製品の比較表示テストです。\n\n### FAQ リスト\nよくある質問の折りたたみ表示テストです。\n\n### 用語集\n専門用語の定義表示テストです。\n\n## 5.3 学習支援コンポーネント\n\n### 学習目標\nコース目標の明確化テストです。\n\n### 学習進捗\n進捗状況の視覚化テストです。\n\n### プログレッシブレイアウト\n段階的なコンテンツ表示テストです。\n\n## 5.4 ユーティリティコンポーネント\n\n### フォントサイズ変更\nアクセシビリティ機能のテストです。\n\n### レスポンシブiframe\n外部コンテンツの埋め込みテストです。",
+    "components": [
+      {
+        "component": "layout/Breadcrumbs",
+        "props": {
+          "items": [
+            {
+              "label": "ホーム",
+              "href": "/"
+            },
+            {
+              "label": "comprehensive-test",
+              "href": "/comprehensive-test"
+            },
+            {
+              "label": "レイアウトテスト",
+              "active": true
+            }
+          ]
+        }
+      },
+      {
+        "component": "layout/CheckList",
+        "props": {
+          "items": [
+            {
+              "text": "完了済みタスク",
+              "checked": true
+            },
+            {
+              "text": "進行中のタスク",
+              "checked": false
+            },
+            {
+              "text": "予定されたタスク",
+              "checked": false
+            }
+          ]
+        }
+      },
+      {
+        "component": "layout/ComparisonTable",
+        "props": {
+          "title": "機能比較表",
+          "items": [
+            {
+              "feature": "レスポンシブデザイン",
+              "basic": "×",
+              "pro": "○",
+              "enterprise": "○"
+            },
+            {
+              "feature": "テーマカスタマイズ",
+              "basic": "制限あり",
+              "pro": "○",
+              "enterprise": "○"
+            },
+            {
+              "feature": "サポート",
+              "basic": "コミュニティ",
+              "pro": "メール",
+              "enterprise": "24時間"
+            }
+          ]
+        }
+      },
+      {
+        "component": "layout/FaqList",
+        "props": {
+          "title": "よくある質問",
+          "faqs": [
+            {
+              "question": "このコンポーネントはどのように使用しますか？",
+              "answer": "YAML ファイルでpropsを定義し、ページに埋め込みます。"
+            },
+            {
+              "question": "カスタマイズは可能ですか？",
+              "answer": "はい、CSS モジュールを使用してスタイルをカスタマイズできます。"
+            },
+            {
+              "question": "アクセシビリティは考慮されていますか？",
+              "answer": "はい、ARIA属性とキーボードナビゲーションをサポートしています。"
+            }
+          ]
+        }
+      },
+      {
+        "component": "layout/GlossaryList",
+        "props": {
+          "title": "技術用語集",
+          "terms": [
+            {
+              "term": "React",
+              "definition": "Facebookが開発したJavaScriptライブラリ"
+            },
+            {
+              "term": "Docusaurus",
+              "definition": "React ベースの静的サイトジェネレーター"
+            },
+            {
+              "term": "YAML",
+              "definition": "人間が読みやすいデータシリアル化標準"
+            },
+            {
+              "term": "CSS Module",
+              "definition": "CSSのクラス名をローカルスコープに制限する技術"
+            }
+          ]
+        }
+      },
+      {
+        "component": "layout/LearningObjectives",
+        "props": {
+          "title": "学習目標",
+          "objectives": [
+            "レイアウトコンポーネントの基本的な使い方を理解する",
+            "propsの構造と設定方法を習得する",
+            "各コンポーネントの適切な使用場面を判断できる",
+            "アクセシビリティを考慮したコンポーネント設計を学ぶ"
+          ]
+        }
+      },
+      {
+        "component": "layout/LearningProgress",
+        "props": {
+          "current": 3,
+          "total": 5
+        }
+      },
+      {
+        "component": "layout/ThemeToggle",
+        "props": {
+          "lightLabel": "ライトモード",
+          "darkLabel": "ダークモード"
+        }
+      },
+      {
+        "component": "layout/FontSizeChanger",
+        "props": {
+          "initialSize": 16,
+          "minSize": 12,
+          "maxSize": 24
+        }
+      },
+      {
+        "component": "layout/ResponsiveIframe",
+        "props": {
+          "src": "https://docusaurus.io",
+          "title": "Docusaurus 公式サイト",
+          "aspectRatio": "16:9"
+        }
+      }
+    ]
+  },
+  {
+    "id": "diagrams-test",
+    "title": "図表コンポーネントテスト",
+    "description": "各種図表・チャートコンポーネントの動作テスト",
+    "slug": "/diagrams-test",
+    "prose_content": "# 図表コンポーネントテスト\n\n## 6.1 図表生成コンポーネント\n\n### フローチャート生成\nプロセスフローの視覚化テストです。\n\n### 画像ハイライター\n画像上のホットスポット機能テストです。\n\n### インタラクティブタイムライン\n時系列イベントの表示テストです。\n\n### インタラクティブシミュレーション\nパラメータ調整機能のテストです。\n\n## 6.2 基本ブロック要素\n\n### ノード・エッジ\n図表の基本構成要素テストです。\n\n### スライダー\n数値入力・調整機能のテストです。\n\n### タイムラインイベント\n個別イベント表示のテストです。\n\n### ドラッグ&ドロップ\n要素の移動機能テストです。\n\n## 6.3 SVG描画要素\n\n### SVG図形\n基本図形の描画テストです。\n\n### 矢印・ラベル\n接続線と説明文のテストです。\n\n### ホットスポット\nクリッカブルエリアのテストです。",
+    "components": [
+      {
+        "component": "diagrams/generators/FlowchartGenerator",
+        "props": {
+          "data": {
+            "nodes": [
+              {
+                "id": "start",
+                "label": "開始",
+                "position": {
+                  "x": 100,
+                  "y": 50
+                }
+              },
+              {
+                "id": "process1",
+                "label": "データ取得",
+                "position": {
+                  "x": 100,
+                  "y": 150
+                }
+              },
+              {
+                "id": "decision1",
+                "label": "データ有効？",
+                "position": {
+                  "x": 100,
+                  "y": 250
+                }
+              },
+              {
+                "id": "process2",
+                "label": "データ処理",
+                "position": {
+                  "x": 50,
+                  "y": 350
+                }
+              },
+              {
+                "id": "error",
+                "label": "エラー処理",
+                "position": {
+                  "x": 150,
+                  "y": 350
+                }
+              },
+              {
+                "id": "end",
+                "label": "終了",
+                "position": {
+                  "x": 100,
+                  "y": 450
+                }
+              }
+            ],
+            "edges": [
+              {
+                "fromNodeId": "start",
+                "toNodeId": "process1"
+              },
+              {
+                "fromNodeId": "process1",
+                "toNodeId": "decision1"
+              },
+              {
+                "fromNodeId": "decision1",
+                "toNodeId": "process2",
+                "label": "Yes"
+              },
+              {
+                "fromNodeId": "decision1",
+                "toNodeId": "error",
+                "label": "No"
+              },
+              {
+                "fromNodeId": "process2",
+                "toNodeId": "end"
+              },
+              {
+                "fromNodeId": "error",
+                "toNodeId": "end"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "component": "diagrams/generators/ImageHighlighter",
+        "props": {
+          "src": "/img/docusaurus.png",
+          "hotspots": [
+            {
+              "x": 30,
+              "y": 20,
+              "width": 20,
+              "height": 20,
+              "content": "メインロゴ"
+            },
+            {
+              "x": 60,
+              "y": 40,
+              "width": 15,
+              "height": 15,
+              "content": "ナビゲーション"
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/generators/InteractiveTimeline",
+        "props": {
+          "events": [
+            {
+              "year": "2020",
+              "title": "プロジェクト企画",
+              "description": "初期コンセプトの策定と技術調査"
+            },
+            {
+              "year": "2021",
+              "title": "プロトタイプ開発",
+              "description": "React コンポーネントの基礎実装"
+            },
+            {
+              "year": "2022",
+              "title": "ベータ版リリース",
+              "description": "限定ユーザーでのテスト開始"
+            },
+            {
+              "year": "2023",
+              "title": "正式リリース",
+              "description": "一般公開とドキュメント整備"
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/generators/InteractiveSimulation",
+        "props": {
+          "initialValue": 50,
+          "onValueChange": "console.log"
+        }
+      },
+      {
+        "component": "diagrams/blocks/Node",
+        "props": {
+          "id": "sample-node",
+          "label": "サンプルノード",
+          "position": {
+            "x": 200,
+            "y": 100
+          },
+          "highlighted": false
+        }
+      },
+      {
+        "component": "diagrams/blocks/Slider",
+        "props": {
+          "min": 0,
+          "max": 100,
+          "value": 75,
+          "onChange": "console.log"
+        }
+      },
+      {
+        "component": "diagrams/blocks/TimelineEvent",
+        "props": {
+          "year": "2024",
+          "title": "機能拡張",
+          "description": "新しいコンポーネントの追加と既存機能の改善"
+        }
+      },
+      {
+        "component": "diagrams/blocks/SvgShape",
+        "props": {
+          "type": "rectangle",
+          "position": {
+            "x": 50,
+            "y": 50
+          },
+          "size": {
+            "width": 100,
+            "height": 60
+          },
+          "color": "#4CAF50",
+          "label": "SVG矩形"
+        }
+      },
+      {
+        "component": "diagrams/blocks/TextLabel",
+        "props": {
+          "text": "ラベルテキスト",
+          "position": {
+            "x": 150,
+            "y": 200
+          },
+          "fontSize": 14
+        }
+      },
+      {
+        "component": "diagrams/blocks/Hotspot",
+        "props": {
+          "x": 25,
+          "y": 25,
+          "width": 50,
+          "height": 30,
+          "content": "クリック可能エリア"
+        }
+      }
+    ]
+  },
+  {
+    "id": "forms-test",
+    "title": "フォーム・入力コンポーネントテスト",
+    "description": "各種フォーム・入力コンポーネントの動作テスト",
+    "slug": "/forms-test",
+    "prose_content": "# フォーム・入力コンポーネントテスト\n\n## 7.1 基本入力コンポーネント\n\n### テキスト入力\n各種テキスト入力フィールドのテストです。\n\n### メール入力\nバリデーション付きメール入力のテストです。\n\n## 7.2 ナビゲーションコンポーネント\n\n### ページネーション\nページ送り機能のテストです。\n\n## 7.3 オーバーレイコンポーネント\n\n### モーダル\nポップアップダイアログのテストです。\n\n### ツールチップ\nホバー時説明表示のテストです。\n\n## 7.4 数式表示\n\n### 数式レンダリング\nKaTeX による数式表示のテストです。",
+    "components": [
+      {
+        "component": "ui/Input",
+        "props": {
+          "type": "text",
+          "label": "テキスト入力",
+          "value": "",
+          "onChange": "console.log"
+        }
+      },
+      {
+        "component": "ui/Input",
+        "props": {
+          "type": "email",
+          "label": "メールアドレス",
+          "options": {
+            "placeholder": "example@email.com",
+            "required": true
+          }
+        }
+      },
+      {
+        "component": "ui/Input",
+        "props": {
+          "type": "password",
+          "label": "パスワード",
+          "options": {
+            "placeholder": "8文字以上",
+            "required": true
+          }
+        }
+      },
+      {
+        "component": "ui/Input",
+        "props": {
+          "type": "number",
+          "label": "数値入力",
+          "options": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        }
+      },
+      {
+        "component": "ui/Pagination",
+        "props": {
+          "totalItems": 250,
+          "itemsPerPage": 10,
+          "onPageChange": "console.log"
+        }
+      },
+      {
+        "component": "ui/Modal",
+        "props": {
+          "title": "テストモーダル",
+          "message": "これはモーダルウィンドウのテストです。閉じるボタンまたは背景をクリックして閉じることができます。",
+          "isOpen": false,
+          "onClose": "console.log",
+          "size": "medium"
+        }
+      },
+      {
+        "component": "ui/Tooltip",
+        "props": {
+          "term": "ツールチップ",
+          "definition": "マウスホバー時に表示される補足説明です。",
+          "children": "この文字にホバーしてください"
+        }
+      },
+      {
+        "component": "ui/MathDisplay",
+        "props": {
+          "equation": "E = mc^2"
+        }
+      },
+      {
+        "component": "ui/MathDisplay",
+        "props": {
+          "equation": "\\sum_{i=1}^{n} x_i = \\frac{n(n+1)}{2}"
+        }
+      },
+      {
+        "component": "ui/MathDisplay",
+        "props": {
+          "equation": "\\int_{0}^{\\infty} e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}"
+        }
+      }
+    ]
+  },
+  {
+    "id": "advanced-test",
+    "title": "高度なコンポーネントテスト",
+    "description": "高度な機能を持つコンポーネントの動作テスト",
+    "slug": "/advanced-test",
+    "prose_content": "# 高度なコンポーネントテスト\n\n## 8.1 画像ホットスポットクイズ\n\n### インタラクティブな画像問題\n画像上の正しいエリアをクリックするクイズテストです。\n\n## 8.2 クイズブロック要素\n\n### 問題コンポーネント\n各種クイズの基本構成要素テストです。\n\n### フィードバックメッセージ\n解答後の反応表示テストです。\n\n## 8.3 ドラッグ＆ドロップ\n\n### 要素移動機能\nドラッグでアイテムを移動する機能のテストです。",
+    "components": [
+      {
+        "component": "quizzes/ImageHotspotQuiz",
+        "props": {
+          "src": "/img/docusaurus.png",
+          "hotspots": [
+            {
+              "x": 30,
+              "y": 40,
+              "width": 15,
+              "height": 15,
+              "content": "正解エリア"
+            },
+            {
+              "x": 60,
+              "y": 60,
+              "width": 15,
+              "height": 15,
+              "content": "不正解エリア"
+            }
+          ],
+          "correctHotspot": 0
+        }
+      },
+      {
+        "component": "quizzes/blocks/Question",
+        "props": {
+          "text": "これはサンプル問題テキストです。"
+        }
+      },
+      {
+        "component": "quizzes/blocks/AnswerOption",
+        "props": {
+          "text": "選択肢A",
+          "onSelect": "console.log",
+          "isSelected": false
+        }
+      },
+      {
+        "component": "quizzes/blocks/AnswerOption",
+        "props": {
+          "text": "選択肢B",
+          "onSelect": "console.log",
+          "isSelected": true
+        }
+      },
+      {
+        "component": "quizzes/blocks/FeedbackMessage",
+        "props": {
+          "isCorrect": true,
+          "message": "正解です！よくできました。"
+        }
+      },
+      {
+        "component": "quizzes/blocks/FeedbackMessage",
+        "props": {
+          "isCorrect": false,
+          "message": "不正解です。もう一度考えてみてください。"
+        }
+      },
+      {
+        "component": "diagrams/blocks/Draggable",
+        "props": {
+          "id": "draggable1",
+          "children": "ドラッグ可能要素",
+          "onDragStart": "console.log"
+        }
+      },
+      {
+        "component": "diagrams/blocks/Droppable",
+        "props": {
+          "id": "droppable1",
+          "children": "ドロップエリア",
+          "onDrop": "console.log"
+        }
+      }
+    ]
   }
 ]

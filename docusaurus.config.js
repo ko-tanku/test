@@ -81,13 +81,43 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [{
-          to: '/comprehensive-test/index',
-          label: '総合テスト',
+          type: 'dropdown',
+          label: '機能網羅テスト',
           position: 'left',
-        },{
-          to: '/comprehensive-test/quiz-test',
-          label: 'クイズテスト',
-          position: 'left',
+          items: [
+            {
+              to: '/comprehensive-test/index',
+              label: 'メインテストページ',
+            },
+            {
+              to: '/comprehensive-test/components-test',
+              label: 'コンポーネントテスト',
+            },
+            {
+              to: '/comprehensive-test/interactive-test',
+              label: 'インタラクティブ機能テスト',
+            },
+            {
+              to: '/comprehensive-test/quiz-test',
+              label: 'クイズコンポーネントテスト',
+            },
+            {
+              to: '/comprehensive-test/layout-test',
+              label: 'レイアウトコンポーネントテスト',
+            },
+            {
+              to: '/comprehensive-test/diagrams-test',
+              label: '図表コンポーネントテスト',
+            },
+            {
+              to: '/comprehensive-test/forms-test',
+              label: 'フォーム・入力コンポーネントテスト',
+            },
+            {
+              to: '/comprehensive-test/advanced-test',
+              label: '高度なコンポーネントテスト',
+            },
+          ],
         }],
       },
       footer: {

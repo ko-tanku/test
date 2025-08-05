@@ -1,1 +1,91 @@
-.clicktoshow {}
+.clickToShow {
+  margin: 1rem 0;
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-color-emphasis-800);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.toggleButton:hover {
+  background-color: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+.toggleButton.primary {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border-color: var(--ifm-color-primary);
+}
+
+.toggleButton.primary:hover {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.toggleButton.secondary {
+  background-color: var(--ifm-color-secondary);
+  color: white;
+  border-color: var(--ifm-color-secondary);
+}
+
+.toggleButton.secondary:hover {
+  background-color: var(--ifm-color-secondary-dark);
+}
+
+.icon {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+.iconOpen {
+  transform: rotate(0deg);
+}
+
+.iconClosed {
+  transform: rotate(-90deg);
+}
+
+.content {
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-top: none;
+  border-radius: 0 0 var(--ifm-border-radius) var(--ifm-border-radius);
+  background-color: var(--ifm-background-color);
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .toggleButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .content {
+    padding: 0.75rem;
+  }
+}

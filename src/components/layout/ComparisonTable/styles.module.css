@@ -1,1 +1,90 @@
-.comparisontable {}
+.comparisonTable {
+  margin: 1.5rem 0;
+}
+
+.tableTitle {
+  margin-bottom: 1rem;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: var(--ifm-border-radius);
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--ifm-background-color);
+}
+
+.tableHeader {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-800);
+  border-bottom: 2px solid var(--ifm-color-emphasis-300);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.featureColumn {
+  background-color: var(--ifm-color-emphasis-200);
+  position: sticky;
+  left: 0;
+  min-width: 200px;
+  z-index: 2;
+}
+
+.planColumn {
+  text-align: center;
+  min-width: 120px;
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.tableRow:hover {
+  background-color: var(--ifm-color-emphasis-50);
+}
+
+.tableCell {
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+}
+
+.featureCell {
+  font-weight: 500;
+  background-color: var(--ifm-color-emphasis-50);
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.planCell {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .tableHeader,
+  .tableCell {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .featureColumn {
+    min-width: 150px;
+  }
+  
+  .planColumn {
+    min-width: 80px;
+  }
+}

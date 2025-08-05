@@ -12,7 +12,7 @@ export default function Node({ id, label, position, onClick, highlighted }) {
   };
 
   return (
-    <div id={id} style={style} onClick={() => onClick(id)}>
+    <div id={id} style={style} onClick={() => onClick && typeof onClick === 'function' && onClick(id)}>
       {label}
     </div>
   );

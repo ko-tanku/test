@@ -1,1 +1,428 @@
-.multiplechoice {}
+.multiplechoice {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--ifm-background-color);
+  border-radius: var(--ifm-border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--ifm-color-emphasis-200);
+}
+
+.multiplechoice.easy {
+  border-color: var(--ifm-color-success);
+}
+
+.multiplechoice.medium {
+  border-color: var(--ifm-color-warning);
+}
+
+.multiplechoice.hard {
+  border-color: var(--ifm-color-danger);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.questionInfo {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.difficulty {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.difficultyeasy {
+  background: var(--ifm-color-success-lightest);
+  color: var(--ifm-color-success-dark);
+}
+
+.difficultymedium {
+  background: var(--ifm-color-warning-lightest);
+  color: var(--ifm-color-warning-dark);
+}
+
+.difficultyhard {
+  background: var(--ifm-color-danger-lightest);
+  color: var(--ifm-color-danger-dark);
+}
+
+.multipleIndicator {
+  background: var(--ifm-color-info-lightest);
+  color: var(--ifm-color-info-dark);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.metadata {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.timer {
+  font-weight: 600;
+}
+
+.timer.urgent {
+  color: var(--ifm-color-danger);
+  animation: pulse 1s infinite;
+}
+
+.attempts {
+  font-weight: 500;
+}
+
+.question {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--ifm-color-emphasis-800);
+  line-height: 1.5;
+}
+
+.hintsSection {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--ifm-color-info-lightest);
+  border-radius: var(--ifm-border-radius);
+  border-left: 4px solid var(--ifm-color-info);
+}
+
+.currentHint {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: var(--ifm-border-radius);
+  color: var(--ifm-color-info-dark);
+  line-height: 1.4;
+}
+
+.hintButton {
+  background: var(--ifm-color-info);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--ifm-border-radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hintButton:hover {
+  background: var(--ifm-color-info-dark);
+  transform: translateY(-1px);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.option {
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  transition: all 0.3s ease;
+  background: var(--ifm-background-surface-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.option:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.option.selected {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+}
+
+.option.correctOption {
+  border-color: var(--ifm-color-success);
+  background: var(--ifm-color-success-lightest);
+}
+
+.option.incorrectOption.selected {
+  border-color: var(--ifm-color-danger);
+  background: var(--ifm-color-danger-lightest);
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+}
+
+.optionInput {
+  margin-right: 1rem;
+  accent-color: var(--ifm-color-primary);
+  transform: scale(1.2);
+}
+
+.optionText {
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.correctIndicator,
+.incorrectIndicator {
+  margin-left: auto;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.optionExplanation {
+  padding: 1rem 1.25rem;
+  background: var(--ifm-color-emphasis-100);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.results {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: var(--ifm-border-radius);
+  border: 2px solid;
+}
+
+.results.correct {
+  border-color: var(--ifm-color-success);
+  background: var(--ifm-color-success-lightest);
+}
+
+.results.incorrect {
+  border-color: var(--ifm-color-danger);
+  background: var(--ifm-color-danger-lightest);
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.resultIcon {
+  font-size: 2rem;
+}
+
+.resultText {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.results.correct .resultText {
+  color: var(--ifm-color-success-dark);
+}
+
+.results.incorrect .resultText {
+  color: var(--ifm-color-danger-dark);
+}
+
+.timeUpIndicator {
+  color: var(--ifm-color-danger);
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.overallExplanation {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: white;
+  border-radius: var(--ifm-border-radius);
+  line-height: 1.6;
+}
+
+.overallExplanation p {
+  margin: 0.5rem 0 0;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.performanceInfo {
+  display: flex;
+  gap: 2rem;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.timeInfo,
+.hintInfo {
+  font-weight: 600;
+}
+
+.retryButton {
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--ifm-border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.retryButton:hover {
+  background: var(--ifm-color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.submitButton {
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: var(--ifm-border-radius);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+  display: block;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.submitButton:disabled {
+  background: var(--ifm-color-emphasis-400);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* アニメーション */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@keyframes correctFlash {
+  0% { background: var(--ifm-color-success-lightest); }
+  50% { background: var(--ifm-color-success-light); }
+  100% { background: var(--ifm-color-success-lightest); }
+}
+
+@keyframes incorrectShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.option.correctOption {
+  animation: correctFlash 0.6s ease;
+}
+
+.option.incorrectOption.selected {
+  animation: incorrectShake 0.6s ease;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .multiplechoice {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .questionInfo {
+    flex-wrap: wrap;
+  }
+  
+  .metadata {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .question {
+    font-size: 1.1rem;
+  }
+  
+  .optionLabel {
+    padding: 1rem;
+  }
+  
+  .optionText {
+    font-size: 0.95rem;
+  }
+  
+  .performanceInfo {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .resultHeader {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .resultIcon {
+    font-size: 3rem;
+  }
+}
+
+/* ダークテーマ対応 */
+[data-theme='dark'] .multiplechoice {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .option {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .option:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .currentHint {
+  background: var(--ifm-color-emphasis-800);
+  color: var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .overallExplanation {
+  background: var(--ifm-color-emphasis-800);
+}
+
+[data-theme='dark'] .overallExplanation p {
+  color: var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .optionExplanation {
+  background: var(--ifm-color-emphasis-800);
+  color: var(--ifm-color-emphasis-200);
+}

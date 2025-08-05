@@ -1,0 +1,63 @@
+- component: 'ui/Input'
+  props:
+    type: 'text'
+    label: 'テキスト入力'
+    value: ''
+    onChange: 'console.log'
+
+- component: 'ui/Input'
+  props:
+    type: 'email'
+    label: 'メールアドレス'
+    options:
+      placeholder: 'example@email.com'
+      required: true
+
+- component: 'ui/Input'
+  props:
+    type: 'password'
+    label: 'パスワード'
+    options:
+      placeholder: '8文字以上'
+      required: true
+
+- component: 'ui/Input'
+  props:
+    type: 'number'
+    label: '数値入力'
+    options:
+      min: 0
+      max: 100
+      step: 1
+
+- component: 'ui/Pagination'
+  props:
+    totalItems: 250
+    itemsPerPage: 10
+    onPageChange: 'console.log'
+
+- component: 'ui/Modal'
+  props:
+    title: 'テストモーダル'
+    message: 'これはモーダルウィンドウのテストです。閉じるボタンまたは背景をクリックして閉じることができます。'
+    isOpen: false
+    onClose: 'console.log'
+    size: 'medium'
+
+- component: 'ui/Tooltip'
+  props:
+    term: 'ツールチップ'
+    definition: 'マウスホバー時に表示される補足説明です。'
+    children: 'この文字にホバーしてください'
+
+- component: 'ui/MathDisplay'
+  props:
+    equation: 'E = mc^2'
+
+- component: 'ui/MathDisplay'
+  props:
+    equation: '\sum_{i=1}^{n} x_i = \frac{n(n+1)}{2}'
+
+- component: 'ui/MathDisplay'
+  props:
+    equation: '\int_{0}^{\infty} e^{-x^2} dx = \frac{\sqrt{\pi}}{2}'

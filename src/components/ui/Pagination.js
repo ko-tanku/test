@@ -7,7 +7,9 @@ export default function Pagination({ totalItems, itemsPerPage, onPageChange }) {
 
   const handlePageClick = (page) => {
     setCurrentPage(page);
-    onPageChange(page);
+    if (onPageChange && typeof onPageChange === 'function') {
+      onPageChange(page);
+    }
   };
 
   if (pageCount <= 1) {

@@ -1,1 +1,52 @@
-.icon {}
+.icon {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* Size variants */
+.icon--small {
+  font-size: 0.75rem;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.icon--medium {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon--large {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon--xlarge {
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Clickable state */
+.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: var(--ifm-border-radius);
+}
+
+.clickable:hover {
+  background-color: var(--ifm-color-emphasis-200);
+  transform: scale(1.1);
+}
+
+.clickable:active {
+  transform: scale(0.95);
+}
+
+.clickable:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}

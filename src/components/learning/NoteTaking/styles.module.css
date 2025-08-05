@@ -1,0 +1,445 @@
+.noteTaking {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--ifm-background-color);
+  border-radius: var(--ifm-border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--ifm-color-emphasis-200);
+}
+
+.header h3 {
+  margin: 0;
+  color: var(--ifm-color-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header h3::before {
+  content: '📝';
+  font-size: 1.5rem;
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.actionButton {
+  padding: 0.5rem 1rem;
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--ifm-border-radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.actionButton:disabled {
+  background: var(--ifm-color-emphasis-400);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.notesList {
+  background: var(--ifm-background-surface-color);
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.notesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--ifm-color-primary-lightest);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.notesHeader h4 {
+  margin: 0;
+  color: var(--ifm-color-primary-dark);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  color: var(--ifm-color-emphasis-600);
+  transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+  color: var(--ifm-color-danger);
+}
+
+.notesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.emptyNotes {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.createFirstNote {
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--ifm-border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+}
+
+.createFirstNote:hover {
+  background: var(--ifm-color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.noteCard {
+  background: var(--ifm-background-color);
+  border: 2px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-border-radius);
+  padding: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.noteCard:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.noteCard.active {
+  border-color: var(--ifm-color-success);
+  background: var(--ifm-color-success-lightest);
+}
+
+.noteCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.noteTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-800);
+  line-height: 1.3;
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: var(--ifm-color-emphasis-500);
+  transition: color 0.2s ease;
+}
+
+.deleteButton:hover {
+  color: var(--ifm-color-danger);
+}
+
+.notePreview {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.noteMetadata {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-500);
+  margin-bottom: 0.75rem;
+}
+
+.loadButton {
+  width: 100%;
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: var(--ifm-border-radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.loadButton:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+.editorSection {
+  margin-bottom: 2rem;
+}
+
+.editor {
+  width: 100%;
+  min-height: 400px;
+  padding: 1.5rem;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: var(--ifm-font-family-base);
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-color-emphasis-800);
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.editor:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px rgba(var(--ifm-color-primary-rgb), 0.2);
+}
+
+.editor::placeholder {
+  color: var(--ifm-color-emphasis-500);
+  font-style: italic;
+}
+
+.editorFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.metadata {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.wordCount {
+  font-weight: 500;
+}
+
+.lastSaved {
+  font-style: italic;
+}
+
+.autoSaveIndicator {
+  font-size: 0.9rem;
+}
+
+.saving {
+  color: var(--ifm-color-warning-dark);
+  font-weight: 600;
+}
+
+.autoSaveEnabled {
+  color: var(--ifm-color-success-dark);
+  font-weight: 500;
+}
+
+.tips {
+  background: var(--ifm-color-info-lightest);
+  padding: 1.5rem;
+  border-radius: var(--ifm-border-radius);
+  border-left: 4px solid var(--ifm-color-info);
+}
+
+.tips h4 {
+  margin: 0 0 1rem;
+  color: var(--ifm-color-info-dark);
+}
+
+.tips ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.tips li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  color: var(--ifm-color-info-dark);
+}
+
+.tips strong {
+  color: var(--ifm-color-info-darker);
+}
+
+/* スクロールバーのカスタマイズ */
+.notesGrid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notesGrid::-webkit-scrollbar-track {
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+}
+
+.notesGrid::-webkit-scrollbar-thumb {
+  background: var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+}
+
+.notesGrid::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-emphasis-600);
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .noteTaking {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .headerActions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .actionButton {
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .notesGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  
+  .editor {
+    min-height: 300px;
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .editorFooter {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  
+  .metadata {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .tips {
+    padding: 1rem;
+  }
+  
+  .tips ul {
+    padding-left: 1rem;
+  }
+}
+
+/* タブレット対応 */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .notesGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .headerActions {
+    gap: 0.5rem;
+  }
+  
+  .actionButton {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.75rem;
+  }
+}
+
+/* ダークテーマ対応 */
+[data-theme='dark'] .noteTaking {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .notesList {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .noteCard {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .noteCard:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .editor {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .editor:focus {
+  border-color: var(--ifm-color-primary);
+}
+
+/* プリント時の対応 */
+@media print {
+  .headerActions,
+  .notesList,
+  .tips {
+    display: none;
+  }
+  
+  .editor {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+  
+  .editorFooter {
+    border-top: 1px solid #ccc;
+  }
+}
