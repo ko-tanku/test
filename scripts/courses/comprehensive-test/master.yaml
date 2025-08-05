@@ -1,0 +1,17 @@
+course_id: "comprehensive-test"
+course_label: "機能網羅テスト"
+course_description: "システムのcore機能を網羅的にテストするためのコース"
+
+sidebar:
+  - type: 'doc'
+    id: 'index'
+    label: 'メインテストページ'
+  - type: 'doc'
+    id: 'components-test'
+    label: 'コンポーネントテスト'
+  - type: 'doc'
+    id: 'interactive-test'
+    label: 'インタラクティブ機能テスト'
+  - type: 'doc'
+    id: 'quiz-test'
+    label: 'クイズコンポーネントテスト'

@@ -1,0 +1,83 @@
+- component: 'quizzes/MultipleChoice'
+  props:
+    question: 'Docusaurusは何で作られていますか？'
+    options:
+      - text: 'React'
+        correct: true
+        explanation: '正解！DocusaurusはReactベースです。'
+      - text: 'Vue.js'
+        correct: false
+        explanation: '不正解。Vue.jsではありません。'
+      - text: 'Angular'
+        correct: false
+        explanation: '不正解。Angularではありません。'
+      - text: 'Svelte'
+        correct: false
+        explanation: '不正解。Svelteではありません。'
+
+- component: 'quizzes/FillInTheBlank'
+  props:
+    question: 'Markdownファイルの拡張子は（　　　）です。'
+    answer: '.md'
+    hint: 'ドット + 2文字のアルファベット'
+    explanation: '.md がMarkdownファイルの標準的な拡張子です。'
+
+- component: 'quizzes/MultipleChoice'
+  props:
+    question: '以下のうち、静的サイトジェネレーターはどれですか？（複数選択可）'
+    multiple: true
+    options:
+      - text: 'Gatsby'
+        correct: true
+        explanation: 'GatsbyはReactベースの静的サイトジェネレーターです。'
+      - text: 'Next.js'
+        correct: true
+        explanation: 'Next.jsは静的サイト生成もサポートしています。'
+      - text: 'Express.js'
+        correct: false
+        explanation: 'Express.jsはサーバーサイドフレームワークです。'
+      - text: 'Hugo'
+        correct: true
+        explanation: 'HugoはGo言語で作られた静的サイトジェネレーターです。'
+
+- component: 'quizzes/Essay'
+  props:
+    question: '静的サイトジェネレーターの利点を3つ挙げて説明してください。'
+    placeholder: 'ここに回答を入力してください...'
+    minLength: 50
+    hint: 'パフォーマンス、セキュリティ、ホスティングなどの観点から考えてみましょう。'
+
+- component: 'quizzes/DragAndDropQuiz'
+  props:
+    question: '以下の技術を正しいカテゴリーにドラッグしてください。'
+    items:
+      - id: 'react'
+        text: 'React'
+        category: 'frontend'
+      - id: 'node'
+        text: 'Node.js'
+        category: 'backend'
+      - id: 'vue'
+        text: 'Vue.js'
+        category: 'frontend'
+      - id: 'express'
+        text: 'Express'
+        category: 'backend'
+    categories:
+      - id: 'frontend'
+        label: 'フロントエンド'
+      - id: 'backend'
+        label: 'バックエンド'
+
+- component: 'quizzes/MatchingPairs'
+  props:
+    question: '以下の用語と説明を正しく組み合わせてください。'
+    pairs:
+      - left: 'HTML'
+        right: 'ウェブページの構造を定義するマークアップ言語'
+      - left: 'CSS'
+        right: 'ウェブページのスタイルを定義する言語'
+      - left: 'JavaScript'
+        right: 'ウェブページに動的な機能を追加するプログラミング言語'
+      - left: 'Markdown'
+        right: '軽量マークアップ言語'

@@ -1,0 +1,13 @@
+- component: 'interactive/ImageHotspot'
+  props:
+    image: '/img/docusaurus.png'
+    alt: 'ITシステムの5つの基本機能の図'
+    hotspots:
+      - x: 50
+        y: 30
+        title: '入力'
+        description: 'データを取り込む機能です。'
+      - x: 80
+        y: 60
+        title: '処理'
+        description: 'データを使って計算や判断を行う機能です。'

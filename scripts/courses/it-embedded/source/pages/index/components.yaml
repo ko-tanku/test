@@ -1,0 +1,4 @@
+- component: 'layout/SummaryBox'
+  props:
+    title: 'このページのゴール'
+    content: '読者にITと組み込み技術の世界への興味を持たせ、この資料が通常の教科書とは一線を画す「特別な体験」を提供することを示唆する。'

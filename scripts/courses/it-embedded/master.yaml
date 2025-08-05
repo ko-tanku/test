@@ -1,0 +1,9 @@
+course_id: it-embedded
+course_label: IT組込技術入門
+sidebar:
+  - type: doc
+    id: index
+    label: はじめに
+  - type: doc
+    id: chapter1
+    label: ITって何だろう？

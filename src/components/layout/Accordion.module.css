@@ -1,0 +1,17 @@
+.accordionItem {
+  border-bottom: 1px solid #ccc;
+}
+
+.accordionTitle {
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.accordionContent {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+}

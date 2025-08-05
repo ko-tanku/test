@@ -1,0 +1,468 @@
+[
+  {
+    "id": "index",
+    "title": "機能テストメインページ",
+    "description": "システムの基本機能をテストするメインページ",
+    "slug": "/",
+    "prose_content": "# 機能網羅テスト\n\n## 1.1 基本的な文章の表示テスト\n\nこのページは、システムの主要機能を網羅的にテストするために生成されました。\n\n基本的なMarkdown（**太字**、*斜体*、リストなど）が正しく表示されることを確認します。\n\n- リスト項目1\n- リスト項目2\n- ネストされたリスト\n  - サブ項目1\n  - サブ項目2\n\n## 1.2 コードブロックテスト\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n    return True\n```\n\n## 1.3 テーブルテスト\n\n| 機能名 | 説明 | 状態 |\n|--------|------|------|\n| 基本表示 | Markdownの基本表示 | ✓ |\n| コンポーネント | Reactコンポーネント表示 | テスト中 |\n\n## 1.4 リンクテスト\n\n[外部リンク](https://docusaurus.io)\n\n## 1.5 数式表示テスト\n\nインライン数式: $E = mc^2$\n\nブロック数式:\n$$\n\\sum_{i=1}^{n} x_i = x_1 + x_2 + \\cdots + x_n\n$$",
+    "components": [
+      {
+        "component": "layout/Callout",
+        "props": {
+          "type": "info",
+          "title": "テスト情報",
+          "content": "このページはシステムの基本機能をテストしています。"
+        }
+      },
+      {
+        "component": "ui/CodeBlock",
+        "props": {
+          "language": "javascript",
+          "title": "サンプルコード",
+          "code": "function testFunction() {\n  console.log(\"テスト実行中...\");\n  return \"success\";\n}\n"
+        }
+      },
+      {
+        "component": "ui/Button",
+        "props": {
+          "variant": "primary",
+          "children": "テストボタン"
+        }
+      },
+      {
+        "component": "layout/SummaryBox",
+        "props": {
+          "title": "テスト結果まとめ",
+          "items": [
+            "基本Markdown表示: OK",
+            "コンポーネント表示: テスト中",
+            "インタラクティブ機能: テスト予定"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "components-test",
+    "title": "コンポーネントテスト",
+    "description": "各種UIコンポーネントの動作テスト",
+    "slug": "/components-test",
+    "prose_content": "# コンポーネントテスト\n\n## 2.1 レイアウトコンポーネント\n\n### アコーディオン\n折りたたみ可能なセクションのテストです。\n\n### カード\n情報をカード形式で表示するテストです。\n\n### タブ\nタブ切り替えのテストです。\n\n## 2.2 UIコンポーネント\n\n### ボタン\n各種ボタンスタイルのテストです。\n\n### プログレスバー\n進捗表示のテストです。\n\n### モーダル\nポップアップ表示のテストです。\n\n## 2.3 テーブルコンポーネント\n\nデータ表示機能のテストです。\n\n## 2.4 ツールチップ\n\nホバー時の説明表示テストです。",
+    "components": [
+      {
+        "component": "ui/Accordion",
+        "props": {
+          "items": [
+            {
+              "title": "セクション1",
+              "content": "これは最初のセクションの内容です。"
+            },
+            {
+              "title": "セクション2",
+              "content": "2番目のセクションには**Markdown**も使えます。"
+            }
+          ]
+        }
+      },
+      {
+        "component": "ui/Card",
+        "props": {
+          "title": "テストカード",
+          "content": "カードコンポーネントのテストです。",
+          "variant": "outlined"
+        }
+      },
+      {
+        "component": "ui/Tabs",
+        "props": {
+          "tabs": [
+            {
+              "label": "タブ1",
+              "content": "タブ1の内容です。"
+            },
+            {
+              "label": "タブ2",
+              "content": "タブ2の内容です。"
+            },
+            {
+              "label": "タブ3",
+              "content": "タブ3の内容です。"
+            }
+          ]
+        }
+      },
+      {
+        "component": "ui/Button",
+        "props": {
+          "variant": "primary",
+          "size": "large",
+          "children": "プライマリボタン"
+        }
+      },
+      {
+        "component": "ui/Button",
+        "props": {
+          "variant": "secondary",
+          "size": "medium",
+          "children": "セカンダリボタン"
+        }
+      },
+      {
+        "component": "ui/ProgressBar",
+        "props": {
+          "value": 75,
+          "label": "進捗: 75%"
+        }
+      },
+      {
+        "component": "ui/Table",
+        "props": {
+          "headers": [
+            "機能",
+            "ステータス",
+            "備考"
+          ],
+          "rows": [
+            [
+              "アコーディオン",
+              "✓",
+              "正常動作"
+            ],
+            [
+              "カード",
+              "✓",
+              "正常動作"
+            ],
+            [
+              "タブ",
+              "テスト中",
+              "確認中"
+            ],
+            [
+              "ボタン",
+              "✓",
+              "正常動作"
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "interactive-test",
+    "title": "インタラクティブ機能テスト",
+    "description": "インタラクティブコンポーネントの動作テスト",
+    "slug": "/interactive-test",
+    "prose_content": "# インタラクティブ機能テスト\n\n## 3.1 クリック操作テスト\n\n### ClickToShow機能\nクリックで情報を表示・非表示する機能のテストです。\n\n### イメージホットスポット\n画像上の特定箇所をクリックして情報を表示する機能のテストです。\n\n## 3.2 図表・チャート機能\n\n### シンプルチャート\n基本的なグラフ描画機能のテストです。\n\n### フローチャート\nインタラクティブなフローチャート機能のテストです。\n\n## 3.3 シミュレーション機能\n\n### データフロー\nデータの流れを視覚的に表現する機能のテストです。\n\n## 3.4 キーワード強調\n\n### KeyTerm機能\n重要な用語の強調表示機能のテストです。",
+    "components": [
+      {
+        "component": "interactive/ClickToShow",
+        "props": {
+          "buttonText": "詳細を表示",
+          "content": "クリックで表示されるコンテンツです。**Markdown**も使えます。"
+        }
+      },
+      {
+        "component": "interactive/ImageHotspot",
+        "props": {
+          "image": "/img/docusaurus.png",
+          "alt": "テスト画像",
+          "hotspots": [
+            {
+              "x": 50,
+              "y": 30,
+              "title": "ポイント1",
+              "description": "ここは重要なポイントです"
+            },
+            {
+              "x": 80,
+              "y": 60,
+              "title": "ポイント2",
+              "description": "もう一つの重要なポイントです"
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "bar",
+          "title": "テストデータ",
+          "data": [
+            {
+              "label": "A項目",
+              "value": 30
+            },
+            {
+              "label": "B項目",
+              "value": 50
+            },
+            {
+              "label": "C項目",
+              "value": 20
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "line",
+          "title": "時系列データ",
+          "data": [
+            {
+              "label": "1月",
+              "value": 10
+            },
+            {
+              "label": "2月",
+              "value": 25
+            },
+            {
+              "label": "3月",
+              "value": 40
+            },
+            {
+              "label": "4月",
+              "value": 35
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/InteractiveFlowchart",
+        "props": {
+          "title": "プロセスフロー",
+          "steps": [
+            {
+              "id": "start",
+              "label": "開始",
+              "type": "start"
+            },
+            {
+              "id": "process1",
+              "label": "処理1",
+              "type": "process"
+            },
+            {
+              "id": "decision1",
+              "label": "判定",
+              "type": "decision"
+            },
+            {
+              "id": "end",
+              "label": "終了",
+              "type": "end"
+            }
+          ],
+          "connections": [
+            {
+              "from": "start",
+              "to": "process1"
+            },
+            {
+              "from": "process1",
+              "to": "decision1"
+            },
+            {
+              "from": "decision1",
+              "to": "end"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/DataFlowSimulator",
+        "props": {
+          "title": "データフローテスト",
+          "nodes": [
+            {
+              "id": "input",
+              "label": "入力",
+              "type": "input"
+            },
+            {
+              "id": "process",
+              "label": "処理",
+              "type": "process"
+            },
+            {
+              "id": "output",
+              "label": "出力",
+              "type": "output"
+            }
+          ],
+          "flows": [
+            {
+              "from": "input",
+              "to": "process",
+              "label": "データ"
+            },
+            {
+              "from": "process",
+              "to": "output",
+              "label": "結果"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/KeyTerm",
+        "props": {
+          "term": "Docusaurus",
+          "definition": "Facebookが開発した静的サイトジェネレーター"
+        }
+      }
+    ]
+  },
+  {
+    "id": "quiz-test",
+    "title": "クイズコンポーネントテスト",
+    "description": "各種クイズ機能の動作テスト",
+    "slug": "/quiz-test",
+    "prose_content": "# クイズコンポーネントテスト\n\n## 4.1 選択式クイズ\n\n### 多肢選択問題\n基本的な多肢選択問題のテストです。\n\n### 複数選択問題\n複数回答可能な選択問題のテストです。\n\n## 4.2 入力式クイズ\n\n### 穴埋め問題\nテキスト入力による穴埋め問題のテストです。\n\n### 記述問題\n自由記述問題のテストです。\n\n## 4.3 インタラクティブクイズ\n\n### ドラッグ&ドロップ\nアイテムをドラッグして正しい位置に配置する問題のテストです。\n\n### マッチング問題\n対応する項目同士を線で結ぶ問題のテストです。\n\n## 4.4 画像クイズ\n\n### イメージホットスポットクイズ\n画像上の正しい箇所をクリックする問題のテストです。",
+    "components": [
+      {
+        "component": "quizzes/MultipleChoice",
+        "props": {
+          "quizData": {
+            "question": "Docusaurusは何で作られていますか？",
+            "options": [
+              {
+                "text": "React",
+                "correct": true,
+                "explanation": "正解！DocusaurusはReactベースです。"
+              },
+              {
+                "text": "Vue.js",
+                "correct": false,
+                "explanation": "不正解。Vue.jsではありません。"
+              },
+              {
+                "text": "Angular",
+                "correct": false,
+                "explanation": "不正解。Angularではありません。"
+              },
+              {
+                "text": "Svelte",
+                "correct": false,
+                "explanation": "不正解。Svelteではありません。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "component": "quizzes/FillInTheBlank",
+        "props": {
+          "question": "Markdownファイルの拡張子は（　　　）です。",
+          "answer": ".md",
+          "hint": "ドット + 2文字のアルファベット",
+          "explanation": ".md がMarkdownファイルの標準的な拡張子です。"
+        }
+      },
+      {
+        "component": "quizzes/MultipleChoice",
+        "props": {
+          "quizData": {
+            "question": "以下のうち、静的サイトジェネレーターはどれですか？（複数選択可）",
+            "multiple": true,
+            "options": [
+              {
+                "text": "Gatsby",
+                "correct": true,
+                "explanation": "GatsbyはReactベースの静的サイトジェネレーターです。"
+              },
+              {
+                "text": "Next.js",
+                "correct": true,
+                "explanation": "Next.jsは静的サイト生成もサポートしています。"
+              },
+              {
+                "text": "Express.js",
+                "correct": false,
+                "explanation": "Express.jsはサーバーサイドフレームワークです。"
+              },
+              {
+                "text": "Hugo",
+                "correct": true,
+                "explanation": "HugoはGo言語で作られた静的サイトジェネレーターです。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "component": "quizzes/Essay",
+        "props": {
+          "question": "静的サイトジェネレーターの利点を3つ挙げて説明してください。",
+          "placeholder": "ここに回答を入力してください...",
+          "minLength": 50,
+          "hint": "パフォーマンス、セキュリティ、ホスティングなどの観点から考えてみましょう。"
+        }
+      },
+      {
+        "component": "quizzes/DragAndDropQuiz",
+        "props": {
+          "question": "以下の技術を正しいカテゴリーにドラッグしてください。",
+          "items": [
+            {
+              "id": "react",
+              "text": "React",
+              "category": "frontend"
+            },
+            {
+              "id": "node",
+              "text": "Node.js",
+              "category": "backend"
+            },
+            {
+              "id": "vue",
+              "text": "Vue.js",
+              "category": "frontend"
+            },
+            {
+              "id": "express",
+              "text": "Express",
+              "category": "backend"
+            }
+          ],
+          "categories": [
+            {
+              "id": "frontend",
+              "label": "フロントエンド"
+            },
+            {
+              "id": "backend",
+              "label": "バックエンド"
+            }
+          ]
+        }
+      },
+      {
+        "component": "quizzes/MatchingPairs",
+        "props": {
+          "question": "以下の用語と説明を正しく組み合わせてください。",
+          "pairs": [
+            {
+              "left": "HTML",
+              "right": "ウェブページの構造を定義するマークアップ言語"
+            },
+            {
+              "left": "CSS",
+              "right": "ウェブページのスタイルを定義する言語"
+            },
+            {
+              "left": "JavaScript",
+              "right": "ウェブページに動的な機能を追加するプログラミング言語"
+            },
+            {
+              "left": "Markdown",
+              "right": "軽量マークアップ言語"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

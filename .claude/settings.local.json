@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm start)",
+      "Bash(PYTHONPATH=scripts/core python scripts/courses/comprehensive-test/build.py)",
+      "Bash(npm install:*)",
+      "Bash(npm start:*)"
+    ],
+    "deny": []
+  }
+}

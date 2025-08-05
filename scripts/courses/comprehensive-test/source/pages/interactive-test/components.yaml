@@ -1,0 +1,94 @@
+- component: 'interactive/ClickToShow'
+  props:
+    buttonText: '詳細を表示'
+    content: 'クリックで表示されるコンテンツです。**Markdown**も使えます。'
+
+- component: 'interactive/ImageHotspot'
+  props:
+    image: '/img/docusaurus.png'
+    alt: 'テスト画像'
+    hotspots:
+      - x: 50
+        y: 30
+        title: 'ポイント1'
+        description: 'ここは重要なポイントです'
+      - x: 80
+        y: 60
+        title: 'ポイント2'
+        description: 'もう一つの重要なポイントです'
+
+- component: 'diagrams/SimpleChart'
+  props:
+    type: 'bar'
+    title: 'テストデータ'
+    data:
+      - label: 'A項目'
+        value: 30
+      - label: 'B項目'
+        value: 50
+      - label: 'C項目'
+        value: 20
+
+- component: 'diagrams/SimpleChart'
+  props:
+    type: 'line'
+    title: '時系列データ'
+    data:
+      - label: '1月'
+        value: 10
+      - label: '2月'
+        value: 25
+      - label: '3月'
+        value: 40
+      - label: '4月'
+        value: 35
+
+- component: 'interactive/InteractiveFlowchart'
+  props:
+    title: 'プロセスフロー'
+    steps:
+      - id: 'start'
+        label: '開始'
+        type: 'start'
+      - id: 'process1'
+        label: '処理1'
+        type: 'process'
+      - id: 'decision1'
+        label: '判定'
+        type: 'decision'
+      - id: 'end'
+        label: '終了'
+        type: 'end'
+    connections:
+      - from: 'start'
+        to: 'process1'
+      - from: 'process1'
+        to: 'decision1'
+      - from: 'decision1'
+        to: 'end'
+
+- component: 'interactive/DataFlowSimulator'
+  props:
+    title: 'データフローテスト'
+    nodes:
+      - id: 'input'
+        label: '入力'
+        type: 'input'
+      - id: 'process'
+        label: '処理'
+        type: 'process'
+      - id: 'output'
+        label: '出力'
+        type: 'output'
+    flows:
+      - from: 'input'
+        to: 'process'
+        label: 'データ'
+      - from: 'process'
+        to: 'output'
+        label: '結果'
+
+- component: 'interactive/KeyTerm'
+  props:
+    term: 'Docusaurus'
+    definition: 'Facebookが開発した静的サイトジェネレーター'

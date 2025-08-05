@@ -1,0 +1,49 @@
+- component: 'ui/Accordion'
+  props:
+    items:
+      - title: 'セクション1'
+        content: 'これは最初のセクションの内容です。'
+      - title: 'セクション2' 
+        content: '2番目のセクションには**Markdown**も使えます。'
+
+- component: 'ui/Card'
+  props:
+    title: 'テストカード'
+    content: 'カードコンポーネントのテストです。'
+    variant: 'outlined'
+
+- component: 'ui/Tabs'
+  props:
+    items:
+      - label: 'タブ1'
+        content: 'タブ1の内容です。'
+      - label: 'タブ2'
+        content: 'タブ2の内容です。'
+      - label: 'タブ3'
+        content: 'タブ3の内容です。'
+
+- component: 'ui/Button'
+  props:
+    variant: 'primary'
+    size: 'large'
+    children: 'プライマリボタン'
+
+- component: 'ui/Button'
+  props:
+    variant: 'secondary'
+    size: 'medium'
+    children: 'セカンダリボタン'
+
+- component: 'ui/ProgressBar'
+  props:
+    value: 75
+    label: '進捗: 75%'
+
+- component: 'ui/Table'
+  props:
+    headers: ['機能', 'ステータス', '備考']
+    rows:
+      - ['アコーディオン', '✓', '正常動作']
+      - ['カード', '✓', '正常動作']
+      - ['タブ', 'テスト中', '確認中']
+      - ['ボタン', '✓', '正常動作']

@@ -1,0 +1,23 @@
+.tabs .tabList {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+}
+
+.tabs .tabList button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid transparent;
+}
+
+.tabs .tabList button.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
+}
+
+.tabs .tabContent {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
