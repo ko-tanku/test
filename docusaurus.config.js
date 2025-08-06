@@ -80,45 +80,66 @@ const config = {
           alt: 'My Site Logo',
           src: 'img/logo.svg',
         },
-        items: [{
-          type: 'dropdown',
-          label: '機能網羅テスト',
-          position: 'left',
-          items: [
-            {
-              to: '/comprehensive-test/index',
-              label: 'メインテストページ',
-            },
-            {
-              to: '/comprehensive-test/components-test',
-              label: 'コンポーネントテスト',
-            },
-            {
-              to: '/comprehensive-test/interactive-test',
-              label: 'インタラクティブ機能テスト',
-            },
-            {
-              to: '/comprehensive-test/quiz-test',
-              label: 'クイズコンポーネントテスト',
-            },
-            {
-              to: '/comprehensive-test/layout-test',
-              label: 'レイアウトコンポーネントテスト',
-            },
-            {
-              to: '/comprehensive-test/diagrams-test',
-              label: '図表コンポーネントテスト',
-            },
-            {
-              to: '/comprehensive-test/forms-test',
-              label: 'フォーム・入力コンポーネントテスト',
-            },
-            {
-              to: '/comprehensive-test/advanced-test',
-              label: '高度なコンポーネントテスト',
-            },
-          ],
-        }],
+        items: [
+          {
+            type: 'dropdown',
+            label: '機能網羅テスト',
+            position: 'left',
+            items: [
+              {
+                to: '/comprehensive-test/index',
+                label: 'メインテストページ',
+              },
+              {
+                to: '/comprehensive-test/components-test',
+                label: 'コンポーネントテスト',
+              },
+              {
+                to: '/comprehensive-test/interactive-test',
+                label: 'インタラクティブ機能テスト',
+              },
+              {
+                to: '/comprehensive-test/quiz-test',
+                label: 'クイズコンポーネントテスト',
+              },
+              {
+                to: '/comprehensive-test/layout-test',
+                label: 'レイアウトコンポーネントテスト',
+              },
+              {
+                to: '/comprehensive-test/diagrams-test',
+                label: '図表コンポーネントテスト',
+              },
+              {
+                to: '/comprehensive-test/forms-test',
+                label: 'フォーム・入力コンポーネントテスト',
+              },
+              {
+                to: '/comprehensive-test/advanced-test',
+                label: '高度なコンポーネントテスト',
+              },
+            ],
+          },
+          {
+            type: 'dropdown',
+            label: '実用コンポーネントデモ',
+            position: 'left',
+            items: [
+              {
+                to: '/practical-demo/index',
+                label: 'はじめに',
+              },
+              {
+                to: '/practical-demo/chapter1',
+                label: '第1章: ITって何だろう？',
+              },
+              {
+                to: '/practical-demo/interactive-tools',
+                label: '学習ツール集',
+              },
+            ],
+          },
+        ],
       },
       footer: {
         style: 'dark',
@@ -131,7 +152,10 @@ const config = {
       },
     }),
   
-  plugins: [path.resolve(__dirname, 'plugins/comprehensive-test-plugin')],
+  plugins: [
+    path.resolve(__dirname, 'plugins/comprehensive-test-plugin'),
+    path.resolve(__dirname, 'plugins/practical-demo-plugin'),
+  ],
 };
 
 export default config;

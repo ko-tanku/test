@@ -22,3 +22,42 @@
 [data-theme='dark'] .content {
   background-color: var(--ifm-color-emphasis-700);
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.statCards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.statCard {
+  flex: 1 1 180px;
+  min-width: 180px;
+  background: var(--ifm-color-emphasis-50);
+  border-radius: var(--ifm-border-radius);
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.charts {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.chart {
+  flex: 1 1 320px;
+  min-width: 320px;
+  background: var(--ifm-color-emphasis-50);
+  border-radius: var(--ifm-border-radius);
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}

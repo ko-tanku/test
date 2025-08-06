@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '../ui/Button';
+import Button from '../ui/Button/index.js';
 
 export default function ProgressiveLayout({ children }) {
   const [visibleSteps, setVisibleSteps] = useState(1);

@@ -1,24 +1,274 @@
 .timer {
-  padding: 1rem;
-  margin: 1rem 0;
+  max-width: 400px;
+  margin: 1rem auto;
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: var(--ifm-border-radius);
   background-color: var(--ifm-background-color);
   color: var(--ifm-color-emphasis-800);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'SF Pro Display', 'Segoe UI', sans-serif;
 }
 
-.content {
-  margin-top: 1rem;
-  padding: 0.5rem;
+.header {
+  text-align: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--ifm-color-primary);
+}
+
+.display {
+  padding: 2rem;
+  text-align: center;
   background-color: var(--ifm-color-emphasis-100);
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.timeDisplay {
+  font-size: 3rem;
+  font-weight: 300;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  color: var(--ifm-color-emphasis-900);
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.timeDisplay.completed {
+  color: var(--ifm-color-success);
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 1; }
+  to { opacity: 0.7; }
+}
+
+.progressContainer {
+  width: 100%;
+  height: 8px;
+  background-color: var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ifm-color-primary), var(--ifm-color-primary-dark));
+  transition: width 1s ease;
+  border-radius: 4px;
+}
+
+.completedMessage {
+  font-size: 1.2rem;
+  color: var(--ifm-color-success);
+  font-weight: 600;
+  animation: celebration 0.5s ease-in-out;
+}
+
+@keyframes celebration {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.controls {
+  padding: 1.5rem;
+}
+
+.inputSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+  min-width: 20px;
+}
+
+.timeInput {
+  width: 60px;
+  padding: 0.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: var(--ifm-border-radius);
+  font-size: 1rem;
+  text-align: center;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-color-emphasis-800);
+}
+
+.timeInput:disabled {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-600);
+}
+
+.setButton {
+  padding: 0.5rem 1rem;
+  background-color: var(--ifm-color-secondary);
+  color: white;
+  border: none;
+  border-radius: var(--ifm-border-radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.setButton:hover:not(:disabled) {
+  background-color: var(--ifm-color-secondary-dark);
+}
+
+.setButton:disabled {
+  background-color: var(--ifm-color-emphasis-400);
+  cursor: not-allowed;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--ifm-border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.startButton {
+  background-color: var(--ifm-color-success);
+  color: white;
+}
+
+.startButton:hover:not(:disabled) {
+  background-color: var(--ifm-color-success-dark);
+  transform: translateY(-1px);
+}
+
+.pauseButton {
+  background-color: var(--ifm-color-warning);
+  color: white;
+}
+
+.pauseButton:hover {
+  background-color: var(--ifm-color-warning-dark);
+  transform: translateY(-1px);
+}
+
+.resetButton {
+  background-color: var(--ifm-color-secondary);
+  color: white;
+}
+
+.resetButton:hover {
+  background-color: var(--ifm-color-secondary-dark);
+  transform: translateY(-1px);
+}
+
+.stopButton {
+  background-color: var(--ifm-color-danger);
+  color: white;
+}
+
+.stopButton:hover {
+  background-color: var(--ifm-color-danger-dark);
+  transform: translateY(-1px);
+}
+
+.button:disabled {
+  background-color: var(--ifm-color-emphasis-400);
+  color: var(--ifm-color-emphasis-600);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.status {
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+  background-color: var(--ifm-color-emphasis-100);
+  border-top: 1px solid var(--ifm-color-emphasis-300);
 }
 
 /* Dark theme support */
 [data-theme='dark'] .timer {
   border-color: var(--ifm-color-emphasis-600);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme='dark'] .content {
+[data-theme='dark'] .header {
+  border-bottom-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .display {
+  background-color: var(--ifm-color-emphasis-800);
+  border-bottom-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .timeDisplay {
+  color: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .progressContainer {
+  background-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .timeInput {
+  border-color: var(--ifm-color-emphasis-600);
   background-color: var(--ifm-color-emphasis-700);
+  color: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .timeInput:disabled {
+  background-color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .status {
+  background-color: var(--ifm-color-emphasis-800);
+  border-top-color: var(--ifm-color-emphasis-600);
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .timer {
+    max-width: 320px;
+    margin: 0.5rem auto;
+  }
+  
+  .timeDisplay {
+    font-size: 2.5rem;
+  }
+  
+  .inputSection {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+  }
+  
+  .button {
+    width: 100%;
+  }
 }

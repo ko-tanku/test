@@ -4,11 +4,13 @@ import styles from './styles.module.css';
 export default function ImageHotspot({ 
   image,
   alt = "Interactive image",
+  title,
   width = "100%",
   height = "auto",
   hotspots = []
 }) {
   const [activeHotspot, setActiveHotspot] = useState(null);
+  const [imageError, setImageError] = useState(false);
 
   const handleHotspotClick = (index) => {
     setActiveHotspot(activeHotspot === index ? null : index);
@@ -23,14 +25,26 @@ export default function ImageHotspot({
 
   return (
     <div className={styles.imageHotspot} style={{ width }}>
+      {title && <h4 className={styles.imageTitle}>{title}</h4>}
       <div className={styles.imageContainer}>
-        <img 
-          src={image}
-          alt={alt}
-          className={styles.image}
-          style={{ height }}
-          onClick={handleImageClick}
-        />
+        {imageError ? (
+          <div className={styles.imagePlaceholder}>
+            <div className={styles.placeholderIcon}>📱</div>
+            <p>スマートフォンの構成図</p>
+            <p className={styles.placeholderNote}>
+              （画像: {image} が見つかりません）
+            </p>
+          </div>
+        ) : (
+          <img 
+            src={image}
+            alt={alt}
+            className={styles.image}
+            style={{ height }}
+            onClick={handleImageClick}
+            onError={() => setImageError(true)}
+          />
+        )}
         {hotspots.map((hotspot, index) => (
           <div
             key={index}

@@ -2,17 +2,34 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 
 export default function MultipleChoice({ 
+  // 基本プロパティ
   question, 
   options = [], 
+  
+  // 後方互換性用（quizData形式）
+  quizData,
+  
+  // 機能設定
   multiple = false,
+  multiSelect, // multipleのエイリアス
   hints = [],
   explanation = '',
   difficulty = 'medium',
   allowRetry = true,
   showProgressTracking = true,
-  timeLimit = null // 秒数、nullで無制限
+  timeLimit = null, // 秒数、nullで無制限
+  showHints = true,
+  randomizeOptions = false,
+  variant = 'default'
 }) {
-  const [selectedAnswers, setSelectedAnswers] = useState(multiple ? [] : null);
+  // 後方互換性: quizDataが渡された場合の処理
+  const actualQuestion = quizData?.question || question;
+  const actualOptions = quizData?.options || options;
+  const actualExplanation = quizData?.explanation || explanation;
+  
+  // multipleとmultiSelectの統合
+  const isMultiple = multiSelect !== undefined ? multiSelect : multiple;
+  const [selectedAnswers, setSelectedAnswers] = useState(isMultiple ? [] : null);
   const [showResults, setShowResults] = useState(false);
   const [currentHintIndex, setCurrentHintIndex] = useState(-1);
   const [attempts, setAttempts] = useState(0);
@@ -43,7 +60,7 @@ export default function MultipleChoice({
   const handleAnswerSelect = (index) => {
     if (showResults || isTimeUp) return;
     
-    if (multiple) {
+    if (isMultiple) {
       setSelectedAnswers(prev => 
         prev.includes(index) 
           ? prev.filter(i => i !== index)
@@ -75,7 +92,7 @@ export default function MultipleChoice({
   };
 
   const handleRetry = () => {
-    setSelectedAnswers(multiple ? [] : null);
+    setSelectedAnswers(isMultiple ? [] : null);
     setShowResults(false);
     setCurrentHintIndex(-1);
     setIsTimeUp(false);
@@ -88,7 +105,7 @@ export default function MultipleChoice({
   };
 
   const isSelected = (index) => {
-    return multiple 
+    return isMultiple 
       ? selectedAnswers.includes(index)
       : selectedAnswers === index;
   };
@@ -96,10 +113,10 @@ export default function MultipleChoice({
   const getResultStatus = () => {
     if (!showResults) return null;
     
-    const correctOptions = options.filter(option => option.correct);
-    const correctIndices = correctOptions.map((_, idx) => options.findIndex(opt => opt === correctOptions[idx]));
+    const correctOptions = actualOptions.filter(option => option.correct || option.isCorrect);
+    const correctIndices = correctOptions.map((_, idx) => actualOptions.findIndex(opt => opt === correctOptions[idx]));
     
-    if (multiple) {
+    if (isMultiple) {
       const selectedSet = new Set(selectedAnswers);
       const correctSet = new Set(correctIndices);
       return selectedSet.size === correctSet.size && 
@@ -117,7 +134,7 @@ export default function MultipleChoice({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  if (!question || !options.length) {
+  if (!actualQuestion || !actualOptions.length) {
     return <div className={styles.multiplechoice}>Invalid quiz data</div>;
   }
 
@@ -129,7 +146,7 @@ export default function MultipleChoice({
           <span className={`${styles.difficulty} ${styles[`difficulty${difficulty}`]}`}>
             {difficulty === 'easy' ? '初級' : difficulty === 'medium' ? '中級' : '上級'}
           </span>
-          {multiple && <span className={styles.multipleIndicator}>複数選択可</span>}
+          {isMultiple && <span className={styles.multipleIndicator}>複数選択可</span>}
         </div>
         
         <div className={styles.metadata}>
@@ -144,10 +161,10 @@ export default function MultipleChoice({
         </div>
       </div>
 
-      <h3 className={styles.question}>{question}</h3>
+      <h3 className={styles.question}>{actualQuestion}</h3>
 
       {/* ヒント表示 */}
-      {hints.length > 0 && !showResults && (
+      {showHints && hints.length > 0 && !showResults && (
         <div className={styles.hintsSection}>
           {currentHintIndex >= 0 && (
             <div className={styles.currentHint}>
@@ -167,27 +184,27 @@ export default function MultipleChoice({
       )}
 
       <div className={styles.options}>
-        {options.map((option, index) => (
+        {actualOptions.map((option, index) => (
           <div 
             key={index} 
             className={`${styles.option} ${
-              showResults ? (option.correct ? styles.correctOption : styles.incorrectOption) : ''
+              showResults ? ((option.correct || option.isCorrect) ? styles.correctOption : styles.incorrectOption) : ''
             } ${isSelected(index) ? styles.selected : ''}`}
           >
             <label className={styles.optionLabel}>
               <input
-                type={multiple ? 'checkbox' : 'radio'}
-                name={`quiz-option-${question}`}
+                type={isMultiple ? 'checkbox' : 'radio'}
+                name={`quiz-option-${actualQuestion}`}
                 checked={isSelected(index)}
                 onChange={() => handleAnswerSelect(index)}
                 className={styles.optionInput}
                 disabled={showResults}
               />
               <span className={styles.optionText}>{option.text || option}</span>
-              {showResults && option.correct && (
+              {showResults && (option.correct || option.isCorrect) && (
                 <span className={styles.correctIndicator}>✅</span>
               )}
-              {showResults && !option.correct && isSelected(index) && (
+              {showResults && !(option.correct || option.isCorrect) && isSelected(index) && (
                 <span className={styles.incorrectIndicator}>❌</span>
               )}
             </label>
@@ -214,10 +231,10 @@ export default function MultipleChoice({
             {isTimeUp && <span className={styles.timeUpIndicator}>（時間切れ）</span>}
           </div>
           
-          {explanation && (
+          {actualExplanation && (
             <div className={styles.overallExplanation}>
               <strong>📝 詳細解説:</strong>
-              <p>{explanation}</p>
+              <p>{actualExplanation}</p>
             </div>
           )}
           
@@ -243,7 +260,7 @@ export default function MultipleChoice({
         <button 
           onClick={() => handleSubmit()}
           className={styles.submitButton}
-          disabled={multiple ? selectedAnswers.length === 0 : selectedAnswers === null}
+          disabled={isMultiple ? selectedAnswers.length === 0 : selectedAnswers === null}
         >
           回答を確認
         </button>

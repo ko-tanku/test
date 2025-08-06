@@ -9,7 +9,13 @@
       "Bash(npm start:*)",
       "Bash(mkdir:*)",
       "Bash(npm run start:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(cp:*)",
+      "Bash(PYTHONPATH=scripts/core python scripts/courses/practical-demo/build.py)",
+      "Bash(npx docusaurus serve:*)",
+      "Bash(rd:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

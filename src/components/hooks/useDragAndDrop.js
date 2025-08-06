@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
 // This is a conceptual hook. The actual implementation will depend on the specific

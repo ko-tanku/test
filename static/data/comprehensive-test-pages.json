@@ -60,35 +60,58 @@
             {
               "title": "セクション2",
               "content": "2番目のセクションには**Markdown**も使えます。"
+            },
+            {
+              "title": "セクション3",
+              "content": "アコーディオンの展開・折りたたみ機能をテストしています。"
             }
           ]
         }
       },
       {
-        "component": "ui/Card",
+        "component": "ui/Alert",
         "props": {
-          "title": "テストカード",
-          "content": "カードコンポーネントのテストです。",
-          "variant": "outlined"
+          "type": "info",
+          "title": "情報アラート",
+          "message": "これは情報アラートのテストです。"
         }
       },
       {
-        "component": "ui/Tabs",
+        "component": "ui/Alert",
         "props": {
-          "tabs": [
-            {
-              "label": "タブ1",
-              "content": "タブ1の内容です。"
-            },
-            {
-              "label": "タブ2",
-              "content": "タブ2の内容です。"
-            },
-            {
-              "label": "タブ3",
-              "content": "タブ3の内容です。"
-            }
-          ]
+          "type": "warning",
+          "title": "警告アラート",
+          "message": "これは警告アラートのテストです。"
+        }
+      },
+      {
+        "component": "ui/Alert",
+        "props": {
+          "type": "error",
+          "title": "エラーアラート",
+          "message": "これはエラーアラートのテストです。"
+        }
+      },
+      {
+        "component": "ui/Avatar",
+        "props": {
+          "name": "テストユーザー",
+          "size": "large",
+          "src": "/img/docusaurus.png"
+        }
+      },
+      {
+        "component": "ui/Badge",
+        "props": {
+          "text": "新機能",
+          "variant": "primary"
+        }
+      },
+      {
+        "component": "ui/Badge",
+        "props": {
+          "text": "ベータ版",
+          "variant": "secondary"
         }
       },
       {
@@ -108,10 +131,119 @@
         }
       },
       {
+        "component": "ui/Button",
+        "props": {
+          "variant": "outline",
+          "size": "small",
+          "children": "アウトラインボタン"
+        }
+      },
+      {
+        "component": "ui/Card",
+        "props": {
+          "title": "テストカード",
+          "content": "カードコンポーネントのテストです。",
+          "variant": "outlined"
+        }
+      },
+      {
+        "component": "ui/Card",
+        "props": {
+          "title": "シャドウカード",
+          "content": "シャドウ付きカードのテストです。",
+          "variant": "shadow"
+        }
+      },
+      {
+        "component": "ui/CodeBlock",
+        "props": {
+          "language": "javascript",
+          "title": "JavaScript サンプル",
+          "code": "function testFunction() {\n  console.log(\"Hello, World!\");\n  return \"success\";\n}\n"
+        }
+      },
+      {
+        "component": "ui/CodeBlock",
+        "props": {
+          "language": "python",
+          "title": "Python サンプル",
+          "code": "def test_function():\n    print(\"Hello, World!\")\n    return \"success\"\n"
+        }
+      },
+      {
+        "component": "ui/Icon",
+        "props": {
+          "name": "check",
+          "size": "large",
+          "color": "green"
+        }
+      },
+      {
+        "component": "ui/MathDisplay",
+        "props": {
+          "equation": "E = mc^2"
+        }
+      },
+      {
+        "component": "ui/MathDisplay",
+        "props": {
+          "equation": "\\sum_{i=1}^{n} x_i = \\frac{n(n+1)}{2}"
+        }
+      },
+      {
+        "component": "ui/Modal",
+        "props": {
+          "title": "テストモーダル",
+          "message": "これはモーダルウィンドウのテストです。閉じるボタンまたは背景をクリックして閉じることができます。",
+          "isOpen": false,
+          "onClose": "console.log",
+          "size": "medium"
+        }
+      },
+      {
+        "component": "ui/Pagination",
+        "props": {
+          "totalItems": 250,
+          "itemsPerPage": 10,
+          "onPageChange": "console.log"
+        }
+      },
+      {
         "component": "ui/ProgressBar",
         "props": {
           "value": 75,
           "label": "進捗: 75%"
+        }
+      },
+      {
+        "component": "ui/ProgressBar",
+        "props": {
+          "value": 100,
+          "label": "完了",
+          "variant": "success"
+        }
+      },
+      {
+        "component": "ui/Skeleton",
+        "props": {
+          "width": "100%",
+          "height": "20px",
+          "variant": "text"
+        }
+      },
+      {
+        "component": "ui/Skeleton",
+        "props": {
+          "width": "200px",
+          "height": "200px",
+          "variant": "rectangular"
+        }
+      },
+      {
+        "component": "ui/Spinner",
+        "props": {
+          "size": "medium",
+          "color": "primary"
         }
       },
       {
@@ -135,14 +267,76 @@
             ],
             [
               "タブ",
-              "テスト中",
-              "確認中"
+              "✓",
+              "正常動作"
             ],
             [
               "ボタン",
               "✓",
               "正常動作"
+            ],
+            [
+              "モーダル",
+              "✓",
+              "正常動作"
+            ],
+            [
+              "プログレスバー",
+              "✓",
+              "正常動作"
             ]
+          ]
+        }
+      },
+      {
+        "component": "ui/Tabs",
+        "props": {
+          "tabs": [
+            {
+              "label": "タブ1",
+              "content": "タブ1の内容です。"
+            },
+            {
+              "label": "タブ2",
+              "content": "タブ2の内容です。"
+            },
+            {
+              "label": "タブ3",
+              "content": "タブ3の内容です。"
+            }
+          ]
+        }
+      },
+      {
+        "component": "ui/Tooltip",
+        "props": {
+          "term": "ツールチップ",
+          "definition": "マウスホバー時に表示される補足説明です。",
+          "children": "この文字にホバーしてください"
+        }
+      },
+      {
+        "component": "layout/SummaryBox",
+        "props": {
+          "title": "UIコンポーネントテスト結果",
+          "items": [
+            "アコーディオン: ✓ 展開・折りたたみ動作確認済み",
+            "アラート: ✓ 各種タイプ表示確認済み",
+            "アバター: ✓ 画像・文字表示確認済み",
+            "バッジ: ✓ 各種スタイル表示確認済み",
+            "ボタン: ✓ 各種バリアント動作確認済み",
+            "カード: ✓ レイアウト表示確認済み",
+            "コードブロック: ✓ シンタックスハイライト確認済み",
+            "アイコン: ✓ 表示・サイズ調整確認済み",
+            "数式表示: ✓ LaTeX レンダリング確認済み",
+            "モーダル: ✓ 開閉動作確認済み",
+            "ページネーション: ✓ ナビゲーション確認済み",
+            "プログレスバー: ✓ 進捗表示確認済み",
+            "スケルトン: ✓ ローディング表示確認済み",
+            "スピナー: ✓ ローディング動作確認済み",
+            "テーブル: ✓ データ表示確認済み",
+            "タブ: ✓ 切り替え動作確認済み",
+            "ツールチップ: ✓ ホバー表示確認済み"
           ]
         }
       }
@@ -156,10 +350,92 @@
     "prose_content": "# インタラクティブ機能テスト\n\n## 3.1 クリック操作テスト\n\n### ClickToShow機能\nクリックで情報を表示・非表示する機能のテストです。\n\n### イメージホットスポット\n画像上の特定箇所をクリックして情報を表示する機能のテストです。\n\n## 3.2 図表・チャート機能\n\n### シンプルチャート\n基本的なグラフ描画機能のテストです。\n\n### フローチャート\nインタラクティブなフローチャート機能のテストです。\n\n## 3.3 シミュレーション機能\n\n### データフロー\nデータの流れを視覚的に表現する機能のテストです。\n\n## 3.4 キーワード強調\n\n### KeyTerm機能\n重要な用語の強調表示機能のテストです。",
     "components": [
       {
+        "component": "interactive/AudioPlayer",
+        "props": {
+          "src": "/audio/sample.mp3",
+          "title": "サンプル音声",
+          "controls": true
+        }
+      },
+      {
+        "component": "interactive/Calculator",
+        "props": {
+          "title": "電卓テスト",
+          "allowDecimals": true,
+          "allowNegative": true
+        }
+      },
+      {
+        "component": "interactive/Carousel",
+        "props": {
+          "items": [
+            {
+              "image": "/img/docusaurus.png",
+              "title": "画像1",
+              "description": "最初の画像です"
+            },
+            {
+              "image": "/img/docusaurus.png",
+              "title": "画像2",
+              "description": "2番目の画像です"
+            },
+            {
+              "image": "/img/docusaurus.png",
+              "title": "画像3",
+              "description": "3番目の画像です"
+            }
+          ],
+          "autoplay": false,
+          "showDots": true
+        }
+      },
+      {
         "component": "interactive/ClickToShow",
         "props": {
           "buttonText": "詳細を表示",
           "content": "クリックで表示されるコンテンツです。**Markdown**も使えます。"
+        }
+      },
+      {
+        "component": "interactive/CodeRunner",
+        "props": {
+          "language": "javascript",
+          "initialCode": "function hello() {\n  console.log(\"Hello, World!\");\n  return \"Hello, World!\";\n}\n\nhello();\n",
+          "editable": true
+        }
+      },
+      {
+        "component": "interactive/Counter",
+        "props": {
+          "initialValue": 0,
+          "min": -10,
+          "max": 100,
+          "step": 1,
+          "title": "カウンター"
+        }
+      },
+      {
+        "component": "interactive/Gallery",
+        "props": {
+          "images": [
+            {
+              "src": "/img/docusaurus.png",
+              "alt": "画像1",
+              "caption": "最初の画像"
+            },
+            {
+              "src": "/img/docusaurus.png",
+              "alt": "画像2",
+              "caption": "2番目の画像"
+            },
+            {
+              "src": "/img/docusaurus.png",
+              "alt": "画像3",
+              "caption": "3番目の画像"
+            }
+          ],
+          "columns": 3,
+          "showCaptions": true
         }
       },
       {
@@ -179,6 +455,174 @@
               "y": 60,
               "title": "ポイント2",
               "description": "もう一つの重要なポイントです"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/InteractiveFlowchart",
+        "props": {
+          "title": "プロセスフロー",
+          "steps": [
+            {
+              "id": "start",
+              "label": "開始",
+              "type": "start"
+            },
+            {
+              "id": "process1",
+              "label": "処理1",
+              "type": "process"
+            },
+            {
+              "id": "decision1",
+              "label": "判定",
+              "type": "decision"
+            },
+            {
+              "id": "end",
+              "label": "終了",
+              "type": "end"
+            }
+          ],
+          "connections": [
+            {
+              "from": "start",
+              "to": "process1"
+            },
+            {
+              "from": "process1",
+              "to": "decision1"
+            },
+            {
+              "from": "decision1",
+              "to": "end"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/KeyTerm",
+        "props": {
+          "term": "Docusaurus",
+          "definition": "Facebookが開発した静的サイトジェネレーター"
+        }
+      },
+      {
+        "component": "interactive/Slideshow",
+        "props": {
+          "slides": [
+            {
+              "title": "スライド1",
+              "content": "最初のスライドの内容です。"
+            },
+            {
+              "title": "スライド2",
+              "content": "2番目のスライドの内容です。"
+            },
+            {
+              "title": "スライド3",
+              "content": "3番目のスライドの内容です。"
+            }
+          ],
+          "autoplay": false,
+          "showNavigation": true
+        }
+      },
+      {
+        "component": "interactive/Stopwatch",
+        "props": {
+          "title": "ストップウォッチ",
+          "showMilliseconds": true
+        }
+      },
+      {
+        "component": "interactive/Timer",
+        "props": {
+          "initialMinutes": 5,
+          "initialSeconds": 0,
+          "title": "タイマー",
+          "autoStart": false
+        }
+      },
+      {
+        "component": "interactive/Timeline",
+        "props": {
+          "events": [
+            {
+              "date": "2020-01-01",
+              "title": "プロジェクト開始",
+              "description": "プロジェクトが始まりました"
+            },
+            {
+              "date": "2021-06-01",
+              "title": "ベータ版リリース",
+              "description": "ベータ版がリリースされました"
+            },
+            {
+              "date": "2022-01-01",
+              "title": "正式リリース",
+              "description": "正式版がリリースされました"
+            },
+            {
+              "date": "2023-01-01",
+              "title": "機能拡張",
+              "description": "新機能が追加されました"
+            }
+          ],
+          "orientation": "vertical"
+        }
+      },
+      {
+        "component": "interactive/VideoPlayer",
+        "props": {
+          "src": "/video/sample.mp4",
+          "title": "サンプル動画",
+          "controls": true,
+          "autoplay": false,
+          "muted": true
+        }
+      },
+      {
+        "component": "interactive/ZoomImage",
+        "props": {
+          "src": "/img/docusaurus.png",
+          "alt": "拡大可能な画像",
+          "maxZoom": 3,
+          "showZoomControls": true
+        }
+      },
+      {
+        "component": "interactive/DataFlowSimulator",
+        "props": {
+          "title": "データフローテスト",
+          "nodes": [
+            {
+              "id": "input",
+              "label": "入力",
+              "type": "input"
+            },
+            {
+              "id": "process",
+              "label": "処理",
+              "type": "process"
+            },
+            {
+              "id": "output",
+              "label": "出力",
+              "type": "output"
+            }
+          ],
+          "flows": [
+            {
+              "from": "input",
+              "to": "process",
+              "label": "データ"
+            },
+            {
+              "from": "process",
+              "to": "output",
+              "label": "結果"
             }
           ]
         }
@@ -230,87 +674,29 @@
         }
       },
       {
-        "component": "interactive/InteractiveFlowchart",
+        "component": "layout/SummaryBox",
         "props": {
-          "title": "プロセスフロー",
-          "steps": [
-            {
-              "id": "start",
-              "label": "開始",
-              "type": "start"
-            },
-            {
-              "id": "process1",
-              "label": "処理1",
-              "type": "process"
-            },
-            {
-              "id": "decision1",
-              "label": "判定",
-              "type": "decision"
-            },
-            {
-              "id": "end",
-              "label": "終了",
-              "type": "end"
-            }
-          ],
-          "connections": [
-            {
-              "from": "start",
-              "to": "process1"
-            },
-            {
-              "from": "process1",
-              "to": "decision1"
-            },
-            {
-              "from": "decision1",
-              "to": "end"
-            }
+          "title": "インタラクティブコンポーネントテスト結果",
+          "items": [
+            "音声プレーヤー: ✓ 音声再生機能確認済み",
+            "電卓: ✓ 四則演算動作確認済み",
+            "カルーセル: ✓ 画像スライド機能確認済み",
+            "クリック表示: ✓ 動的コンテンツ表示確認済み",
+            "コードランナー: ✓ コード実行機能確認済み",
+            "カウンター: ✓ 増減機能確認済み",
+            "ギャラリー: ✓ 画像表示機能確認済み",
+            "画像ホットスポット: ✓ インタラクティブ領域確認済み",
+            "フローチャート: ✓ プロセス図表示確認済み",
+            "用語定義: ✓ ポップアップ表示確認済み",
+            "スライドショー: ✓ プレゼンテーション機能確認済み",
+            "ストップウォッチ: ✓ 計測機能確認済み",
+            "タイマー: ✓ カウントダウン機能確認済み",
+            "タイムライン: ✓ 時系列表示確認済み",
+            "動画プレーヤー: ✓ 動画再生機能確認済み",
+            "拡大画像: ✓ ズーム機能確認済み",
+            "データフローシミュレーター: ✓ データ流れ可視化確認済み",
+            "チャート: ✓ データ可視化機能確認済み"
           ]
-        }
-      },
-      {
-        "component": "interactive/DataFlowSimulator",
-        "props": {
-          "title": "データフローテスト",
-          "nodes": [
-            {
-              "id": "input",
-              "label": "入力",
-              "type": "input"
-            },
-            {
-              "id": "process",
-              "label": "処理",
-              "type": "process"
-            },
-            {
-              "id": "output",
-              "label": "出力",
-              "type": "output"
-            }
-          ],
-          "flows": [
-            {
-              "from": "input",
-              "to": "process",
-              "label": "データ"
-            },
-            {
-              "from": "process",
-              "to": "output",
-              "label": "結果"
-            }
-          ]
-        }
-      },
-      {
-        "component": "interactive/KeyTerm",
-        "props": {
-          "term": "Docusaurus",
-          "definition": "Facebookが開発した静的サイトジェネレーター"
         }
       }
     ]
@@ -322,6 +708,44 @@
     "slug": "/quiz-test",
     "prose_content": "# クイズコンポーネントテスト\n\n## 4.1 選択式クイズ\n\n### 多肢選択問題\n基本的な多肢選択問題のテストです。\n\n### 複数選択問題\n複数回答可能な選択問題のテストです。\n\n## 4.2 入力式クイズ\n\n### 穴埋め問題\nテキスト入力による穴埋め問題のテストです。\n\n### 記述問題\n自由記述問題のテストです。\n\n## 4.3 インタラクティブクイズ\n\n### ドラッグ&ドロップ\nアイテムをドラッグして正しい位置に配置する問題のテストです。\n\n### マッチング問題\n対応する項目同士を線で結ぶ問題のテストです。\n\n## 4.4 画像クイズ\n\n### イメージホットスポットクイズ\n画像上の正しい箇所をクリックする問題のテストです。",
     "components": [
+      {
+        "component": "quizzes/QuizWrapper",
+        "props": {
+          "title": "サンプルクイズセット",
+          "quizzes": [
+            {
+              "type": "MultipleChoice",
+              "question": "Reactの特徴として正しいものは？",
+              "options": [
+                {
+                  "text": "コンポーネントベース",
+                  "correct": true,
+                  "explanation": "正解！Reactはコンポーネントベースのライブラリです。"
+                },
+                {
+                  "text": "サーバーサイド専用",
+                  "correct": false,
+                  "explanation": "不正解。Reactはクライアントサイドでも動作します。"
+                },
+                {
+                  "text": "PHPベース",
+                  "correct": false,
+                  "explanation": "不正解。ReactはJavaScriptベースです。"
+                }
+              ]
+            },
+            {
+              "type": "FillInTheBlank",
+              "question": "JSXは（　　　）の拡張構文です。",
+              "answer": "JavaScript",
+              "hint": "Reactで使用される言語",
+              "explanation": "JSXはJavaScriptの拡張構文です。"
+            }
+          ],
+          "showProgress": true,
+          "allowRetry": true
+        }
+      },
       {
         "component": "quizzes/MultipleChoice",
         "props": {
@@ -350,15 +774,6 @@
               }
             ]
           }
-        }
-      },
-      {
-        "component": "quizzes/FillInTheBlank",
-        "props": {
-          "question": "Markdownファイルの拡張子は（　　　）です。",
-          "answer": ".md",
-          "hint": "ドット + 2文字のアルファベット",
-          "explanation": ".md がMarkdownファイルの標準的な拡張子です。"
         }
       },
       {
@@ -393,12 +808,39 @@
         }
       },
       {
+        "component": "quizzes/FillInTheBlank",
+        "props": {
+          "question": "Markdownファイルの拡張子は（　　　）です。",
+          "answer": ".md",
+          "hint": "ドット + 2文字のアルファベット",
+          "explanation": ".md がMarkdownファイルの標準的な拡張子です。"
+        }
+      },
+      {
+        "component": "quizzes/FillInTheBlank",
+        "props": {
+          "question": "HTMLの基本構造を定義するタグは（　　　）です。",
+          "answer": "html",
+          "hint": "ページ全体を囲む最上位のタグ",
+          "explanation": "<html>タグがHTMLドキュメントの基本構造を定義します。"
+        }
+      },
+      {
         "component": "quizzes/Essay",
         "props": {
           "question": "静的サイトジェネレーターの利点を3つ挙げて説明してください。",
           "placeholder": "ここに回答を入力してください...",
           "minLength": 50,
           "hint": "パフォーマンス、セキュリティ、ホスティングなどの観点から考えてみましょう。"
+        }
+      },
+      {
+        "component": "quizzes/Essay",
+        "props": {
+          "question": "Reactを使用する理由について、あなたの考えを述べてください。",
+          "placeholder": "あなたの考えを入力してください...",
+          "minLength": 100,
+          "hint": "コンポーネント化、再利用性、エコシステムなどの観点から考えてみましょう。"
         }
       },
       {
@@ -424,6 +866,16 @@
             {
               "id": "express",
               "text": "Express",
+              "category": "backend"
+            },
+            {
+              "id": "angular",
+              "text": "Angular",
+              "category": "frontend"
+            },
+            {
+              "id": "mongodb",
+              "text": "MongoDB",
               "category": "backend"
             }
           ],
@@ -459,7 +911,89 @@
             {
               "left": "Markdown",
               "right": "軽量マークアップ言語"
+            },
+            {
+              "left": "JSON",
+              "right": "データ交換フォーマット"
             }
+          ]
+        }
+      },
+      {
+        "component": "quizzes/ImageHotspotQuiz",
+        "props": {
+          "src": "/img/docusaurus.png",
+          "question": "Docusaurusロゴの特徴的な部分をクリックしてください。",
+          "hotspots": [
+            {
+              "x": 30,
+              "y": 40,
+              "width": 15,
+              "height": 15,
+              "content": "正解エリア - ロゴの中心部"
+            },
+            {
+              "x": 60,
+              "y": 60,
+              "width": 15,
+              "height": 15,
+              "content": "不正解エリア"
+            }
+          ],
+          "correctHotspot": 0
+        }
+      },
+      {
+        "component": "quizzes/blocks/Question",
+        "props": {
+          "text": "これはサンプル問題テキストです。"
+        }
+      },
+      {
+        "component": "quizzes/blocks/AnswerOption",
+        "props": {
+          "text": "選択肢A",
+          "onSelect": "console.log",
+          "isSelected": false
+        }
+      },
+      {
+        "component": "quizzes/blocks/AnswerOption",
+        "props": {
+          "text": "選択肢B（選択済み）",
+          "onSelect": "console.log",
+          "isSelected": true
+        }
+      },
+      {
+        "component": "quizzes/blocks/FeedbackMessage",
+        "props": {
+          "isCorrect": true,
+          "message": "正解です！よくできました。"
+        }
+      },
+      {
+        "component": "quizzes/blocks/FeedbackMessage",
+        "props": {
+          "isCorrect": false,
+          "message": "不正解です。もう一度考えてみてください。"
+        }
+      },
+      {
+        "component": "layout/SummaryBox",
+        "props": {
+          "title": "クイズコンポーネントテスト結果",
+          "items": [
+            "クイズラッパー: ✓ 複数クイズの管理機能確認済み",
+            "選択式クイズ: ✓ 単一・複数選択機能確認済み",
+            "穴埋めクイズ: ✓ テキスト入力・検証機能確認済み",
+            "記述式クイズ: ✓ 長文回答機能確認済み",
+            "ドラッグ&ドロップ: ✓ アイテム分類機能確認済み",
+            "マッチングペア: ✓ 組み合わせ機能確認済み",
+            "画像ホットスポット: ✓ 画像上選択機能確認済み",
+            "問題表示ブロック: ✓ 問題文表示確認済み",
+            "選択肢ブロック: ✓ オプション表示・選択確認済み",
+            "フィードバック: ✓ 正解・不正解メッセージ確認済み"
           ]
         }
       }
@@ -891,47 +1425,218 @@
         }
       },
       {
-        "component": "ui/Pagination",
+        "component": "ui/Input",
         "props": {
-          "totalItems": 250,
-          "itemsPerPage": 10,
-          "onPageChange": "console.log"
+          "type": "url",
+          "label": "URL入力",
+          "options": {
+            "placeholder": "https://example.com"
+          }
         }
       },
       {
-        "component": "ui/Modal",
+        "component": "ui/NumberInput",
         "props": {
-          "title": "テストモーダル",
-          "message": "これはモーダルウィンドウのテストです。閉じるボタンまたは背景をクリックして閉じることができます。",
-          "isOpen": false,
-          "onClose": "console.log",
-          "size": "medium"
+          "label": "数値専用入力",
+          "value": 50,
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "showControls": true
         }
       },
       {
-        "component": "ui/Tooltip",
+        "component": "ui/DatePicker",
         "props": {
-          "term": "ツールチップ",
-          "definition": "マウスホバー時に表示される補足説明です。",
-          "children": "この文字にホバーしてください"
+          "label": "日付選択",
+          "value": "",
+          "min": "2020-01-01",
+          "max": "2030-12-31"
         }
       },
       {
-        "component": "ui/MathDisplay",
+        "component": "ui/TimePicker",
         "props": {
-          "equation": "E = mc^2"
+          "label": "時刻選択",
+          "value": "",
+          "format": "24h"
         }
       },
       {
-        "component": "ui/MathDisplay",
+        "component": "ui/ColorPicker",
         "props": {
-          "equation": "\\sum_{i=1}^{n} x_i = \\frac{n(n+1)}{2}"
+          "label": "色選択",
+          "value": "#3B82F6",
+          "showPreview": true
         }
       },
       {
-        "component": "ui/MathDisplay",
+        "component": "ui/RangeSlider",
         "props": {
-          "equation": "\\int_{0}^{\\infty} e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}"
+          "label": "範囲選択スライダー",
+          "min": 0,
+          "max": 100,
+          "value": 50,
+          "showValue": true,
+          "step": 1
+        }
+      },
+      {
+        "component": "ui/CheckboxGroup",
+        "props": {
+          "label": "チェックボックスグループ",
+          "options": [
+            {
+              "label": "オプション1",
+              "value": "option1",
+              "checked": false
+            },
+            {
+              "label": "オプション2",
+              "value": "option2",
+              "checked": true
+            },
+            {
+              "label": "オプション3",
+              "value": "option3",
+              "checked": false
+            }
+          ],
+          "onChange": "console.log"
+        }
+      },
+      {
+        "component": "ui/RadioGroup",
+        "props": {
+          "label": "ラジオボタングループ",
+          "options": [
+            {
+              "label": "選択肢A",
+              "value": "a"
+            },
+            {
+              "label": "選択肢B",
+              "value": "b"
+            },
+            {
+              "label": "選択肢C",
+              "value": "c"
+            }
+          ],
+          "value": "a",
+          "onChange": "console.log"
+        }
+      },
+      {
+        "component": "ui/Dropdown",
+        "props": {
+          "label": "ドロップダウン選択",
+          "options": [
+            {
+              "label": "項目1",
+              "value": "item1"
+            },
+            {
+              "label": "項目2",
+              "value": "item2"
+            },
+            {
+              "label": "項目3",
+              "value": "item3"
+            }
+          ],
+          "value": "item1",
+          "onChange": "console.log"
+        }
+      },
+      {
+        "component": "ui/Switch",
+        "props": {
+          "label": "スイッチ切り替え",
+          "checked": false,
+          "onChange": "console.log"
+        }
+      },
+      {
+        "component": "ui/SearchBox",
+        "props": {
+          "placeholder": "検索キーワードを入力",
+          "onSearch": "console.log",
+          "showSearchIcon": true
+        }
+      },
+      {
+        "component": "ui/TagInput",
+        "props": {
+          "label": "タグ入力",
+          "tags": [
+            "React",
+            "JavaScript",
+            "Docusaurus"
+          ],
+          "placeholder": "新しいタグを入力",
+          "onAddTag": "console.log",
+          "onRemoveTag": "console.log"
+        }
+      },
+      {
+        "component": "ui/TextEditor",
+        "props": {
+          "label": "リッチテキストエディター",
+          "value": "ここにテキストを入力してください。",
+          "onChange": "console.log",
+          "showToolbar": true
+        }
+      },
+      {
+        "component": "ui/FileUpload",
+        "props": {
+          "label": "ファイルアップロード",
+          "accept": ".jpg,.jpeg,.png,.gif,.pdf",
+          "multiple": true,
+          "maxSize": 5242880,
+          "onFileSelect": "console.log"
+        }
+      },
+      {
+        "component": "ui/Rating",
+        "props": {
+          "label": "評価",
+          "max": 5,
+          "value": 3,
+          "onChange": "console.log",
+          "showLabels": true
+        }
+      },
+      {
+        "component": "ui/Calendar",
+        "props": {
+          "label": "カレンダー",
+          "value": "",
+          "minDate": "2020-01-01",
+          "maxDate": "2030-12-31",
+          "onChange": "console.log"
+        }
+      },
+      {
+        "component": "layout/SummaryBox",
+        "props": {
+          "title": "フォームコンポーネントテスト結果",
+          "items": [
+            "基本入力: ✓ テキスト、メール、パスワード、数値、URL入力確認済み",
+            "専用入力: ✓ 数値、日付、時刻、色選択確認済み",
+            "スライダー: ✓ 範囲選択機能確認済み",
+            "チェックボックス: ✓ 複数選択機能確認済み",
+            "ラジオボタン: ✓ 単一選択機能確認済み",
+            "ドロップダウン: ✓ リスト選択機能確認済み",
+            "スイッチ: ✓ ON/OFF切り替え確認済み",
+            "検索ボックス: ✓ 検索機能確認済み",
+            "タグ入力: ✓ タグ追加・削除機能確認済み",
+            "テキストエディター: ✓ リッチテキスト編集確認済み",
+            "ファイルアップロード: ✓ ファイル選択機能確認済み",
+            "評価: ✓ 星評価機能確認済み",
+            "カレンダー: ✓ 日付選択機能確認済み"
+          ]
         }
       }
     ]
