@@ -60,20 +60,20 @@ def transform_component_props(components_data):
     """
     if not components_data:
         return []
-    
+
     transformed_components = []
     for comp in components_data:
         component_name = comp.get('component')
         props = comp.get('props', {})
-        
+
         if component_name == 'ui/Tabs' and 'items' in props:
             props['tabs'] = props.pop('items')
         elif component_name == 'quizzes/MultipleChoice':
             # MultipleChoiceはprops全体をquizDataとして渡す
             comp['props'] = {'quizData': props}
-        
+
         transformed_components.append(comp)
-        
+
     return transformed_components
 
 def generate_page_data(page_id, source_dir):
@@ -82,11 +82,11 @@ def generate_page_data(page_id, source_dir):
     meta.yaml, prose.md, components.yaml を読み込み、一つの辞書にまとめます。
     """
     page_dir = source_dir / "pages" / page_id
-    
+
     meta_data = load_yaml_file(page_dir / "meta.yaml") or {}
     prose_content = read_markdown_file(page_dir / "prose.md")
     components_data = load_yaml_file(page_dir / "components.yaml") or []
-    
+
     # フロントエンドでのマッピングロジックを排除するため、ここでプロパティ名を変換
     transformed_components = transform_component_props(components_data)
 
@@ -113,10 +113,10 @@ const sidebars = {{
 }};
 
 module.exports = sidebars;"""
-    
+
     sidebar_file = sidebars_dir / f"{course_id}.js"
     sidebars_dir.mkdir(exist_ok=True)
-    
+
     try:
         with open(sidebar_file, 'w', encoding='utf-8') as f:
             f.write(sidebar_content)
@@ -128,6 +128,7 @@ module.exports = sidebars;"""
 def update_docusaurus_navbar(master_data, course_id, config_path):
     """
     docusaurus.config.jsのナビゲーションバーにコースリンクを自動追加します。
+    スマートな重複回避ロジック付き。
     """
     course_label = master_data.get('course_label', course_id)
     sidebar_items = master_data.get('sidebar', [])
@@ -135,7 +136,7 @@ def update_docusaurus_navbar(master_data, course_id, config_path):
     # ドロップダウンアイテムを生成
     dropdown_items = []
     
-    def process_sidebar_items(items, base_path=""):
+    def process_sidebar_items(items):
         """サイドバー設定からドロップダウンアイテムを生成"""
         for item in items:
             if item.get('type') == 'doc':
@@ -148,51 +149,84 @@ def update_docusaurus_navbar(master_data, course_id, config_path):
             elif item.get('type') == 'category':
                 # カテゴリーの場合は子アイテムを処理
                 category_items = item.get('items', [])
-                process_sidebar_items(category_items, base_path)
+                process_sidebar_items(category_items)
     
     process_sidebar_items(sidebar_items)
     
+    if not dropdown_items:
+        print("No dropdown items to add")
+        return
+    
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
-            config_content = f.read()
+            lines = f.readlines()
         
-        # 既存のコース設定を削除
-        pattern = rf'{{[\s\S]*?type:\s*["\']dropdown["\'],[\s\S]*?label:\s*["\']機能網羅テスト["\'],[\s\S]*?items:\s*\[[\s\S]*?\][\s\S]*?}}'
-        config_content = re.sub(pattern, '', config_content)
+        # 行ベースでの処理でより安全に操作
+        new_lines = []
+        in_target_dropdown = False
+        dropdown_depth = 0
+        items_found = False
+        dropdown_added = False
         
-        # 新しいドロップダウン設定を生成
-        dropdown_config = f"""          {{
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            
+            # すでに存在するコースのドロップダウンをチェック
+            if not in_target_dropdown and f"label: '{course_label}'" in line and 'dropdown' in lines[max(0, i-2):i+1]:
+                # 既存のコースドロップダウンを見つけた場合はスキップ開始
+                in_target_dropdown = True
+                dropdown_depth = 1
+                i += 1
+                continue
+            
+            # 既存コースドロップダウン内の処理
+            if in_target_dropdown:
+                # 中括弧のカウントで階層を追跡
+                dropdown_depth += line.count('{') - line.count('}')
+                if dropdown_depth <= 0:
+                    in_target_dropdown = False
+                i += 1
+                continue
+            
+            # navbar items セクションの検出と新しいドロップダウンの追加
+            if not dropdown_added and 'items: [' in line and not items_found:
+                items_found = True
+                new_lines.append(line)
+                
+                # 新しいドロップダウン設定を挿入
+                dropdown_config = f"""          {{
             type: 'dropdown',
             label: '{course_label}',
             position: 'left',
             items: ["""
-        
-        for item in dropdown_items:
-            dropdown_config += f"""
+                
+                for item in dropdown_items:
+                    dropdown_config += f"""
               {{
                 to: '{item['to']}',
                 label: '{item['label']}',
               }},"""
-        
-        dropdown_config += """
+                
+                dropdown_config += """
             ],
-          },"""
+          },
+"""
+                new_lines.append(dropdown_config)
+                dropdown_added = True
+            else:
+                new_lines.append(line)
+            
+            i += 1
         
-        # navbarのitemsセクションに挿入
-        navbar_items_pattern = r'(items:\s*\[)'
-        replacement = rf'\1\n{dropdown_config}'
-        
-        if re.search(navbar_items_pattern, config_content):
-            config_content = re.sub(navbar_items_pattern, replacement, config_content)
+        if dropdown_added:
+            # ファイルに書き戻し
+            with open(config_path, 'w', encoding='utf-8') as f:
+                f.writelines(new_lines)
+            
+            print(f"Successfully updated navbar in docusaurus.config.js")
         else:
-            print("Warning: Could not find navbar items section in docusaurus.config.js", file=sys.stderr)
-            return
-        
-        # ファイルに書き戻し
-        with open(config_path, 'w', encoding='utf-8') as f:
-            f.write(config_content)
-        
-        print(f"Successfully updated navbar in docusaurus.config.js")
+            print("Warning: Could not find navbar items section or course already exists", file=sys.stderr)
         
     except Exception as e:
         print(f"Error updating docusaurus.config.js: {e}", file=sys.stderr)
@@ -204,34 +238,34 @@ def main():
     """
     course_dir = Path(__file__).parent
     source_dir = course_dir / "source"
-    
+
     master_file = course_dir / "master.yaml"
     master_data = load_yaml_file(master_file)
-    
+
     if not master_data:
         print("Error: master.yaml is missing or invalid. Aborting build.", file=sys.stderr)
         sys.exit(1)
-    
+
     course_id = master_data.get('course_id')
     course_label = master_data.get('course_label')
-    
+
     if not course_id or not course_label:
         print("Error: 'course_id' and 'course_label' must be defined in master.yaml.", file=sys.stderr)
         sys.exit(1)
 
     print(f"Building course: {course_label} ({course_id})")
-    
+
     # 各ディレクトリのパスを設定
     sidebars_dir = PROJECT_ROOT / "sidebars"
     output_data_dir = PROJECT_ROOT / "static" / "data"
-    
+
     # サイドバー設定を生成
     generate_sidebar_config(master_data, course_id, sidebars_dir)
     
     # docusaurus.config.jsのナビゲーションを自動更新
     config_path = PROJECT_ROOT / "docusaurus.config.js"
     update_docusaurus_navbar(master_data, course_id, config_path)
-    
+
     # 各ページのデータを処理
     sidebar_items = master_data.get('sidebar', [])
     all_pages_data = []
@@ -266,7 +300,7 @@ def main():
     except Exception as e:
         print(f"Error writing JSON data to {output_json_file}: {e}", file=sys.stderr)
         sys.exit(1)
-    
+
     print(f"\nBuild completed successfully for course: {course_id}")
 
 if __name__ == "__main__":
