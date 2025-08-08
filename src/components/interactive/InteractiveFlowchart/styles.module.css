@@ -6,22 +6,65 @@
   background-color: var(--ifm-background-color);
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
 .title {
-  margin: 0 0 1.5rem 0;
+  margin: 0;
   color: var(--ifm-color-emphasis-800);
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.zoomButton,
+.resetButton {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  background: var(--ifm-background-color);
+  color: var(--ifm-color-emphasis-800);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.zoomButton:hover,
+.resetButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-primary);
+}
+
+.zoomLevel {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+  min-width: 45px;
   text-align: center;
+}
+
+.content {
+  display: flex;
+  gap: 1rem;
 }
 
 .flowchartContainer {
   position: relative;
-  width: 100%;
+  flex: 1;
   height: 400px;
   background-color: var(--ifm-color-emphasis-50);
   border: 1px solid var(--ifm-color-emphasis-200);
   border-radius: var(--ifm-border-radius);
   overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
 .step {
@@ -83,6 +126,38 @@
   border-color: var(--ifm-color-info);
 }
 
+/* Architecture-specific step types */
+.step.cpu_component {
+  background-color: var(--ifm-color-primary-lightest);
+  border-color: var(--ifm-color-primary);
+  border-width: 3px;
+}
+
+.step.memory_block {
+  background-color: var(--ifm-color-warning-lightest);
+  border-color: var(--ifm-color-warning);
+  border-radius: 4px;
+}
+
+.step.cpu_unit {
+  background-color: var(--ifm-color-success-lightest);
+  border-color: var(--ifm-color-success);
+  border-radius: 8px;
+}
+
+.step.peripheral {
+  background-color: var(--ifm-color-secondary-lightest);
+  border-color: var(--ifm-color-secondary);
+  border-style: dashed;
+}
+
+.step.bus {
+  background-color: var(--ifm-color-info-lightest);
+  border-color: var(--ifm-color-info);
+  height: 30px;
+  border-radius: 15px;
+}
+
 .stepContent {
   font-size: 0.9rem;
   font-weight: 500;
@@ -90,24 +165,70 @@
   line-height: 1.3;
 }
 
+.stepIcon {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.stepLabel {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.stepSpecs {
+  font-size: 0.7rem;
+  margin-top: 0.25rem;
+  opacity: 0.8;
+}
+
+.specItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.1rem;
+}
+
+.specKey {
+  font-weight: 500;
+}
+
+.specValue {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
 .stepTooltip {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  position: fixed;
+  top: auto;
+  left: auto;
+  transform: none;
+  margin: 0.5rem;
+  padding: 0.75rem 1rem;
   background-color: var(--ifm-color-emphasis-900);
   color: white;
   border-radius: var(--ifm-border-radius);
-  font-size: 0.8rem;
-  white-space: nowrap;
-  max-width: 200px;
-  white-space: normal;
+  font-size: 0.85rem;
+  max-width: 300px;
   text-align: left;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-  animation: tooltipFadeIn 0.2s ease-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: tooltipFadeIn 0.3s ease-out;
+  pointer-events: none;
+}
+
+.technicalDetails {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.technicalDetails ul {
+  margin: 0.25rem 0 0 0;
+  padding-left: 1rem;
+  font-size: 0.75rem;
+}
+
+.technicalDetails li {
+  margin-bottom: 0.1rem;
 }
 
 .stepTooltip::before {
@@ -125,6 +246,42 @@
 
 .connection {
   z-index: 1;
+}
+
+/* Legend styles */
+.legend {
+  min-width: 150px;
+  padding: 1rem;
+  background-color: var(--ifm-color-emphasis-50);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-border-radius);
+  font-size: 0.8rem;
+}
+
+.legend h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-800);
+  font-weight: 600;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.legendColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.legendItem span {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.75rem;
 }
 
 @keyframes tooltipFadeIn {

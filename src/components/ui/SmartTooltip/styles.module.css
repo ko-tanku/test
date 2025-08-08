@@ -1,0 +1,347 @@
+.smartTooltipContainer {
+  position: relative;
+  display: inline;
+}
+
+/* トリガー要素 */
+.trigger {
+  cursor: help;
+  border-bottom: 1px dotted var(--ifm-color-primary);
+  text-decoration: none;
+  position: relative;
+  display: inline;
+  padding: 0 2px;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.trigger:hover {
+  background-color: var(--ifm-color-primary-lightest);
+  border-bottom-style: solid;
+}
+
+.trigger.firstOccurrence {
+  font-weight: 600;
+  color: var(--ifm-color-primary-darker);
+  border-bottom: 2px solid var(--ifm-color-primary);
+  background: linear-gradient(90deg, 
+    var(--ifm-color-primary-lightest) 0%, 
+    transparent 100%);
+}
+
+.newTermIcon {
+  font-size: 10px;
+  margin-left: 2px;
+  opacity: 0.8;
+}
+
+/* ツールチップ本体 */
+.tooltip {
+  position: absolute;
+  z-index: 1000;
+  background: var(--ifm-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 位置別スタイル */
+.tooltip.top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+}
+
+.tooltip.bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+}
+
+.tooltip.left {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 8px;
+}
+
+.tooltip.right {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 8px;
+}
+
+/* 矢印 */
+.arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ifm-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  transform: rotate(45deg);
+}
+
+.top .arrow {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  margin-top: -5px;
+  border-top: none;
+  border-left: none;
+}
+
+.bottom .arrow {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  margin-bottom: -5px;
+  border-bottom: none;
+  border-right: none;
+}
+
+.left .arrow {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  margin-left: -5px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.right .arrow {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  margin-right: -5px;
+  border-right: none;
+  border-top: none;
+}
+
+/* ツールチップコンテンツ */
+.tooltipContent {
+  padding: 12px 16px;
+  position: relative;
+}
+
+/* カスタムコンテンツ */
+.customContent {
+  color: var(--ifm-color-content);
+}
+
+/* 専門用語コンテンツ */
+.termContent {
+  color: var(--ifm-color-content);
+}
+
+.termHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.categoryIcon {
+  font-size: 16px;
+}
+
+.termName {
+  color: var(--ifm-color-primary-darker);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.categoryTag {
+  background: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary-dark);
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.firstOccurrenceTag {
+  background: var(--ifm-color-success-lightest);
+  color: var(--ifm-color-success-dark);
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.definition {
+  margin-bottom: 12px;
+  color: var(--ifm-color-content);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.examples {
+  margin-bottom: 12px;
+}
+
+.examples strong {
+  color: var(--ifm-color-content);
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.examplesList {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: var(--ifm-color-content-secondary);
+}
+
+.examplesList li {
+  margin-bottom: 2px;
+  line-height: 1.4;
+}
+
+.relatedTerms {
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  padding-top: 8px;
+}
+
+.relatedTerms strong {
+  color: var(--ifm-color-content);
+  font-size: 12px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.relatedList {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.relatedTag {
+  background: var(--ifm-color-secondary-lightest);
+  color: var(--ifm-color-secondary-dark);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.relatedTag:hover {
+  background: var(--ifm-color-secondary-light);
+}
+
+/* 閉じるボタン */
+.closeButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--ifm-color-content-secondary);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.closeButton:hover {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-content);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .tooltip {
+    max-width: 280px !important;
+    font-size: 13px;
+  }
+
+  .tooltipContent {
+    padding: 10px 12px;
+  }
+
+  .termName {
+    font-size: 14px;
+  }
+
+  .definition {
+    font-size: 12px;
+  }
+
+  /* モバイルでは位置を調整 */
+  .tooltip.left,
+  .tooltip.right {
+    left: 50% !important;
+    right: auto !important;
+    top: 100% !important;
+    transform: translateX(-50%) !important;
+    margin: 8px 0 0 0 !important;
+  }
+
+  .tooltip.left .arrow,
+  .tooltip.right .arrow {
+    bottom: 100% !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    transform: translateX(-50%) rotate(45deg) !important;
+    margin: -5px 0 0 0 !important;
+    border: 1px solid var(--ifm-color-emphasis-300);
+    border-bottom: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-top: none !important;
+  }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+  .tooltip {
+    background: var(--ifm-background-color);
+    border-color: var(--ifm-color-emphasis-300);
+  }
+
+  .arrow {
+    background: var(--ifm-background-color);
+    border-color: var(--ifm-color-emphasis-300);
+  }
+}
+
+/* 高コントラストモード対応 */
+@media (prefers-contrast: high) {
+  .trigger {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+  }
+
+  .tooltip {
+    border-width: 2px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+}

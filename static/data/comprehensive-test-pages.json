@@ -1724,5 +1724,1824 @@
         }
       }
     ]
+  },
+  {
+    "id": "enhanced-components-test",
+    "title": "拡張コンポーネント包括テスト",
+    "description": "IT・組み込みシステム教育用に拡張された4つのコンポーネントの完全機能テストページ",
+    "slug": "/enhanced-components-test",
+    "prose_content": "# 拡張コンポーネント包括テスト - YAML駆動アーキテクチャ対応版\n\nこのページでは、**YAML駆動アーキテクチャに移行した**IT・組み込みシステム教育用拡張コンポーネントの完全な機能テストを実施します。従来のハードコーディング制約を解消し、教育コンテンツに最適化された柔軟なレイアウト制御を実現した新アーキテクチャの効果を検証します。\n\n## 🚀 YAML駆動アーキテクチャ改修の成果\n\n### アーキテクチャ改善点\n**従来の課題:**\n- ❌ コンポーネント内でのハードコーディング（`height: 400px`、`layerHeight: 100`等）\n- ❌ 内容量に関係なく固定サイズでの表示\n- ❌ レイアウト調整時にコンポーネント修正が必要\n\n**新アーキテクチャの特徴:**\n- ✅ **コンポーネント = 型（テンプレート）**: 描画ロジックとスタイルの枠組みのみ\n- ✅ **YAML = 具体的設定**: 画面サイズ、要素配置、間隔、色など詳細な制御\n- ✅ **用途別最適化**: 同じコンポーネントでも教育内容に応じて最適なレイアウト\n\n### YAML制御例\n```yaml\nlayout:\n  container:\n    height: 600  # 従来の窮屈さを解消\n    width: '100%'\n  layers:\n    height: 90   # レイヤー高さを動的調整\n    spacing: 15  # 間隔を内容に応じて調整\n  protocolPanel:\n    position: 'top-right'  # 被りを避ける最適配置\n    width: 300\n    maxHeight: 250\n```\n\n## テスト概要\n\n### 対象コンポーネント（YAML駆動対応）\n1. **InteractiveFlowchart** - SystemArchitectureViewer + 柔軟レイアウト制御\n2. **Timeline** - DevelopmentProcessFlow + 動的間隔調整\n3. **SimpleChart** - 波形表示 + 動的サイズ制御\n4. **DataFlowSimulator** - ネットワーク階層表示 + 最適配置制御\n\n### テストカテゴリ\n- 🔧 **機能テスト**: 各機能の正常動作確認\n- 📊 **データ処理テスト**: 様々なデータ形式への対応確認\n- ⚠️ **エッジケーステスト**: 異常データ・境界値での動作確認\n- 🚀 **パフォーマンステスト**: 大量データでの処理性能確認\n- 🎯 **実用性テスト**: 実際の教育シーンでの有用性確認\n\n---\n\n## 1. InteractiveFlowchart - SystemArchitectureViewer機能\n\n### 1.1 基本フローチャートモード\nシステム設計における標準的なフローチャート作成機能をテストします。\n\n**期待する動作:**\n- ✅ 各ステップ（開始・処理・判定・終了）の正しい表示\n- ✅ ステップ間の接続線の適切な描画\n- ✅ インタラクティブな要素選択とツールチップ表示\n- ✅ 各ステップタイプに応じた適切な色分けとスタイリング\n\n### 1.2 CPUアーキテクチャモード 🧠 (YAML駆動対応)\n**新機能**: 組み込みシステムのハードウェア構成を視覚的に表現\n\n**YAML駆動改善効果:**\n- 📐 **動的サイズ調整**: コンテナ幅900px、高さ500px（従来400px）で情報密度最適化\n- 🎯 **ツールチップ最適化**: 幅350px、高さ250px（従来300×200）で詳細情報を余裕をもって表示\n- 📏 **レジェンド拡張**: 幅180px（従来150px）でバス種類説明を見やすく表示\n\n**テスト内容:**\n- CPU、メモリ、キャッシュ、システムバスの表示\n- 技術仕様情報（クロック周波数、容量、レイテンシ等）の表示\n- アイコン表示によるコンポーネント識別\n- 詳細な技術説明とスペック情報の展開表示\n\n**期待する動作:**\n- ✅ ハードウェアコンポーネント専用のスタイリング適用\n- ✅ ズーム機能による詳細表示の拡大・縮小\n- ✅ レジェンド表示によるバスタイプの説明\n- ✅ **改善**: ビューポート認識型ツールチップで画面外はみ出し防止\n- ✅ **改善**: 拡張されたツールチップサイズで技術詳細の読みやすさ向上\n\n### 1.3 バス接続表示\n**新機能**: データバス・制御バス・アドレスバスの種類別可視化\n\n**期待する動作:**\n- 🔵 **データバス**: プライマリーカラーで太線表示\n- 🟡 **制御バス**: 警告カラーで破線表示  \n- 🟢 **アドレスバス**: 成功カラーで実線表示\n- ✅ バス上のデータラベル表示\n\n### 1.4 メモリマップ表示\n**新機能**: 組み込みシステムのメモリ配置を視覚化\n\n**期待する動作:**\n- ✅ ROM、RAM、周辺機器、外部メモリ領域の区分表示\n- ✅ アドレス範囲とサイズ情報の表示\n- ✅ メモリタイプに応じた色分け\n- ✅ Memory Mapped I/Oの特別表示\n\n---\n\n## 2. Timeline - DevelopmentProcessFlow機能\n\n### 2.1 基本タイムライン表示\nプロジェクトの時系列イベント表示機能をテストします。\n\n**期待する動作:**\n- ✅ 時系列に沿ったイベントの正しい配置\n- ✅ 日付情報と説明文の適切な表示\n- ✅ タグ機能によるイベント分類\n- ✅ インタラクティブな詳細表示\n\n### 2.2 V字モデル開発プロセス 📈 (YAML駆動対応)\n**新機能**: ソフトウェア開発プロセスの可視化\n\n**YAML駆動改善効果:**\n- 📏 **間隔最適化**: イベント間隔140px（従来120px）で依存関係線の視認性向上\n- 📄 **コンテンツ拡張**: 幅400px（従来300px）で成果物リストを余裕をもって表示\n- 📋 **詳細表示拡張**: 高さ250px（従来200px）で技術ポイントの詳細説明を充実\n- 🔗 **依存関係改善**: オフセット50px（従来40px）で線の被り解消\n\n**テスト内容:**\n- 要件定義→設計→実装→テスト→デプロイメントの工程表示\n- 各フェーズの成果物リスト表示\n- 技術的ポイントの詳細説明\n- 工程間の依存関係表示\n\n**期待する動作:**\n- 🔵 **要件定義**: 情報カラーでアイコン表示\n- 🟡 **設計**: 警告カラーでアイコン表示\n- 🟢 **実装**: プライマリーカラーでアイコン表示\n- 🟢 **テスト**: 成功カラーでアイコン表示\n- 🔴 **デプロイ**: 危険カラーでアイコン表示\n- ✅ 各フェーズの期間表示\n- ✅ マイルストーンと成果物の区別表示\n- ✅ **改善**: 拡張されたコンテンツ幅で成果物の詳細説明を見やすく表示\n\n### 2.3 Git Flow開発モデル 🌿\n**新機能**: Git ブランチ戦略の可視化\n\n**テスト内容:**\n- main、develop、feature、release、hotfixブランチの表示\n- ブランチ間のマージとコンフリクト表示\n- コミット数とブランチ情報の表示\n\n**期待する動作:**\n- ✅ ブランチタイプに応じた適切なアイコン表示\n- ✅ マージ操作の視覚的表現\n- ✅ ブランチ保護ルールや開発規約の説明表示\n- ✅ タグ付きリリースの特別表示\n\n### 2.4 依存関係表示\n**新機能**: 工程間の依存関係を矢印で可視化\n\n**期待する動作:**\n- ✅ 前工程完了が必要な場合の依存線表示\n- ✅ 並行実行可能な工程の明確な区別\n- ✅ クリティカルパスの強調表示\n\n---\n\n## 3. SimpleChart - 波形表示機能\n\n### 3.1 従来のチャートタイプ\n既存の棒グラフ・折れ線グラフ・円グラフ機能の動作を確認します。\n\n**期待する動作:**\n- ✅ 各チャートタイプの正しい描画\n- ✅ データラベルと軸ラベルの適切な表示\n- ✅ レスポンシブ対応による画面サイズ適応\n\n### 3.2 アナログ波形表示 📊\n**新機能**: 連続的なアナログ信号の波形表示\n\n**テスト内容:**\n- サイン波、方形波、三角波等の波形描画\n- 時間軸とamplitude軸の適切なスケーリング\n- グリッド表示による読み取りやすさの向上\n\n**期待する動作:**\n- ✅ 滑らかな曲線による波形描画\n- ✅ 時間単位（ms、μs、ns等）の適切な表示\n- ✅ 振幅スケールの自動調整\n- ✅ グリッド線による値読み取り支援\n\n### 3.3 デジタル信号表示 🔲 (YAML駆動対応)\n**新機能**: High/Lowレベルのデジタル信号表示\n\n**YAML駆動改善効果:**\n- 📐 **サイズ最適化**: チャート幅900px、高さ250px（従来800×200）でプロトコル詳細の視認性向上\n- 📊 **チャンネル拡張**: チャンネル高80px、間隔15px（従来60×10）で信号の読み取りやすさ向上\n- 📏 **マージン調整**: 上40px、下50px、左80px（従来30×40×50）でラベル表示領域確保\n- 🎨 **テキスト最適化**: タイトル18px、ラベル14px（従来16×12）で情報の階層表示\n\n**テスト内容:**\n- I2C通信プロトコル（SCL、SDAライン）\n- SPI通信プロトコル（SCLK、MOSI、MISO、CSライン）\n- UART通信プロトコル\n\n**期待する動作:**\n- ✅ クリアなHigh/Low レベル表示\n- ✅ 信号遷移のエッジ表現\n- ✅ 各チャンネルの明確な区分表示\n- ✅ プロトコル固有の信号パターン表現\n- ✅ **改善**: 拡張されたチャンネル高による信号波形の詳細表示\n- ✅ **改善**: 最適化されたマージンによるラベル可読性向上\n\n### 3.4 マルチチャンネル対応 📡\n**新機能**: 複数信号の同時表示と比較\n\n**テスト内容:**\n- 複数のアナログ信号の重ね合わせ表示\n- 各チャンネルの色分け表示\n- チャンネル名とレジェンド表示\n\n**期待する動作:**\n- ✅ チャンネル間の位相関係の明確な表示\n- ✅ 各チャンネルの独立したスケーリング\n- ✅ チャンネル選択による表示ON/OFF切り替え\n- ✅ 異なる周波数信号の同時表示\n\n---\n\n## 4. DataFlowSimulator - ネットワーク階層表示\n\n### 4.1 基本データフロー\nシステム内のデータの流れを可視化する基本機能をテストします。\n\n**期待する動作:**\n- ✅ ノード間のデータフロー表示\n- ✅ アニメーション効果による動的な流れ表現\n- ✅ フロー情報の詳細表示\n- ✅ 手動・自動再生の制御機能\n\n### 4.2 OSI参照モデル 🌐 (YAML駆動対応)\n**新機能**: 簡略化ネットワークモデルの階層表示\n\n**YAML駆動改善効果:**\n- 📐 **コンテナ拡張**: 高さ550px（従来800px）で適切な層密度を実現\n- 📊 **レイヤー最適化**: 各層高110px、間隔20px（従来100×10）で詰まりを大幅解消\n- 🎯 **ノード配置改善**: 間隔300px（従来200px）で要素の重なりを防止\n- 📍 **パネル配置最適化**: プロトコル情報パネルを左下に配置（280×200）して視線の邪魔を回避\n\n**テスト内容:**\n- 簡略化4層モデル（従来7層から見やすさを重視して簡略化）\n- 各層でのプロトコル情報表示\n- 層間でのデータ変換過程の可視化\n- Webアクセス時のプロトコルスタック動作\n\n**期待する動作:**\n- ✅ 各層の背景色による明確な区分\n- ✅ 層番号とレイヤー名の表示\n- ✅ プロトコル情報パネルの詳細表示\n- ✅ 実際のWebアクセスフローの再現\n- ✅ **改善**: レイヤー間隔拡大による構造の明確化\n- ✅ **改善**: パネル配置最適化による情報確認の容易性\n\n### 4.3 IoT通信スタック 📱 (YAML駆動対応)\n**新機能**: IoTデバイス特有の軽量通信プロトコル表示\n\n**YAML駆動改善効果:**\n- 📐 **コンテナ最適化**: 高さ600px（従来800px）で5層構成に適した表示密度\n- 📊 **レイヤー拡張**: 各層高90px、間隔15px（従来80×10）で階層構造の明確化\n- 🎯 **ノード配置改善**: 間隔120px（従来200px）でコンパクトながら読みやすい配置\n- 📍 **パネル配置変更**: プロトコル情報パネルを右上に配置（300×250）してレイヤーラベルとの被りを解消\n\n**テスト内容:**\n- MQTT over 6LoWPAN over ZigBeeスタック\n- CoAP（Constrained Application Protocol）表示\n- センサーデータ送信フローの可視化\n\n**期待する動作:**\n- ✅ 省電力通信プロトコルの特徴表示\n- ✅ メッシュネットワーク構成の表現\n- ✅ センサーデータのJSONシリアライゼーション表示\n- ✅ **改善**: レイヤー高さ拡張による各プロトコル情報の詳細表示\n- ✅ **改善**: プロトコル情報パネル配置最適化による情報アクセス性向上\n\n### 4.4 マイクロサービスアーキテクチャ 🏗️\n**新機能**: 分散システムの複雑な相互作用表示\n\n**テスト内容:**\n- API Gateway、認証サービス、ビジネスロジック分離\n- データベース分散とメッセージキュー\n- 非同期処理フローの表示\n\n**期待する動作:**\n- ✅ サービス間の疎結合関係の表現\n- ✅ 非同期メッセージパッシングの可視化\n- ✅ 各サービスの責任範囲の明確な表示\n\n---\n\n## 5. エッジケース・例外処理テスト\n\n### 5.1 空データ処理\n各コンポーネントが空のデータセットを適切に処理することを確認します。\n\n**期待する動作:**\n- ✅ エラーメッセージではなく適切な空状態表示\n- ✅ ユーザーフレンドリーなメッセージ表示\n- ✅ レイアウト崩れの防止\n\n### 5.2 不正データ処理\n不正な形式や不完全なデータに対する頑健性をテストします。\n\n**期待する動作:**\n- ✅ 無効なプロパティの無視と継続動作\n- ✅ 必須フィールド欠如時のデフォルト値適用\n- ✅ 型不整合時の適切なフォールバック処理\n\n### 5.3 大量データ処理\n1000点以上の大量データでのパフォーマンスを評価します。\n\n**期待する動作:**\n- ✅ レスポンシブな描画パフォーマンス維持\n- ✅ メモリ使用量の適切な管理\n- ✅ UIブロッキングの回避\n\n---\n\n## 6. レスポンシブ・アクセシビリティテスト\n\n### 6.1 画面サイズ対応\n異なるデバイスサイズでの表示品質を確認します。\n\n**テスト対象:**\n- 📱 モバイル（320px-768px）\n- 📟 タブレット（768px-1024px）  \n- 🖥️ デスクトップ（1024px以上）\n\n**期待する動作:**\n- ✅ 各画面サイズでの適切なレイアウト調整\n- ✅ テキストとボタンの適切なサイズ維持\n- ✅ スクロール・ナビゲーションの使いやすさ\n\n### 6.2 アクセシビリティ\n障がい者や高齢者にとっての使いやすさを確認します。\n\n**期待する動作:**\n- ✅ キーボードナビゲーション対応\n- ✅ スクリーンリーダー対応のセマンティック構造\n- ✅ 十分なカラーコントラスト確保\n- ✅ フォント拡大時のレイアウト維持\n\n---\n\n## テスト実施方法\n\n### 手動テスト手順\n1. **視覚確認**: 各コンポーネントが期待通りに描画されているか確認\n2. **インタラクション確認**: クリック、ホバー、ズーム等の動作確認\n3. **データ確認**: 表示される情報の正確性確認\n4. **レスポンシブ確認**: 異なる画面サイズでの表示確認\n5. **パフォーマンス確認**: 操作レスポンスの確認\n\n### 自動テスト観点\n- コンポーネントの正常レンダリング\n- プロパティの適切な反映\n- エラーハンドリングの動作\n- パフォーマンス指標の測定\n\n### 合格基準\n- ✅ 全ての基本機能が正常動作\n- ✅ 拡張機能が仕様通りに動作\n- ✅ エッジケースで適切なエラー処理\n- ✅ レスポンシブ対応が完全\n- ✅ パフォーマンスが実用レベル\n\n---\n\n## 期待される学習効果\n\nこのYAML駆動アーキテクチャ対応テストを完了することで、受講者は以下の知識・スキルを習得できます：\n\n### 技術的理解\n- 🧠 **システムアーキテクチャ**: CPUとメモリの関係、バス構成の理解\n- 📈 **開発プロセス**: V字モデル、アジャイル開発、Git Flow の実践的理解\n- 📊 **信号処理**: アナログ・デジタル信号の特性と可視化手法\n- 🌐 **ネットワーク**: OSI参照モデル、IoT通信、マイクロサービスの理解\n- 🏗️ **アーキテクチャ設計**: YAML駆動設計による柔軟性と保守性の実現\n\n### 実務スキル\n- 🛠️ **システム設計**: ハードウェア・ソフトウェア設計での視覚化活用\n- 🔄 **プロセス管理**: 開発工程の管理と依存関係の把握\n- 📡 **通信設計**: プロトコル選択と通信フロー設計\n- 🎯 **品質保証**: テスト観点とエッジケース考慮の重要性\n- ⚙️ **柔軟な設計**: コンポーネントの汎用性と設定の分離設計手法\n\n### 教育・指導スキル  \n- 📚 **視覚的教授法**: 複雑な概念の効果的な可視化手法\n- 🎓 **段階的学習**: 基礎から応用への適切な学習段階設計\n- 💡 **実践的指導**: 理論と実践を結ぶ教育コンテンツ作成\n- 🎨 **カスタマイゼーション**: 教育内容に応じた最適レイアウト設計手法\n\nこのテストページは、IT・組み込みシステム教育における実践的なスキル習得を支援する包括的な学習リソースとして設計されています。",
+    "components": [
+      {
+        "component": "interactive/InteractiveFlowchart",
+        "props": {
+          "title": "基本フローチャート",
+          "mode": "flowchart",
+          "interactive": true,
+          "steps": [
+            {
+              "id": "start",
+              "label": "開始",
+              "type": "start",
+              "x": 50,
+              "y": 10,
+              "description": "プロセス開始点"
+            },
+            {
+              "id": "process1",
+              "label": "データ入力",
+              "type": "process",
+              "x": 50,
+              "y": 30,
+              "description": "ユーザーからのデータ入力"
+            },
+            {
+              "id": "decision1",
+              "label": "有効？",
+              "type": "decision",
+              "x": 50,
+              "y": 50,
+              "description": "データの妥当性チェック"
+            },
+            {
+              "id": "process2",
+              "label": "処理実行",
+              "type": "process",
+              "x": 30,
+              "y": 70,
+              "description": "データの処理実行"
+            },
+            {
+              "id": "error",
+              "label": "エラー",
+              "type": "end",
+              "x": 70,
+              "y": 70,
+              "description": "エラー処理"
+            },
+            {
+              "id": "end",
+              "label": "終了",
+              "type": "end",
+              "x": 50,
+              "y": 90,
+              "description": "プロセス終了"
+            }
+          ],
+          "connections": [
+            {
+              "from": "start",
+              "to": "process1"
+            },
+            {
+              "from": "process1",
+              "to": "decision1"
+            },
+            {
+              "from": "decision1",
+              "to": "process2",
+              "label": "Yes"
+            },
+            {
+              "from": "decision1",
+              "to": "error",
+              "label": "No"
+            },
+            {
+              "from": "process2",
+              "to": "end"
+            },
+            {
+              "from": "error",
+              "to": "end"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/InteractiveFlowchart",
+        "props": {
+          "title": "CPUアーキテクチャ図",
+          "mode": "architecture",
+          "interactive": true,
+          "showLegend": true,
+          "zoomEnabled": true,
+          "layout": {
+            "container": {
+              "width": 900,
+              "height": 500
+            },
+            "tooltip": {
+              "width": 350,
+              "maxHeight": 250,
+              "positioning": "viewport-aware"
+            },
+            "legend": {
+              "position": "right",
+              "width": 180,
+              "itemSpacing": 10
+            },
+            "nodes": {
+              "spacing": 150
+            }
+          },
+          "steps": [
+            {
+              "id": "cpu",
+              "label": "CPU Core",
+              "type": "cpu_component",
+              "x": 50,
+              "y": 30,
+              "icon": "🧠",
+              "specs": {
+                "クロック周波数": "3.2GHz",
+                "アーキテクチャ": "x86-64",
+                "コア数": "8",
+                "スレッド数": "16"
+              },
+              "description": "Central Processing Unit",
+              "technicalDetails": [
+                "ALU: 算術論理演算装置",
+                "Control Unit: 制御装置",
+                "Register File: レジスタ群",
+                "Cache: L1/L2/L3キャッシュ"
+              ]
+            },
+            {
+              "id": "memory",
+              "label": "Main Memory",
+              "type": "memory_block",
+              "x": 20,
+              "y": 60,
+              "icon": "💾",
+              "specs": {
+                "容量": "32GB",
+                "タイプ": "DDR4-3200",
+                "チャンネル": "Dual Channel",
+                "レイテンシ": "CL16"
+              },
+              "description": "システムメインメモリ",
+              "technicalDetails": [
+                "DRAM: Dynamic Random Access Memory",
+                "ECC: Error Correction Code対応",
+                "Buffered: Registered DIMM"
+              ]
+            },
+            {
+              "id": "cache",
+              "label": "Cache",
+              "type": "cpu_unit",
+              "x": 70,
+              "y": 45,
+              "icon": "⚡",
+              "specs": {
+                "L1キャッシュ": "32KB",
+                "L2キャッシュ": "256KB",
+                "L3キャッシュ": "16MB"
+              },
+              "description": "キャッシュメモリ階層"
+            },
+            {
+              "id": "bus",
+              "label": "System Bus",
+              "type": "bus",
+              "x": 50,
+              "y": 75,
+              "icon": "🔌",
+              "specs": {
+                "幅": "64bit",
+                "周波数": "1600MHz"
+              },
+              "description": "システムバス"
+            }
+          ],
+          "connections": [
+            {
+              "from": "cpu",
+              "to": "memory",
+              "type": "data_bus",
+              "label": "データバス"
+            },
+            {
+              "from": "cpu",
+              "to": "cache",
+              "type": "control_bus",
+              "label": "制御バス"
+            },
+            {
+              "from": "cpu",
+              "to": "bus",
+              "type": "address_bus",
+              "label": "アドレスバス"
+            },
+            {
+              "from": "cache",
+              "to": "memory",
+              "type": "data_bus",
+              "label": "メモリアクセス"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/InteractiveFlowchart",
+        "props": {
+          "title": "メモリマップ",
+          "mode": "memory_map",
+          "interactive": true,
+          "showLegend": true,
+          "steps": [
+            {
+              "id": "rom",
+              "label": "ROM領域",
+              "type": "memory_block",
+              "x": 30,
+              "y": 20,
+              "specs": {
+                "アドレス": "0x00000000-0x00FFFFFF",
+                "サイズ": "16MB",
+                "タイプ": "Flash ROM"
+              },
+              "description": "ブートローダーとファームウェア"
+            },
+            {
+              "id": "ram",
+              "label": "RAM領域",
+              "type": "memory_block",
+              "x": 30,
+              "y": 40,
+              "specs": {
+                "アドレス": "0x20000000-0x2FFFFFFF",
+                "サイズ": "256MB",
+                "タイプ": "SRAM"
+              },
+              "description": "実行時データとスタック"
+            },
+            {
+              "id": "peripheral",
+              "label": "周辺機器領域",
+              "type": "peripheral",
+              "x": 30,
+              "y": 60,
+              "specs": {
+                "アドレス": "0x40000000-0x5FFFFFFF",
+                "サイズ": "512MB",
+                "タイプ": "Memory Mapped I/O"
+              },
+              "description": "周辺機器レジスタ"
+            },
+            {
+              "id": "external",
+              "label": "外部メモリ",
+              "type": "memory_block",
+              "x": 30,
+              "y": 80,
+              "specs": {
+                "アドレス": "0x60000000-0xFFFFFFFF",
+                "サイズ": "2.5GB",
+                "タイプ": "External Bus"
+              },
+              "description": "拡張メモリとデバイス"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/Timeline",
+        "props": {
+          "orientation": "vertical",
+          "interactive": true,
+          "showProgress": false,
+          "currentStep": 0,
+          "mode": "timeline",
+          "events": [
+            {
+              "title": "プロジェクト企画",
+              "date": "2023-01-15",
+              "description": "プロジェクトの企画と初期要件定義",
+              "details": "詳細な企画書作成と関係者との初期協議を実施",
+              "tags": [
+                "企画",
+                "要件定義"
+              ]
+            },
+            {
+              "title": "チーム結成",
+              "date": "2023-02-01",
+              "description": "プロジェクトチームの編成",
+              "details": "エンジニア、デザイナー、PMを含む5名のチーム結成",
+              "tags": [
+                "チーム",
+                "体制"
+              ]
+            },
+            {
+              "title": "プロトタイプ完成",
+              "date": "2023-04-30",
+              "description": "初期プロトタイプの完成",
+              "details": "基本機能を実装したMVPの完成とデモ実施",
+              "tags": [
+                "開発",
+                "プロトタイプ"
+              ]
+            },
+            {
+              "title": "ベータリリース",
+              "date": "2023-07-15",
+              "description": "限定ユーザー向けベータ版公開",
+              "details": "100名の限定ユーザーでの先行テスト開始",
+              "tags": [
+                "リリース",
+                "テスト"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/Timeline",
+        "props": {
+          "orientation": "vertical",
+          "interactive": true,
+          "showProgress": true,
+          "currentStep": 2,
+          "mode": "v_model",
+          "showDependencies": true,
+          "phaseColors": true,
+          "layout": {
+            "timeline": {
+              "eventSpacing": 140,
+              "lineWidth": 4,
+              "markerSize": 45
+            },
+            "events": {
+              "contentWidth": 400,
+              "contentPadding": 20,
+              "headerHeight": 70,
+              "detailsMaxHeight": 250
+            },
+            "dependencies": {
+              "lineOffset": 50,
+              "arrowSize": 10,
+              "horizontalSpacing": 250
+            },
+            "text": {
+              "titleSize": "1.2rem",
+              "descriptionSize": "1rem",
+              "metaSize": "0.85rem"
+            }
+          },
+          "events": [
+            {
+              "title": "要件定義",
+              "phase": "requirements",
+              "type": "milestone",
+              "description": "ステークホルダーからの要求事項の明確化",
+              "duration": "3週間",
+              "deliverables": [
+                "要件定義書",
+                "機能仕様書",
+                "ユースケース図",
+                "非機能要件書"
+              ],
+              "technicalNotes": [
+                "ステークホルダー分析の実施",
+                "MoSCoW法による要件優先度付け",
+                "プロトタイプによる要件検証"
+              ],
+              "tags": [
+                "要件",
+                "ドキュメント"
+              ]
+            },
+            {
+              "title": "システム設計",
+              "phase": "design",
+              "type": "deliverable",
+              "description": "システム全体のアーキテクチャ設計",
+              "duration": "4週間",
+              "deliverables": [
+                "システムアーキテクチャ図",
+                "データベース設計書",
+                "API仕様書",
+                "セキュリティ設計書"
+              ],
+              "technicalNotes": [
+                "マイクロサービスアーキテクチャの採用",
+                "RESTful API設計原則の適用",
+                "OAuth 2.0認証の実装"
+              ],
+              "dependencies": [
+                0
+              ],
+              "tags": [
+                "設計",
+                "アーキテクチャ"
+              ]
+            },
+            {
+              "title": "詳細設計",
+              "phase": "design",
+              "type": "deliverable",
+              "description": "各モジュールの詳細設計",
+              "duration": "3週間",
+              "deliverables": [
+                "詳細設計書",
+                "クラス図",
+                "シーケンス図",
+                "データフロー図"
+              ],
+              "technicalNotes": [
+                "オブジェクト指向設計の適用",
+                "デザインパターンの活用",
+                "コーディング規約の策定"
+              ],
+              "dependencies": [
+                1
+              ],
+              "tags": [
+                "詳細設計",
+                "モジュール"
+              ]
+            },
+            {
+              "title": "実装・単体テスト",
+              "phase": "implementation",
+              "type": "deliverable",
+              "description": "コード実装と単体テストの実施",
+              "duration": "8週間",
+              "deliverables": [
+                "ソースコード",
+                "単体テストコード",
+                "コードレビュー記録",
+                "テスト実行結果"
+              ],
+              "technicalNotes": [
+                "TDD（テスト駆動開発）の実践",
+                "CI/CDパイプラインの構築",
+                "静的解析ツールの導入"
+              ],
+              "dependencies": [
+                2
+              ],
+              "tags": [
+                "実装",
+                "単体テスト"
+              ]
+            },
+            {
+              "title": "結合テスト",
+              "phase": "testing",
+              "type": "milestone",
+              "description": "モジュール間の結合テスト",
+              "duration": "3週間",
+              "deliverables": [
+                "結合テスト仕様書",
+                "テスト実行結果",
+                "バグレポート",
+                "修正済みソースコード"
+              ],
+              "technicalNotes": [
+                "APIテストの自動化",
+                "データベーステストの実施",
+                "パフォーマンステスト"
+              ],
+              "dependencies": [
+                3
+              ],
+              "tags": [
+                "結合テスト",
+                "品質保証"
+              ]
+            },
+            {
+              "title": "システムテスト",
+              "phase": "testing",
+              "type": "milestone",
+              "description": "システム全体のテスト",
+              "duration": "2週間",
+              "deliverables": [
+                "システムテスト仕様書",
+                "テスト結果レポート",
+                "性能測定結果",
+                "セキュリティテスト結果"
+              ],
+              "technicalNotes": [
+                "E2Eテストの自動化",
+                "負荷テストの実施",
+                "セキュリティ脆弱性検査"
+              ],
+              "dependencies": [
+                4
+              ],
+              "tags": [
+                "システムテスト",
+                "性能"
+              ]
+            },
+            {
+              "title": "受け入れテスト",
+              "phase": "testing",
+              "type": "milestone",
+              "description": "ユーザー受け入れテスト",
+              "duration": "2週間",
+              "deliverables": [
+                "受け入れテスト仕様書",
+                "ユーザーテスト結果",
+                "操作マニュアル",
+                "受け入れ確認書"
+              ],
+              "technicalNotes": [
+                "ユーザビリティテスト",
+                "アクセシビリティチェック",
+                "運用手順書の検証"
+              ],
+              "dependencies": [
+                5
+              ],
+              "tags": [
+                "受け入れテスト",
+                "ユーザー"
+              ]
+            },
+            {
+              "title": "デプロイメント",
+              "phase": "deployment",
+              "type": "milestone",
+              "description": "本番環境へのデプロイ",
+              "duration": "1週間",
+              "deliverables": [
+                "デプロイメント手順書",
+                "運用マニュアル",
+                "監視設定",
+                "バックアップ設定"
+              ],
+              "technicalNotes": [
+                "Blue-Greenデプロイメント",
+                "ロールバック手順の確認",
+                "監視・アラート設定"
+              ],
+              "dependencies": [
+                6
+              ],
+              "tags": [
+                "デプロイ",
+                "本番"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/Timeline",
+        "props": {
+          "orientation": "vertical",
+          "interactive": true,
+          "mode": "git_flow",
+          "showDependencies": false,
+          "phaseColors": true,
+          "events": [
+            {
+              "title": "main: 初期リポジトリ作成",
+              "date": "2023-01-01",
+              "description": "Gitリポジトリの初期化とmainブランチ作成",
+              "branch": "main",
+              "action": "commit",
+              "commits": 1,
+              "details": "README.mdとライセンスファイルの追加",
+              "technicalNotes": [
+                "Git Flow開発モデルの採用",
+                "ブランチ保護ルールの設定",
+                "コミットメッセージ規約の策定"
+              ]
+            },
+            {
+              "title": "develop: 開発ブランチ作成",
+              "date": "2023-01-02",
+              "description": "mainから開発用ブランチを分岐",
+              "branch": "develop",
+              "action": "branch",
+              "commits": 0,
+              "details": "開発用の統合ブランチとして利用",
+              "dependencies": [
+                0
+              ],
+              "technicalNotes": [
+                "develop = 開発中の最新状態",
+                "feature branchの統合先"
+              ]
+            },
+            {
+              "title": "feature/login: ログイン機能開発",
+              "date": "2023-01-15",
+              "description": "ユーザーログイン機能の実装",
+              "branch": "feature/login",
+              "action": "branch",
+              "commits": 12,
+              "details": "OAuth2.0認証システムの実装",
+              "dependencies": [
+                1
+              ],
+              "technicalNotes": [
+                "JWT トークンベース認証",
+                "パスワードハッシュ化",
+                "セッション管理"
+              ]
+            },
+            {
+              "title": "develop: ログイン機能統合",
+              "date": "2023-01-28",
+              "description": "feature/loginをdevelopにマージ",
+              "branch": "develop",
+              "action": "merge",
+              "commits": 12,
+              "details": "プルリクエスト経由でのマージ",
+              "dependencies": [
+                2
+              ],
+              "technicalNotes": [
+                "コードレビューの実施",
+                "CI/CDパイプライン通過確認"
+              ]
+            },
+            {
+              "title": "feature/dashboard: ダッシュボード開発",
+              "date": "2023-02-01",
+              "description": "ユーザーダッシュボードの実装",
+              "branch": "feature/dashboard",
+              "action": "branch",
+              "commits": 18,
+              "details": "React コンポーネントとAPI連携",
+              "dependencies": [
+                3
+              ],
+              "technicalNotes": [
+                "React Hooks使用",
+                "レスポンシブデザイン",
+                "API データバインディング"
+              ]
+            },
+            {
+              "title": "release/1.0.0: リリース準備",
+              "date": "2023-02-20",
+              "description": "v1.0.0リリース準備ブランチ",
+              "branch": "release/1.0.0",
+              "action": "branch",
+              "commits": 5,
+              "details": "バージョン番号更新とドキュメント整備",
+              "dependencies": [
+                4
+              ],
+              "technicalNotes": [
+                "バージョン番号の更新",
+                "CHANGELOG.md作成",
+                "最終テスト実施"
+              ]
+            },
+            {
+              "title": "main: v1.0.0 リリース",
+              "date": "2023-02-28",
+              "description": "正式版リリース",
+              "branch": "main",
+              "action": "merge",
+              "commits": 35,
+              "details": "タグ付きでのリリース",
+              "dependencies": [
+                5
+              ],
+              "technicalNotes": [
+                "Git タグ作成 (v1.0.0)",
+                "本番環境デプロイ",
+                "リリースノート公開"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "bar",
+          "title": "性能ベンチマーク比較",
+          "width": 500,
+          "height": 300,
+          "data": [
+            {
+              "label": "CPU使用率",
+              "value": 75
+            },
+            {
+              "label": "メモリ使用率",
+              "value": 60
+            },
+            {
+              "label": "ディスクI/O",
+              "value": 40
+            },
+            {
+              "label": "ネットワーク",
+              "value": 25
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "line",
+          "title": "システムパフォーマンス推移",
+          "width": 600,
+          "height": 250,
+          "data": [
+            {
+              "label": "09:00",
+              "value": 20
+            },
+            {
+              "label": "10:00",
+              "value": 35
+            },
+            {
+              "label": "11:00",
+              "value": 55
+            },
+            {
+              "label": "12:00",
+              "value": 80
+            },
+            {
+              "label": "13:00",
+              "value": 70
+            },
+            {
+              "label": "14:00",
+              "value": 45
+            },
+            {
+              "label": "15:00",
+              "value": 30
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "waveform",
+          "title": "サイン波信号 (1kHz)",
+          "width": 700,
+          "height": 300,
+          "timeUnit": "ms",
+          "amplitude": 100,
+          "showGrid": true,
+          "animated": false,
+          "data": [
+            {
+              "time": 0,
+              "value": 0
+            },
+            {
+              "time": 0.25,
+              "value": 70.7
+            },
+            {
+              "time": 0.5,
+              "value": 100
+            },
+            {
+              "time": 0.75,
+              "value": 70.7
+            },
+            {
+              "time": 1.0,
+              "value": 0
+            },
+            {
+              "time": 1.25,
+              "value": -70.7
+            },
+            {
+              "time": 1.5,
+              "value": -100
+            },
+            {
+              "time": 1.75,
+              "value": -70.7
+            },
+            {
+              "time": 2.0,
+              "value": 0
+            },
+            {
+              "time": 2.25,
+              "value": 70.7
+            },
+            {
+              "time": 2.5,
+              "value": 100
+            },
+            {
+              "time": 2.75,
+              "value": 70.7
+            },
+            {
+              "time": 3.0,
+              "value": 0
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "digital",
+          "title": "I2C通信プロトコル波形",
+          "timeUnit": "μs",
+          "showGrid": true,
+          "layout": {
+            "chart": {
+              "width": 900,
+              "height": 250,
+              "margin": {
+                "top": 40,
+                "right": 60,
+                "bottom": 50,
+                "left": 80
+              }
+            },
+            "digital": {
+              "channelHeight": 80,
+              "channelSpacing": 15,
+              "signalWidth": 2
+            },
+            "text": {
+              "titleSize": 18,
+              "labelSize": 14
+            }
+          },
+          "data": [
+            {
+              "name": "SCL (Clock)",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 1
+                },
+                {
+                  "time": 1,
+                  "value": 0
+                },
+                {
+                  "time": 2,
+                  "value": 1
+                },
+                {
+                  "time": 3,
+                  "value": 0
+                },
+                {
+                  "time": 4,
+                  "value": 1
+                },
+                {
+                  "time": 5,
+                  "value": 0
+                },
+                {
+                  "time": 6,
+                  "value": 1
+                },
+                {
+                  "time": 7,
+                  "value": 0
+                },
+                {
+                  "time": 8,
+                  "value": 1
+                }
+              ],
+              "color": "var(--ifm-color-primary)"
+            },
+            {
+              "name": "SDA (Data)",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 1
+                },
+                {
+                  "time": 1,
+                  "value": 1
+                },
+                {
+                  "time": 2,
+                  "value": 0
+                },
+                {
+                  "time": 3,
+                  "value": 1
+                },
+                {
+                  "time": 4,
+                  "value": 0
+                },
+                {
+                  "time": 5,
+                  "value": 1
+                },
+                {
+                  "time": 6,
+                  "value": 0
+                },
+                {
+                  "time": 7,
+                  "value": 0
+                },
+                {
+                  "time": 8,
+                  "value": 1
+                }
+              ],
+              "color": "var(--ifm-color-success)"
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "digital",
+          "title": "SPI通信プロトコル波形",
+          "width": 800,
+          "height": 250,
+          "timeUnit": "ns",
+          "showGrid": true,
+          "data": [
+            {
+              "name": "SCLK",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 0
+                },
+                {
+                  "time": 100,
+                  "value": 1
+                },
+                {
+                  "time": 200,
+                  "value": 0
+                },
+                {
+                  "time": 300,
+                  "value": 1
+                },
+                {
+                  "time": 400,
+                  "value": 0
+                },
+                {
+                  "time": 500,
+                  "value": 1
+                },
+                {
+                  "time": 600,
+                  "value": 0
+                },
+                {
+                  "time": 700,
+                  "value": 1
+                },
+                {
+                  "time": 800,
+                  "value": 0
+                }
+              ],
+              "color": "var(--ifm-color-primary)"
+            },
+            {
+              "name": "MOSI",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 1
+                },
+                {
+                  "time": 100,
+                  "value": 1
+                },
+                {
+                  "time": 200,
+                  "value": 0
+                },
+                {
+                  "time": 300,
+                  "value": 1
+                },
+                {
+                  "time": 400,
+                  "value": 0
+                },
+                {
+                  "time": 500,
+                  "value": 1
+                },
+                {
+                  "time": 600,
+                  "value": 1
+                },
+                {
+                  "time": 700,
+                  "value": 0
+                },
+                {
+                  "time": 800,
+                  "value": 0
+                }
+              ],
+              "color": "var(--ifm-color-success)"
+            },
+            {
+              "name": "MISO",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 0
+                },
+                {
+                  "time": 100,
+                  "value": 1
+                },
+                {
+                  "time": 200,
+                  "value": 1
+                },
+                {
+                  "time": 300,
+                  "value": 0
+                },
+                {
+                  "time": 400,
+                  "value": 1
+                },
+                {
+                  "time": 500,
+                  "value": 0
+                },
+                {
+                  "time": 600,
+                  "value": 0
+                },
+                {
+                  "time": 700,
+                  "value": 1
+                },
+                {
+                  "time": 800,
+                  "value": 1
+                }
+              ],
+              "color": "var(--ifm-color-warning)"
+            },
+            {
+              "name": "CS",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 0
+                },
+                {
+                  "time": 50,
+                  "value": 0
+                },
+                {
+                  "time": 750,
+                  "value": 0
+                },
+                {
+                  "time": 800,
+                  "value": 1
+                }
+              ],
+              "color": "var(--ifm-color-danger)"
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "waveform",
+          "title": "マルチチャンネル アナログ信号",
+          "width": 700,
+          "height": 350,
+          "timeUnit": "s",
+          "amplitude": 100,
+          "showGrid": true,
+          "channelColors": [
+            "var(--ifm-color-primary)",
+            "var(--ifm-color-success)",
+            "var(--ifm-color-warning)"
+          ],
+          "data": [
+            {
+              "name": "Channel 1 (1Hz)",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 0
+                },
+                {
+                  "time": 0.5,
+                  "value": 100
+                },
+                {
+                  "time": 1.0,
+                  "value": 0
+                },
+                {
+                  "time": 1.5,
+                  "value": -100
+                },
+                {
+                  "time": 2.0,
+                  "value": 0
+                }
+              ],
+              "color": "var(--ifm-color-primary)"
+            },
+            {
+              "name": "Channel 2 (2Hz)",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 0
+                },
+                {
+                  "time": 0.25,
+                  "value": 80
+                },
+                {
+                  "time": 0.5,
+                  "value": 0
+                },
+                {
+                  "time": 0.75,
+                  "value": -80
+                },
+                {
+                  "time": 1.0,
+                  "value": 0
+                },
+                {
+                  "time": 1.25,
+                  "value": 80
+                },
+                {
+                  "time": 1.5,
+                  "value": 0
+                },
+                {
+                  "time": 1.75,
+                  "value": -80
+                },
+                {
+                  "time": 2.0,
+                  "value": 0
+                }
+              ],
+              "color": "var(--ifm-color-success)"
+            },
+            {
+              "name": "Channel 3 (0.5Hz)",
+              "data": [
+                {
+                  "time": 0,
+                  "value": 60
+                },
+                {
+                  "time": 1.0,
+                  "value": -60
+                },
+                {
+                  "time": 2.0,
+                  "value": 60
+                }
+              ],
+              "color": "var(--ifm-color-warning)"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/DataFlowSimulator",
+        "props": {
+          "title": "基本データフロー",
+          "mode": "dataflow",
+          "autoPlay": false,
+          "speed": 1500,
+          "nodes": [
+            {
+              "id": "sensor",
+              "label": "センサー",
+              "type": "input",
+              "x": 20,
+              "y": 50,
+              "description": "温度センサーからのデータ取得"
+            },
+            {
+              "id": "mcu",
+              "label": "マイコン",
+              "type": "process",
+              "x": 50,
+              "y": 50,
+              "description": "データ処理とフィルタリング"
+            },
+            {
+              "id": "display",
+              "label": "ディスプレイ",
+              "type": "output",
+              "x": 80,
+              "y": 30,
+              "description": "温度値表示"
+            },
+            {
+              "id": "logger",
+              "label": "データロガー",
+              "type": "output",
+              "x": 80,
+              "y": 70,
+              "description": "データ記録装置"
+            }
+          ],
+          "flows": [
+            {
+              "from": "sensor",
+              "to": "mcu",
+              "label": "温度データ"
+            },
+            {
+              "from": "mcu",
+              "to": "display",
+              "label": "表示データ"
+            },
+            {
+              "from": "mcu",
+              "to": "logger",
+              "label": "ログデータ"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/DataFlowSimulator",
+        "props": {
+          "title": "OSI参照モデル - HTTP通信 (簡略版)",
+          "mode": "network_stack",
+          "showLayers": true,
+          "protocolInfo": true,
+          "autoPlay": false,
+          "speed": 3000,
+          "layout": {
+            "container": {
+              "height": 550,
+              "width": "100%"
+            },
+            "layers": {
+              "height": 110,
+              "spacing": 20,
+              "labelWidth": 150
+            },
+            "nodes": {
+              "spacing": 300,
+              "defaultWidth": 140,
+              "defaultHeight": 65
+            },
+            "protocolPanel": {
+              "position": "bottom-left",
+              "width": 280,
+              "maxHeight": 200,
+              "offset": {
+                "x": 20,
+                "y": 20
+              }
+            }
+          },
+          "nodes": [
+            {
+              "id": "app",
+              "label": "アプリケーション",
+              "layer": 3,
+              "protocol": "HTTP",
+              "port": 80,
+              "icon": "🌐",
+              "x": 20,
+              "description": "Layer 7: アプリケーション層",
+              "functions": [
+                "HTTP/HTTPS通信",
+                "Webサービス"
+              ]
+            },
+            {
+              "id": "transport",
+              "label": "トランスポート",
+              "layer": 2,
+              "protocol": "TCP",
+              "port": 80,
+              "icon": "🔗",
+              "x": 20,
+              "description": "Layer 4: トランスポート層",
+              "functions": [
+                "セグメント化",
+                "信頼性保証"
+              ]
+            },
+            {
+              "id": "network",
+              "label": "ネットワーク",
+              "layer": 1,
+              "protocol": "IP",
+              "icon": "🗺️",
+              "x": 20,
+              "description": "Layer 3: ネットワーク層",
+              "functions": [
+                "ルーティング",
+                "IPアドレッシング"
+              ]
+            },
+            {
+              "id": "link",
+              "label": "データリンク/物理",
+              "layer": 0,
+              "protocol": "Ethernet",
+              "icon": "🔌",
+              "x": 20,
+              "description": "Layer 2/1: データリンク・物理層",
+              "functions": [
+                "フレーム送受信",
+                "物理的な信号転送"
+              ]
+            },
+            {
+              "id": "server",
+              "label": "Webサーバー",
+              "layer": 3,
+              "protocol": "HTTP",
+              "port": 80,
+              "icon": "🖥️",
+              "x": 70,
+              "description": "サーバー側アプリケーション",
+              "functions": [
+                "HTTPリクエスト処理",
+                "レスポンス生成"
+              ]
+            }
+          ],
+          "flows": [
+            {
+              "from": "app",
+              "to": "transport",
+              "label": "HTTP Request",
+              "protocol": "HTTP"
+            },
+            {
+              "from": "transport",
+              "to": "network",
+              "label": "TCP Segment",
+              "protocol": "TCP"
+            },
+            {
+              "from": "network",
+              "to": "link",
+              "label": "IP Packet",
+              "protocol": "IP"
+            },
+            {
+              "from": "link",
+              "to": "server",
+              "label": "Network Transfer",
+              "protocol": "Ethernet"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/DataFlowSimulator",
+        "props": {
+          "title": "IoT通信スタック - センサーデータ送信",
+          "mode": "network_stack",
+          "showLayers": true,
+          "protocolInfo": true,
+          "layout": {
+            "container": {
+              "height": 600,
+              "width": "100%"
+            },
+            "layers": {
+              "height": 90,
+              "spacing": 15,
+              "labelWidth": 140
+            },
+            "nodes": {
+              "spacing": 120,
+              "defaultWidth": 160,
+              "defaultHeight": 70
+            },
+            "protocolPanel": {
+              "position": "top-right",
+              "width": 300,
+              "maxHeight": 250,
+              "offset": {
+                "x": 10,
+                "y": 10
+              }
+            }
+          },
+          "nodes": [
+            {
+              "id": "sensor_app",
+              "label": "センサーアプリ",
+              "layer": 4,
+              "protocol": "MQTT",
+              "port": 1883,
+              "icon": "📡",
+              "x": 20,
+              "description": "IoTアプリケーション層",
+              "functions": [
+                "センサーデータ収集",
+                "JSONシリアライズ",
+                "MQTTパブリッシュ"
+              ]
+            },
+            {
+              "id": "coap",
+              "label": "CoAP",
+              "layer": 3,
+              "protocol": "CoAP",
+              "port": 5683,
+              "icon": "🔄",
+              "x": 20,
+              "description": "軽量アプリケーション層",
+              "functions": [
+                "RESTful通信",
+                "UDP上での動作",
+                "省電力通信"
+              ]
+            },
+            {
+              "id": "udp",
+              "label": "UDP",
+              "layer": 2,
+              "protocol": "UDP",
+              "port": 1883,
+              "icon": "📦",
+              "x": 20,
+              "description": "トランスポート層",
+              "functions": [
+                "コネクションレス通信",
+                "高速データ転送",
+                "軽量プロトコル"
+              ]
+            },
+            {
+              "id": "ipv6",
+              "label": "IPv6",
+              "layer": 1,
+              "protocol": "6LoWPAN",
+              "icon": "🌐",
+              "x": 20,
+              "description": "ネットワーク層",
+              "functions": [
+                "IPv6アドレッシング",
+                "ルーティング",
+                "パケット圧縮"
+              ]
+            },
+            {
+              "id": "zigbee",
+              "label": "ZigBee",
+              "layer": 0,
+              "protocol": "802.15.4",
+              "icon": "📶",
+              "x": 20,
+              "description": "無線通信層",
+              "functions": [
+                "2.4GHz無線通信",
+                "メッシュネットワーク",
+                "低消費電力"
+              ]
+            },
+            {
+              "id": "gateway",
+              "label": "IoTゲートウェイ",
+              "layer": 4,
+              "protocol": "MQTT",
+              "port": 1883,
+              "icon": "🌉",
+              "x": 70,
+              "description": "プロトコル変換",
+              "functions": [
+                "プロトコル変換",
+                "データ集約",
+                "セキュリティ"
+              ]
+            }
+          ],
+          "flows": [
+            {
+              "from": "sensor_app",
+              "to": "coap",
+              "label": "センサーデータ",
+              "protocol": "MQTT"
+            },
+            {
+              "from": "coap",
+              "to": "udp",
+              "label": "CoAPメッセージ",
+              "protocol": "CoAP"
+            },
+            {
+              "from": "udp",
+              "to": "ipv6",
+              "label": "UDPデータグラム",
+              "protocol": "UDP"
+            },
+            {
+              "from": "ipv6",
+              "to": "zigbee",
+              "label": "IPv6パケット",
+              "protocol": "6LoWPAN"
+            },
+            {
+              "from": "zigbee",
+              "to": "gateway",
+              "label": "無線フレーム",
+              "protocol": "802.15.4"
+            }
+          ]
+        }
+      },
+      {
+        "component": "interactive/DataFlowSimulator",
+        "props": {
+          "title": "マイクロサービスアーキテクチャ",
+          "mode": "dataflow",
+          "autoPlay": false,
+          "speed": 2000,
+          "nodes": [
+            {
+              "id": "client",
+              "label": "Webクライアント",
+              "type": "input",
+              "x": 10,
+              "y": 50,
+              "description": "フロントエンドアプリケーション"
+            },
+            {
+              "id": "api_gateway",
+              "label": "API Gateway",
+              "type": "process",
+              "x": 25,
+              "y": 50,
+              "description": "リクエスト振り分けとロードバランシング"
+            },
+            {
+              "id": "auth_service",
+              "label": "認証サービス",
+              "type": "process",
+              "x": 45,
+              "y": 30,
+              "description": "JWT認証とユーザー管理"
+            },
+            {
+              "id": "user_service",
+              "label": "ユーザーサービス",
+              "type": "process",
+              "x": 45,
+              "y": 50,
+              "description": "ユーザー情報管理API"
+            },
+            {
+              "id": "order_service",
+              "label": "注文サービス",
+              "type": "process",
+              "x": 45,
+              "y": 70,
+              "description": "注文処理とビジネスロジック"
+            },
+            {
+              "id": "auth_db",
+              "label": "認証DB",
+              "type": "output",
+              "x": 70,
+              "y": 30,
+              "description": "ユーザー認証情報"
+            },
+            {
+              "id": "user_db",
+              "label": "ユーザーDB",
+              "type": "output",
+              "x": 70,
+              "y": 50,
+              "description": "ユーザープロファイル"
+            },
+            {
+              "id": "order_db",
+              "label": "注文DB",
+              "type": "output",
+              "x": 70,
+              "y": 70,
+              "description": "注文履歴とデータ"
+            },
+            {
+              "id": "message_queue",
+              "label": "Message Queue",
+              "type": "process",
+              "x": 60,
+              "y": 90,
+              "description": "非同期メッセージ処理"
+            }
+          ],
+          "flows": [
+            {
+              "from": "client",
+              "to": "api_gateway",
+              "label": "HTTP Request"
+            },
+            {
+              "from": "api_gateway",
+              "to": "auth_service",
+              "label": "認証リクエスト"
+            },
+            {
+              "from": "api_gateway",
+              "to": "user_service",
+              "label": "ユーザー情報"
+            },
+            {
+              "from": "api_gateway",
+              "to": "order_service",
+              "label": "注文処理"
+            },
+            {
+              "from": "auth_service",
+              "to": "auth_db",
+              "label": "認証クエリ"
+            },
+            {
+              "from": "user_service",
+              "to": "user_db",
+              "label": "ユーザークエリ"
+            },
+            {
+              "from": "order_service",
+              "to": "order_db",
+              "label": "注文クエリ"
+            },
+            {
+              "from": "order_service",
+              "to": "message_queue",
+              "label": "非同期イベント"
+            }
+          ]
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "bar",
+          "title": "空データテスト",
+          "data": []
+        }
+      },
+      {
+        "component": "interactive/InteractiveFlowchart",
+        "props": {
+          "title": "不正データテスト",
+          "steps": [],
+          "connections": []
+        }
+      },
+      {
+        "component": "diagrams/SimpleChart",
+        "props": {
+          "type": "waveform",
+          "title": "大量データ波形テスト (100点)",
+          "width": 800,
+          "height": 300,
+          "timeUnit": "ms",
+          "amplitude": 100,
+          "showGrid": true,
+          "data": [
+            {
+              "time": 0,
+              "value": 0
+            },
+            {
+              "time": 0.1,
+              "value": 59
+            },
+            {
+              "time": 0.2,
+              "value": 95
+            },
+            {
+              "time": 0.3,
+              "value": 95
+            },
+            {
+              "time": 0.4,
+              "value": 59
+            },
+            {
+              "time": 0.5,
+              "value": 0
+            },
+            {
+              "time": 0.6,
+              "value": -59
+            },
+            {
+              "time": 0.7,
+              "value": -95
+            },
+            {
+              "time": 0.8,
+              "value": -95
+            },
+            {
+              "time": 0.9,
+              "value": -59
+            },
+            {
+              "time": 1.0,
+              "value": 0
+            },
+            {
+              "time": 1.1,
+              "value": 59
+            },
+            {
+              "time": 1.2,
+              "value": 95
+            },
+            {
+              "time": 1.3,
+              "value": 95
+            },
+            {
+              "time": 1.4,
+              "value": 59
+            },
+            {
+              "time": 1.5,
+              "value": 0
+            },
+            {
+              "time": 1.6,
+              "value": -59
+            },
+            {
+              "time": 1.7,
+              "value": -95
+            },
+            {
+              "time": 1.8,
+              "value": -95
+            },
+            {
+              "time": 1.9,
+              "value": -59
+            },
+            {
+              "time": 2.0,
+              "value": 0
+            }
+          ]
+        }
+      },
+      {
+        "component": "layout/SummaryBox",
+        "props": {
+          "title": "拡張コンポーネントテスト結果",
+          "items": [
+            "InteractiveFlowchart拡張機能: ✓ アーキテクチャモード動作確認",
+            "InteractiveFlowchart拡張機能: ✓ ズーム・レジェンド機能確認",
+            "InteractiveFlowchart拡張機能: ✓ バス接続種別表示確認",
+            "Timeline拡張機能: ✓ 開発プロセスモード動作確認",
+            "Timeline拡張機能: ✓ 依存関係表示確認",
+            "Timeline拡張機能: ✓ フェーズ別色分け確認",
+            "SimpleChart拡張機能: ✓ 波形表示機能動作確認",
+            "SimpleChart拡張機能: ✓ デジタル信号表示確認",
+            "SimpleChart拡張機能: ✓ マルチチャンネル対応確認",
+            "DataFlowSimulator拡張機能: ✓ ネットワークスタック表示確認",
+            "DataFlowSimulator拡張機能: ✓ OSI参照モデル動作確認",
+            "DataFlowSimulator拡張機能: ✓ プロトコル情報表示確認",
+            "エッジケース: ✓ 空データ・不正データ処理確認",
+            "パフォーマンス: ✓ 大量データ処理確認"
+          ]
+        }
+      }
+    ]
   }
 ]

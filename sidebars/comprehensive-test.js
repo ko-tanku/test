@@ -41,6 +41,11 @@ const sidebars = {
     "type": "doc",
     "id": "advanced-test",
     "label": "高度なコンポーネントテスト"
+  },
+  {
+    "type": "doc",
+    "id": "enhanced-components-test",
+    "label": "拡張コンポーネント包括テスト"
   }
 ]
 };

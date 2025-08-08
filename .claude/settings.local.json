@@ -15,7 +15,8 @@
       "Bash(PYTHONPATH=scripts/core python scripts/courses/practical-demo/build.py)",
       "Bash(npx docusaurus serve:*)",
       "Bash(rd:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }

@@ -77,35 +77,30 @@ const componentMap = {
   'ui/Alert': React.lazy(() => import('./ui/Alert')),
   'ui/Spinner': React.lazy(() => import('./ui/Spinner')),
   'ui/Skeleton': React.lazy(() => import('./ui/Skeleton')),
-  'ui/Avatar': React.lazy(() => import('./ui/Avatar')),
-  'ui/Rating': React.lazy(() => import('./ui/Rating')),
+  // 削除済み: Avatar, Rating
   'ui/Switch': React.lazy(() => import('./ui/Switch')),
   'ui/RadioGroup': React.lazy(() => import('./ui/RadioGroup')),
   'ui/CheckboxGroup': React.lazy(() => import('./ui/CheckboxGroup')),
   'ui/DatePicker': React.lazy(() => import('./ui/DatePicker')),
   'ui/TimePicker': React.lazy(() => import('./ui/TimePicker')),
-  'ui/ColorPicker': React.lazy(() => import('./ui/ColorPicker')),
+  // 削除済み: ColorPicker
   'ui/RangeSlider': React.lazy(() => import('./ui/RangeSlider')),
   'ui/FileUpload': React.lazy(() => import('./ui/FileUpload')),
   'ui/SearchBox': React.lazy(() => import('./ui/SearchBox')),
   'ui/TagInput': React.lazy(() => import('./ui/TagInput')),
   'ui/NumberInput': React.lazy(() => import('./ui/NumberInput')),
   'ui/TextEditor': React.lazy(() => import('./ui/TextEditor')),
-  'ui/Calendar': React.lazy(() => import('./ui/Calendar')),
+  // 削除済み: Calendar
 
   // 学習支援インタラクティブ機能
   'interactive/Timeline': React.lazy(() => import('./interactive/Timeline')),
-  'interactive/Gallery': React.lazy(() => import('./interactive/Gallery')),
-  'interactive/Carousel': React.lazy(() => import('./interactive/Carousel')),
-  'interactive/Slideshow': React.lazy(() => import('./interactive/Slideshow')),
+  // 削除済み: Gallery, Carousel, Slideshow
   'interactive/ZoomImage': React.lazy(() => import('./interactive/ZoomImage')),
   'interactive/VideoPlayer': React.lazy(() => import('./interactive/VideoPlayer')),
   'interactive/AudioPlayer': React.lazy(() => import('./interactive/AudioPlayer')),
   'interactive/CodeRunner': React.lazy(() => import('./interactive/CodeRunner')),
-  'interactive/Calculator': React.lazy(() => import('./interactive/Calculator')),
-  'interactive/Counter': React.lazy(() => import('./interactive/Counter')),
-  'interactive/Timer': React.lazy(() => import('./interactive/Timer')),
-  'interactive/Stopwatch': React.lazy(() => import('./interactive/Stopwatch')),
+  // 削除済み: Calculator, Counter, Timer, Stopwatch
+  'interactive/BinaryConverter': React.lazy(() => import('./interactive/BinaryConverter')),
 
   // 学習支援機能
   'special/LazyLoad': React.lazy(() => import('./special/LazyLoad')),
@@ -127,6 +122,11 @@ const componentMap = {
   'learning/FlashcardSystem': React.lazy(() => import('./learning/FlashcardSystem')),
   'learning/KnowledgeCheck': React.lazy(() => import('./learning/KnowledgeCheck')),
   'learning/NoteTaking': React.lazy(() => import('./learning/NoteTaking')),
+  'learning/BookmarkManager': React.lazy(() => import('./learning/BookmarkManager')),
+
+  // 新規追加 - IT組込学習特化コンポーネント
+  'layout/LearningPathIndicator': React.lazy(() => import('./layout/LearningPathIndicator')),
+  'ui/SmartTooltip': React.lazy(() => import('./ui/SmartTooltip')),
 };
 
 function ComprehensiveTestPage({ pageData }) {

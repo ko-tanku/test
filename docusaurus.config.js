@@ -118,6 +118,10 @@ const config = {
                 to: '/comprehensive-test/advanced-test',
                 label: '高度なコンポーネントテスト',
               },
+              {
+                to: '/comprehensive-test/enhanced-components-test',
+                label: '拡張コンポーネント包括テスト',
+              },
             ],
           },
           {

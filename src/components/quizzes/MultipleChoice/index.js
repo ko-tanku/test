@@ -20,7 +20,15 @@ export default function MultipleChoice({
   timeLimit = null, // 秒数、nullで無制限
   showHints = true,
   randomizeOptions = false,
-  variant = 'default'
+  variant = 'default',
+  
+  // IT組込学習特化機能
+  category = '', // 'binary', 'memory', 'cpu', 'communication', 'security'等
+  aiPromptTemplate = '', // AI学習支援用プロンプトテンプレート
+  relatedTerms = [], // 関連専門用語
+  codeExample = '', // コード例の表示
+  showBinaryConverter = false, // 2進数変換機能
+  showLogicGates = false // 論理演算の視覚化
 }) {
   // 後方互換性: quizDataが渡された場合の処理
   const actualQuestion = quizData?.question || question;
@@ -134,6 +142,37 @@ export default function MultipleChoice({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // IT組込学習特化機能
+  const [showAIPrompt, setShowAIPrompt] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const [showCode, setShowCode] = useState(false);
+  
+  // バイナリコンバーター状態
+  const [binaryInput, setBinaryInput] = useState('');
+  const [binaryResult, setBinaryResult] = useState('');
+  
+  const convertBinary = (input, fromBase = 10, toBase = 2) => {
+    try {
+      const decimal = parseInt(input, fromBase);
+      if (isNaN(decimal)) return '';
+      return decimal.toString(toBase).toUpperCase();
+    } catch (e) {
+      return '';
+    }
+  };
+
+  const getCategoryIcon = (cat) => {
+    const icons = {
+      'binary': '🔢',
+      'memory': '🧠',
+      'cpu': '💻',
+      'communication': '📡',
+      'security': '🔐',
+      'ai': '🤖'
+    };
+    return icons[cat] || '📚';
+  };
+
   if (!actualQuestion || !actualOptions.length) {
     return <div className={styles.multiplechoice}>Invalid quiz data</div>;
   }
@@ -147,6 +186,11 @@ export default function MultipleChoice({
             {difficulty === 'easy' ? '初級' : difficulty === 'medium' ? '中級' : '上級'}
           </span>
           {isMultiple && <span className={styles.multipleIndicator}>複数選択可</span>}
+          {category && (
+            <span className={styles.category}>
+              {getCategoryIcon(category)} {category.charAt(0).toUpperCase() + category.slice(1)}
+            </span>
+          )}
         </div>
         
         <div className={styles.metadata}>
@@ -255,6 +299,95 @@ export default function MultipleChoice({
           )}
         </div>
       )}
+
+      {/* IT組込学習支援機能 */}
+      <div className={styles.learningSupport}>
+        {/* AI学習プロンプト */}
+        {aiPromptTemplate && (
+          <div className={styles.supportTool}>
+            <button 
+              onClick={() => setShowAIPrompt(!showAIPrompt)}
+              className={styles.supportToggle}
+            >
+              🤖 AI学習ヘルプ
+            </button>
+            {showAIPrompt && (
+              <div className={styles.aiPrompt}>
+                <h4>AIに質問するときのヒント:</h4>
+                <p>{aiPromptTemplate}</p>
+                <small>※ このテンプレートをChatGPTやClaudeにコピーして活用してください</small>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* 関連用語 */}
+        {relatedTerms.length > 0 && (
+          <div className={styles.supportTool}>
+            <button 
+              onClick={() => setShowTerms(!showTerms)}
+              className={styles.supportToggle}
+            >
+              📖 関連用語
+            </button>
+            {showTerms && (
+              <div className={styles.relatedTerms}>
+                <h4>関連する専門用語:</h4>
+                <ul>
+                  {relatedTerms.map((term, idx) => (
+                    <li key={idx}>
+                      <strong>{term.term}:</strong> {term.definition}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* コード例 */}
+        {codeExample && (
+          <div className={styles.supportTool}>
+            <button 
+              onClick={() => setShowCode(!showCode)}
+              className={styles.supportToggle}
+            >
+              💻 コード例
+            </button>
+            {showCode && (
+              <div className={styles.codeExample}>
+                <h4>実装例:</h4>
+                <pre><code>{codeExample}</code></pre>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* 2進数変換器 */}
+        {showBinaryConverter && (
+          <div className={styles.supportTool}>
+            <div className={styles.binaryConverter}>
+              <h4>🔢 数値変換ツール</h4>
+              <div className={styles.converterRow}>
+                <input 
+                  type="text" 
+                  placeholder="数値を入力"
+                  value={binaryInput}
+                  onChange={(e) => {
+                    setBinaryInput(e.target.value);
+                    setBinaryResult(convertBinary(e.target.value));
+                  }}
+                />
+                <span>→</span>
+                <span className={styles.result}>
+                  2進数: {convertBinary(binaryInput, 10, 2)}<br/>
+                  16進数: {convertBinary(binaryInput, 10, 16)}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       {!showResults && !isTimeUp && (
         <button 

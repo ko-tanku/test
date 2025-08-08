@@ -9,6 +9,7 @@ import os
 import sys
 import yaml
 import json
+import re
 from pathlib import Path
 
 # 標準出力のエンコーディングをUTF-8に設定
@@ -124,6 +125,78 @@ module.exports = sidebars;"""
         print(f"Error writing sidebar file {sidebar_file}: {e}", file=sys.stderr)
         sys.exit(1)
 
+def update_docusaurus_navbar(master_data, course_id, config_path):
+    """
+    docusaurus.config.jsのナビゲーションバーにコースリンクを自動追加します。
+    """
+    course_label = master_data.get('course_label', course_id)
+    sidebar_items = master_data.get('sidebar', [])
+    
+    # ドロップダウンアイテムを生成
+    dropdown_items = []
+    
+    def process_sidebar_items(items, base_path=""):
+        """サイドバー設定からドロップダウンアイテムを生成"""
+        for item in items:
+            if item.get('type') == 'doc':
+                page_id = item.get('id')
+                label = item.get('label', page_id)
+                dropdown_items.append({
+                    'to': f'/{course_id}/{page_id}',
+                    'label': label
+                })
+            elif item.get('type') == 'category':
+                # カテゴリーの場合は子アイテムを処理
+                category_items = item.get('items', [])
+                process_sidebar_items(category_items, base_path)
+    
+    process_sidebar_items(sidebar_items)
+    
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config_content = f.read()
+        
+        # 既存のコース設定を削除
+        pattern = rf'{{[\s\S]*?type:\s*["\']dropdown["\'],[\s\S]*?label:\s*["\']機能網羅テスト["\'],[\s\S]*?items:\s*\[[\s\S]*?\][\s\S]*?}}'
+        config_content = re.sub(pattern, '', config_content)
+        
+        # 新しいドロップダウン設定を生成
+        dropdown_config = f"""          {{
+            type: 'dropdown',
+            label: '{course_label}',
+            position: 'left',
+            items: ["""
+        
+        for item in dropdown_items:
+            dropdown_config += f"""
+              {{
+                to: '{item['to']}',
+                label: '{item['label']}',
+              }},"""
+        
+        dropdown_config += """
+            ],
+          },"""
+        
+        # navbarのitemsセクションに挿入
+        navbar_items_pattern = r'(items:\s*\[)'
+        replacement = rf'\1\n{dropdown_config}'
+        
+        if re.search(navbar_items_pattern, config_content):
+            config_content = re.sub(navbar_items_pattern, replacement, config_content)
+        else:
+            print("Warning: Could not find navbar items section in docusaurus.config.js", file=sys.stderr)
+            return
+        
+        # ファイルに書き戻し
+        with open(config_path, 'w', encoding='utf-8') as f:
+            f.write(config_content)
+        
+        print(f"Successfully updated navbar in docusaurus.config.js")
+        
+    except Exception as e:
+        print(f"Error updating docusaurus.config.js: {e}", file=sys.stderr)
+
 def main():
     """
     メイン実行関数。
@@ -154,6 +227,10 @@ def main():
     
     # サイドバー設定を生成
     generate_sidebar_config(master_data, course_id, sidebars_dir)
+    
+    # docusaurus.config.jsのナビゲーションを自動更新
+    config_path = PROJECT_ROOT / "docusaurus.config.js"
+    update_docusaurus_navbar(master_data, course_id, config_path)
     
     # 各ページのデータを処理
     sidebar_items = master_data.get('sidebar', [])

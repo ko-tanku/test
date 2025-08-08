@@ -12,7 +12,7 @@ export default function FillInTheBlank({
   explanation, 
   placeholder = "回答を入力してください...",
   variant = 'default',
-  showHints = true,
+  enableHints = true,
   caseSensitive = false,
   allowRetry = true,
   className 
@@ -206,7 +206,7 @@ export default function FillInTheBlank({
               >
                 回答する
               </button>
-              {showHints && hint && (
+              {enableHints && showHints && hint && (
                 <button 
                   onClick={() => toggleHint()}
                   className={clsx(styles.button, styles.hintButton)}
@@ -227,7 +227,7 @@ export default function FillInTheBlank({
           )}
         </div>
 
-        {showHints && hint && (
+        {enableHints && showHints && hint && (
           <div className={styles.hint}>
             <strong>💡 ヒント:</strong> {hint}
           </div>
@@ -245,7 +245,7 @@ export default function FillInTheBlank({
               </>
             ) : (
               <>
-                <span className={styles.feedbackIcon">❌</span>
+                <span className={styles.feedbackIcon}>❌</span>
                 <span>不正解です。正解は: <strong>{answer}</strong></span>
               </>
             )}
