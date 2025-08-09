@@ -1,0 +1,408 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.header h3 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: #6c757d;
+  margin: 0;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.codePanel {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.codePanel h4 {
+  color: #2c3e50;
+  margin: 0 0 16px 0;
+}
+
+.codeContainer {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 16px;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.codeLine {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.codeLine.currentLine {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding-left: 8px;
+}
+
+.codeLine.executedLine {
+  background: #d4edda;
+  opacity: 0.7;
+}
+
+.lineNumber {
+  display: inline-block;
+  min-width: 30px;
+  color: #6c757d;
+  font-size: 12px;
+  margin-right: 12px;
+}
+
+.stepDescription {
+  background: #e3f2fd;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.stepDescription h5 {
+  color: #1976d2;
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.stepDescription p {
+  color: #1976d2;
+  margin: 0;
+  font-size: 14px;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.controls button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.playButton {
+  background: #28a745 !important;
+  color: white;
+}
+
+.playButton:hover:not(:disabled) {
+  background: #218838 !important;
+}
+
+.resetButton {
+  background: #6c757d !important;
+  color: white;
+}
+
+.resetButton:hover:not(:disabled) {
+  background: #545b62 !important;
+}
+
+.controls button:not(.playButton):not(.resetButton) {
+  background: #007bff;
+  color: white;
+}
+
+.controls button:not(.playButton):not(.resetButton):hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.memoryPanel {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.memoryStats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statItem span:first-child {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.statItem span:last-child {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.memoryVisualization {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.memorySection h4 {
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.stackContainer, .heapContainer {
+  min-height: 300px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  padding: 8px;
+  background: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heapContainer {
+  flex-direction: column-reverse;
+}
+
+.memoryBlock {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  min-height: 20px;
+}
+
+.memoryBlock:hover {
+  border-color: #007bff;
+  transform: scale(1.02);
+  z-index: 1;
+}
+
+.blockInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 11px;
+  width: 100%;
+}
+
+.blockName {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.blockAddress {
+  font-family: monospace;
+  color: #007bff;
+}
+
+.blockSize {
+  color: #6c757d;
+}
+
+.blockData {
+  color: #28a745;
+  font-style: italic;
+}
+
+.emptyMemory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.detailPanel {
+  grid-column: 1 / -1;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 2px solid #007bff;
+}
+
+.detailPanel h4 {
+  color: #007bff;
+  margin: 0 0 16px 0;
+}
+
+.detailContent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.detailContent > div {
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.detailPanel button {
+  padding: 8px 16px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.detailPanel button:hover {
+  background: #545b62;
+}
+
+.explanation {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.explanation h4 {
+  color: #2c3e50;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.comparisonTable {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #dee2e6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.comparisonRow {
+  display: contents;
+}
+
+.comparisonRow > div {
+  padding: 12px;
+  background: white;
+  font-size: 14px;
+}
+
+.comparisonHeader {
+  background: #2c3e50 !important;
+  color: white !important;
+  font-weight: bold !important;
+  text-align: center;
+}
+
+.comparisonRow > div:first-child:not(.comparisonHeader) {
+  background: #f8f9fa !important;
+  font-weight: 500;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .memoryVisualization {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0 10px;
+    padding: 16px;
+  }
+  
+  .controls {
+    justify-content: center;
+  }
+  
+  .memoryStats {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .detailContent {
+    grid-template-columns: 1fr;
+  }
+  
+  .comparisonTable {
+    font-size: 12px;
+  }
+  
+  .comparisonRow > div {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .controls button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  
+  .stackContainer, .heapContainer {
+    min-height: 200px;
+  }
+  
+  .blockInfo {
+    font-size: 10px;
+  }
+}

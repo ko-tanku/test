@@ -1,0 +1,274 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h3 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: #6c757d;
+  margin: 0;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  transition: width 0.3s ease;
+}
+
+.scenario {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #007bff;
+}
+
+.scenario h4 {
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.situation, .goal {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.situation strong, .goal strong {
+  color: #495057;
+}
+
+.promptInput {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.promptInput label {
+  display: block;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+.promptInput textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.promptInput textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.evaluateBtn, .hintBtn, .navBtn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.evaluateBtn {
+  background: #28a745;
+  color: white;
+}
+
+.evaluateBtn:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.hintBtn {
+  background: #ffc107;
+  color: #212529;
+}
+
+.hintBtn:hover {
+  background: #e0a800;
+  transform: translateY(-1px);
+}
+
+.hints {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.hints h5 {
+  color: #856404;
+  margin-bottom: 12px;
+}
+
+.hints ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.hints li {
+  margin-bottom: 4px;
+  color: #856404;
+}
+
+.feedback {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.feedback h5 {
+  color: #0c5460;
+  margin-bottom: 12px;
+}
+
+.feedback pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  margin: 0;
+  color: #0c5460;
+  line-height: 1.5;
+}
+
+.examples {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.exampleGood, .exampleBad {
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.exampleGood {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.exampleBad {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.exampleGood h5 {
+  color: #155724;
+  margin-bottom: 8px;
+}
+
+.exampleBad h5 {
+  color: #721c24;
+  margin-bottom: 8px;
+}
+
+.exampleGood p, .exampleBad p {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.exampleGood p {
+  color: #155724;
+}
+
+.exampleBad p {
+  color: #721c24;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.navBtn {
+  background: #007bff;
+  color: white;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+.navBtn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.completionInfo {
+  font-weight: 600;
+  color: #495057;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .container {
+    margin: 0 10px;
+    padding: 16px;
+  }
+  
+  .examples {
+    grid-template-columns: 1fr;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+  
+  .navigation {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

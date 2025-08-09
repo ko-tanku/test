@@ -127,6 +127,13 @@ const componentMap = {
   // 新規追加 - IT組込学習特化コンポーネント
   'layout/LearningPathIndicator': React.lazy(() => import('./layout/LearningPathIndicator')),
   'ui/SmartTooltip': React.lazy(() => import('./ui/SmartTooltip')),
+
+  // Phase 1 - 既存フォルダの実装完成
+  'ai/AIPromptTrainer': React.lazy(() => import('./ai/AIPromptTrainer')),
+  'embedded/MemoryMapVisualizer': React.lazy(() => import('./embedded/MemoryMapVisualizer')),
+  'embedded/LogicGateSimulator': React.lazy(() => import('./embedded/LogicGateSimulator')),
+  'learning/AdaptiveLearningEngine': React.lazy(() => import('./learning/AdaptiveLearningEngine')),
+  'learning/LearningProgressTracker': React.lazy(() => import('./learning/LearningProgressTracker')),
 };
 
 function ComprehensiveTestPage({ pageData }) {
