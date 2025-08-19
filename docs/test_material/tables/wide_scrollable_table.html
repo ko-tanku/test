@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+        }
+        .content-wrapper {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        
+        
+        <style>
+            #table_横スクロール対応no幅広表 {
+                width: 100%;
+                table-layout: fixed;
+                word-wrap: break-word;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            
+            #table_横スクロール対応no幅広表 th {
+                background-color: #00BCD4;
+                color: #FFFFFF;
+                padding: 8px 12px;
+                text-align: left;
+                font-weight: bold;
+                border: 1px solid #CCCCCC;
+            }
+            
+            #table_横スクロール対応no幅広表 td {
+                padding: 8px 12px;
+                border: 1px solid #CCCCCC;
+            }
+            
+            #table_横スクロール対応no幅広表 tr:nth-child(even) {
+                background-color: #FAFAFA;
+            }
+            
+            #table_横スクロール対応no幅広表 tr:nth-child(odd) {
+                background-color: #F0F0F0;
+            }
+            
+            #table_横スクロール対応no幅広表 {
+                font-size: 0.9em;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+                margin: 20px 0;
+            }
+            
+            .table-title {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #333;
+            }
+        </style>
+        
+        <div class="table-container">
+            <div class="table-title">横スクロール対応の幅広表</div>
+            <table border="1" class="dataframe mkdocs-table" id="table_横スクロール対応no幅広表">
+  <thead>
+    <tr style="text-align: right;">
+      <th>ID</th>
+      <th>列1</th>
+      <th>列2</th>
+      <th>列3</th>
+      <th>列4</th>
+      <th>列5</th>
+      <th>列6</th>
+      <th>列7</th>
+      <th>列8</th>
+      <th>列9</th>
+      <th>列10</th>
+      <th>列11</th>
+      <th>列12</th>
+      <th>列13</th>
+      <th>列14</th>
+      <th>列15</th>
+      <th>列16</th>
+      <th>列17</th>
+      <th>列18</th>
+      <th>列19</th>
+      <th>列20</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>行1</td>
+      <td>データ1-1</td>
+      <td>データ1-2</td>
+      <td>データ1-3</td>
+      <td>データ1-4</td>
+      <td>データ1-5</td>
+      <td>データ1-6</td>
+      <td>データ1-7</td>
+      <td>データ1-8</td>
+      <td>データ1-9</td>
+      <td>データ1-10</td>
+      <td>データ1-11</td>
+      <td>データ1-12</td>
+      <td>データ1-13</td>
+      <td>データ1-14</td>
+      <td>データ1-15</td>
+      <td>データ1-16</td>
+      <td>データ1-17</td>
+      <td>データ1-18</td>
+      <td>データ1-19</td>
+      <td>データ1-20</td>
+    </tr>
+    <tr>
+      <td>行2</td>
+      <td>データ2-1</td>
+      <td>データ2-2</td>
+      <td>データ2-3</td>
+      <td>データ2-4</td>
+      <td>データ2-5</td>
+      <td>データ2-6</td>
+      <td>データ2-7</td>
+      <td>データ2-8</td>
+      <td>データ2-9</td>
+      <td>データ2-10</td>
+      <td>データ2-11</td>
+      <td>データ2-12</td>
+      <td>データ2-13</td>
+      <td>データ2-14</td>
+      <td>データ2-15</td>
+      <td>データ2-16</td>
+      <td>データ2-17</td>
+      <td>データ2-18</td>
+      <td>データ2-19</td>
+      <td>データ2-20</td>
+    </tr>
+    <tr>
+      <td>行3</td>
+      <td>データ3-1</td>
+      <td>データ3-2</td>
+      <td>データ3-3</td>
+      <td>データ3-4</td>
+      <td>データ3-5</td>
+      <td>データ3-6</td>
+      <td>データ3-7</td>
+      <td>データ3-8</td>
+      <td>データ3-9</td>
+      <td>データ3-10</td>
+      <td>データ3-11</td>
+      <td>データ3-12</td>
+      <td>データ3-13</td>
+      <td>データ3-14</td>
+      <td>データ3-15</td>
+      <td>データ3-16</td>
+      <td>データ3-17</td>
+      <td>データ3-18</td>
+      <td>データ3-19</td>
+      <td>データ3-20</td>
+    </tr>
+    <tr>
+      <td>行4</td>
+      <td>データ4-1</td>
+      <td>データ4-2</td>
+      <td>データ4-3</td>
+      <td>データ4-4</td>
+      <td>データ4-5</td>
+      <td>データ4-6</td>
+      <td>データ4-7</td>
+      <td>データ4-8</td>
+      <td>データ4-9</td>
+      <td>データ4-10</td>
+      <td>データ4-11</td>
+      <td>データ4-12</td>
+      <td>データ4-13</td>
+      <td>データ4-14</td>
+      <td>データ4-15</td>
+      <td>データ4-16</td>
+      <td>データ4-17</td>
+      <td>データ4-18</td>
+      <td>データ4-19</td>
+      <td>データ4-20</td>
+    </tr>
+    <tr>
+      <td>行5</td>
+      <td>データ5-1</td>
+      <td>データ5-2</td>
+      <td>データ5-3</td>
+      <td>データ5-4</td>
+      <td>データ5-5</td>
+      <td>データ5-6</td>
+      <td>データ5-7</td>
+      <td>データ5-8</td>
+      <td>データ5-9</td>
+      <td>データ5-10</td>
+      <td>データ5-11</td>
+      <td>データ5-12</td>
+      <td>データ5-13</td>
+      <td>データ5-14</td>
+      <td>データ5-15</td>
+      <td>データ5-16</td>
+      <td>データ5-17</td>
+      <td>データ5-18</td>
+      <td>データ5-19</td>
+      <td>データ5-20</td>
+    </tr>
+    <tr>
+      <td>行6</td>
+      <td>データ6-1</td>
+      <td>データ6-2</td>
+      <td>データ6-3</td>
+      <td>データ6-4</td>
+      <td>データ6-5</td>
+      <td>データ6-6</td>
+      <td>データ6-7</td>
+      <td>データ6-8</td>
+      <td>データ6-9</td>
+      <td>データ6-10</td>
+      <td>データ6-11</td>
+      <td>データ6-12</td>
+      <td>データ6-13</td>
+      <td>データ6-14</td>
+      <td>データ6-15</td>
+      <td>データ6-16</td>
+      <td>データ6-17</td>
+      <td>データ6-18</td>
+      <td>データ6-19</td>
+      <td>データ6-20</td>
+    </tr>
+    <tr>
+      <td>行7</td>
+      <td>データ7-1</td>
+      <td>データ7-2</td>
+      <td>データ7-3</td>
+      <td>データ7-4</td>
+      <td>データ7-5</td>
+      <td>データ7-6</td>
+      <td>データ7-7</td>
+      <td>データ7-8</td>
+      <td>データ7-9</td>
+      <td>データ7-10</td>
+      <td>データ7-11</td>
+      <td>データ7-12</td>
+      <td>データ7-13</td>
+      <td>データ7-14</td>
+      <td>データ7-15</td>
+      <td>データ7-16</td>
+      <td>データ7-17</td>
+      <td>データ7-18</td>
+      <td>データ7-19</td>
+      <td>データ7-20</td>
+    </tr>
+    <tr>
+      <td>行8</td>
+      <td>データ8-1</td>
+      <td>データ8-2</td>
+      <td>データ8-3</td>
+      <td>データ8-4</td>
+      <td>データ8-5</td>
+      <td>データ8-6</td>
+      <td>データ8-7</td>
+      <td>データ8-8</td>
+      <td>データ8-9</td>
+      <td>データ8-10</td>
+      <td>データ8-11</td>
+      <td>データ8-12</td>
+      <td>データ8-13</td>
+      <td>データ8-14</td>
+      <td>データ8-15</td>
+      <td>データ8-16</td>
+      <td>データ8-17</td>
+      <td>データ8-18</td>
+      <td>データ8-19</td>
+      <td>データ8-20</td>
+    </tr>
+    <tr>
+      <td>行9</td>
+      <td>データ9-1</td>
+      <td>データ9-2</td>
+      <td>データ9-3</td>
+      <td>データ9-4</td>
+      <td>データ9-5</td>
+      <td>データ9-6</td>
+      <td>データ9-7</td>
+      <td>データ9-8</td>
+      <td>データ9-9</td>
+      <td>データ9-10</td>
+      <td>データ9-11</td>
+      <td>データ9-12</td>
+      <td>データ9-13</td>
+      <td>データ9-14</td>
+      <td>データ9-15</td>
+      <td>データ9-16</td>
+      <td>データ9-17</td>
+      <td>データ9-18</td>
+      <td>データ9-19</td>
+      <td>データ9-20</td>
+    </tr>
+    <tr>
+      <td>行10</td>
+      <td>データ10-1</td>
+      <td>データ10-2</td>
+      <td>データ10-3</td>
+      <td>データ10-4</td>
+      <td>データ10-5</td>
+      <td>データ10-6</td>
+      <td>データ10-7</td>
+      <td>データ10-8</td>
+      <td>データ10-9</td>
+      <td>データ10-10</td>
+      <td>データ10-11</td>
+      <td>データ10-12</td>
+      <td>データ10-13</td>
+      <td>データ10-14</td>
+      <td>データ10-15</td>
+      <td>データ10-16</td>
+      <td>データ10-17</td>
+      <td>データ10-18</td>
+      <td>データ10-19</td>
+      <td>データ10-20</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+        
+    </div>
+</body>
+</html>

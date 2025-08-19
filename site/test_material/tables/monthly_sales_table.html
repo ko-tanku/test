@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+        }
+        .content-wrapper {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        
+        
+        <style>
+            #table_月次売上データ {
+                width: 100%;
+                table-layout: fixed;
+                word-wrap: break-word;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            
+            #table_月次売上データ th {
+                background-color: #00BCD4;
+                color: #FFFFFF;
+                padding: 8px 12px;
+                text-align: left;
+                font-weight: bold;
+                border: 1px solid #CCCCCC;
+            }
+            
+            #table_月次売上データ td {
+                padding: 8px 12px;
+                border: 1px solid #CCCCCC;
+            }
+            
+            #table_月次売上データ tr:nth-child(even) {
+                background-color: #FAFAFA;
+            }
+            
+            #table_月次売上データ tr:nth-child(odd) {
+                background-color: #F0F0F0;
+            }
+            
+            #table_月次売上データ {
+                font-size: 0.9em;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+                margin: 20px 0;
+            }
+            
+            .table-title {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #333;
+            }
+        </style>
+        
+        <div class="table-container">
+            <div class="table-title">月次売上データ</div>
+            <table border="1" class="dataframe mkdocs-table" id="table_月次売上データ">
+  <thead>
+    <tr style="text-align: right;">
+      <th>月</th>
+      <th>売上（万円）</th>
+      <th>前年比（%）</th>
+      <th>累計（万円）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1月</td>
+      <td>1,234</td>
+      <td>+5.2</td>
+      <td>1,234</td>
+    </tr>
+    <tr>
+      <td>2月</td>
+      <td>1,456</td>
+      <td>+8.7</td>
+      <td>2,690</td>
+    </tr>
+    <tr>
+      <td>3月</td>
+      <td>1,789</td>
+      <td>+12.3</td>
+      <td>4,479</td>
+    </tr>
+    <tr>
+      <td>4月</td>
+      <td>1,567</td>
+      <td>-2.1</td>
+      <td>6,046</td>
+    </tr>
+    <tr>
+      <td>5月</td>
+      <td>1,890</td>
+      <td>+15.6</td>
+      <td>7,936</td>
+    </tr>
+    <tr>
+      <td>6月</td>
+      <td>2,123</td>
+      <td>+18.9</td>
+      <td>10,059</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+        
+    </div>
+</body>
+</html>

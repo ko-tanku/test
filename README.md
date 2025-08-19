@@ -1,41 +1,83 @@
-# Website
+# 学習プラットフォーム構築フレームワーク
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+## 1. 概要
 
-## Installation
+このプロジェクトは、単なるドキュメント生成システムではありません。**拡張性と再利用性を核とした設計思想**に基づき、高品質なインタラクティブ学習教材を効率的かつ体系的に制作・管理するための**学習プラットフォーム構築フレームワーク**です。
+
+`core`（共通基盤）と `materials`（個別教材）を明確に分離するアーキテクチャを採用しており、30種類以上の多様な教材を、品質を保ちながら効率的に追加していくことが可能です。
+
+## 2. プロジェクトの思想とアーキテクチャ
+
+このフレームワークは、以下の2つの中心的な概念で構成されています。
+
+- **`src/core` (共通基盤):**
+  - コンテンツ生成（`DocumentBuilder`）、動的な図表作成（`ChartGenerator`）、サイト設定管理（`MkDocsManager`）など、全ての教材で共通して利用される、再利用可能な機能部品群です。
+  - この`core`が、プラットフォーム全体の品質と一貫性を担保します。
+
+- **`src/materials` (個別教材):**
+  - 「C言語入門」や「ネットワーク入門」といった、個別の教材コンテンツを格納する場所です。
+  - 各教材は、`core`の機能を利用しつつ、それぞれ固有のコンテンツ定義、設定、さらには特別な表現機能を持つことができます。
+
+この分離構造により、**新しい教材の追加は、`src/materials`に新しいディレクトリを追加するだけで済み**、既存の教材や`core`機能に影響を与えることなく、安全かつ迅速に行えます。
+
+## 3. 主な機能
+
+### コンテンツ表現力
+- **高度なMarkdownサポート:** 注釈、タブ、ツールチップなど、リッチな表現が可能です。
+- **動的な図表生成:** `matplotlib`や`plotly`と連携し、静的・動的を問わず、多彩なグラフや表をコンテンツ内に埋め込めます。
+- **インタラクティブ要素:** 学習者の理解度を測るクイズや、能動的な学習を促すUIコントロール付きのグラフなどを生成できます。
+
+### 自動化と管理
+- **サイト設定の自動化:** `mkdocs.yml`のナビゲーションや各種設定を、Pythonコードから動的に生成・管理します。
+- **アセット管理:** 教材ごとのCSSやJavaScriptをテンプレートから生成し、サイト全体のアセットを一元管理します。
+
+## 4. 使い方
+
+### 既存教材のコンテンツ生成
+
+各教材の`main.py`を実行することで、`docs`ディレクトリ以下にサイトコンテンツが生成されます。
 
 ```bash
-yarn
+# 例: test_materialのコンテンツを生成
+python src/materials/test_material/test_material_main.py
 ```
 
-## Local Development
+### ローカルでのサイト確認
+
+コンテンツ生成後、以下のコマンドでローカルサーバーを起動します。
 
 ```bash
-yarn start
+mkdocs serve
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+ブラウザで `http://127.0.0.1:8000` を開くと、生成されたサイトを確認できます。
 
-## Build
+### **新しい教材の追加方法**
 
-```bash
-yarn build
-```
+このフレームワークの真価は、新しい教材の追加の容易さにあります。
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+1.  **教材ディレクトリの作成:**
+    `src/materials/`内に、新しい教材用のディレクトリを作成します。（例: `src/materials/new_material/`）
 
-## Deployment
+2.  **基本ファイルの配置:**
+    作成したディレクトリ内に、他の教材を参考に、以下の基本ファイルを配置します。
+    - `__init__.py`
+    - `config.py`: 教材固有の設定（テーマカラー、タイトル等）を定義します。
+    - `contents.py`: `BaseContentManager`を継承し、章やセクションといった具体的なコンテンツを定義します。
+    - `main.py`: この教材のコンテンツ生成を実行するスクリプトです。
 
-Using SSH:
+3.  **コンテンツの定義:**
+    `contents.py`内で、`core`が提供する`DocumentBuilder`のメソッド（`add_heading`, `add_chart`等）を使い、章ごとの内容を記述していきます。
 
-```bash
-USE_SSH=true yarn deploy
-```
+4.  **生成スクリプトの実行:**
+    新しく作成した`main.py`を実行すれば、サイトに新しい教材が自動的に追加されます。
 
-Not using SSH:
+## 5. 今後の展望
 
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
+このフレームワークは、さらなる進化の可能性を秘めています。詳細な改善案は `IMPROVEMENT_PROPOSALS.md` にまとめてありますが、将来的には以下のような機能拡張を想定しています。
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+- **プラグイン機構:** 教材固有の特殊な機能を、プラグインとして簡単に追加・削除できる仕組み。
+- **コンテンツの外部化:** コンテンツ定義をYAMLファイル等に分離し、非エンジニアでも教材作成を可能に。
+- **学習オブジェクト:** コンテンツを部品化し、教材間での再利用や動的なコース生成を実現。
+
+この`README.md`が、本プロジェクトの理解と、今後の開発の一助となれば幸いです。

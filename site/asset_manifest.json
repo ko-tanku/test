@@ -1,0 +1,40 @@
+{
+  "custom.css": {
+    "type": "css",
+    "template": "learning_theme",
+    "path": "C:\\Users\\ko-iwai\\Documents\\newcomer_education\\prog\\docs\\custom.css",
+    "variables": {}
+  },
+  "custom_dark.css": {
+    "type": "css",
+    "template": "learning_theme",
+    "path": "C:\\Users\\ko-iwai\\Documents\\newcomer_education\\prog\\docs\\custom_dark.css",
+    "variables": {
+      "background_color": "#1a1a1a",
+      "text_color": "#e0e0e0",
+      "tooltip_bg": "#424242"
+    }
+  },
+  "custom_high_contrast.css": {
+    "type": "css",
+    "template": "learning_theme",
+    "path": "C:\\Users\\ko-iwai\\Documents\\newcomer_education\\prog\\docs\\custom_high_contrast.css",
+    "variables": {
+      "primary_color": "#000000",
+      "background_color": "#ffffff",
+      "text_color": "#000000"
+    }
+  },
+  "custom.js": {
+    "type": "js",
+    "template": "base",
+    "path": "C:\\Users\\ko-iwai\\Documents\\newcomer_education\\prog\\docs\\custom.js",
+    "variables": {}
+  },
+  "quiz.js": {
+    "type": "js",
+    "template": "quiz_system",
+    "path": "C:\\Users\\ko-iwai\\Documents\\newcomer_education\\prog\\docs\\quiz.js",
+    "variables": {}
+  }
+}

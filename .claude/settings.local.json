@@ -1,23 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python:*)",
-      "Bash(npm run build:*)",
-      "Bash(npm start)",
-      "Bash(PYTHONPATH=scripts/core python scripts/courses/comprehensive-test/build.py)",
-      "Bash(npm install:*)",
-      "Bash(npm start:*)",
       "Bash(mkdir:*)",
-      "Bash(npm run start:*)",
-      "Bash(rm:*)",
-      "Bash(find:*)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(grep:*)",
       "Bash(cp:*)",
-      "Bash(PYTHONPATH=scripts/core python scripts/courses/practical-demo/build.py)",
-      "Bash(npx docusaurus serve:*)",
-      "Bash(rd:*)",
-      "Bash(mv:*)",
-      "Bash(git checkout:*)"
+      "Bash(mkdocs serve:*)"
     ],
-    "deny": []
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\c\\Users\\subka\\Documents\\my-project\\test\\src\\materials",
+      "C:\\c\\Users\\subka\\Documents\\my-project"
+    ]
   }
 }

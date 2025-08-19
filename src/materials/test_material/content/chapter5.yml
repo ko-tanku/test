@@ -1,0 +1,101 @@
+title: "第5章: インタラクティブクイズ機能"
+overview: "新しく追加された高度なクイズ機能をテストします。カテゴリ分けクイズと複数選択クイズの動作を確認できます。"
+
+sections:
+  - title: "基本的なクイズ機能の復習"
+    contents:
+      - type: "text"
+        text: "まず、従来の単一選択クイズを復習しましょう。"
+      - type: "quiz"
+        question: "リアルタイムシステムの2つの分類は何ですか？"
+        options:
+          - "ハードリアルタイムとソフトリアルタイム"
+          - "バッチ処理とインタラクティブ処理"
+          - "並列処理と直列処理"
+          - "同期処理と非同期処理"
+        correct: 0
+        hint: "第4章で学習したシステムの分類です"
+        explanation: "リアルタイムシステムは、デッドラインの厳格さによりハードリアルタイムとソフトリアルタイムに分類されます。"
+
+  - title: "カテゴリ分けクイズ"
+    contents:
+      - type: "text"
+        text: "項目を適切なカテゴリにドラッグ&ドロップで分類してください。"
+      - type: "categorization_quiz"
+        question: "以下の要素を「ハードウェア」と「ソフトウェア」に分類してください。"
+        quiz_id: "system-classification"
+        categories:
+          - "ハードウェア"
+          - "ソフトウェア"
+        items:
+          - "CPU"
+          - "OS"
+          - "RAM"
+          - "コンパイラ"
+          - "GPIO"
+          - "デバイスドライバ"
+          - "センサー"
+          - "RTOS"
+        correct_answers: [0, 1, 0, 1, 0, 1, 0, 1]
+
+  - title: "複数選択クイズ"
+    contents:
+      - type: "text"
+        text: "複数の正解がある問題です。該当する項目を全て選択してください。"
+      - type: "multiple_choice_quiz"
+        question: "以下の中でハードリアルタイムシステムに該当するものを全て選択してください。"
+        quiz_id: "realtime-applications"
+        options:
+          - "航空機の制御システム"
+          - "動画ストリーミングサービス"
+          - "原子力発電所の制御システム"
+          - "オンラインゲーム"
+          - "人工呼吸器の制御"
+          - "Webブラウザ"
+          - "自動車のエアバッグシステム"
+        correct_answers: [0, 2, 4, 6]
+        explanation: "ハードリアルタイムシステムは、デッドラインを守れない場合に人命や安全に関わる致命的な問題が発生するシステムです。航空機制御、原子力発電所制御、人工呼吸器、エアバッグシステムなどがこれに該当します。"
+
+  - title: "応用問題 - 組み込みシステムの理解"
+    contents:
+      - type: "categorization_quiz"
+        question: "以下の通信プロトコルを「有線」と「無線」に分類してください。"
+        quiz_id: "communication-protocols"
+        categories:
+          - "有線通信"
+          - "無線通信"
+        items:
+          - "UART"
+          - "Wi-Fi"
+          - "I2C"
+          - "Bluetooth"
+          - "SPI"
+          - "ZigBee"
+          - "CAN"
+          - "LoRa"
+        correct_answers: [0, 1, 0, 1, 0, 1, 0, 1]
+      - type: "multiple_choice_quiz"
+        question: "組み込みシステムの特徴として正しいものを全て選択してください。"
+        quiz_id: "microcontroller-features"
+        options:
+          - "リアルタイム性が重要"
+          - "高性能なGPUが必須"
+          - "省電力設計が重要"
+          - "大容量メモリが必要"
+          - "長時間の安定動作が必要"
+          - "インターネット接続が必須"
+          - "決定論的な動作が求められる"
+          - "高速な3D描画が必要"
+        correct_answers: [0, 2, 4, 6]
+        explanation: "組み込みシステムは、リアルタイム性、省電力性、安定性、決定論的な動作が重要な特徴です。高性能GPU、大容量メモリ、インターネット接続、3D描画は一般的に必須ではありません。"
+
+  - title: "まとめ"
+    contents:
+      - type: "note"
+        title: "第5章で学習した新機能"
+        points:
+          - "カテゴリ分けクイズによるドラッグ&ドロップ操作"
+          - "複数選択クイズによる知識の多角的評価"
+          - "インタラクティブな学習体験の提供"
+          - "YAMLファイルによるクイズ内容の外部化"
+          - "JavaScriptと連携したリアルタイムフィードバック"
