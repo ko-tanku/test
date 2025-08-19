@@ -6,11 +6,11 @@ MkDocs Materialテーマのパレット設定とは独立した内部ロジッ�
 from pathlib import Path
 from datetime import datetime
 
-# プロジェクトルートディレクトリ
+# プロジェクトルートディレクトリ（相対パスで設定）
 PROJECT_ROOT = Path(__file__).resolve().parents[2]  # Embedded_control/
 
-# 主要ディレクトリ
-DOCS_DIR = PROJECT_ROOT / "docs"
+# 主要ディレクトリ（相対パスで設定）  
+DOCS_DIR = Path("docs")
 ASSETS_DIR_NAME = "assets"
 CHARTS_DIR_NAME = "charts"
 TABLES_DIR_NAME = "tables"

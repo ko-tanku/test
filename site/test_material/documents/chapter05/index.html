@@ -48,11 +48,11 @@
       
     
     
-      <link rel="stylesheet" href="../../../custom.css">
-    
       <link rel="stylesheet" href="../../../custom_dark.css">
     
       <link rel="stylesheet" href="../../../custom_high_contrast.css">
+    
+      <link rel="stylesheet" href="../../../custom.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -66,10 +66,12 @@
   
     
     
+      
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal">
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -120,7 +122,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -203,24 +231,6 @@
           
   
   IT・組み込み技術入門
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../../intro_to_embedded/" class="md-tabs__link">
-          
-  
-  組込制御入門：私たちの身の回りの「賢い」仕組みを探る
 
         </a>
       </li>
@@ -480,7 +490,7 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      ツールチップ機能の詳細テスト
+      基本的なクイズ機能の復習
     </span>
   </a>
   
@@ -489,7 +499,7 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      アイコン・略語ツールチップテスト
+      カテゴリ分けクイズ
     </span>
   </a>
   
@@ -498,16 +508,16 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      アニメーション図表テスト
+      複数選択クイズ
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#faqtips" class="md-nav__link">
+  <a href="#-" class="md-nav__link">
     <span class="md-ellipsis">
-      クイズ・FAQ・TIPS統合テスト
+      応用問題 - 組み込みシステムの理解
     </span>
   </a>
   
@@ -516,16 +526,7 @@
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
-      学習サマリーと関連資料
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      高度なインタラクティブ図表
+      まとめ
     </span>
   </a>
   
@@ -631,223 +632,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    組込制御入門：私たちの身の回りの「賢い」仕組みを探る
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            組込制御入門：私たちの身の回りの「賢い」仕組みを探る
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    ホーム
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/documents/chapter01/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    第1章: 組込制御ってなんだろう？
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/documents/chapter02/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    第2章: ITと組み込み技術
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/documents/chapter03/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    第3章: 技術者を目指す意義
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/exercises/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    演習問題
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/glossary/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    用語集
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/faq/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    FAQ
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/tips/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    学習TIPS
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -866,98 +650,212 @@
   
 
 
-<h1 id="5">第5章: 全機能統合テスト</h1>
-<p>全ての実装済み機能を網羅的にテストします。</p>
-<h2 id="_1">ツールチップ機能の詳細テスト</h2>
-<p>マイコンはセンサーからの入力を処理し、アクチュエータを制御します。RTOSを使用することで複雑なタスク管理が可能になります。</p>
-<p>PWM制御によりモーターの回転速度を調整し、I2C通信でセンサーデータを取得します。</p>
-<h2 id="_2">アイコン・略語ツールチップテスト</h2>
-<p>:material-memory:{ title="メモリ使用量を表示" }</p>
-<p>:material-speed:{ title="CPU使用率を監視" }</p>
-<p><span class="custom-tooltip" data-tooltip="Microcontroller Unit - マイクロコントローラユニット">MCU</span></p>
-<p><span class="custom-tooltip" data-tooltip="General Purpose Input/Output - 汎用入出力ポート">GPIO</span></p>
-<h2 id="_3">アニメーション図表テスト</h2>
-<p><strong>図5-1: 時系列データの変化をアニメーションで表示</strong></p>
-<p><img alt="アニメーション図表" src="../../charts/data_animation.gif" /></p>
-<h2 id="faqtips">クイズ・FAQ・TIPS統合テスト</h2>
+<h1 id="5">第5章: インタラクティブクイズ機能</h1>
+<p>新しく追加された高度なクイズ機能をテストします。カテゴリ分けクイズと複数選択クイズの動作を確認できます。</p>
+<h2 id="_1">基本的なクイズ機能の復習</h2>
+<p>まず、従来の単一選択クイズを復習しましょう。</p>
 <div class="admonition question">
 <p class="admonition-title">クイズ</p>
-<p><strong>問題</strong>: RTOSの主な特徴は何ですか？</p>
+<p><strong>問題</strong>: リアルタイムシステムの2つの分類は何ですか？</p>
 <p><strong>選択肢</strong>:
-1. リアルタイム性の保証
-2. グラフィック処理の高速化
-3. ネットワーク通信の最適化
-4. データベース管理</p>
+1. ハードリアルタイムとソフトリアルタイム
+2. バッチ処理とインタラクティブ処理
+3. 並列処理と直列処理
+4. 同期処理と非同期処理</p>
 <details class="tip">
 <summary>ヒント</summary>
-<p>RTOSはReal-Time Operating Systemの略です</p>
+<p>第4章で学習したシステムの分類です</p>
 </details>
 <details class="success">
 <summary>解説</summary>
 <p><strong>正解</strong>: 1</p>
-<p><strong>解説</strong>: RTOSは決められた時間内に処理を完了することを保証するオペレーティングシステムです。</p>
+<p><strong>解説</strong>: リアルタイムシステムは、デッドラインの厳格さによりハードリアルタイムとソフトリアルタイムに分類されます。</p>
 </details>
 </div>
+<h2 id="_2">カテゴリ分けクイズ</h2>
+<p>項目を適切なカテゴリにドラッグ&amp;ドロップで分類してください。</p>
 <div class="admonition question">
-<p class="admonition-title">クイズ</p>
-<p><strong>問題</strong>: I2C通信の特徴として正しいものは？</p>
-<p><strong>選択肢</strong>:
-1. 2本の信号線で通信
-2. 1本の信号線で通信
-3. 4本の信号線で通信
-4. 8本の信号線で通信</p>
-<details class="tip">
-<summary>ヒント</summary>
-<p>I2CはSDAとSCLの2本の線を使用します</p>
-</details>
-<details class="success">
-<summary>解説</summary>
-<p><strong>正解</strong>: 1</p>
-<p><strong>解説</strong>: I2C通信はSDA（データ線）とSCL（クロック線）の2本で通信を行います。</p>
-</details>
+<p class="admonition-title">カテゴリ分けクイズ</p>
+<p><strong>問題</strong>: 以下の要素を「ハードウェア」と「ソフトウェア」に分類してください。</p>
+<p><strong>カテゴリ</strong>:
+- ハードウェア
+- ソフトウェア</p>
+<div class="highlight"><pre><span></span><code>&lt;div class=&quot;categorization-quiz&quot; data-quiz-id=&quot;system-classification&quot;&gt;
+    &lt;div class=&quot;quiz-items&quot;&gt;
+        &lt;h4&gt;項目をドラッグして適切なカテゴリに分類してください：&lt;/h4&gt;
+        &lt;div class=&quot;draggable-items&quot;&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;0&quot; draggable=&quot;true&quot;&gt;CPU&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;1&quot; draggable=&quot;true&quot;&gt;OS&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;2&quot; draggable=&quot;true&quot;&gt;RAM&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;3&quot; draggable=&quot;true&quot;&gt;コンパイラ&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;4&quot; draggable=&quot;true&quot;&gt;GPIO&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;5&quot; draggable=&quot;true&quot;&gt;デバイスドライバ&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;6&quot; draggable=&quot;true&quot;&gt;センサー&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;7&quot; draggable=&quot;true&quot;&gt;RTOS&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;drop-zones&quot;&gt;
+        &lt;div class=&quot;drop-zone&quot; data-category=&quot;0&quot;&gt;
+            &lt;h4&gt;ハードウェア&lt;/h4&gt;
+            &lt;div class=&quot;drop-area&quot;&gt;ここにドロップしてください&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;drop-zone&quot; data-category=&quot;1&quot;&gt;
+            &lt;h4&gt;ソフトウェア&lt;/h4&gt;
+            &lt;div class=&quot;drop-area&quot;&gt;ここにドロップしてください&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;button class=&quot;check-categorization&quot; onclick=&quot;checkCategorization(&#39;system-classification&#39;)&quot;&gt;答えを確認&lt;/button&gt;
+    &lt;div class=&quot;categorization-result&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
 </div>
+<script>window.categorizationData = window.categorizationData || {};
+window.categorizationData["system-classification"] = [0, 1, 0, 1, 0, 1, 0, 1];</script>
+
+<h2 id="_3">複数選択クイズ</h2>
+<p>複数の正解がある問題です。該当する項目を全て選択してください。</p>
 <div class="admonition question">
-<p class="admonition-title">クイズ</p>
-<p><strong>問題</strong>: マイコンの主要な構成要素でないものは？</p>
-<p><strong>選択肢</strong>:
-1. CPU
-2. RAM
-3. プリンター
-4. I/Oポート</p>
-<details class="tip">
-<summary>ヒント</summary>
-<p>マイコンは組み込みシステム用の小型コンピュータです</p>
-</details>
-<details class="success">
-<summary>解説</summary>
-<p><strong>正解</strong>: 3</p>
-<p><strong>解説</strong>: マイコンはCPU、メモリ、I/Oポートを1つのチップに集積した小型コンピュータです。プリンターは外部機器です。</p>
-</details>
+<p class="admonition-title">複数選択クイズ</p>
+<p><strong>問題</strong>: 以下の中でハードリアルタイムシステムに該当するものを全て選択してください。</p>
+<p><strong>複数の選択肢から正解を全て選んでください</strong>:</p>
+<div class="highlight"><pre><span></span><code>&lt;div class=&quot;multiple-choice-quiz&quot; data-quiz-id=&quot;realtime-applications&quot;&gt;
+    &lt;div class=&quot;quiz-options&quot;&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;realtime-applications&quot; value=&quot;0&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;航空機の制御システム&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;realtime-applications&quot; value=&quot;1&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;動画ストリーミングサービス&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;realtime-applications&quot; value=&quot;2&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;原子力発電所の制御システム&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;realtime-applications&quot; value=&quot;3&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;オンラインゲーム&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;realtime-applications&quot; value=&quot;4&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;人工呼吸器の制御&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;realtime-applications&quot; value=&quot;5&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;Webブラウザ&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;realtime-applications&quot; value=&quot;6&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;自動車のエアバッグシステム&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+    &lt;/div&gt;
+
+    &lt;button class=&quot;check-multiple-choice&quot; onclick=&quot;checkMultipleChoice(&#39;realtime-applications&#39;)&quot;&gt;答えを確認&lt;/button&gt;
+    &lt;div class=&quot;multiple-choice-result&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
 </div>
-<h2 id="_4">学習サマリーと関連資料</h2>
-<div class="admonition note">
-<p class="admonition-title">第5章で学んだ重要事項</p>
-<ul>
-<li>ツールチップ機能により用語理解が向上</li>
-<li>アニメーション図表で動的な現象を可視化</li>
-<li>クイズ機能で理解度の確認が可能</li>
-<li>FAQ・TIPSで自主学習を支援</li>
-</ul>
+<script>window.multipleChoiceData = window.multipleChoiceData || {};
+window.multipleChoiceData["realtime-applications"] = {
+  "correct": [0, 2, 4, 6],
+  "explanation": "ハードリアルタイムシステムは、デッドラインを守れない場合に人命や安全に関わる致命的な問題が発生するシステムです。航空機制御、原子力発電所制御、人工呼吸器、エアバッグシステムなどがこれに該当します。"
+};</script>
+
+<h2 id="-">応用問題 - 組み込みシステムの理解</h2>
+<div class="admonition question">
+<p class="admonition-title">カテゴリ分けクイズ</p>
+<p><strong>問題</strong>: 以下の通信プロトコルを「有線」と「無線」に分類してください。</p>
+<p><strong>カテゴリ</strong>:
+- 有線通信
+- 無線通信</p>
+<div class="highlight"><pre><span></span><code>&lt;div class=&quot;categorization-quiz&quot; data-quiz-id=&quot;communication-protocols&quot;&gt;
+    &lt;div class=&quot;quiz-items&quot;&gt;
+        &lt;h4&gt;項目をドラッグして適切なカテゴリに分類してください：&lt;/h4&gt;
+        &lt;div class=&quot;draggable-items&quot;&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;0&quot; draggable=&quot;true&quot;&gt;UART&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;1&quot; draggable=&quot;true&quot;&gt;Wi-Fi&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;2&quot; draggable=&quot;true&quot;&gt;I2C&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;3&quot; draggable=&quot;true&quot;&gt;Bluetooth&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;4&quot; draggable=&quot;true&quot;&gt;SPI&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;5&quot; draggable=&quot;true&quot;&gt;ZigBee&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;6&quot; draggable=&quot;true&quot;&gt;CAN&lt;/div&gt;
+            &lt;div class=&quot;draggable-item&quot; data-item=&quot;7&quot; draggable=&quot;true&quot;&gt;LoRa&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;drop-zones&quot;&gt;
+        &lt;div class=&quot;drop-zone&quot; data-category=&quot;0&quot;&gt;
+            &lt;h4&gt;有線通信&lt;/h4&gt;
+            &lt;div class=&quot;drop-area&quot;&gt;ここにドロップしてください&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;drop-zone&quot; data-category=&quot;1&quot;&gt;
+            &lt;h4&gt;無線通信&lt;/h4&gt;
+            &lt;div class=&quot;drop-area&quot;&gt;ここにドロップしてください&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;button class=&quot;check-categorization&quot; onclick=&quot;checkCategorization(&#39;communication-protocols&#39;)&quot;&gt;答えを確認&lt;/button&gt;
+    &lt;div class=&quot;categorization-result&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
 </div>
-<div class="admonition info">
-<p class="admonition-title">関連資料と次のステップ</p>
-<ul>
-<li><a href="../chapter01/">第1章: プログラミング基礎の復習</a></li>
-<li><a href="../chapter02/">第2章: 組み込みシステム概要</a></li>
-<li><a href="../chapter03/">第3章: ハードウェア理解</a></li>
-<li><a href="../chapter04/">第4章: 演習問題に挑戦</a></li>
-<li><a href="../../glossary/">用語集で知識を体系化</a></li>
-<li><a href="../../faq/">FAQで疑問を解決</a></li>
-</ul>
+<script>window.categorizationData = window.categorizationData || {};
+window.categorizationData["communication-protocols"] = [0, 1, 0, 1, 0, 1, 0, 1];</script>
+
+<div class="admonition question">
+<p class="admonition-title">複数選択クイズ</p>
+<p><strong>問題</strong>: 組み込みシステムの特徴として正しいものを全て選択してください。</p>
+<p><strong>複数の選択肢から正解を全て選んでください</strong>:</p>
+<div class="highlight"><pre><span></span><code>&lt;div class=&quot;multiple-choice-quiz&quot; data-quiz-id=&quot;microcontroller-features&quot;&gt;
+    &lt;div class=&quot;quiz-options&quot;&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;0&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;リアルタイム性が重要&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;1&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;高性能なGPUが必須&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;2&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;省電力設計が重要&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;3&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;大容量メモリが必要&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;4&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;長時間の安定動作が必要&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;5&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;インターネット接続が必須&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;6&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;決定論的な動作が求められる&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+        &lt;label class=&quot;option-label&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; name=&quot;microcontroller-features&quot; value=&quot;7&quot;&gt;
+            &lt;span class=&quot;option-text&quot;&gt;高速な3D描画が必要&lt;/span&gt;
+        &lt;/label&gt;&lt;br&gt;
+    &lt;/div&gt;
+
+    &lt;button class=&quot;check-multiple-choice&quot; onclick=&quot;checkMultipleChoice(&#39;microcontroller-features&#39;)&quot;&gt;答えを確認&lt;/button&gt;
+    &lt;div class=&quot;multiple-choice-result&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
 </div>
-<h2 id="_5">高度なインタラクティブ図表</h2>
-<p><strong>図5-2: ドロップダウンでリソース種別を切り替え</strong></p>
-<iframe src="../../charts/system_resource_monitor.html" width="100%"  style="border: 1px solid #ddd; border-radius: 4px;" scrolling="no" class="auto-height-iframe"></iframe>
+<script>window.multipleChoiceData = window.multipleChoiceData || {};
+window.multipleChoiceData["microcontroller-features"] = {
+  "correct": [0, 2, 4, 6],
+  "explanation": "組み込みシステムは、リアルタイム性、省電力性、安定性、決定論的な動作が重要な特徴です。高性能GPU、大容量メモリ、インターネット接続、3D描画は一般的に必須ではありません。"
+};</script>
+
+<h2 id="_4">まとめ</h2>
 
 
 

@@ -35,36 +35,35 @@
     - ソフトウェア
 
 
+        <div class="categorization-quiz" data-quiz-id="system-classification">
+            <div class="quiz-items">
+                <h4>項目をドラッグして適切なカテゴリに分類してください：</h4>
+                <div class="draggable-items">
+                    <div class="draggable-item" data-item="0" draggable="true">CPU</div>
+                    <div class="draggable-item" data-item="1" draggable="true">OS</div>
+                    <div class="draggable-item" data-item="2" draggable="true">RAM</div>
+                    <div class="draggable-item" data-item="3" draggable="true">コンパイラ</div>
+                    <div class="draggable-item" data-item="4" draggable="true">GPIO</div>
+                    <div class="draggable-item" data-item="5" draggable="true">デバイスドライバ</div>
+                    <div class="draggable-item" data-item="6" draggable="true">センサー</div>
+                    <div class="draggable-item" data-item="7" draggable="true">RTOS</div>
+                </div>
+            </div>
 
-    <div class="categorization-quiz" data-quiz-id="system-classification">
-        <div class="quiz-items">
-            <h4>項目をドラッグして適切なカテゴリに分類してください：</h4>
-            <div class="draggable-items">
-                <div class="draggable-item" data-item="0" draggable="true">CPU</div>
-                <div class="draggable-item" data-item="1" draggable="true">OS</div>
-                <div class="draggable-item" data-item="2" draggable="true">RAM</div>
-                <div class="draggable-item" data-item="3" draggable="true">コンパイラ</div>
-                <div class="draggable-item" data-item="4" draggable="true">GPIO</div>
-                <div class="draggable-item" data-item="5" draggable="true">デバイスドライバ</div>
-                <div class="draggable-item" data-item="6" draggable="true">センサー</div>
-                <div class="draggable-item" data-item="7" draggable="true">RTOS</div>
+            <div class="drop-zones">
+                <div class="drop-zone" data-category="0">
+                    <h4>ハードウェア</h4>
+                    <div class="drop-area">ここにドロップしてください</div>
+                </div>
+                <div class="drop-zone" data-category="1">
+                    <h4>ソフトウェア</h4>
+                    <div class="drop-area">ここにドロップしてください</div>
+                </div>
             </div>
+
+            <button class="check-categorization" onclick="checkCategorization('system-classification')">答えを確認</button>
+            <div class="categorization-result"></div>
         </div>
-        
-        <div class="drop-zones">
-            <div class="drop-zone" data-category="0">
-                <h4>ハードウェア</h4>
-                <div class="drop-area">ここにドロップしてください</div>
-            </div>
-            <div class="drop-zone" data-category="1">
-                <h4>ソフトウェア</h4>
-                <div class="drop-area">ここにドロップしてください</div>
-            </div>
-        </div>
-        
-        <button class="check-categorization" onclick="checkCategorization('system-classification')">答えを確認</button>
-        <div class="categorization-result"></div>
-    </div>
 
 <script>window.categorizationData = window.categorizationData || {};
 window.categorizationData["system-classification"] = [0, 1, 0, 1, 0, 1, 0, 1];</script>
@@ -79,42 +78,41 @@ window.categorizationData["system-classification"] = [0, 1, 0, 1, 0, 1, 0, 1];</
     **複数の選択肢から正解を全て選んでください**:
 
 
+        <div class="multiple-choice-quiz" data-quiz-id="realtime-applications">
+            <div class="quiz-options">
+                <label class="option-label">
+                    <input type="checkbox" name="realtime-applications" value="0">
+                    <span class="option-text">航空機の制御システム</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="realtime-applications" value="1">
+                    <span class="option-text">動画ストリーミングサービス</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="realtime-applications" value="2">
+                    <span class="option-text">原子力発電所の制御システム</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="realtime-applications" value="3">
+                    <span class="option-text">オンラインゲーム</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="realtime-applications" value="4">
+                    <span class="option-text">人工呼吸器の制御</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="realtime-applications" value="5">
+                    <span class="option-text">Webブラウザ</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="realtime-applications" value="6">
+                    <span class="option-text">自動車のエアバッグシステム</span>
+                </label><br>
+            </div>
 
-    <div class="multiple-choice-quiz" data-quiz-id="realtime-applications">
-        <div class="quiz-options">
-            <label class="option-label">
-                <input type="checkbox" name="realtime-applications" value="0">
-                <span class="option-text">航空機の制御システム</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="realtime-applications" value="1">
-                <span class="option-text">動画ストリーミングサービス</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="realtime-applications" value="2">
-                <span class="option-text">原子力発電所の制御システム</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="realtime-applications" value="3">
-                <span class="option-text">オンラインゲーム</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="realtime-applications" value="4">
-                <span class="option-text">人工呼吸器の制御</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="realtime-applications" value="5">
-                <span class="option-text">Webブラウザ</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="realtime-applications" value="6">
-                <span class="option-text">自動車のエアバッグシステム</span>
-            </label><br>
+            <button class="check-multiple-choice" onclick="checkMultipleChoice('realtime-applications')">答えを確認</button>
+            <div class="multiple-choice-result"></div>
         </div>
-        
-        <button class="check-multiple-choice" onclick="checkMultipleChoice('realtime-applications')">答えを確認</button>
-        <div class="multiple-choice-result"></div>
-    </div>
 
 <script>window.multipleChoiceData = window.multipleChoiceData || {};
 window.multipleChoiceData["realtime-applications"] = {
@@ -132,36 +130,35 @@ window.multipleChoiceData["realtime-applications"] = {
     - 無線通信
 
 
+        <div class="categorization-quiz" data-quiz-id="communication-protocols">
+            <div class="quiz-items">
+                <h4>項目をドラッグして適切なカテゴリに分類してください：</h4>
+                <div class="draggable-items">
+                    <div class="draggable-item" data-item="0" draggable="true">UART</div>
+                    <div class="draggable-item" data-item="1" draggable="true">Wi-Fi</div>
+                    <div class="draggable-item" data-item="2" draggable="true">I2C</div>
+                    <div class="draggable-item" data-item="3" draggable="true">Bluetooth</div>
+                    <div class="draggable-item" data-item="4" draggable="true">SPI</div>
+                    <div class="draggable-item" data-item="5" draggable="true">ZigBee</div>
+                    <div class="draggable-item" data-item="6" draggable="true">CAN</div>
+                    <div class="draggable-item" data-item="7" draggable="true">LoRa</div>
+                </div>
+            </div>
 
-    <div class="categorization-quiz" data-quiz-id="communication-protocols">
-        <div class="quiz-items">
-            <h4>項目をドラッグして適切なカテゴリに分類してください：</h4>
-            <div class="draggable-items">
-                <div class="draggable-item" data-item="0" draggable="true">UART</div>
-                <div class="draggable-item" data-item="1" draggable="true">Wi-Fi</div>
-                <div class="draggable-item" data-item="2" draggable="true">I2C</div>
-                <div class="draggable-item" data-item="3" draggable="true">Bluetooth</div>
-                <div class="draggable-item" data-item="4" draggable="true">SPI</div>
-                <div class="draggable-item" data-item="5" draggable="true">ZigBee</div>
-                <div class="draggable-item" data-item="6" draggable="true">CAN</div>
-                <div class="draggable-item" data-item="7" draggable="true">LoRa</div>
+            <div class="drop-zones">
+                <div class="drop-zone" data-category="0">
+                    <h4>有線通信</h4>
+                    <div class="drop-area">ここにドロップしてください</div>
+                </div>
+                <div class="drop-zone" data-category="1">
+                    <h4>無線通信</h4>
+                    <div class="drop-area">ここにドロップしてください</div>
+                </div>
             </div>
+
+            <button class="check-categorization" onclick="checkCategorization('communication-protocols')">答えを確認</button>
+            <div class="categorization-result"></div>
         </div>
-        
-        <div class="drop-zones">
-            <div class="drop-zone" data-category="0">
-                <h4>有線通信</h4>
-                <div class="drop-area">ここにドロップしてください</div>
-            </div>
-            <div class="drop-zone" data-category="1">
-                <h4>無線通信</h4>
-                <div class="drop-area">ここにドロップしてください</div>
-            </div>
-        </div>
-        
-        <button class="check-categorization" onclick="checkCategorization('communication-protocols')">答えを確認</button>
-        <div class="categorization-result"></div>
-    </div>
 
 <script>window.categorizationData = window.categorizationData || {};
 window.categorizationData["communication-protocols"] = [0, 1, 0, 1, 0, 1, 0, 1];</script>
@@ -172,46 +169,45 @@ window.categorizationData["communication-protocols"] = [0, 1, 0, 1, 0, 1, 0, 1];
     **複数の選択肢から正解を全て選んでください**:
 
 
+        <div class="multiple-choice-quiz" data-quiz-id="microcontroller-features">
+            <div class="quiz-options">
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="0">
+                    <span class="option-text">リアルタイム性が重要</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="1">
+                    <span class="option-text">高性能なGPUが必須</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="2">
+                    <span class="option-text">省電力設計が重要</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="3">
+                    <span class="option-text">大容量メモリが必要</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="4">
+                    <span class="option-text">長時間の安定動作が必要</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="5">
+                    <span class="option-text">インターネット接続が必須</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="6">
+                    <span class="option-text">決定論的な動作が求められる</span>
+                </label><br>
+                <label class="option-label">
+                    <input type="checkbox" name="microcontroller-features" value="7">
+                    <span class="option-text">高速な3D描画が必要</span>
+                </label><br>
+            </div>
 
-    <div class="multiple-choice-quiz" data-quiz-id="microcontroller-features">
-        <div class="quiz-options">
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="0">
-                <span class="option-text">リアルタイム性が重要</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="1">
-                <span class="option-text">高性能なGPUが必須</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="2">
-                <span class="option-text">省電力設計が重要</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="3">
-                <span class="option-text">大容量メモリが必要</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="4">
-                <span class="option-text">長時間の安定動作が必要</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="5">
-                <span class="option-text">インターネット接続が必須</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="6">
-                <span class="option-text">決定論的な動作が求められる</span>
-            </label><br>
-            <label class="option-label">
-                <input type="checkbox" name="microcontroller-features" value="7">
-                <span class="option-text">高速な3D描画が必要</span>
-            </label><br>
+            <button class="check-multiple-choice" onclick="checkMultipleChoice('microcontroller-features')">答えを確認</button>
+            <div class="multiple-choice-result"></div>
         </div>
-        
-        <button class="check-multiple-choice" onclick="checkMultipleChoice('microcontroller-features')">答えを確認</button>
-        <div class="multiple-choice-result"></div>
-    </div>
 
 <script>window.multipleChoiceData = window.multipleChoiceData || {};
 window.multipleChoiceData["microcontroller-features"] = {

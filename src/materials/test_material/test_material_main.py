@@ -49,22 +49,8 @@ def update_mkdocs_config(material_config: Dict[str, Any]) -> None:
         # 1. CSSファイル生成
         logger.info("CSSファイルを生成中...")
         
-        # 学習材料用CSSテンプレート作成
-        asset_generator.create_custom_template(
-            AssetType.CSS,
-            "learning_theme",
-            _get_learning_css_template(),
-            variables={
-                'primary_color': '#1976D2',
-                'secondary_color': '#FFC107',
-                'background_color': '#ffffff',
-                'text_color': '#333333',
-                'tooltip_bg': '#263238',
-                'tooltip_text': '#ffffff',
-                'quiz_correct': '#4CAF50',
-                'quiz_incorrect': '#F44336'
-            }
-        )
+        # 学習材料用テンプレートはasset_generator.pyで一元管理
+        # テンプレートは既に初期化済み（learning_material）
         
         # 複数テーマのCSS生成
         css_files = []
@@ -86,7 +72,7 @@ def update_mkdocs_config(material_config: Dict[str, Any]) -> None:
             filename = f"custom_{theme_name}.css" if theme_name != 'default' else "custom.css"
             css_path = asset_generator.generate_asset(
                 AssetType.CSS,
-                'learning_theme',
+                'learning_material',  # asset_generator.pyの学習材料テンプレートを使用
                 filename,
                 variables=theme_vars
             )
@@ -95,13 +81,7 @@ def update_mkdocs_config(material_config: Dict[str, Any]) -> None:
         # 2. JavaScriptファイル生成
         logger.info("JavaScriptファイルを生成中...")
         
-        # クイズシステムJSテンプレート作成
-        asset_generator.create_custom_template(
-            AssetType.JAVASCRIPT,
-            "quiz_system",
-            _get_quiz_js_template()
-        )
-        
+        # クイズシステムはasset_generator.pyの'interactive'テンプレートを使用
         # JSファイル生成
         js_files = []
         
@@ -109,15 +89,14 @@ def update_mkdocs_config(material_config: Dict[str, Any]) -> None:
         js_path = asset_generator.generate_asset(
             AssetType.JAVASCRIPT,
             'base',
-            'custom.js',
-            additional_content=_get_additional_js_content()
+            'custom.js'
         )
         js_files.append('custom.js')
         
-        # クイズシステムJS
+        # クイズシステムJS（インタラクティブテンプレートを使用）
         quiz_js_path = asset_generator.generate_asset(
             AssetType.JAVASCRIPT,
-            'quiz_system',
+            'interactive',
             'quiz.js'
         )
         js_files.append('quiz.js')
@@ -283,403 +262,9 @@ def create_test_material() -> None:
         raise
 
 
-def _get_learning_css_template() -> str:
-    """学習材料用CSSテンプレート"""
-    return """/* 学習材料専用CSS - 自動生成 */
-
-:root {
-    --primary-color: {primary_color};
-    --secondary-color: {secondary_color};
-    --background-color: {background_color};
-    --text-color: {text_color};
-    --tooltip-bg: {tooltip_bg};
-    --tooltip-text: {tooltip_text};
-    --quiz-correct: {quiz_correct};
-    --quiz-incorrect: {quiz_incorrect};
-}
-
-/* ツールチップ拡張 */
-.custom-tooltip {
-    position: relative;
-    cursor: help;
-    border-bottom: 1px dotted var(--primary-color);
-    transition: all 0.3s ease;
-}
-
-.custom-tooltip::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--tooltip-bg);
-    color: var(--tooltip-text);
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.custom-tooltip:hover::before {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* クイズスタイル */
-.quiz-container {
-    border: 2px solid var(--primary-color);
-    border-radius: 12px;
-    padding: 24px;
-    margin: 24px 0;
-    background: var(--background-color);
-}
-
-.quiz-option {
-    padding: 12px 16px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 8px 0;
-}
-
-.quiz-option:hover {
-    border-color: var(--primary-color);
-}
-
-.quiz-option.correct {
-    background: var(--quiz-correct);
-    color: white;
-}
-
-.quiz-option.incorrect {
-    background: var(--quiz-incorrect);
-    color: white;
-}
-
-/* テーマ切り替えボタン */
-.theme-switcher {
-    margin: 20px 0;
-    text-align: center;
-}
-
-.theme-switcher button {
-    margin: 5px;
-    padding: 8px 16px;
-    border: 1px solid var(--primary-color);
-    background: var(--background-color);
-    color: var(--text-color);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.theme-switcher button:hover {
-    background: var(--primary-color);
-    color: white;
-}
-"""
-
-
-def _get_quiz_js_template() -> str:
-    """クイズシステムJavaScriptテンプレート"""
-    return """// クイズシステム - 自動生成
-
-(function() {
-    'use strict';
-    
-    function initQuizSystem() {
-        const quizContainers = document.querySelectorAll('.quiz-container');
-        
-        quizContainers.forEach(function(container) {
-            const options = container.querySelectorAll('.quiz-option');
-            const correctIndex = parseInt(container.dataset.correct);
-            
-            options.forEach(function(option, index) {
-                option.addEventListener('click', function() {
-                    // 全てのオプションを無効化
-                    options.forEach(opt => opt.style.pointerEvents = 'none');
-                    
-                    // 正解/不正解の表示
-                    if (index === correctIndex) {
-                        this.classList.add('correct');
-                    } else {
-                        this.classList.add('incorrect');
-                        options[correctIndex].classList.add('correct');
-                    }
-                    
-                    // 説明を表示
-                    const explanation = container.querySelector('.quiz-explanation');
-                    if (explanation) {
-                        explanation.style.display = 'block';
-                    }
-                });
-            });
-        });
-    }
-    
-    // 自動初期化
-    document.addEventListener('DOMContentLoaded', initQuizSystem);
-    
-    // 公開API
-    window.initQuizSystem = initQuizSystem;
-    
-})();
-
-// カテゴリ分けクイズ機能
-function checkCategorization(quizId) {
-    const quizContainer = document.querySelector(`[data-quiz-id="${quizId}"]`);
-    if (!quizContainer) return;
-
-    const dropZones = quizContainer.querySelectorAll('.drop-zone');
-    const result = quizContainer.querySelector('.categorization-result');
-    const correctData = window.categorizationData[quizId];
-    
-    if (!correctData) {
-        result.innerHTML = '<div class="error">正解データが見つかりません</div>';
-        return;
-    }
-
-    let userAnswers = [];
-    let allItemsPlaced = true;
-
-    // 各ドロップゾーンから回答を収集
-    dropZones.forEach((zone, categoryIndex) => {
-        const items = zone.querySelectorAll('.draggable-item');
-        items.forEach(item => {
-            const itemIndex = parseInt(item.dataset.item);
-            userAnswers[itemIndex] = categoryIndex;
-        });
-    });
-
-    // 全てのアイテムが配置されているかチェック
-    for (let i = 0; i < correctData.length; i++) {
-        if (userAnswers[i] === undefined) {
-            allItemsPlaced = false;
-            break;
-        }
-    }
-
-    if (!allItemsPlaced) {
-        result.innerHTML = '<div class="warning">全ての項目を分類してください</div>';
-        return;
-    }
-
-    // 正解数をカウント
-    let correctCount = 0;
-    for (let i = 0; i < correctData.length; i++) {
-        if (userAnswers[i] === correctData[i]) {
-            correctCount++;
-        }
-    }
-
-    // 結果表示
-    const percentage = Math.round((correctCount / correctData.length) * 100);
-    let resultClass = percentage >= 80 ? 'success' : percentage >= 60 ? 'warning' : 'error';
-    
-    result.innerHTML = `
-        <div class="${resultClass}">
-            <strong>結果: ${correctCount}/${correctData.length}問正解 (${percentage}%)</strong>
-        </div>
-    `;
-}
-
-// 複数選択クイズ機能
-function checkMultipleChoice(quizId) {
-    const quizContainer = document.querySelector(`[data-quiz-id="${quizId}"]`);
-    if (!quizContainer) return;
-
-    const checkboxes = quizContainer.querySelectorAll(`input[name="${quizId}"]`);
-    const result = quizContainer.querySelector('.multiple-choice-result');
-    const quizData = window.multipleChoiceData[quizId];
-    
-    if (!quizData) {
-        result.innerHTML = '<div class="error">クイズデータが見つかりません</div>';
-        return;
-    }
-
-    // ユーザーの選択を収集
-    let selectedIndices = [];
-    checkboxes.forEach((checkbox, index) => {
-        if (checkbox.checked) {
-            selectedIndices.push(index);
-        }
-    });
-
-    // 正解数をチェック
-    const correctIndices = quizData.correct;
-    let isFullyCorrect = true;
-    
-    // 正解の選択肢が全て選ばれているかチェック
-    correctIndices.forEach(correctIndex => {
-        if (!selectedIndices.includes(correctIndex)) {
-            isFullyCorrect = false;
-        }
-    });
-    
-    // 間違った選択肢が選ばれていないかチェック
-    selectedIndices.forEach(selectedIndex => {
-        if (!correctIndices.includes(selectedIndex)) {
-            isFullyCorrect = false;
-        }
-    });
-
-    // 結果表示
-    let resultHTML = '';
-    if (isFullyCorrect) {
-        resultHTML = `
-            <div class="success">
-                <strong>正解！</strong><br>
-                ${quizData.explanation}
-            </div>
-        `;
-    } else {
-        const correctCount = selectedIndices.filter(idx => correctIndices.includes(idx)).length;
-        const incorrectCount = selectedIndices.filter(idx => !correctIndices.includes(idx)).length;
-        const missedCount = correctIndices.filter(idx => !selectedIndices.includes(idx)).length;
-        
-        resultHTML = `
-            <div class="warning">
-                <strong>部分的に正解</strong><br>
-                正しく選択: ${correctCount}個<br>
-                誤って選択: ${incorrectCount}個<br>
-                選択漏れ: ${missedCount}個<br><br>
-                <strong>正解:</strong> ${correctIndices.map(i => i + 1).join(', ')}番<br>
-                ${quizData.explanation}
-            </div>
-        `;
-    }
-    
-    result.innerHTML = resultHTML;
-}
-
-// ドラッグ&ドロップ機能の初期化
-document.addEventListener('DOMContentLoaded', function() {
-    // カテゴリ分けクイズの初期化
-    const categorizationQuizzes = document.querySelectorAll('.categorization-quiz');
-    
-    categorizationQuizzes.forEach(quiz => {
-        const draggableItems = quiz.querySelectorAll('.draggable-item');
-        const dropZones = quiz.querySelectorAll('.drop-area');
-        
-        // ドラッグ可能なアイテムのイベントリスナー
-        draggableItems.forEach(item => {
-            item.addEventListener('dragstart', function(e) {
-                e.dataTransfer.setData('text/plain', item.dataset.item);
-                e.dataTransfer.setData('text/html', item.outerHTML);
-                item.classList.add('dragging');
-            });
-            
-            item.addEventListener('dragend', function() {
-                item.classList.remove('dragging');
-            });
-        });
-        
-        // ドロップゾーンのイベントリスナー
-        dropZones.forEach(zone => {
-            zone.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                zone.classList.add('drag-over');
-            });
-            
-            zone.addEventListener('dragleave', function() {
-                zone.classList.remove('drag-over');
-            });
-            
-            zone.addEventListener('drop', function(e) {
-                e.preventDefault();
-                zone.classList.remove('drag-over');
-                
-                const itemIndex = e.dataTransfer.getData('text/plain');
-                const itemHTML = e.dataTransfer.getData('text/html');
-                
-                // 既存のアイテムを削除（他の場所から移動された場合）
-                const existingItem = document.querySelector(`[data-item="${itemIndex}"]`);
-                if (existingItem) {
-                    existingItem.remove();
-                }
-                
-                // 新しいアイテムを追加
-                zone.innerHTML = itemHTML;
-                
-                // イベントリスナーを再設定
-                const newItem = zone.querySelector('.draggable-item');
-                if (newItem) {
-                    newItem.addEventListener('dragstart', function(e) {
-                        e.dataTransfer.setData('text/plain', newItem.dataset.item);
-                        e.dataTransfer.setData('text/html', newItem.outerHTML);
-                        newItem.classList.add('dragging');
-                    });
-                    
-                    newItem.addEventListener('dragend', function() {
-                        newItem.classList.remove('dragging');
-                    });
-                }
-            });
-        });
-    });
-});
-"""
-
-
-def _get_additional_js_content() -> str:
-    """追加JavaScript機能"""
-    return """
-// 学習材料追加機能
-
-// テーマ切り替え機能
-function switchTheme(theme) {
-    const links = document.querySelectorAll('link[href*="custom"]');
-    links.forEach(link => {
-        if (link.href.includes('custom')) {
-            const newHref = theme === 'default' ? 'custom.css' : `custom_${theme}.css`;
-            link.href = link.href.replace(/custom[^.]*\\.css/, newHref);
-        }
-    });
-    
-    // テーマ保存
-    localStorage.setItem('preferred_theme', theme);
-    console.log(`テーマを${theme}に切り替えました`);
-}
-
-// 学習進度追跡
-function markChapterComplete(chapterNum) {
-    const key = `chapter_${chapterNum}_completed`;
-    localStorage.setItem(key, 'true');
-    console.log(`第${chapterNum}章を完了としてマークしました`);
-}
-
-function getCompletedChapters() {
-    const completed = [];
-    for (let i = 1; i <= 6; i++) {
-        if (localStorage.getItem(`chapter_${i}_completed`)) {
-            completed.push(i);
-        }
-    }
-    return completed;
-}
-
-// ページ読み込み時にテーマを復元
-document.addEventListener('DOMContentLoaded', function() {
-    const savedTheme = localStorage.getItem('preferred_theme');
-    if (savedTheme && savedTheme !== 'default') {
-        switchTheme(savedTheme);
-    }
-});
-
-console.log('学習材料システム初期化完了');
-"""
-
+# 重複テンプレート関数を削除 - asset_generator.pyで一元管理
 
 if __name__ == "__main__":
-    """
-    直接実行時のエントリポイント
-    """
     try:
         create_test_material()
     except KeyboardInterrupt:

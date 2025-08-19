@@ -48,11 +48,11 @@
       
     
     
-      <link rel="stylesheet" href="../../../custom.css">
-    
       <link rel="stylesheet" href="../../../custom_dark.css">
     
       <link rel="stylesheet" href="../../../custom_high_contrast.css">
+    
+      <link rel="stylesheet" href="../../../custom.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -66,10 +66,12 @@
   
     
     
+      
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal">
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -120,7 +122,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -203,24 +231,6 @@
           
   
   IT・組み込み技術入門
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../../intro_to_embedded/" class="md-tabs__link">
-          
-  
-  組込制御入門：私たちの身の回りの「賢い」仕組みを探る
 
         </a>
       </li>
@@ -468,7 +478,7 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      スケジューリングアルゴリズム
+      タスクスケジューリング
     </span>
   </a>
   
@@ -477,7 +487,7 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      まとめ
+      組み込みシステムアーキテクチャ
     </span>
   </a>
   
@@ -486,7 +496,7 @@
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
-      よくある質問
+      スケジューリングアルゴリズム
     </span>
   </a>
   
@@ -495,7 +505,7 @@
         <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
-      演習問題
+      まとめ
     </span>
   </a>
   
@@ -622,223 +632,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    組込制御入門：私たちの身の回りの「賢い」仕組みを探る
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            組込制御入門：私たちの身の回りの「賢い」仕組みを探る
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    ホーム
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/documents/chapter01/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    第1章: 組込制御ってなんだろう？
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/documents/chapter02/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    第2章: ITと組み込み技術
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/documents/chapter03/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    第3章: 技術者を目指す意義
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/exercises/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    演習問題
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/glossary/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    用語集
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/faq/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    FAQ
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../intro_to_embedded/tips/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    学習TIPS
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -858,8 +651,24 @@
 
 
 <h1 id="4">第4章: リアルタイムシステム</h1>
-<p>リアルタイムシステムの概念を学び、演習問題で理解を深めます。</p>
+<p>リアルタイムシステムの概念を学び、Mermaid図表を使ってシステム構成を理解します。</p>
 <h2 id="_1">リアルタイムシステムの分類</h2>
+<p><strong>図4-1: リアルタイムシステムの分類</strong></p>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[リアルタイムシステム] --&gt; B[ハードリアルタイム]
+    A --&gt; C[ソフトリアルタイム]
+
+    B --&gt; D[航空機制御システム]
+    B --&gt; E[原子力発電所制御]
+    B --&gt; F[医療機器制御]
+
+    C --&gt; G[動画ストリーミング]
+    C --&gt; H[オンラインゲーム]
+    C --&gt; I[音声通話システム]
+
+    style B fill:#ffcccc
+    style C fill:#ccffcc
+</code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">ハードリアルタイムシステム</p>
 <p>デッドラインを1回でも守れないとシステム全体が破綻します。
@@ -870,7 +679,93 @@
 <p>デッドラインを時々守れなくても、品質が低下するだけです。
 例：動画ストリーミング、オンラインゲーム</p>
 </div>
-<h2 id="_2">スケジューリングアルゴリズム</h2>
+<h2 id="_2">タスクスケジューリング</h2>
+<p><strong>図4-2: タスクスケジューリングの流れ</strong></p>
+<div class="highlight"><pre><span></span><code>sequenceDiagram
+    participant S as スケジューラ
+    participant T1 as タスク1（高優先度）
+    participant T2 as タスク2（低優先度）
+    participant CPU as CPU
+
+    S-&gt;&gt;T2: 実行開始
+    T2-&gt;&gt;CPU: 処理中...
+    Note right of T1: 緊急タスク発生！
+    T1-&gt;&gt;S: 実行要求
+    S-&gt;&gt;T2: プリエンプション
+    T2--&gt;&gt;S: 中断
+    S-&gt;&gt;T1: 実行開始
+    T1-&gt;&gt;CPU: 緊急処理
+    T1--&gt;&gt;S: 完了
+    S-&gt;&gt;T2: 実行再開
+    T2-&gt;&gt;CPU: 処理継続
+</code></pre></div>
+<h2 id="_3">組み込みシステムアーキテクチャ</h2>
+<p><strong>図4-3: 典型的な組み込みシステム構成</strong></p>
+<div class="highlight"><pre><span></span><code>graph LR
+    subgraph &quot;センサー類&quot;
+        S1[温度センサー]
+        S2[圧力センサー]
+        S3[振動センサー]
+    end
+
+    subgraph &quot;マイクロコントローラー&quot;
+        MCU[CPU]
+        RAM[RAM]
+        ROM[ROM/Flash]
+        GPIO[GPIO]
+    end
+
+    subgraph &quot;アクチュエータ&quot;
+        M1[モーター]
+        M2[バルブ]
+        LED[LED]
+    end
+
+    subgraph &quot;通信インターフェース&quot;
+        UART[UART]
+        I2C[I2C]
+        SPI[SPI]
+    end
+
+    S1 --&gt; GPIO
+    S2 --&gt; GPIO
+    S3 --&gt; GPIO
+
+    GPIO --&gt; MCU
+    MCU --&gt; RAM
+    MCU --&gt; ROM
+
+    MCU --&gt; M1
+    MCU --&gt; M2
+    MCU --&gt; LED
+
+    MCU --&gt; UART
+    MCU --&gt; I2C
+    MCU --&gt; SPI
+
+    style MCU fill:#e1f5fe
+    style RAM fill:#f3e5f5
+    style ROM fill:#f3e5f5
+</code></pre></div>
+<h2 id="_4">スケジューリングアルゴリズム</h2>
+<p><strong>図4-4: 優先度ベーススケジューリング</strong></p>
+<div class="highlight"><pre><span></span><code>gantt
+    title 優先度ベーススケジューリング
+    dateFormat X
+    axisFormat %s
+
+    section 高優先度タスク
+    タスクA（優先度1）    :active, a1, 0, 2
+    タスクA（優先度1）    :active, a2, 5, 3
+
+    section 中優先度タスク
+    タスクB（優先度2）    :b1, 2, 2
+    タスクB（優先度2）    :b2, 8, 2
+
+    section 低優先度タスク
+    タスクC（優先度3）    :c1, 4, 1
+    タスクC（優先度3）    :c2, 10, 2
+</code></pre></div>
 <div class="admonition question">
 <p class="admonition-title">クイズ</p>
 <p><strong>問題</strong>: 優先度ベースのスケジューリングで最も重要な概念は？</p>
@@ -888,7 +783,7 @@
 <p><strong>解説</strong>: プリエンプションにより、緊急タスクが即座に実行されます。</p>
 </details>
 </div>
-<h2 id="_3">まとめ</h2>
+<h2 id="_5">まとめ</h2>
 <div class="admonition note">
 <p class="admonition-title">第4章の要点</p>
 <ul>
@@ -896,50 +791,8 @@
 <li>デッドラインの厳格さが異なる</li>
 <li>プリエンプションにより優先度の高いタスクが実行される</li>
 <li>スケジューリングアルゴリズムがシステムの性能を左右する</li>
+<li>Mermaid図表により複雑なシステムを視覚的に理解できる</li>
 </ul>
-</div>
-<h2 id="_4">よくある質問</h2>
-<p>以下はこの章に関するFAQの抜粋です：</p>
-<details class="question">
-<summary>RTOSは必ず必要ですか？</summary>
-<p>小規模なシステムではベアメタルプログラミングでも十分な場合があります。</p>
-</details>
-<h2 id="_5">演習問題</h2>
-<div class="admonition question">
-<p class="admonition-title">演習問題（中級）</p>
-<p><strong>問題</strong>: エレベーターの制御システムはハードリアルタイムですか、ソフトリアルタイムですか？理由も説明してください。</p>
-<details class="success">
-<summary>解答</summary>
-<p><strong>解答</strong>: ハードリアルタイムシステム。扉の開閉制御や非常停止などは、決められた時間内に確実に動作しなければ人命に関わるため。</p>
-</details>
-<details class="info">
-<summary>解説</summary>
-<p><strong>解説</strong>: エレベーターは安全性が最優先されるシステムで、タイミングの遅れは許されません。</p>
-</details>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">演習問題（上級）</p>
-<p><strong>問題</strong>: 車載ECUでプリエンプションが無効だとどのような問題が起きる可能性がありますか？</p>
-<details class="success">
-<summary>解答</summary>
-<p><strong>解答</strong>: エアバッグの展開やABSの作動など、緊急性の高い処理が通常処理の終了を待つ必要があり、致命的な遅延が発生する可能性がある。</p>
-</details>
-<details class="info">
-<summary>解説</summary>
-<p><strong>解説</strong>: 車載システムでは、安全に関わる処理が最優先で実行される必要があります。</p>
-</details>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">演習問題（初級）</p>
-<p><strong>問題</strong>: ソフトリアルタイムシステムの例を3つ挙げてください。</p>
-<details class="success">
-<summary>解答</summary>
-<p><strong>解答</strong>: 1. 動画ストリーミング 2. オンラインゲーム 3. 音声通話アプリ</p>
-</details>
-<details class="info">
-<summary>解説</summary>
-<p><strong>解説</strong>: これらは多少の遅延があっても機能は継続しますが、品質が低下します。</p>
-</details>
 </div>
 
 

@@ -62,6 +62,22 @@ class AssetGenerator:
             variables={'primary_color': '#2196F3', 'background_color': '#ffffff'}
         )
         
+        # 学習材料専用CSSテンプレート
+        self.css_templates['learning_material'] = AssetTemplate(
+            name="learning_material",
+            content=self._get_learning_material_css_template(),
+            variables={
+                'primary_color': '#1976D2',
+                'secondary_color': '#FFC107', 
+                'background_color': '#ffffff',
+                'text_color': '#333333',
+                'tooltip_bg': '#263238',
+                'tooltip_text': '#ffffff',
+                'quiz_correct': '#4CAF50',
+                'quiz_incorrect': '#F44336'
+            }
+        )
+        
         # JSベーステンプレート
         self.js_templates['base'] = AssetTemplate(
             name="base",
@@ -327,6 +343,215 @@ body {{
     padding: 2px 4px;
     border-radius: 3px;
 }}
+
+/* ============================================
+   クイズ関連スタイル
+   ============================================ */
+:root {{
+    --quiz-correct: #4CAF50;
+    --quiz-incorrect: #F44336;
+    --quiz-warning: #FF9800;
+}}
+
+.quiz-container {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-option {{
+    padding: 12px 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 8px 0;
+}}
+
+.quiz-option:hover {{
+    border-color: var(--primary-color);
+}}
+
+.quiz-option.correct {{
+    background: var(--quiz-correct);
+    color: white;
+}}
+
+.quiz-option.incorrect {{
+    background: var(--quiz-incorrect);
+    color: white;
+}}
+
+/* カテゴリ分けクイズスタイル */
+.categorization-quiz {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-items {{
+    margin-bottom: 24px;
+}}
+
+.draggable-items {{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    min-height: 60px;
+}}
+
+.draggable-item {{
+    background: #FFC107;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: move;
+    user-select: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}}
+
+.draggable-item:hover {{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}}
+
+.draggable-item.dragging {{
+    opacity: 0.5;
+    transform: rotate(5deg);
+}}
+
+.drop-zones {{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}}
+
+.drop-zone {{
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: all 0.3s ease;
+}}
+
+.drop-zone.drag-over {{
+    border-color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.1);
+}}
+
+.drop-zone h4 {{
+    margin: 0;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 6px 6px 0 0;
+    text-align: center;
+    font-size: 14px;
+}}
+
+.drop-area {{
+    min-height: 80px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-style: italic;
+}}
+
+.drop-area .draggable-item {{
+    font-style: normal;
+    margin: 0;
+}}
+
+/* 複数選択クイズスタイル */
+.multiple-choice-quiz {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-options {{
+    margin: 16px 0;
+}}
+
+.option-label {{
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--background-color);
+}}
+
+.option-label:hover {{
+    border-color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.05);
+}}
+
+.option-label input[type="checkbox"] {{
+    margin-right: 12px;
+    transform: scale(1.2);
+}}
+
+.option-text {{
+    font-size: 14px;
+}}
+
+.check-categorization, .check-multiple-choice {{
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+}}
+
+.check-categorization:hover, .check-multiple-choice:hover {{
+    background: #1565C0;
+    transform: translateY(-1px);
+}}
+
+.categorization-result, .multiple-choice-result {{
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}}
+
+.categorization-result .success, .multiple-choice-result .success {{
+    background: #E8F5E8;
+    color: var(--quiz-correct);
+    border: 1px solid var(--quiz-correct);
+}}
+
+.categorization-result .warning, .multiple-choice-result .warning {{
+    background: #FFF8E1;
+    color: var(--quiz-warning);
+    border: 1px solid #FFB74D;
+}}
+
+.categorization-result .error, .multiple-choice-result .error {{
+    background: #FFEBEE;
+    color: var(--quiz-incorrect);
+    border: 1px solid var(--quiz-incorrect);
+}}
 """
 
     def _get_tooltip_css_template(self) -> str:
@@ -359,6 +584,277 @@ body {{
 .custom-tooltip:hover::before {{
     opacity: 1;
     visibility: visible;
+}}
+"""
+
+    def _get_learning_material_css_template(self) -> str:
+        """学習材料専用CSSテンプレート（完全版）"""
+        return """/* 学習材料専用CSS - 自動生成 */
+
+:root {{
+    --primary-color: {primary_color};
+    --secondary-color: {secondary_color};
+    --background-color: {background_color};
+    --text-color: {text_color};
+    --tooltip-bg: {tooltip_bg};
+    --tooltip-text: {tooltip_text};
+    --quiz-correct: {quiz_correct};
+    --quiz-incorrect: {quiz_incorrect};
+}}
+
+/* ツールチップ拡張 */
+.custom-tooltip {{
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dotted var(--primary-color);
+    transition: all 0.3s ease;
+}}
+
+.custom-tooltip::before {{
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}}
+
+.custom-tooltip:hover::before {{
+    opacity: 1;
+    visibility: visible;
+}}
+
+/* クイズスタイル */
+.quiz-container {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-option {{
+    padding: 12px 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 8px 0;
+}}
+
+.quiz-option:hover {{
+    border-color: var(--primary-color);
+}}
+
+.quiz-option.correct {{
+    background: var(--quiz-correct);
+    color: white;
+}}
+
+.quiz-option.incorrect {{
+    background: var(--quiz-incorrect);
+    color: white;
+}}
+
+/* カテゴリ分けクイズスタイル */
+.categorization-quiz {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-items {{
+    margin-bottom: 24px;
+}}
+
+.draggable-items {{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    min-height: 60px;
+}}
+
+.draggable-item {{
+    background: var(--secondary-color);
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: move;
+    user-select: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}}
+
+.draggable-item:hover {{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}}
+
+.draggable-item.dragging {{
+    opacity: 0.5;
+    transform: rotate(5deg);
+}}
+
+.drop-zones {{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}}
+
+.drop-zone {{
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: all 0.3s ease;
+}}
+
+.drop-zone.drag-over {{
+    border-color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.1);
+}}
+
+.drop-zone h4 {{
+    margin: 0;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 6px 6px 0 0;
+    text-align: center;
+    font-size: 14px;
+}}
+
+.drop-area {{
+    min-height: 80px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-style: italic;
+}}
+
+.drop-area .draggable-item {{
+    font-style: normal;
+    margin: 0;
+}}
+
+/* 複数選択クイズスタイル */
+.multiple-choice-quiz {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-options {{
+    margin: 16px 0;
+}}
+
+.option-label {{
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--background-color);
+}}
+
+.option-label:hover {{
+    border-color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.05);
+}}
+
+.option-label input[type="checkbox"] {{
+    margin-right: 12px;
+    transform: scale(1.2);
+}}
+
+.option-text {{
+    font-size: 14px;
+}}
+
+.check-categorization, .check-multiple-choice {{
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+}}
+
+.check-categorization:hover, .check-multiple-choice:hover {{
+    background: #1565C0;
+    transform: translateY(-1px);
+}}
+
+.categorization-result, .multiple-choice-result {{
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}}
+
+.categorization-result .success, .multiple-choice-result .success {{
+    background: #E8F5E8;
+    color: var(--quiz-correct);
+    border: 1px solid var(--quiz-correct);
+}}
+
+.categorization-result .warning, .multiple-choice-result .warning {{
+    background: #FFF8E1;
+    color: #FF9800;
+    border: 1px solid #FFB74D;
+}}
+
+.categorization-result .error, .multiple-choice-result .error {{
+    background: #FFEBEE;
+    color: var(--quiz-incorrect);
+    border: 1px solid var(--quiz-incorrect);
+}}
+
+/* テーマ切り替えボタン */
+.theme-switcher {{
+    margin: 20px 0;
+    text-align: center;
+}}
+
+.theme-switcher button {{
+    margin: 5px;
+    padding: 8px 16px;
+    border: 1px solid var(--primary-color);
+    background: var(--background-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}}
+
+.theme-switcher button:hover {{
+    background: var(--primary-color);
+    color: white;
 }}
 """
 
@@ -460,10 +956,233 @@ body {{
         });
     }
     
+    // クイズ機能
+    function initQuizzes() {
+        // 基本クイズ初期化
+        const quizContainers = document.querySelectorAll('.quiz-container');
+        quizContainers.forEach(function(container) {
+            const options = container.querySelectorAll('.quiz-option');
+            const correctIndex = parseInt(container.dataset.correct);
+            
+            options.forEach(function(option, index) {
+                option.addEventListener('click', function() {
+                    options.forEach(opt => opt.style.pointerEvents = 'none');
+                    
+                    if (index === correctIndex) {
+                        this.classList.add('correct');
+                    } else {
+                        this.classList.add('incorrect');
+                        options[correctIndex].classList.add('correct');
+                    }
+                    
+                    const explanation = container.querySelector('.quiz-explanation');
+                    if (explanation) {
+                        explanation.style.display = 'block';
+                    }
+                });
+            });
+        });
+        
+        // ドラッグ&ドロップクイズ初期化
+        initCategorizationQuizzes();
+    }
+    
+    function initCategorizationQuizzes() {
+        const categorizationQuizzes = document.querySelectorAll('.categorization-quiz');
+        
+        categorizationQuizzes.forEach(quiz => {
+            const draggableItems = quiz.querySelectorAll('.draggable-item');
+            const dropZones = quiz.querySelectorAll('.drop-area');
+            
+            // ドラッグ可能なアイテムのイベントリスナー
+            draggableItems.forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', item.dataset.item);
+                    e.dataTransfer.setData('text/html', item.outerHTML);
+                    item.classList.add('dragging');
+                });
+                
+                item.addEventListener('dragend', function() {
+                    item.classList.remove('dragging');
+                });
+            });
+            
+            // ドロップゾーンのイベントリスナー
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    zone.parentElement.classList.add('drag-over');
+                });
+                
+                zone.addEventListener('dragleave', function(e) {
+                    if (!zone.contains(e.relatedTarget)) {
+                        zone.parentElement.classList.remove('drag-over');
+                    }
+                });
+                
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    zone.parentElement.classList.remove('drag-over');
+                    
+                    const itemIndex = e.dataTransfer.getData('text/plain');
+                    const itemHTML = e.dataTransfer.getData('text/html');
+                    
+                    // 既存のアイテムを削除（他の場所から移動された場合）
+                    const existingItem = document.querySelector(`[data-item="${itemIndex}"]`);
+                    if (existingItem && existingItem.parentElement.classList.contains('drop-area')) {
+                        existingItem.remove();
+                    }
+                    
+                    // 新しいアイテムを追加
+                    zone.innerHTML = itemHTML;
+                    
+                    // イベントリスナーを再設定
+                    const newItem = zone.querySelector('.draggable-item');
+                    if (newItem) {
+                        newItem.addEventListener('dragstart', function(e) {
+                            e.dataTransfer.setData('text/plain', newItem.dataset.item);
+                            e.dataTransfer.setData('text/html', newItem.outerHTML);
+                            newItem.classList.add('dragging');
+                        });
+                        
+                        newItem.addEventListener('dragend', function() {
+                            newItem.classList.remove('dragging');
+                        });
+                    }
+                });
+            });
+        });
+    }
+    
     // 初期化
     document.addEventListener('DOMContentLoaded', function() {
         initAccordions();
         initTabs();
+        initQuizzes();
     });
+    
+    // グローバル関数として公開
+    window.checkCategorization = function(quizId) {
+        const quizContainer = document.querySelector(`[data-quiz-id="${quizId}"]`);
+        if (!quizContainer) return;
+
+        const dropZones = quizContainer.querySelectorAll('.drop-zone');
+        const result = quizContainer.querySelector('.categorization-result');
+        const correctData = window.categorizationData ? window.categorizationData[quizId] : null;
+        
+        if (!correctData) {
+            result.innerHTML = '<div class="error">正解データが見つかりません</div>';
+            return;
+        }
+
+        let userAnswers = [];
+        let allItemsPlaced = true;
+
+        // 各ドロップゾーンから回答を収集
+        dropZones.forEach((zone, categoryIndex) => {
+            const items = zone.querySelectorAll('.draggable-item');
+            items.forEach(item => {
+                const itemIndex = parseInt(item.dataset.item);
+                userAnswers[itemIndex] = categoryIndex;
+            });
+        });
+
+        // 全てのアイテムが配置されているかチェック
+        for (let i = 0; i < correctData.length; i++) {
+            if (userAnswers[i] === undefined) {
+                allItemsPlaced = false;
+                break;
+            }
+        }
+
+        if (!allItemsPlaced) {
+            result.innerHTML = '<div class="warning">全ての項目を分類してください</div>';
+            return;
+        }
+
+        // 正解数をカウント
+        let correctCount = 0;
+        for (let i = 0; i < correctData.length; i++) {
+            if (userAnswers[i] === correctData[i]) {
+                correctCount++;
+            }
+        }
+
+        // 結果表示
+        const percentage = Math.round((correctCount / correctData.length) * 100);
+        let resultClass = percentage >= 80 ? 'success' : percentage >= 60 ? 'warning' : 'error';
+        
+        result.innerHTML = `
+            <div class="${resultClass}">
+                <strong>結果: ${correctCount}/${correctData.length}問正解 (${percentage}%)</strong>
+            </div>
+        `;
+    };
+    
+    window.checkMultipleChoice = function(quizId) {
+        const quizContainer = document.querySelector(`[data-quiz-id="${quizId}"]`);
+        if (!quizContainer) return;
+
+        const checkboxes = quizContainer.querySelectorAll(`input[name="${quizId}"]`);
+        const result = quizContainer.querySelector('.multiple-choice-result');
+        const quizData = window.multipleChoiceData ? window.multipleChoiceData[quizId] : null;
+        
+        if (!quizData) {
+            result.innerHTML = '<div class="error">クイズデータが見つかりません</div>';
+            return;
+        }
+
+        // ユーザーの選択を収集
+        let selectedIndices = [];
+        checkboxes.forEach((checkbox, index) => {
+            if (checkbox.checked) {
+                selectedIndices.push(index);
+            }
+        });
+
+        // 正解数をチェック
+        const correctIndices = quizData.correct;
+        let isFullyCorrect = true;
+        
+        correctIndices.forEach(correctIndex => {
+            if (!selectedIndices.includes(correctIndex)) {
+                isFullyCorrect = false;
+            }
+        });
+        
+        selectedIndices.forEach(selectedIndex => {
+            if (!correctIndices.includes(selectedIndex)) {
+                isFullyCorrect = false;
+            }
+        });
+
+        // 結果表示
+        let resultHTML = '';
+        if (isFullyCorrect) {
+            resultHTML = `
+                <div class="success">
+                    <strong>正解！</strong><br>
+                    ${quizData.explanation}
+                </div>
+            `;
+        } else {
+            const correctCount = selectedIndices.filter(idx => correctIndices.includes(idx)).length;
+            const incorrectCount = selectedIndices.filter(idx => !correctIndices.includes(idx)).length;
+            const missedCount = correctIndices.filter(idx => !selectedIndices.includes(idx)).length;
+            
+            resultHTML = `
+                <div class="warning">
+                    <strong>部分的に正解</strong><br>
+                    正しく選択: ${correctCount}個<br>
+                    誤って選択: ${incorrectCount}個<br>
+                    選択漏れ: ${missedCount}個<br><br>
+                    <strong>正解:</strong> ${correctIndices.map(i => i + 1).join(', ')}番<br>
+                    ${quizData.explanation}
+                </div>
+            `;
+        }
+        
+        result.innerHTML = resultHTML;
+    };
 })();
 """

@@ -1,6 +1,6 @@
 /* 学習材料専用CSS - 自動生成 */
 
-:root {
+:root {{
     --primary-color: #000000;
     --secondary-color: #FFC107;
     --background-color: #ffffff;
@@ -9,17 +9,17 @@
     --tooltip-text: #ffffff;
     --quiz-correct: #4CAF50;
     --quiz-incorrect: #F44336;
-}
+}}
 
 /* ツールチップ拡張 */
-.custom-tooltip {
+.custom-tooltip {{
     position: relative;
     cursor: help;
     border-bottom: 1px dotted var(--primary-color);
     transition: all 0.3s ease;
-}
+}}
 
-.custom-tooltip::before {
+.custom-tooltip::before {{
     content: attr(data-tooltip);
     position: absolute;
     bottom: 125%;
@@ -36,52 +36,221 @@
     transition: all 0.3s ease;
     z-index: 1000;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
+}}
 
-.custom-tooltip:hover::before {
+.custom-tooltip:hover::before {{
     opacity: 1;
     visibility: visible;
-}
+}}
 
 /* クイズスタイル */
-.quiz-container {
+.quiz-container {{
     border: 2px solid var(--primary-color);
     border-radius: 12px;
     padding: 24px;
     margin: 24px 0;
     background: var(--background-color);
-}
+}}
 
-.quiz-option {
+.quiz-option {{
     padding: 12px 16px;
     border: 2px solid #ddd;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 8px 0;
-}
+}}
 
-.quiz-option:hover {
+.quiz-option:hover {{
     border-color: var(--primary-color);
-}
+}}
 
-.quiz-option.correct {
+.quiz-option.correct {{
     background: var(--quiz-correct);
     color: white;
-}
+}}
 
-.quiz-option.incorrect {
+.quiz-option.incorrect {{
     background: var(--quiz-incorrect);
     color: white;
-}
+}}
+
+/* カテゴリ分けクイズスタイル */
+.categorization-quiz {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-items {{
+    margin-bottom: 24px;
+}}
+
+.draggable-items {{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    min-height: 60px;
+}}
+
+.draggable-item {{
+    background: var(--secondary-color);
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: move;
+    user-select: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}}
+
+.draggable-item:hover {{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}}
+
+.draggable-item.dragging {{
+    opacity: 0.5;
+    transform: rotate(5deg);
+}}
+
+.drop-zones {{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}}
+
+.drop-zone {{
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: all 0.3s ease;
+}}
+
+.drop-zone.drag-over {{
+    border-color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.1);
+}}
+
+.drop-zone h4 {{
+    margin: 0;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 6px 6px 0 0;
+    text-align: center;
+    font-size: 14px;
+}}
+
+.drop-area {{
+    min-height: 80px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-style: italic;
+}}
+
+.drop-area .draggable-item {{
+    font-style: normal;
+    margin: 0;
+}}
+
+/* 複数選択クイズスタイル */
+.multiple-choice-quiz {{
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    background: var(--background-color);
+}}
+
+.quiz-options {{
+    margin: 16px 0;
+}}
+
+.option-label {{
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--background-color);
+}}
+
+.option-label:hover {{
+    border-color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.05);
+}}
+
+.option-label input[type="checkbox"] {{
+    margin-right: 12px;
+    transform: scale(1.2);
+}}
+
+.option-text {{
+    font-size: 14px;
+}}
+
+.check-categorization, .check-multiple-choice {{
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+}}
+
+.check-categorization:hover, .check-multiple-choice:hover {{
+    background: #1565C0;
+    transform: translateY(-1px);
+}}
+
+.categorization-result, .multiple-choice-result {{
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}}
+
+.categorization-result .success, .multiple-choice-result .success {{
+    background: #E8F5E8;
+    color: var(--quiz-correct);
+    border: 1px solid var(--quiz-correct);
+}}
+
+.categorization-result .warning, .multiple-choice-result .warning {{
+    background: #FFF8E1;
+    color: #FF9800;
+    border: 1px solid #FFB74D;
+}}
+
+.categorization-result .error, .multiple-choice-result .error {{
+    background: #FFEBEE;
+    color: var(--quiz-incorrect);
+    border: 1px solid var(--quiz-incorrect);
+}}
 
 /* テーマ切り替えボタン */
-.theme-switcher {
+.theme-switcher {{
     margin: 20px 0;
     text-align: center;
-}
+}}
 
-.theme-switcher button {
+.theme-switcher button {{
     margin: 5px;
     padding: 8px 16px;
     border: 1px solid var(--primary-color);
@@ -90,9 +259,9 @@
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
-}
+}}
 
-.theme-switcher button:hover {
+.theme-switcher button:hover {{
     background: var(--primary-color);
     color: white;
-}
+}}

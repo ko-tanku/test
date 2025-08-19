@@ -391,10 +391,12 @@ class BaseContentManager(ABC):
 
             elif content_type == 'categorization_quiz':
                 quiz_data = item.get('quiz_data', item)  # デフォルトでアイテム自体を使用
+                logger.info(f"カテゴリ分けクイズを処理: {quiz_data.get('quiz_id', 'ID不明')}")
                 self.doc_builder.add_categorization_quiz(quiz_data)
 
             elif content_type == 'multiple_choice_quiz':
                 quiz_data = item.get('quiz_data', item)  # デフォルトでアイテム自体を使用
+                logger.info(f"複数選択クイズを処理: {quiz_data.get('quiz_id', 'ID不明')}")
                 self.doc_builder.add_multiple_choice_quiz(quiz_data)
             elif content_type == 'exercises':
 

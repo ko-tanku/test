@@ -389,12 +389,15 @@ class DocumentBuilder:
         <div class="categorization-result"></div>
     </div>'''
         
-        # admonitionブロックをクローズ
-        self.content_buffer.extend(lines)
-        self.content_buffer.append("")
+        # HTMLコンテンツをadmonitionブロック内に追加（4スペースでインデント）
+        html_lines = html_content.split('\n')
+        for html_line in html_lines:
+            if html_line.strip():
+                lines.append(f"    {html_line}")
+            else:
+                lines.append("")
         
-        # HTMLコンテンツを独立したブロックとして追加（インデントしない）
-        self.content_buffer.append(html_content)
+        self.content_buffer.extend(lines)
         self.content_buffer.append("")
         
         # 正解データをdata属性として埋め込み
@@ -439,12 +442,15 @@ class DocumentBuilder:
         <div class="multiple-choice-result"></div>
     </div>'''
         
-        # admonitionブロックをクローズ
-        self.content_buffer.extend(lines)
-        self.content_buffer.append("")
+        # HTMLコンテンツをadmonitionブロック内に追加（4スペースでインデント）
+        html_lines = html_content.split('\n')
+        for html_line in html_lines:
+            if html_line.strip():
+                lines.append(f"    {html_line}")
+            else:
+                lines.append("")
         
-        # HTMLコンテンツを独立したブロックとして追加（インデントしない）
-        self.content_buffer.append(html_content)
+        self.content_buffer.extend(lines)
         self.content_buffer.append("")
         
         # 正解データと解説をdata属性として埋め込み
