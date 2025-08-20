@@ -127,19 +127,37 @@ MKDOCS_SITE_CONFIG = {
     "markdown_extensions": [
         "admonition",
         "pymdownx.details",
-        "pymdownx.superfences",
+        {
+            "pymdownx.superfences": {
+                "custom_fences": [
+                    {
+                        "name": "mermaid",
+                        "class": "mermaid",
+                        "format": "!!python/name:pymdownx.superfences.fence_code_format"
+                    }
+                ]
+            }
+        },
         "pymdownx.highlight",
         "pymdownx.tabbed",
+        "pymdownx.tasklist",
         "attr_list",
         "md_in_html",
         "footnotes",
         "tables",
         "fenced_code",
         "abbr",
-        "pymdownx.snippets"
+        "pymdownx.snippets",
+        "pymdownx.emoji",
+        "pymdownx.keys"
     ],
     "plugins": [
-        # "mkdocs-quiz-plugin"  # 必要に応じてコメントアウトを解除
+        "search",
+        {
+            "mermaid2": {
+                "version": "10.6.1"
+            }
+        }
     ],
     "extra_javascript": [
         "custom.js"

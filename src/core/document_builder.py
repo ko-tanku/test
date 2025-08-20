@@ -343,67 +343,64 @@ class DocumentBuilder:
         Args:
             quiz_data: クイズデータの辞書
         """
-        lines = []
         quiz_id = quiz_data.get('quiz_id', quiz_data.get('id', 'categorization-quiz'))
         
-        lines.append("!!! question \"カテゴリ分けクイズ\"")
-        lines.append(f"    **問題**: {quiz_data['question']}")
-        lines.append("")
-        
-        # カテゴリ
-        lines.append("    **カテゴリ**:")
-        for category in quiz_data['categories']:
-            lines.append(f"    - {category}")
-        lines.append("")
-        
-        # ドラッグ&ドロップ用のHTMLを生成
+        # AdmonitionではなくHTMLブロックとして出力
         html_content = f'''
-    <div class="categorization-quiz" data-quiz-id="{quiz_id}">
-        <div class="quiz-items">
-            <h4>項目をドラッグして適切なカテゴリに分類してください：</h4>
-            <div class="draggable-items">'''
+<div class="quiz-container categorization-quiz" data-quiz-id="{quiz_id}">
+    <h3 class="quiz-title">カテゴリ分けクイズ</h3>
+    <p class="quiz-question"><strong>問題:</strong> {quiz_data['question']}</p>
+
+    <div class="quiz-categories">
+        <strong>カテゴリ:</strong>
+        <ul>'''
+        
+        for category in quiz_data['categories']:
+            html_content += f'''
+            <li>{category}</li>'''
+        
+        html_content += '''
+        </ul>
+    </div>
+
+    <div class="quiz-items">
+        <h4>項目をドラッグして適切なカテゴリに分類してください：</h4>
+        <div class="draggable-items">'''
         
         # アイテムを追加
         for i, item in enumerate(quiz_data['items']):
             html_content += f'''
-                <div class="draggable-item" data-item="{i}" draggable="true">{item}</div>'''
+            <div class="draggable-item" data-item="{i}" draggable="true">{item}</div>'''
         
         html_content += '''
-            </div>
         </div>
-        
-        <div class="drop-zones">'''
+    </div>
+
+    <div class="drop-zones">'''
         
         # カテゴリのドロップゾーンを作成
         for i, category in enumerate(quiz_data['categories']):
             html_content += f'''
-            <div class="drop-zone" data-category="{i}">
-                <h4>{category}</h4>
-                <div class="drop-area">ここにドロップしてください</div>
-            </div>'''
+        <div class="drop-zone" data-category="{i}">
+            <h4>{category}</h4>
+            <div class="drop-area">ここにドロップしてください</div>
+        </div>'''
         
         html_content += f'''
-        </div>
+    </div>
+
+    <button class="check-categorization" onclick="checkCategorization('{quiz_id}')">答えを確認</button>
+    <div class="categorization-result"></div>
+</div>
+
+<script>
+window.categorizationData = window.categorizationData || {{}};
+window.categorizationData["{quiz_id}"] = {quiz_data.get('correct_answers', quiz_data.get('correct_mapping', []))};
+</script>
+'''
         
-        <button class="check-categorization" onclick="checkCategorization('{quiz_id}')">答えを確認</button>
-        <div class="categorization-result"></div>
-    </div>'''
-        
-        # HTMLコンテンツをadmonitionブロック内に追加（4スペースでインデント）
-        html_lines = html_content.split('\n')
-        for html_line in html_lines:
-            if html_line.strip():
-                lines.append(f"    {html_line}")
-            else:
-                lines.append("")
-        
-        self.content_buffer.extend(lines)
-        self.content_buffer.append("")
-        
-        # 正解データをdata属性として埋め込み
-        correct_data = quiz_data.get('correct_answers', quiz_data.get('correct_mapping', []))
-        self.content_buffer.append(f'<script>window.categorizationData = window.categorizationData || {{}};')
-        self.content_buffer.append(f'window.categorizationData["{quiz_id}"] = {correct_data};</script>')
+        # HTMLを直接追加（インデントなし）
+        self.content_buffer.append(html_content)
         self.content_buffer.append("")
 
     def add_multiple_choice_quiz(self, quiz_data: Dict[str, Any]):
@@ -413,54 +410,43 @@ class DocumentBuilder:
         Args:
             quiz_data: クイズデータの辞書
         """
-        lines = []
         quiz_id = quiz_data.get('quiz_id', quiz_data.get('id', 'multiple-choice-quiz'))
         
-        lines.append("!!! question \"複数選択クイズ\"")
-        lines.append(f"    **問題**: {quiz_data['question']}")
-        lines.append("")
-        lines.append("    **複数の選択肢から正解を全て選んでください**:")
-        lines.append("")
-        
-        # チェックボックス形式のHTMLを生成
+        # AdmonitionではなくHTMLブロックとして出力
         html_content = f'''
-    <div class="multiple-choice-quiz" data-quiz-id="{quiz_id}">
-        <div class="quiz-options">'''
+<div class="quiz-container multiple-choice-quiz" data-quiz-id="{quiz_id}">
+    <h3 class="quiz-title">複数選択クイズ</h3>
+    <p class="quiz-question"><strong>問題:</strong> {quiz_data['question']}</p>
+    <p class="quiz-instruction"><strong>複数の選択肢から正解を全て選んでください</strong></p>
+
+    <div class="quiz-options">'''
         
         # 選択肢を追加（チェックボックス）
         for i, option in enumerate(quiz_data['options']):
             html_content += f'''
-            <label class="option-label">
-                <input type="checkbox" name="{quiz_id}" value="{i}">
-                <span class="option-text">{option}</span>
-            </label><br>'''
+        <label class="option-label">
+            <input type="checkbox" name="{quiz_id}" value="{i}">
+            <span class="option-text">{option}</span>
+        </label><br>'''
         
         html_content += f'''
-        </div>
+    </div>
+
+    <button class="check-multiple-choice" onclick="checkMultipleChoice('{quiz_id}')">答えを確認</button>
+    <div class="multiple-choice-result"></div>
+</div>
+
+<script>
+window.multipleChoiceData = window.multipleChoiceData || {{}};
+window.multipleChoiceData["{quiz_id}"] = {{
+    "correct": {quiz_data.get('correct_answers', quiz_data.get('correct_indices', []))},
+    "explanation": "{quiz_data.get('explanation', '')}"
+}};
+</script>
+'''
         
-        <button class="check-multiple-choice" onclick="checkMultipleChoice('{quiz_id}')">答えを確認</button>
-        <div class="multiple-choice-result"></div>
-    </div>'''
-        
-        # HTMLコンテンツをadmonitionブロック内に追加（4スペースでインデント）
-        html_lines = html_content.split('\n')
-        for html_line in html_lines:
-            if html_line.strip():
-                lines.append(f"    {html_line}")
-            else:
-                lines.append("")
-        
-        self.content_buffer.extend(lines)
-        self.content_buffer.append("")
-        
-        # 正解データと解説をdata属性として埋め込み
-        correct_indices = quiz_data.get('correct_answers', quiz_data.get('correct_indices', []))
-        explanation = quiz_data.get('explanation', '')
-        self.content_buffer.append(f'<script>window.multipleChoiceData = window.multipleChoiceData || {{}};')
-        self.content_buffer.append(f'window.multipleChoiceData["{quiz_id}"] = {{')
-        self.content_buffer.append(f'  "correct": {correct_indices},')
-        self.content_buffer.append(f'  "explanation": "{explanation}"')
-        self.content_buffer.append(f'}};</script>')
+        # HTMLを直接追加（インデントなし）
+        self.content_buffer.append(html_content)
         self.content_buffer.append("")
         
     def add_exercise_question(self, exercise_data: Dict[str, Any]):
