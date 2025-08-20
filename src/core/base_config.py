@@ -155,15 +155,29 @@ MKDOCS_SITE_CONFIG = {
         "search",
         {
             "mermaid2": {
-                "version": "10.6.1"
+                "version": "10.6.1",
+                "arguments": {
+                    "theme": "default",
+                    "themeVariables": {
+                        "primaryColor": "#1976D2",
+                        "primaryTextColor": "#fff",
+                        "primaryBorderColor": "#1976D2",
+                        "lineColor": "#000000",
+                        "secondaryColor": "#FFC107",
+                        "tertiaryColor": "#fff"
+                    }
+                }
             }
         }
     ],
     "extra_javascript": [
-        "custom.js"
+        "custom.js",
+        "quiz.js"
     ],
     "extra_css": [
-        "custom.css"
+        "custom.css",
+        "custom_dark.css", 
+        "custom_high_contrast.css"
     ],
     "extra": {
         # "analytics": {
