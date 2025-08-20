@@ -1,267 +1,189 @@
-/* 学習材料専用CSS - 自動生成 */
+/* クイズのスタイル */
+.quiz-container {
+    border: 1px solid #e0e0e0; /* 枠線を少し薄く */
+    padding: 20px; /* パディングを増やす */
+    margin-bottom: 20px; /* マージンを増やす */
+    border-radius: 8px; /* 角を丸く */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
+    background-color: #ffffff; /* 背景色を白に */
+}
 
-:root {{
-    --primary-color: #1976D2;
-    --secondary-color: #FFC107;
-    --background-color: #ffffff;
-    --text-color: #333333;
-    --tooltip-bg: #263238;
-    --tooltip-text: #ffffff;
-    --quiz-correct: #4CAF50;
-    --quiz-incorrect: #F44336;
-}}
+.quiz-question {
+    font-size: 1.2em; /* フォントサイズを大きく */
+    font-weight: bold;
+    color: #333; /* 色を濃く */
+    margin-bottom: 15px; /* 下マージンを追加 */
+}
 
-/* ツールチップ拡張 */
-.custom-tooltip {{
-    position: relative;
-    cursor: help;
-    border-bottom: 1px dotted var(--primary-color);
-    transition: all 0.3s ease;
-}}
+.quiz-options {
+    margin-top: 15px; /* 上マージンを増やす */
+}
 
-.custom-tooltip::before {{
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--tooltip-bg);
-    color: var(--tooltip-text);
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}}
-
-.custom-tooltip:hover::before {{
-    opacity: 1;
-    visibility: visible;
-}}
-
-/* クイズスタイル */
-.quiz-container {{
-    border: 2px solid var(--primary-color);
-    border-radius: 12px;
-    padding: 24px;
-    margin: 24px 0;
-    background: var(--background-color);
-}}
-
-.quiz-option {{
-    padding: 12px 16px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 8px 0;
-}}
-
-.quiz-option:hover {{
-    border-color: var(--primary-color);
-}}
-
-.quiz-option.correct {{
-    background: var(--quiz-correct);
-    color: white;
-}}
-
-.quiz-option.incorrect {{
-    background: var(--quiz-incorrect);
-    color: white;
-}}
-
-/* カテゴリ分けクイズスタイル */
-.categorization-quiz {{
-    border: 2px solid var(--primary-color);
-    border-radius: 12px;
-    padding: 24px;
-    margin: 24px 0;
-    background: var(--background-color);
-}}
-
-.quiz-items {{
-    margin-bottom: 24px;
-}}
-
-.draggable-items {{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 16px 0;
-    padding: 16px;
-    background: #f5f5f5;
-    border-radius: 8px;
-    min-height: 60px;
-}}
-
-.draggable-item {{
-    background: var(--secondary-color);
-    color: #333;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: move;
-    user-select: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}}
-
-.draggable-item:hover {{
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}}
-
-.draggable-item.dragging {{
-    opacity: 0.5;
-    transform: rotate(5deg);
-}}
-
-.drop-zones {{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin: 16px 0;
-}}
-
-.drop-zone {{
-    border: 2px dashed #ddd;
-    border-radius: 8px;
-    background: #fafafa;
-    transition: all 0.3s ease;
-}}
-
-.drop-zone.drag-over {{
-    border-color: var(--primary-color);
-    background: rgba(25, 118, 210, 0.1);
-}}
-
-.drop-zone h4 {{
-    margin: 0;
-    padding: 12px;
-    background: var(--primary-color);
-    color: white;
-    border-radius: 6px 6px 0 0;
-    text-align: center;
-    font-size: 14px;
-}}
-
-.drop-area {{
-    min-height: 80px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    font-style: italic;
-}}
-
-.drop-area .draggable-item {{
-    font-style: normal;
-    margin: 0;
-}}
-
-/* 複数選択クイズスタイル */
-.multiple-choice-quiz {{
-    border: 2px solid var(--primary-color);
-    border-radius: 12px;
-    padding: 24px;
-    margin: 24px 0;
-    background: var(--background-color);
-}}
-
-.quiz-options {{
-    margin: 16px 0;
-}}
-
-.option-label {{
+.option-label {
     display: block;
-    padding: 12px 16px;
-    margin: 8px 0;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    margin-bottom: 10px; /* マージンを増やす */
+    padding: 10px 15px; /* パディングを追加 */
+    border: 1px solid #ddd; /* 枠線を追加 */
+    border-radius: 5px; /* 角を丸く */
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: var(--background-color);
-}}
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* ホバーアニメーション */
+}
 
-.option-label:hover {{
-    border-color: var(--primary-color);
-    background: rgba(25, 118, 210, 0.05);
-}}
+.option-label:hover {
+    background-color: #f0f8ff; /* ホバー時の背景色 */
+    border-color: #a0d8ff; /* ホバー時の枠線色 */
+}
 
-.option-label input[type="checkbox"] {{
-    margin-right: 12px;
-    transform: scale(1.2);
-}}
+/* 選択肢のラジオボタン/チェックボックスを非表示にし、カスタムスタイルを適用する場合 */
+.option-label input[type="radio"],
+.option-label input[type="checkbox"] {
+    margin-right: 10px; /* テキストとの間隔 */
+}
 
-.option-text {{
-    font-size: 14px;
-}}
-
-.check-categorization, .check-multiple-choice {{
-    background: var(--primary-color);
+.check-multiple-choice, .check-categorization {
+    margin-top: 20px; /* 上マージンを増やす */
+    padding: 10px 25px; /* パディングを増やす */
+    background-color: #007bff;
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
+    border-radius: 5px; /* 角を丸く */
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 16px;
-    transition: all 0.3s ease;
-}}
+    font-size: 1em; /* フォントサイズ */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* ホバーアニメーション */
+}
 
-.check-categorization:hover, .check-multiple-choice:hover {{
-    background: #1565C0;
-    transform: translateY(-1px);
-}}
+.check-multiple-choice:hover, .check-categorization:hover {
+    background-color: #0056b3; /* ホバー時の背景色 */
+    transform: translateY(-2px); /* 少し上に移動 */
+}
 
-.categorization-result, .multiple-choice-result {{
-    margin-top: 16px;
-    padding: 16px;
-    border-radius: 8px;
+.multiple-choice-result, .categorization-result {
+    margin-top: 20px; /* 上マージンを増やす */
+    padding: 15px; /* パディングを増やす */
+    border-radius: 5px; /* 角を丸く */
     font-weight: bold;
-}}
+}
 
-.categorization-result .success, .multiple-choice-result .success {{
-    background: #E8F5E8;
-    color: var(--quiz-correct);
-    border: 1px solid var(--quiz-correct);
-}}
+/* 結果表示のスタイル */
+.multiple-choice-result .success,
+.categorization-result .success {
+    background-color: #d4edda; /* 緑系の背景色 */
+    color: #155724; /* 緑系の文字色 */
+    border: 1px solid #c3e6cb;
+}
 
-.categorization-result .warning, .multiple-choice-result .warning {{
-    background: #FFF8E1;
-    color: #FF9800;
-    border: 1px solid #FFB74D;
-}}
+.multiple-choice-result .warning,
+.categorization-result .warning {
+    background-color: #fff3cd; /* 黄系の背景色 */
+    color: #856404; /* 黄系の文字色 */
+    border: 1px solid #ffeeba;
+}
 
-.categorization-result .error, .multiple-choice-result .error {{
-    background: #FFEBEE;
-    color: var(--quiz-incorrect);
-    border: 1px solid var(--quiz-incorrect);
-}}
+.multiple-choice-result .error,
+.categorization-result .error {
+    background-color: #f8d7da; /* 赤系の背景色 */
+    color: #721c24; /* 赤系の文字色 */
+    border: 1px solid #f5c6cb;
+}
 
-/* テーマ切り替えボタン */
-.theme-switcher {{
-    margin: 20px 0;
+/* ドラッグ&ドロップクイズのスタイル */
+.draggable-items {
+    margin-bottom: 15px; /* マージンを増やす */
+    padding: 15px; /* パディングを増やす */
+    border: 2px dashed #ccc; /* 枠線を太く */
+    border-radius: 5px;
+    background-color: #f9f9f9; /* 背景色 */
+    min-height: 80px; /* 最小高さを設定 */
+    display: flex; /* Flexboxでアイテムを配置 */
+    flex-wrap: wrap; /* 折り返し */
+    gap: 8px; /* アイテム間の隙間 */
+}
+
+.draggable-item {
+    display: inline-block;
+    padding: 10px 15px; /* パディングを増やす */
+    background-color: #e0e0e0; /* 背景色 */
+    border: 1px solid #ccc; /* 枠線 */
+    border-radius: 4px; /* 角を丸く */
+    cursor: grab;
+    font-size: 0.95em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* 影 */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.draggable-item:hover {
+    background-color: #d0d0d0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.draggable-item.dragging {
+    opacity: 0.6; /* ドラッグ中の透明度 */
+    border: 1px dashed #007bff; /* ドラッグ中の枠線 */
+}
+
+.drop-zones {
+    display: flex;
+    flex-wrap: wrap; /* 折り返し */
+    gap: 15px; /* ゾーン間の隙間 */
+    margin-top: 15px;
+}
+
+.drop-zone {
+    flex: 1;
+    min-width: 200px; /* 最小幅を設定 */
+    padding: 15px;
+    border: 2px dashed #aaa;
+    min-height: 120px; /* 最小高さを増やす */
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    display: flex; /* Flexboxでドロップされたアイテムを配置 */
+    flex-direction: column; /* 縦方向に並べる */
+    gap: 5px; /* ドロップされたアイテム間の隙間 */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.drop-zone.drag-over { /* drag-over クラスはquiz.jsで追加される */
+    background-color: #e6f7ff; /* ドラッグオーバー時の背景色 */
+    border-color: #007bff; /* ドラッグオーバー時の枠線色 */
+}
+
+/* ツールチップのスタイルは変更なし */
+.custom-tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    cursor: help;
+}
+
+.custom-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
     text-align: center;
-}}
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
 
-.theme-switcher button {{
-    margin: 5px;
-    padding: 8px 16px;
-    border: 1px solid var(--primary-color);
-    background: var(--background-color);
-    color: var(--text-color);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}}
+.custom-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
 
-.theme-switcher button:hover {{
-    background: var(--primary-color);
-    color: white;
-}}
+.custom-tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

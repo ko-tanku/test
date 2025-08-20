@@ -138,6 +138,32 @@ class AssetGenerator:
         logger.info(f"{asset_type.value.upper()}ファイル生成完了: {file_path}")
         return file_path
 
+    def write_raw_asset(self, asset_type: AssetType, filename: str, content: str) -> Path:
+        """
+        テンプレートを使用せず、生のコンテンツを直接アセットファイルに書き込む。
+
+        Args:
+            asset_type: アセットタイプ（CSS, JS, YAML）
+            filename: 出力ファイル名
+            content: 書き込む生のコンテンツ
+
+        Returns:
+            生成されたファイルのパス
+        """
+        file_path = self.docs_dir / filename
+        file_path.write_text(content, encoding='utf-8')
+        
+        # 生成記録
+        self.generated_assets[filename] = {
+            'type': asset_type,
+            'template': 'raw', # テンプレートはrawとして記録
+            'path': file_path,
+            'variables': {}
+        }
+        
+        logger.info(f"RAW {asset_type.value.upper()}ファイル生成完了: {file_path}")
+        return file_path
+
     def update_asset(
         self, 
         filename: str, 

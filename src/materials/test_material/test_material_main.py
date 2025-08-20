@@ -21,6 +21,7 @@ from src.materials.test_material.test_material_config import (
     MATERIAL_CONFIG, MKDOCS_MATERIAL_OVERRIDE
 )
 from src.materials.test_material.test_material_contents import TestMaterialContentManager
+from src.core.utils import load_yaml_to_json # これを追加
 
 # ロギング設定
 logging.basicConfig(
@@ -101,7 +102,27 @@ def update_mkdocs_config(material_config: Dict[str, Any]) -> None:
         )
         js_files.append('quiz.js')
         
-        # 3. MkDocs設定生成・更新
+        # --- ここから変更 ---
+        # 3. クイズデータJSファイル生成
+        logger.info("クイズデータJSファイルを生成中...")
+        quiz_yaml_path = PATHS["TEST_MATERIAL_DIR"] / "content" / "quizzes.yml"
+        
+        # load_yaml_to_json を使ってYAMLをJSON文字列として読み込む
+        quiz_json_content = load_yaml_to_json(str(quiz_yaml_path))
+        
+        # JavaScriptの変数として埋め込む形式
+        quiz_data_js_content = f"window.quizData = {quiz_json_content};"
+        
+        # write_raw_asset を使ってquizzes_data.jsを生成
+        quiz_data_js_path = asset_generator.write_raw_asset(
+            AssetType.JAVASCRIPT,
+            'quizzes_data.js',
+            quiz_data_js_content
+        )
+        js_files.append('quizzes_data.js')
+        # --- ここまで変更 ---
+
+        # 3. MkDocs設定生成・更新 (元の3.が4.になる)
         logger.info("MkDocs設定を更新中...")
         
         # 構造化ナビゲーション作成（第6章追加）
@@ -240,6 +261,40 @@ def create_test_material() -> None:
         
         # コンテンツの生成
         logger.info("コンテンツを生成中...")
+        generated_files = content_manager.generate_content()
+        
+        logger.info(f"生成されたファイル数: {len(generated_files)}")
+        for file_path in generated_files:
+            logger.info(f"  - {file_path}")
+        
+        # アセット機能を使ったmkdocs.yml更新
+        logger.info("アセット機能を使ってmkdocs.ymlを更新中...")
+        update_mkdocs_config(MATERIAL_CONFIG)
+        
+        logger.info("テスト資料の生成が完了しました！")
+        logger.info("\n実行方法:")
+        logger.info("  1. プロジェクトルートで: mkdocs serve")
+        logger.info("  2. ブラウザで: http://127.0.0.1:8000")
+        logger.info("  3. 新機能（第6章）でアセット機能をテスト")
+        
+    except Exception as e:
+        logger.error(f"テスト資料生成中にエラーが発生しました: {e}")
+        logger.exception("詳細なエラー情報:")
+        raise
+
+
+# 重複テンプレート関数を削除 - asset_generator.pyで一元管理
+
+if __name__ == "__main__":
+    try:
+        create_test_material()
+    except KeyboardInterrupt:
+        logger.info("\n処理が中断されました")
+        sys.exit(1)
+    except Exception as e:
+        logger.error(f"予期しないエラーが発生しました: {e}")
+        sys.exit(1)
+
         generated_files = content_manager.generate_content()
         
         logger.info(f"生成されたファイル数: {len(generated_files)}")

@@ -9,7 +9,11 @@ extra_javascript:
 markdown_extensions:
 - admonition
 - pymdownx.details
-- pymdownx.superfences
+- pymdownx.superfences:
+    custom_fences:
+      - name: mermaid
+        class: mermaid
+        format: !!python/name:pymdownx.superfences.fence_code_format
 - pymdownx.highlight
 - pymdownx.tabbed
 - pymdownx.tasklist
@@ -31,6 +35,7 @@ nav:
   - '第4章: 演習': test_material/documents/chapter04.md
   - '第5章: 統合テスト': test_material/documents/chapter05.md
   - '第6章: アセット機能テスト': test_material/documents/chapter06.md
+  - 学習: test_material/documents/learning.md
   - 用語集: test_material/glossary.md
   - FAQ: test_material/faq.md
   - TIPS: test_material/tips.md

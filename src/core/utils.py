@@ -8,9 +8,33 @@ import logging
 import unicodedata
 from typing import List, Tuple, Dict, Any, Optional
 from html import escape
+import yaml
+import json
 
 # ロガーの設定
 logger = logging.getLogger(__name__)
+
+def load_yaml_to_json(file_path: str) -> str:
+    """
+    YAMLファイルを読み込み、その内容をJSON文字列として返す。
+
+    Args:
+        file_path: 読み込むYAMLファイルのパス。
+
+    Returns:
+        YAMLファイルの内容を表現するJSON文字列。
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+        return json.dumps(data, ensure_ascii=False, indent=2)
+    except FileNotFoundError:
+        logger.error(f"YAMLファイルが見つかりません: {file_path}")
+        return "{}"
+    except yaml.YAMLError as e:
+        logger.error(f"YAMLファイルのパースエラー: {file_path} - {e}")
+        return "{}"
+
 
 
 def slugify(text: str) -> str:
