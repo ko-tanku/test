@@ -1,0 +1,258 @@
+# Claude Code 動作指針
+
+## 必須の作業手順
+
+### 1. コード修正前の必須確認事項
+- [x] 関連ファイル全体を読んで完全に理解する
+- [x] 現在の動作状況を具体的に把握する（何が動いて何が動かないか）
+- [x] エラーメッセージやログを詳細に確認する
+- [x] 基本的な構文エラー（CSS/JS/Python等）をチェックする
+
+### 2. 問題分析の手順
+- [x] 推測ではなく証拠ベースで根本原因を特定する
+- [x] 複数の仮説を立てて一つずつ検証する
+- [x] 関連するシステム全体への影響を考慮する
+- [x] 最小限の修正で解決できるポイントを特定する
+
+### 3. 修正実施の原則
+- [x] **一箇所ずつ修正**して動作確認する
+- [x] 修正前に必ずバックアップまたは元の状態を記録する
+- [x] 既存機能を壊さないことを最優先にする
+- [x] 修正後は必ず動作テストを実行する
+
+### 4. 禁止事項
+- ❌ 推測に基づく修正
+- ❌ 複数箇所の同時修正
+- ❌ コード理解不足での変更
+- ❌ テスト無しでの修正完了報告
+- ❌ **自動生成されるファイルを直接修正すること**
+
+## プロジェクト固有の情報
+
+### アーキテクチャ
+- **設計思想**: coreフレームワークとmaterials個別実装の分離
+- **生成システム**: YAMLベースのコンテンツ → MkDocs Material
+- **アセット管理**: asset_generator.pyによるCSS/JS動的生成
+- **`docs`フォルダ**: MkDocsによって自動生成される出力先であり、**直接編集すべきではありません**。変更は必ず生成元のスクリプト（例: `src/materials`内の`main.py`や`src/core`内のジェネレータ）で行う必要があります。
+
+### 重要なファイル
+- `src/core/asset_generator.py`: CSS/JS生成の中核
+- `docs/asset_manifest.json`: 生成アセットの管理情報
+- `mkdocs.yml`: MkDocs設定（プラグイン・テーマ）
+- `src/materials/test_material/`: テスト用教材定義
+
+### テストコマンド
+```bash
+# 生成テスト
+python src/materials/test_material/test_material_main.py
+
+# サーバー起動
+mkdocs serve
+
+# 構文チェック（追加時）
+python -m py_compile src/core/*.py
+```
+
+## 問題解決における新行動原理
+
+### 知識の限界認識と外部情報活用
+1. **自身知識の限界を認める**: 従来の手法で解決できない問題に直面した場合、知識不足を率直に認める
+2. **インターネット検索の積極活用**: 
+   - WebSearch機能を使用してMermaid.js、ドラッグ&ドロップ、CSS適用順序等の最新情報を収集
+   - Stack Overflow、GitHub Issues、公式ドキュメントから実装例を学習
+   - 類似問題の解決事例を調査し、新しいアプローチを発見
+3. **視野の拡大**: 
+   - 単一の原因に固執せず、複数要因の可能性を考慮
+   - システム全体の相互作用を意識した原因分析
+   - 想定外の副作用や依存関係の存在を前提とする
+
+### 実証的問題解決プロセス
+1. **仮説の多様化**: 1つの仮説に依存せず、複数の可能性を並行検証
+2. **段階的検証**: 
+   - 最小限の変更で効果を確認
+   - 各修正の影響を個別に測定
+   - 予期しない副作用の早期発見
+3. **外部知見の統合**: 
+   - 業界標準の実装パターンとの比較
+   - 既知の問題と解決策の調査
+   - コミュニティのベストプラクティス適用
+
+### 失敗からの学習強化
+1. **失敗パターンの体系化**: 効果的でなかった手法を明確に記録
+2. **代替手法の優先適用**: 従来手法の限界が明らかな場合は新手法を優先
+3. **継続的知識更新**: 解決後も関連する最新情報を収集し、知識ベースを拡充
+
+## 解決済み問題の記録（簡略版）
+
+### CSS変数置換エラー（2025-08-20）
+**核心**: asset_generator.pyのテンプレート内で `{{variable}}` 形式と置換処理 `{variable}` の不整合
+**決め手**: テンプレート内の `{{` をすべて `{` に統一
+**状態**: ✅ 解決済み
+
+### Mermaid.js表示問題（2025-08-21）
+**核心**: mkdocs.ymlで `pymdownx.superfences` の `custom_fences` 設定が欠落
+**決め手**: 外部知識調査により正しい設定を発見・適用
+```yaml
+pymdownx.superfences:
+  custom_fences:
+  - name: mermaid
+    class: mermaid
+    format: !!python/name:mermaid2.fence_mermaid_custom
+```
+**状態**: ✅ 解決済み
+
+### ドラッグ&ドロップ問題（2025-08-21）
+**核心**: HTML文字列コピー方式とプレースホルダーテキスト判定の不具合
+**決め手**: 外部知識に基づく実DOM要素移動方式への変更
+- HTML文字列転送削除 → 直接DOM要素移動
+- プレースホルダー判定に `area.children.length === 0` 条件追加
+**状態**: ✅ 解決済み
+
+### single-choice機能誤削除（2025-08-21）
+**核心**: データソース調査不足による必要機能の誤削除
+**決め手**: chapter5.ymlでの実存在確認とJavaScript関数完全復旧
+**教訓**: 複数YMLファイル存在の可能性を常に考慮する
+**状態**: ✅ 解決済み
+
+## この設定の目的
+初心者レベルのミスを防ぎ、システム全体の理解に基づいた確実な作業を保証する。
+
+## 未解決問題の記録
+
+### 2025-08-21: 複数の表示・機能問題
+**問題**: 
+1. **Mermaid.js依然未解決**: 図表がコードのままで表示、コンソールに「Mermaid.jsが読み込まれていません。手動で初期化を試みます。」
+2. **単一クイズ機能不良**: 「答えを確認」が生テキスト表示、クリック時「クイズデータが見つかりません」エラー
+3. **3章の図表非表示**: 図・表が表示されていない状態
+4. **2章の表表示問題**: 組込みシステムの特徴表の表示範囲が狭すぎて確認不可、データは存在
+5. **material内部構造問題**: 構造の見直しが必要
+
+**分析仮説**:
+- **Mermaid**: custom_fences設定だけでは不十分、プラグイン初期化やライブラリ読み込みに問題
+- **単一クイズ**: データソースの不整合またはJavaScript関数とデータ構造のミスマッチ
+- **図表非表示**: CSVデータ不足やパス設定問題、生成プロセスの失敗
+- **表表示**: CSS幅制限またはレスポンシブ設定の問題
+- **構造問題**: YMLファイル分散による管理複雑化
+
+**要調査項目**:
+- material内部構造の詳細確認
+- 生成物（HTML/CSS/JS）の内容検証
+- データソースとJavaScript関数の対応関係
+- MkDocsプラグイン初期化プロセス
+
+**状態**: 🔍 調査・解決待ち
+
+---
+
+## materials内部構造の現状と改善方針
+
+本セクションでは、現在の`src/materials`ディレクトリの内部構造について記述します。この構造は、プロジェクトの初期段階で構築されたものであり、**現在も改善途中**にあります。したがって、この構造を厳密に死守する必要性は薄く、今後の開発において、より堅牢で効率的な構造へと積極的に改善提案を行うことを推奨します。
+
+### 現状のmaterials内部構造 (`src/materials/test_material`を例に)
+
+```
+src/materials/test_material/
+├── __init__.py
+├── test_material_main.py       # ビルドの起点。アセット生成、mkdocs.yml更新を統括。
+├── test_material_config.py     # 教材の基本設定（Pythonファイルで定義）。
+├── test_material_contents.py   # コンテンツ全体の生成管理。章ごとのMarkdown生成、図表・表・用語集などの呼び出し。
+├── test_material_assets.py     # 教材固有のCSS/JSテンプレート定義（Python文字列として定義）。
+├── test_material_charts.py     # グラフや図の生成ロジック（データがPythonコード内にハードコードされている場合がある）。
+├── test_material_tables.py     # 表の生成ロジック（データがPythonコード内にハードコードされている場合がある）。
+├── test_material_terms.py      # 用語集、FAQ、TIPSのデータ（Pythonオブジェクトとして定義）。
+├── content/                    # コンテンツデータソース
+│   ├── chapter1.yml            # 各章のコンテンツ定義（YAML）。
+│   ├── chapter2.yml
+│   ├── chapter3.yml
+│   ├── chapter4.yml
+│   ├── chapter5.yml
+│   └── quizzes.yml             # クイズデータ（YAML）。
+├── faq.md                      # 静的なFAQページ（Markdown）。
+├── glossary.md                 # 静的な用語集ページ（Markdown）。
+├── index.md                    # 静的なトップページ（Markdown）。
+└── tips.md                     # 静的なTIPSページ（Markdown）。
+```
+
+### 改善に向けた行動方針
+
+上記の現状を踏まえ、今後の`materials`構造の改善は、以下の点を重視して積極的に提案・実行されるべきです。
+
+1.  **Core機能との連携強化と最大限の活用:**
+    *   `src/core`が提供する`DocumentBuilder`、`ChartGenerator`、`TableGenerator`、`KnowledgeManager`、`AssetGenerator`、`MkDocsManager`といった機能を最大限に活用し、`materials`側のコードをよりシンプルかつ効率的にします。
+    *   Core機能で対応可能な部分は、`materials`側で独自に実装するのではなく、Core機能への委譲を優先します。
+
+2.  **静的データとロジックの明確な分離:**
+    *   **データはYAMLへ:** `test_material_config.py`、`test_material_terms.py`、`test_material_charts.py`、`test_material_tables.py`内に現在Pythonコードとして定義されている静的なデータ（教材設定、用語、図表データ、表データなど）は、`content/`ディレクトリ内のYAMLファイル（例: `config.yml`, `terms.yml`, `charts_data.yml`, `tables_data.yml`など）へ移行することを積極的に提案します。これにより、データとロジックの分離を徹底し、コンテンツ作成者にとっての視認性と編集のしやすさを向上させます。
+    *   **テンプレートは専用ファイルへ:** `test_material_assets.py`内にPython文字列として定義されているCSS/JSテンプレートは、`templates/`ディレクトリ内の独立したファイル（例: `custom.css.jinja`, `interactive.js.jinja`など）へ移行することを提案します。
+    *   **静的Markdownファイルの排除:** `faq.md`, `glossary.md`, `index.md`, `tips.md`のように、`materials`ディレクトリ直下に静的なMarkdownファイルが存在する場合、これらは`KnowledgeManager`などのCore機能によって動的に生成されるべきです。静的なMarkdownファイルは、動的な生成プロセスとの競合や混乱を招く可能性があるため、原則として排除し、Core機能による動的生成に一本化することを提案します。
+
+3.  **生成物との連携を重視した構造:**
+    *   `materials`の構造は、最終的にMkDocsによって生成されるウェブドキュメントの構造と、その中でCore機能がどのように連携するかを常に意識して設計されます。
+    *   例えば、チャプター固有の図表データは、そのチャプターのYAMLファイル内に記述されるのが最も自然であるなど、利用実態に即したデータ配置を重視します。
+
+4.  **積極的な改善提案と柔軟性:**
+    *   現在の構造はあくまで出発点であり、より良い方法が見つかれば、積極的に改善提案を行います。
+    *   ユーザー様のフィードバックや、新しい要件に応じて、構造は柔軟に変化し得るものとします。
+
+**重要**: この指針に従わない場合、システムを破損させる可能性が高い。外部知識の積極活用により、従来手法の限界を突破する。
+
+## 最新の更新内容（2025-08-22）
+
+### materials内部構造改善実装 - 完了 ✅
+
+#### 実装内容
+1. **YAML駆動型データ管理への移行完了**
+   - `src/materials/test_material/content/config.yml`: 教材設定とテンプレート変数
+   - `src/materials/test_material/content/terms.yml`: 専門用語定義
+   - `src/materials/test_material/content/faq.yml`, `tips.yml`: FAQ・TIPS定義
+   - `src/materials/test_material/content/quizzes.yml`: クイズデータ
+   - `src/materials/test_material/content/chapter6.yml`: Core機能完全テスト章
+   - `src/materials/test_material/content/chapter7.yml`: 機能拡張とカスタマイズ章
+
+2. **テンプレート外部化の実装完了**
+   - `src/materials/test_material/templates/custom.css.jinja`: CSS生成テンプレート
+   - `src/materials/test_material/templates/interactive.js.jinja`: JS生成テンプレート
+   - 動的テンプレート読み込みとカスタムテンプレート登録機能実装
+
+3. **Core機能最大活用への移行完了**
+   - `test_material_contents.py`: 1000+行から簡潔なCore機能活用型へ書き直し完了
+   - `KnowledgeManager`による動的用語集・FAQ・TIPS生成実装
+   - 重複機能削除、Core機能への委譲実装
+
+4. **ファイル構造最適化完了**
+   - 廃止ファイル削除: `test_material_config.py`, `test_material_assets.py`, `test_material_charts.py`, `test_material_tables.py`, `test_material_terms.py`
+   - 静的Markdownファイル削除: `faq.md`, `glossary.md`, `index.md`, `tips.md`
+   - インポート構造整理、モジュール依存関係最適化
+
+5. **動作確認済み**
+   - ✅ テスト資料生成成功: `python src/materials/test_material/test_material_main.py`
+   - ✅ MkDocsサーバー正常動作: `mkdocs serve` at http://127.0.0.1:8000/
+   - ✅ Mermaid2プラグイン動作確認（第4章で4図表検出）
+   - ✅ アセット生成完了（CSS3ファイル、JS4ファイル）
+
+#### 改善後の構造
+```
+src/materials/test_material/
+├── __init__.py                     # 簡素化済み
+├── test_material_main.py          # YAML駆動・テンプレート外部化対応
+├── test_material_contents.py      # Core機能最大活用、大幅簡素化
+├── content/                       # データソース（YAML）
+│   ├── config.yml                # 教材設定・テンプレート変数  
+│   ├── terms.yml                 # 専門用語定義
+│   ├── faq.yml                   # FAQ定義
+│   ├── tips.yml                  # TIPS定義
+│   ├── quizzes.yml               # クイズデータ
+│   ├── chapter1.yml - chapter5.yml  # 既存章
+│   ├── chapter6.yml              # Core機能完全テスト章
+│   └── chapter7.yml              # 機能拡張とカスタマイズ章
+└── templates/                    # テンプレートファイル（Jinja2）
+    ├── custom.css.jinja          # CSS生成テンプレート
+    └── interactive.js.jinja      # JS生成テンプレート
+```
+
+#### 今後の課題（メモ）
+- 第6章・第7章のコンテンツがまだ生成されていない（YAMLファイルは作成済み）
+- 各章個別のナビゲーション設定更新の検討
+- Core機能の新機能開発時の章6・7更新
+
+**状態**: ✅ 材料内部構造改善実装 - 完了（2025-08-22）

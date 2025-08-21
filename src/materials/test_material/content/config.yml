@@ -1,0 +1,104 @@
+# テスト資料固有の設定
+# IT・組み込み技術入門テーマ
+
+# テスト資料のメタデータ
+material_config:
+  title: "IT・組み込み技術入門"
+  material_id: "test_material"
+  version: "2.0.0"
+  author: "AI Learning Material Creator"
+  target_audience: "プログラミング初心者・組み込みエンジニア志望者"
+  purpose: "ITと組み込み技術の基礎を学びながら、学習システムの全機能を確認"
+  description: "プログラミングの基礎から組み込みシステムまで、実践的に学べる入門資料"
+  prerequisites:
+    - "基本的なPC操作"
+  learning_objectives:
+    - "プログラミングの基本概念を理解する"
+    - "組み込みシステムの特徴を理解する" 
+    - "ハードウェアとソフトウェアの関係を理解する"
+    - "リアルタイムシステムの基礎を理解する"
+    - "Core機能の拡張性を理解する"
+
+# MkDocs設定のオーバーライド
+mkdocs_material_override:
+  theme:
+    palette:
+      primary: "blue-grey"
+      accent: "cyan"
+
+# テスト資料用のカスタムカラー
+custom_colors:
+  embedded: "#607D8B"    # Blue Grey
+  hardware: "#00BCD4"    # Cyan  
+  software: "#4CAF50"    # Green
+  realtime: "#FF5722"    # Deep Orange
+  core_feature: "#9C27B0"    # Purple
+  extension: "#795548"   # Brown
+
+# CSS/JSテンプレート設定
+template_variables:
+  css:
+    primary_color: "#1976D2"
+    secondary_color: "#FFC107" 
+    background_color: "#ffffff"
+    text_color: "#333333"
+    code_background: "#f5f5f5"
+    tooltip_bg: "#263238"
+    tooltip_text: "#ffffff"
+    quiz_correct: "#4CAF50"
+    quiz_incorrect: "#F44336"
+    admonition_info: "#2196F3"
+    admonition_warning: "#FF9800"
+    admonition_danger: "#F44336"
+  
+  js:
+    debug_mode: false
+    animation_speed: 300
+    auto_save: true
+    theme: "default"
+
+# 章構成定義
+chapters:
+  - id: "chapter01"
+    title: "第1章: プログラミングの基礎"
+    file: "chapter1.yml"
+    
+  - id: "chapter02" 
+    title: "第2章: 組み込みシステム入門"
+    file: "chapter2.yml"
+    
+  - id: "chapter03"
+    title: "第3章: ハードウェアとソフトウェア"
+    file: "chapter3.yml"
+    
+  - id: "chapter04"
+    title: "第4章: リアルタイムシステム" 
+    file: "chapter4.yml"
+    
+  - id: "chapter05"
+    title: "第5章: インタラクティブクイズ機能"
+    file: "chapter5.yml"
+    
+  - id: "chapter06"
+    title: "第6章: Core機能完全テスト"
+    file: "chapter6.yml"
+    
+  - id: "chapter07"
+    title: "第7章: 機能拡張とカスタマイズ"
+    file: "chapter7.yml"
+
+# ナビゲーション設定
+navigation:
+  main_sections:
+    - title: "ホーム"
+      path: "test_material/index.md"
+    - title: "学習章"
+      children: "chapters"  # chaptersセクションから自動生成
+    - title: "参考資料"
+      children:
+        - title: "用語集"
+          path: "test_material/glossary.md"
+        - title: "FAQ"
+          path: "test_material/faq.md"
+        - title: "TIPS"
+          path: "test_material/tips.md"

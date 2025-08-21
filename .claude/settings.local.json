@@ -6,7 +6,11 @@
       "Bash(pip install:*)",
       "Bash(grep:*)",
       "Bash(cp:*)",
-      "Bash(mkdocs serve:*)"
+      "Bash(mkdocs serve:*)",
+      "Bash(powershell:*)",
+      "WebSearch",
+      "Bash(rm:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": [],
