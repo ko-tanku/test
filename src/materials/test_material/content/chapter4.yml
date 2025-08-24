@@ -1,150 +1,93 @@
-title: "第4章: リアルタイムシステム"
-overview: "リアルタイムシステムの概念を学び、Mermaid図表を使ってシステム構成を理解します。"
+# C:\Users\subka\Documents\my-project\src\materials\test_material\content\chapter4.yml
 
+title: "第4章 高度なビジュアル要素とインタラクション"
 sections:
-  - title: "リアルタイムシステムの分類"
+  - title: "1. Mermaid.jsによる図表作成"
     contents:
-      - type: "mermaid"
-        title: "図4-1: リアルタイムシステムの分類"
+      - type: text
+        text: "Mermaid構文から、フローチャートやシーケンス図を直接生成する機能のテストです。"
+      - type: mermaid
+        title: "基本的なフローチャート"
         graph: |
-          graph TD
-              A[リアルタイムシステム] --> B[ハードリアルタイム]
-              A --> C[ソフトリアルタイム]
-              
-              B --> D[航空機制御システム]
-              B --> E[原子力発電所制御]
-              B --> F[医療機器制御]
-              
-              C --> G[動画ストリーミング]
-              C --> H[オンラインゲーム]
-              C --> I[音声通話システム]
-              
-              style B fill:#ffcccc
-              style C fill:#ccffcc
-      - type: "admonition"
-        admonition_type: "warning"
-        title: "ハードリアルタイムシステム"
-        text: "デッドラインを1回でも守れないとシステム全体が破綻します。\n例：航空機の制御システム、原子力発電所の制御"
-        collapsible: false
-      - type: "admonition"
-        admonition_type: "info"
-        title: "ソフトリアルタイムシステム"
-        text: "デッドラインを時々守れなくても、品質が低下するだけです。\n例：動画ストリーミング、オンラインゲーム"
-        collapsible: false
+          graph TD;
+              A[Start] --> B{Is it working?};
+              B -->|Yes| C[Great!];
+              B -->|No| D[Check logs];
 
-  - title: "タスクスケジューリング"
+  - title: "2. インタラクティブグラフ (Plotly)"
     contents:
-      - type: "mermaid"
-        title: "図4-2: タスクスケジューリングの流れ"
-        graph: |
-          sequenceDiagram
-              participant S as スケジューラ
-              participant T1 as タスク1（高優先度）
-              participant T2 as タスク2（低優先度）
-              participant CPU as CPU
-              
-              S->>T2: 実行開始
-              T2->>CPU: 処理中...
-              Note right of T1: 緊急タスク発生！
-              T1->>S: 実行要求
-              S->>T2: プリエンプション
-              T2-->>S: 中断
-              S->>T1: 実行開始
-              T1->>CPU: 緊急処理
-              T1-->>S: 完了
-              S->>T2: 実行再開
-              T2->>CPU: 処理継続
+      - type: text
+        text: "ユーザーが操作できるインタラクティブなグラフのテストです。これらはPlotly.jsを利用して描画されます。"
+      - type: chart
+        chart_type: interactive
+        caption: "状態遷移グラフ：ボタンをクリックすると、表示されるデータが切り替わります。"
+        config:
+          interactive_type: state_transition
+          title: "状態遷移デモ"
+        data:
+          states:
+            - name: "状態A"
+              x: [1, 2, 3]
+              y: [2, 5, 3]
+            - name: "状態B"
+              x: [1, 2, 3]
+              y: [4, 1, 7]
 
-  - title: "組み込みシステムアーキテクチャ"
-    contents:
-      - type: "mermaid"
-        title: "図4-3: 典型的な組み込みシステム構成"
-        graph: |
-          graph LR
-              subgraph "センサー類"
-                  S1[温度センサー]
-                  S2[圧力センサー]
-                  S3[振動センサー]
-              end
-              
-              subgraph "マイクロコントローラー"
-                  MCU[CPU]
-                  RAM[RAM]
-                  ROM[ROM/Flash]
-                  GPIO[GPIO]
-              end
-              
-              subgraph "アクチュエータ"
-                  M1[モーター]
-                  M2[バルブ]
-                  LED[LED]
-              end
-              
-              subgraph "通信インターフェース"
-                  UART[UART]
-                  I2C[I2C]
-                  SPI[SPI]
-              end
-              
-              S1 --> GPIO
-              S2 --> GPIO
-              S3 --> GPIO
-              
-              GPIO --> MCU
-              MCU --> RAM
-              MCU --> ROM
-              
-              MCU --> M1
-              MCU --> M2
-              MCU --> LED
-              
-              MCU --> UART
-              MCU --> I2C
-              MCU --> SPI
-              
-              style MCU fill:#e1f5fe
-              style RAM fill:#f3e5f5
-              style ROM fill:#f3e5f5
+      - type: chart
+        chart_type: interactive
+        caption: "ドロップダウンフィルタ：ドロップダウンメニューから表示するデータセットを選択できます。"
+        config:
+          interactive_type: dropdown_filter
+        data:
+          datasets:
+            "データセット1":
+              x: [1, 2, 3, 4]
+              y: [10, 11, 12, 13]
+            "データセット2":
+              x: [1, 2, 3, 4]
+              y: [15, 12, 10, 9]
 
-  - title: "スケジューリングアルゴリズム"
+  - title: "3. アニメーションGIF"
     contents:
-      - type: "mermaid"
-        title: "図4-4: 優先度ベーススケジューリング"
-        graph: |
-          gantt
-              title 優先度ベーススケジューリング
-              dateFormat X
-              axisFormat %s
-              
-              section 高優先度タスク
-              タスクA（優先度1）    :active, a1, 0, 2
-              タスクA（優先度1）    :active, a2, 5, 3
-              
-              section 中優先度タスク
-              タスクB（優先度2）    :b1, 2, 2
-              タスクB（優先度2）    :b2, 8, 2
-              
-              section 低優先度タスク
-              タスクC（優先度3）    :c1, 4, 1
-              タスクC（優先度3）    :c2, 10, 2
-      - type: "quiz"
-        question_data:
-          question: "優先度ベースのスケジューリングで最も重要な概念は？"
-          options:
-            - "FIFO"
-            - "プリエンプション"
-            - "ラウンドロビン"
-          correct: 1
-          hint: "高優先度タスクが低優先度タスクを中断できる仕組み"
-          explanation: "プリエンプションにより、緊急タスクが即座に実行されます。"
+      - type: text
+        text: "複数のデータフレームからアニメーションGIFを生成する機能のテストです。"
+      - type: chart
+        chart_type: animation
+        caption: "データ変化のアニメーション"
+        config:
+          filename: "simple_animation.gif"
+          fps: 2
+          xlabel: "X軸"
+          ylabel: "Y軸"
+          xlim: [0, 5]
+          ylim: [0, 15]
+        data:
+          frames:
+            - type: line
+              title: "フレーム1"
+              x: [1, 2, 3]
+              y: [2, 5, 3]
+            - type: line
+              title: "フレーム2"
+              x: [1, 2, 3]
+              y: [8, 4, 10]
+            - type: line
+              title: "フレーム3"
+              x: [1, 2, 3]
+              y: [12, 9, 14]
 
-  - title: "まとめ"
+  - title: "4. その他のCore機能"
     contents:
-      - type: "summary"
-        title: "第4章の要点"
-        points:
-          - "リアルタイムシステムには「ハード」と「ソフト」の2種類がある"
-          - "デッドラインの厳格さが異なる"
-          - "プリエンプションにより優先度の高いタスクが実行される"
-          - "スケジューリングアルゴリズムがシステムの性能を左右する"
-          - "Mermaid図表により複雑なシステムを視覚的に理解できる"
+      - type: text
+        text: "新しく追加されたCore機能の呼び出しテストです。"
+      - type: admonition
+        admonition_type: note
+        title: "学習オブジェクトの呼び出し"
+        text: "↓ここに`sample_object.yml`の内容が展開されるはずです。"
+      - type: learning_object
+        id: sample_object
+      - type: horizontal_rule
+      - type: feedback_form
+        form_url: "https://docs.google.com/forms/d/e/your_form_id/viewform?usp=sf_link"
+        title: "この章の理解度アンケート"
+        description: "この章の内容は分かりやすかったですか？改善のため、ぜひご意見をお聞かせください。"

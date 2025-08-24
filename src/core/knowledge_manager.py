@@ -86,6 +86,26 @@ class KnowledgeManager:
         """
         for term_obj in term_list:
             self.register_term(term_obj)
+
+    def register_faq_batch(self, faq_list: List[FaqItem]):
+        """
+        複数のFAQ項目を一括登録
+        
+        Args:
+            faq_list: FaqItemオブジェクトのリスト
+        """
+        for faq_item in faq_list:
+            self.register_faq_item(faq_item)
+
+    def register_tips_batch(self, tip_list: List[TipItem]):
+        """
+        複数のTIPS項目を一括登録
+        
+        Args:
+            tip_list: TipItemオブジェクトのリスト
+        """
+        for tip_item in tip_list:
+            self.register_tip_item(tip_item)
             
     def register_faq_item(self, faq_item: FaqItem):
         """

@@ -1,9 +1,11 @@
-# 第3章: ハードウェアとソフトウェア
+# 第3章 静的グラフ機能
 
-ハードウェアとソフトウェアの関係を、様々な図表を使って理解します。
+## 各種グラフ
 
-## CPUの性能推移
+**棒グラフ (Plotly)**
 
-## メモリ階層
+<iframe src="../../charts/bar_chart.html" width="100%"  style="border: 1px solid #ddd; border-radius: 4px;" scrolling="no" class="auto-height-iframe"></iframe>
 
-## プロセッサの市場シェア
+**折れ線グラフ (Matplotlib)**
+
+<iframe src="../../charts/line_chart.html" width="100%"  style="border: 1px solid #ddd; border-radius: 4px;" scrolling="no" class="auto-height-iframe"></iframe>

@@ -136,7 +136,7 @@ class DocumentBuilder:
             text_with_protected_links = text_with_protected_links.replace(
                 f"__PROTECTED_LINK_{i}__", protected_link
             )
-        self.add_paragraph(text_with_protected_links)
+        self.add_raw_markdown(text_with_protected_links)
         
     def add_code_block(self, code: str, lang: str = "python"):
         """
@@ -532,3 +532,15 @@ class DocumentBuilder:
         self.content_buffer.append(graph_string)
         self.content_buffer.append("```")
         self.content_buffer.append("")
+
+    def add_feedback_form(self, form_url: str, title: str = "フィードバックのお願い", description: str = "この学習資料をより良くするために、皆様のご意見をお聞かせください。"):
+        """
+        外部のフィードバックフォームへのリンクを含むセクションを追加する。
+
+        Args:
+            form_url: 埋め込むフォームのURL（Google Formsなど）。
+            title: セクションのタイトル。
+            description: フォームの説明文。
+        """
+        content = f'{description}\n\n<a href="{form_url}" target="_blank" rel="noopener noreferrer" class="md-button md-button--primary">フィードバックを送信する</a>'
+        self.add_admonition("question", title, content, False)

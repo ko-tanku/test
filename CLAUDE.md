@@ -151,26 +151,7 @@ pymdownx.superfences:
 ### 現状のmaterials内部構造 (`src/materials/test_material`を例に)
 
 ```
-src/materials/test_material/
-├── __init__.py
-├── test_material_main.py       # ビルドの起点。アセット生成、mkdocs.yml更新を統括。
-├── test_material_config.py     # 教材の基本設定（Pythonファイルで定義）。
-├── test_material_contents.py   # コンテンツ全体の生成管理。章ごとのMarkdown生成、図表・表・用語集などの呼び出し。
-├── test_material_assets.py     # 教材固有のCSS/JSテンプレート定義（Python文字列として定義）。
-├── test_material_charts.py     # グラフや図の生成ロジック（データがPythonコード内にハードコードされている場合がある）。
-├── test_material_tables.py     # 表の生成ロジック（データがPythonコード内にハードコードされている場合がある）。
-├── test_material_terms.py      # 用語集、FAQ、TIPSのデータ（Pythonオブジェクトとして定義）。
-├── content/                    # コンテンツデータソース
-│   ├── chapter1.yml            # 各章のコンテンツ定義（YAML）。
-│   ├── chapter2.yml
-│   ├── chapter3.yml
-│   ├── chapter4.yml
-│   ├── chapter5.yml
-│   └── quizzes.yml             # クイズデータ（YAML）。
-├── faq.md                      # 静的なFAQページ（Markdown）。
-├── glossary.md                 # 静的な用語集ページ（Markdown）。
-├── index.md                    # 静的なトップページ（Markdown）。
-└── tips.md                     # 静的なTIPSページ（Markdown）。
+
 ```
 
 ### 改善に向けた行動方針
@@ -196,63 +177,5 @@ src/materials/test_material/
 
 **重要**: この指針に従わない場合、システムを破損させる可能性が高い。外部知識の積極活用により、従来手法の限界を突破する。
 
-## 最新の更新内容（2025-08-22）
+## 最新の更新内容
 
-### materials内部構造改善実装 - 完了 ✅
-
-#### 実装内容
-1. **YAML駆動型データ管理への移行完了**
-   - `src/materials/test_material/content/config.yml`: 教材設定とテンプレート変数
-   - `src/materials/test_material/content/terms.yml`: 専門用語定義
-   - `src/materials/test_material/content/faq.yml`, `tips.yml`: FAQ・TIPS定義
-   - `src/materials/test_material/content/quizzes.yml`: クイズデータ
-   - `src/materials/test_material/content/chapter6.yml`: Core機能完全テスト章
-   - `src/materials/test_material/content/chapter7.yml`: 機能拡張とカスタマイズ章
-
-2. **テンプレート外部化の実装完了**
-   - `src/materials/test_material/templates/custom.css.jinja`: CSS生成テンプレート
-   - `src/materials/test_material/templates/interactive.js.jinja`: JS生成テンプレート
-   - 動的テンプレート読み込みとカスタムテンプレート登録機能実装
-
-3. **Core機能最大活用への移行完了**
-   - `test_material_contents.py`: 1000+行から簡潔なCore機能活用型へ書き直し完了
-   - `KnowledgeManager`による動的用語集・FAQ・TIPS生成実装
-   - 重複機能削除、Core機能への委譲実装
-
-4. **ファイル構造最適化完了**
-   - 廃止ファイル削除: `test_material_config.py`, `test_material_assets.py`, `test_material_charts.py`, `test_material_tables.py`, `test_material_terms.py`
-   - 静的Markdownファイル削除: `faq.md`, `glossary.md`, `index.md`, `tips.md`
-   - インポート構造整理、モジュール依存関係最適化
-
-5. **動作確認済み**
-   - ✅ テスト資料生成成功: `python src/materials/test_material/test_material_main.py`
-   - ✅ MkDocsサーバー正常動作: `mkdocs serve` at http://127.0.0.1:8000/
-   - ✅ Mermaid2プラグイン動作確認（第4章で4図表検出）
-   - ✅ アセット生成完了（CSS3ファイル、JS4ファイル）
-
-#### 改善後の構造
-```
-src/materials/test_material/
-├── __init__.py                     # 簡素化済み
-├── test_material_main.py          # YAML駆動・テンプレート外部化対応
-├── test_material_contents.py      # Core機能最大活用、大幅簡素化
-├── content/                       # データソース（YAML）
-│   ├── config.yml                # 教材設定・テンプレート変数  
-│   ├── terms.yml                 # 専門用語定義
-│   ├── faq.yml                   # FAQ定義
-│   ├── tips.yml                  # TIPS定義
-│   ├── quizzes.yml               # クイズデータ
-│   ├── chapter1.yml - chapter5.yml  # 既存章
-│   ├── chapter6.yml              # Core機能完全テスト章
-│   └── chapter7.yml              # 機能拡張とカスタマイズ章
-└── templates/                    # テンプレートファイル（Jinja2）
-    ├── custom.css.jinja          # CSS生成テンプレート
-    └── interactive.js.jinja      # JS生成テンプレート
-```
-
-#### 今後の課題（メモ）
-- 第6章・第7章のコンテンツがまだ生成されていない（YAMLファイルは作成済み）
-- 各章個別のナビゲーション設定更新の検討
-- Core機能の新機能開発時の章6・7更新
-
-**状態**: ✅ 材料内部構造改善実装 - 完了（2025-08-22）

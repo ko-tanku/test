@@ -1,11 +1,11 @@
 extra: {}
 extra_css:
+- custom_high_contrast.css
 - custom_dark.css
 - custom.css
-- custom_high_contrast.css
 extra_javascript:
-- custom.js
 - quiz.js
+- custom.js
 markdown_extensions:
 - admonition
 - pymdownx.details

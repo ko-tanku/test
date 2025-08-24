@@ -1,81 +1,52 @@
-title: "第1章: プログラミングの基礎"
-overview: "プログラミングの基本概念を学び、様々なMarkdown要素をテストします。"
-
+title: "第1章 基本的なドキュメント要素"
 sections:
-  - title: "プログラミングとは"
+  - title: "テキストと見出し"
     contents:
-      - type: "text"
-        text: "プログラミングとは、コンピュータに対する**命令**を記述することです。"
-      - type: "quote"
-        text: |
-          プログラムとは、料理のレシピのようなもの。
-          材料（データ）と手順（アルゴリズム）を組み合わせて、
-          目的の結果を得るための指示書です。
-      - type: "horizontal_rule"
+      - type: heading
+        level: 2
+        text: "これはレベル2の見出しです"
+      - type: text
+        text: "これは通常の段落テキストです。専門用語「Core」と「Material」にはツールチップが表示されるはずです。"
+        terms: "terms.yml" # terms.ymlの用語を参照
+      - type: horizontal_rule
 
-  - title: "プログラミング言語の種類"
+  - title: "リストと引用"
     contents:
-      - type: "tabs"
-        tabs_data:
-          Python: |
-            ```python
-            # Pythonの例
-            def hello():
-                print("Hello, World!")
-            
-            hello()
-            ```
-          C言語: |
-            ```c
-            // C言語の例
-            #include <stdio.h>
-            
-            int main() {
-                printf("Hello, World!\n");
-                return 0;
-            }
-            ```
-          JavaScript: |
-            ```javascript
-            // JavaScriptの例
-            function hello() {
-                console.log("Hello, World!");
-            }
-            
-            hello();
-            ```
-      - type: "table"
-        table_type: "comparison"
-        categories: ["Python", "C言語", "JavaScript"]
-        items: ["用途", "実行速度", "学習難易度", "組み込み適性"]
-        data:
-          - ["汎用・AI", "組み込み・OS", "Web開発"]
-          - ["遅い", "非常に速い", "中程度"]
-          - ["簡単", "難しい", "中程度"]
-          - ["△", "◎", "×"]
-        title: "プログラミング言語の比較"
-        filename: "language_comparison"
+      - type: list
+        list_type: "unordered"
+        items: ["順不同リスト1", "順不同リスト2"]
+      - type: list
+        list_type: "ordered"
+        items: ["順序付きリスト1", "順序付きリスト2"]
+      - type: quote
+        text: "これは引用ブロックです。
+複数行にわたる引用も可能です。"
 
-  - title: "基本的なプログラム構造"
+  - title: "コードブロック"
     contents:
-      - type: "admonition"
-        admonition_type: "note"
-        title: "重要な概念"
-        text: "すべてのプログラムは「順次」「分岐」「反復」の3つの基本構造で構成されます。"
-        collapsible: false
-      - type: "code_with_output"
-        code: |
-          # 順次処理の例
-          a = 10
-          b = 20
-          c = a + b
-          print(f"{a} + {b} = {c}")
-        output: "10 + 20 = 30"
+      - type: code
         lang: "python"
+        code: |
+          def hello():
+              print("Hello, World!")
+      - type: code_with_output
+        lang: "bash"
+        code: "echo 'Hello'"
+        output: "Hello"
         output_label: "実行結果"
 
-exercises:
-  - question: "プログラミングの3つの基本構造を挙げてください。"
-    answer: "順次・分岐・反復"
-    explanation: "これらの構造を組み合わせることで、どんな複雑なプログラムも作成できます。"
-    difficulty: "easy"
+  - title: "Admonitionとタブ"
+    contents:
+      - type: admonition
+        admonition_type: "note"
+        title: "ノート"
+        text: "これはノートタイプのAdmonitionです。"
+      - type: admonition
+        admonition_type: "warning"
+        title: "警告（折りたたみ可能）"
+        text: "これは折りたたみ可能な警告です。"
+        collapsible: true
+      - type: tabs
+        tabs_data:
+          "タブ1": "これはタブ1のコンテンツです。"
+          "タブ2": "これはタブ2のコンテンツです。"

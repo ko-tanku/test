@@ -1,131 +1,20 @@
-# 専門用語定義
-# IT・組み込み技術テーマ
-
+# KnowledgeManagerが利用する用語、FAQ、TIPSのテストデータを定義します。
 terms:
-  - term: "マイコン"
-    definition: "マイクロコントローラの略。CPU、メモリ、I/Oなどを1チップに集積した小型コンピュータ。"
-    category: "ハードウェア"
-    related_terms: ["CPU", "組み込みシステム", "SoC"]
-    first_chapter: "第2章"
-    context_snippets:
-      - "マイコンは組み込みシステムの心臓部です。"
-      - "8ビットから32ビットまで様々な種類があります。"
+  - term: "Core"
+    definition: "本プロジェクトにおける、学習資料自動生成フレームワークの心臓部。"
+    category: "基本概念"
+  - term: "Material"
+    definition: "Core機能を利用して生成される、個別の学習資料のこと。"
+    category: "基本概念"
 
-  - term: "センサー"
-    definition: "物理量（温度、圧力、光など）を電気信号に変換する素子。"
-    category: "ハードウェア"
-    related_terms: ["アクチュエータ", "A/D変換"]
-    first_chapter: "第2章"
-    context_snippets:
-      - "センサーからの入力を処理して、適切な制御を行います。"
+faq:
+  - question: "この教材の目的は何ですか？"
+    answer: "Coreフレームワークの全機能が正しく動作するかを網羅的にテストすることです。"
+  - question: "YAMLファイルは何に使われますか？"
+    answer: "学習コンテンツのデータソースとして利用されます。ロジックとデータを分離するための重要な要素です。"
 
-  - term: "アクチュエータ"
-    definition: "電気信号を物理的な動作（モーター回転、バルブ開閉など）に変換する装置。"
-    category: "ハードウェア"
-    related_terms: ["センサー", "サーボモーター"]
-    first_chapter: "第2章"
-
-  - term: "RTOS"
-    definition: "Real-Time Operating System。リアルタイム性を保証するOS。"
-    category: "ソフトウェア"
-    related_terms: ["リアルタイムシステム", "スケジューリング"]
-    first_chapter: "第4章"
-    context_snippets:
-      - "RTOSを使用することで、複雑なタスク管理が可能になります。"
-
-  - term: "割り込み"
-    definition: "CPUの通常処理を一時中断して、緊急の処理を実行する仕組み。"
-    category: "システム"
-    related_terms: ["ISR", "プリエンプション"]
-    first_chapter: "第3章"
-
-  - term: "デバッガ"
-    definition: "プログラムのバグを発見・修正するためのツール。"
-    category: "開発ツール"
-    related_terms: ["IDE", "エミュレータ"]
-    first_chapter: "第1章"
-
-  - term: "フラッシュメモリ"
-    definition: "電源を切ってもデータが保持される不揮発性メモリ。プログラムの格納に使用。"
-    category: "ハードウェア"
-    related_terms: ["ROM", "EEPROM"]
-    first_chapter: "第3章"
-
-  - term: "PWM"
-    definition: "Pulse Width Modulation。パルス幅変調。デジタル信号で擬似的にアナログ値を表現。"
-    category: "制御技術"
-    related_terms: ["D/A変換", "モーター制御"]
-    first_chapter: "第3章"
-    context_snippets:
-      - "PWM制御によりモーターの回転速度を調整し、I2C通信でセンサーデータを取得します。"
-
-  - term: "I2C"
-    definition: "Inter-Integrated Circuit。シリアル通信プロトコルの一種。"
-    category: "通信"
-    related_terms: ["SPI", "UART"]
-    first_chapter: "第3章"
-    context_snippets:
-      - "PWM制御によりモーターの回転速度を調整し、I2C通信でセンサーデータを取得します。"
-
-  - term: "デッドライン"
-    definition: "処理が完了すべき制限時間。リアルタイムシステムで重要な概念。"
-    category: "リアルタイムシステム"
-    related_terms: ["リアルタイム性", "レイテンシ"]
-    first_chapter: "第4章"
-
-  # Core機能関連の用語を追加
-  - term: "DocumentBuilder"
-    definition: "Core機能の一つ。Markdownコンテンツを構築するためのビルダークラス。"
-    category: "Core機能"
-    related_terms: ["ChartGenerator", "TableGenerator", "KnowledgeManager"]
-    first_chapter: "第6章"
-    context_snippets:
-      - "DocumentBuilderを使用してMarkdownコンテンツを動的生成します。"
-
-  - term: "ChartGenerator"
-    definition: "Core機能の一つ。matplotlib、plotlyを使用して図表を生成するクラス。"
-    category: "Core機能"
-    related_terms: ["DocumentBuilder", "TableGenerator"]
-    first_chapter: "第6章"
-
-  - term: "TableGenerator"
-    definition: "Core機能の一つ。HTMLテーブルを生成し、カスタムスタイルを適用するクラス。"
-    category: "Core機能"
-    related_terms: ["DocumentBuilder", "ChartGenerator"]
-    first_chapter: "第6章"
-
-  - term: "KnowledgeManager"
-    definition: "Core機能の一つ。専門用語、FAQ、TIPSを管理し、用語集ページを生成するクラス。"
-    category: "Core機能"
-    related_terms: ["DocumentBuilder", "AssetGenerator"]
-    first_chapter: "第6章"
-
-  - term: "AssetGenerator"
-    definition: "Core機能の一つ。CSS、JavaScriptファイルを動的生成・管理するクラス。"
-    category: "Core機能"
-    related_terms: ["MkDocsManager", "Jinjaテンプレート"]
-    first_chapter: "第6章"
-
-  - term: "MkDocsManager"
-    definition: "Core機能の一つ。mkdocs.ymlファイルの動的生成・更新を管理するクラス。"
-    category: "Core機能"
-    related_terms: ["AssetGenerator", "NavItem"]
-    first_chapter: "第6章"
-
-  - term: "BaseContentManager"
-    definition: "Core機能の基底クラス。各種ジェネレータを統合し、章ごとのコンテンツ構築フレームワークを提供。"
-    category: "Core機能"
-    related_terms: ["DocumentBuilder", "ChartGenerator", "TableGenerator"]
-    first_chapter: "第6章"
-
-  - term: "Jinjaテンプレート"
-    definition: "Python用のテンプレートエンジン。変数置換や条件分岐、ループ処理が可能。"
-    category: "テンプレート技術"
-    related_terms: ["AssetGenerator", "テンプレート外部化"]
-    first_chapter: "第7章"
-
-  - term: "テンプレート外部化"
-    definition: "CSS/JSテンプレートをPythonコードから分離し、独立ファイルとして管理する手法。"
-    category: "アーキテクチャ"
-    related_terms: ["Jinjaテンプレート", "保守性向上"]
-    first_chapter: "第7章"
+tips:
+  - title: "デバッグのヒント"
+    content: "もし表示が崩れたら、まずはブラウザの開発者ツールでコンソールエラーを確認してください。"
+  - title: "機能の探し方"
+    content: "`documents/core実装機能一覧.md`を見ると、利用可能な全ての機能を確認できます。"

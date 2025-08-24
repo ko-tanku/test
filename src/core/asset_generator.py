@@ -863,11 +863,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('カスタムスクリプト初期化開始');
     
     // ツールチップの初期化（MkDocs Materialのレンダリング後に実行）
-    setTimeout(function() {
-        initCustomTooltips();
-        initQuizComponents();
-        initMermaidFallback();
-    }, 100);
+    initCustomTooltips();
+    initQuizComponents();
+    initMermaidFallback();
 });
 
 function initCustomTooltips() {

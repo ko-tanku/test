@@ -127,17 +127,7 @@ MKDOCS_SITE_CONFIG = {
     "markdown_extensions": [
         "admonition",
         "pymdownx.details",
-        {
-            "pymdownx.superfences": {
-                "custom_fences": [
-                    {
-                        "name": "mermaid",
-                        "class": "mermaid",
-                        "format": "!!python/name:pymdownx.superfences.fence_code_format"
-                    }
-                ]
-            }
-        },
+        "pymdownx.superfences",
         "pymdownx.highlight",
         "pymdownx.tabbed",
         "pymdownx.tasklist",
@@ -152,23 +142,7 @@ MKDOCS_SITE_CONFIG = {
         "pymdownx.keys"
     ],
     "plugins": [
-        "search",
-        {
-            "mermaid2": {
-                "version": "10.6.1",
-                "arguments": {
-                    "theme": "default",
-                    "themeVariables": {
-                        "primaryColor": "#1976D2",
-                        "primaryTextColor": "#fff",
-                        "primaryBorderColor": "#1976D2",
-                        "lineColor": "#000000",
-                        "secondaryColor": "#FFC107",
-                        "tertiaryColor": "#fff"
-                    }
-                }
-            }
-        }
+        "search"
     ],
     "extra_javascript": [
         "custom.js",

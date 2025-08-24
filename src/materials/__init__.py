@@ -1,8 +1,4 @@
 """
 Materials module for MkDocs Materials Generator
-各学習資料固有のコードを格納
+各学習資料固有のコードを格納します。
 """
-
-from . import materials_index
-
-__all__ = ["materials_index"]

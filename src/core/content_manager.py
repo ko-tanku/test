@@ -442,6 +442,44 @@ class BaseContentManager(ABC):
                 title = item.get('title', None)
                 self.doc_builder.add_mermaid_block(graph_string, title)
 
+            elif content_type == 'learning_object':
+                self._expand_learning_object(item, charts_dir, tables_dir)
+
+
+
+    def _expand_learning_object(self, item: Dict[str, Any], charts_dir: Path, tables_dir: Path):
+        """
+        学習オブジェクトIDを解決し、その内容を展開する。
+        
+        Args:
+            item: 学習オブジェクトの参照情報（例: {'type': 'learning_object', 'id': 'intro_to_pointer'}）
+            charts_dir: 図表の出力ディレクトリ
+            tables_dir: 表の出力ディレクトリ
+        """
+        object_id = item.get('id')
+        if not object_id:
+            logger.warning("学習オブジェクトのIDが指定されていません。")
+            return
+
+        # learning_objectsディレクトリのパスを構築
+        learning_objects_dir = self.project_root / "src" / "learning_objects"
+        object_path = learning_objects_dir / f"{object_id}.yml"
+
+        if not object_path.exists():
+            logger.error(f"学習オブジェクトファイルが見つかりません: {object_path}")
+            return
+
+        try:
+            with open(object_path, 'r', encoding='utf-8') as f:
+                learning_object_data = yaml.safe_load(f)
+            
+            # 学習オブジェクトのコンテンツリストを処理（再帰呼び出し）
+            # これにより、学習オブジェクト内に別の学習オブジェクトをネストすることも可能になる
+            object_contents = learning_object_data.get('contents', [])
+            self._process_content_list(object_contents, charts_dir, tables_dir)
+
+        except Exception as e:
+            logger.error(f"学習オブジェクトの読み込みまたは展開中にエラーが発生しました: {e}")
 
 
     def _process_chart(self, chart_config: Dict[str, Any], output_dir: Path):

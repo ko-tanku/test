@@ -1,52 +1,27 @@
-title: "第3章: ハードウェアとソフトウェア"
-overview: "ハードウェアとソフトウェアの関係を、様々な図表を使って理解します。"
-
+title: "第3章 静的グラフ機能"
 sections:
-  - title: "CPUの性能推移"
+  - title: "各種グラフ"
     contents:
-      - type: "chart"
-        chart_type: "line"
-        data_source: "cpu_performance.csv"  # 外部CSVファイルを参照
-        config:
-          x_col: "year"
-          y_col: "performance"
-          title: "CPU性能の推移（相対値）"
-          xlabel: "年"
-          ylabel: "性能指数"
-          filename: "cpu_performance_trend"
-          use_plotly: true
-        caption: "図3-1: ムーアの法則に従うCPU性能の向上"
-        width: "100%"
-        height: 450
-
-  - title: "メモリ階層"
-    contents:
-      - type: "chart"
+      - type: chart
         chart_type: "bar"
-        data_source: "memory_hierarchy.csv"
+        caption: "棒グラフ (Plotly)"
         config:
-          x_col: "memory_type"
-          y_col: "access_time"
-          title: "メモリ階層とアクセス時間（ナノ秒）"
-          xlabel: "メモリ種別"
-          ylabel: "アクセス時間（対数スケール）"
-          filename: "memory_hierarchy"
           use_plotly: true
-        caption: "図3-2: メモリ階層による速度とコストのトレードオフ"
-        width: "100%"
-        height: 450
+          title: "カテゴリ別データ"
+          x_col: "category"
+          y_col: "value"
+        data:
+          category: ["A", "B", "C"]
+          value: [10, 20, 15]
 
-  - title: "プロセッサの市場シェア"
-    contents:
-      - type: "chart"
-        chart_type: "pie"
-        data_source: "processor_market_share.csv"
+      - type: chart
+        chart_type: "line"
+        caption: "折れ線グラフ (Matplotlib)"
         config:
-          values_col: "share"
-          labels_col: "vendor"
-          title: "組み込みプロセッサの市場シェア（2024年）"
-          filename: "processor_market_share"
-          use_plotly: true
-        caption: "図3-4: ARM社が組み込み市場をリード"
-        width: "100%"
-        height: 450
+          use_plotly: false
+          title: "時系列データ"
+          x_col: "time"
+          y_col: "value"
+        data:
+          time: [1, 2, 3, 4]
+          value: [5, 8, 6, 10]

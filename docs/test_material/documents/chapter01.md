@@ -1,70 +1,50 @@
-# 第1章: プログラミングの基礎
+# 第1章 基本的なドキュメント要素
 
-プログラミングの基本概念を学び、様々なMarkdown要素をテストします。
+## テキストと見出し
 
-## プログラミングとは
+## これはレベル2の見出しです
 
-プログラミングとは、コンピュータに対する**命令**を記述することです。
-
-> プログラムとは、料理のレシピのようなもの。
-> 材料（データ）と手順（アルゴリズム）を組み合わせて、
-> 目的の結果を得るための指示書です。
-> 
+これは通常の段落テキストです。専門用語「Core」と「Material」にはツールチップが表示されるはずです。
 
 ---
 
-## プログラミング言語の種類
+## リストと引用
 
-=== "Python"
-    ```python
-    # Pythonの例
-    def hello():
-        print("Hello, World!")
+- 順不同リスト1
+- 順不同リスト2
 
-    hello()
-    ```
+1. 順序付きリスト1
+2. 順序付きリスト2
 
+> これは引用ブロックです。 複数行にわたる引用も可能です。
 
-=== "C言語"
-    ```c
-    // C言語の例
-    #include <stdio.h>
-
-    int main() {
-        printf("Hello, World!\n");
-        return 0;
-    }
-    ```
-
-
-=== "JavaScript"
-    ```javascript
-    // JavaScriptの例
-    function hello() {
-        console.log("Hello, World!");
-    }
-
-    hello();
-    ```
-
-
-<iframe src="../../tables/language_comparison.html" width="100%"  style="border: 1px solid #ddd; border-radius: 4px;" scrolling="no" class="auto-height-iframe"></iframe>
-
-## 基本的なプログラム構造
-
-!!! note "重要な概念"
-    すべてのプログラムは「順次」「分岐」「反復」の3つの基本構造で構成されます。
+## コードブロック
 
 ```python
-# 順次処理の例
-a = 10
-b = 20
-c = a + b
-print(f"{a} + {b} = {c}")
+def hello():
+    print("Hello, World!")
 
+```
+
+```bash
+echo 'Hello'
 ```
 
 !!! success "実行結果"
     ```
-    10 + 20 = 30
+    Hello
     ```
+
+## Admonitionとタブ
+
+!!! note "ノート"
+    これはノートタイプのAdmonitionです。
+
+??? warning "警告（折りたたみ可能）"
+    これは折りたたみ可能な警告です。
+
+=== "タブ1"
+    これはタブ1のコンテンツです。
+
+=== "タブ2"
+    これはタブ2のコンテンツです。
