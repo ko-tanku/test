@@ -1,102 +1,128 @@
 """
-Base configuration module for MkDocs Materials Generator
-システム全体の絶対的な基盤設定と色の定義
+システム全体の基盤となる設定と色定義
+MkDocs Materialテーマのパレット設定とは独立した内部ロジック用の設定
 """
 
 from pathlib import Path
-from typing import Dict, List, Any
+from datetime import datetime
 
-# プロジェクトの基本パス設定を修正
-# __file__ は base_config.py のパス
-# parents[0] = core/
-# parents[1] = src/
-# parents[2] = my-project/ (プロジェクトルート)
-PROJECT_ROOT = Path(__file__).resolve().parents[2]  # my-project/ フォルダ
-DOCS_DIR = PROJECT_ROOT / "docs"
+# プロジェクトルートディレクトリ（相対パスで設定）
+PROJECT_ROOT = Path(__file__).resolve().parents[2]  # Embedded_control/
+
+# 主要ディレクトリ（相対パスで設定）  
+DOCS_DIR = Path("docs")
 ASSETS_DIR_NAME = "assets"
 CHARTS_DIR_NAME = "charts"
 TABLES_DIR_NAME = "tables"
 
-# 意味合いを持つ色定義（MaterialテーマのPalette色とは独立）
-MEANING_COLORS: Dict[str, str] = {
-    "danger": "#ff5252",      # 危険・エラー
-    "warning": "#ff9800",     # 警告・注意
-    "success": "#4caf50",     # 成功・正常
-    "info": "#2196f3",        # 情報・参考
-    "primary": "#1976d2",     # 主要・重要
-    "secondary": "#424242",   # 副次的・補助
-    "accent": "#ff4081",      # アクセント・強調
-    "neutral": "#9e9e9e"      # 中立・標準
+# 意味合いを持つHEXカラーコード（Material Design準拠）
+MEANING_COLORS = {
+    "danger": "#F44336",   # Material Design Red 500
+    "warning": "#FF9800",  # Material Design Orange 500
+    "success": "#4CAF50",  # Material Design Green 500
+    "info": "#00BCD4"      # Material Design Cyan 500
 }
 
+# Material Design Icons辞書（確実に表示されるアイコンのみ）
+MATERIAL_ICONS = {
+    # システム・ハードウェア関連
+    "memory": "memory",
+    "speed": "speed",
+    "cpu": "developer_board",
+    "storage": "storage",
+    "device": "devices",
+    "hardware": "build",
+    "circuit": "cable",
+    
+    # 学習・情報関連
+    "help": "help",
+    "info": "info",
+    "question": "help_outline",
+    "tip": "lightbulb_outline",
+    "warning": "warning",
+    "error": "error",
+    "success": "check_circle",
+    
+    # ナビゲーション・UI関連
+    "home": "home",
+    "menu": "menu",
+    "settings": "settings",
+    "search": "search",
+    "bookmark": "bookmark",
+    "favorite": "favorite",
+    
+    # 学習コンテンツ関連
+    "book": "book",
+    "school": "school",
+    "quiz": "quiz",
+    "assignment": "assignment",
+    "grade": "grade",
+    "library": "local_library",
+    
+    # 技術・開発関連
+    "code": "code",
+    "bug": "bug_report",
+    "terminal": "terminal",
+    "api": "api",
+    "database": "storage",
+    "cloud": "cloud",
+    
+    # 組み込み・IoT関連
+    "sensor": "sensors",
+    "microchip": "memory",
+    "robot": "precision_manufacturing",
+    "automation": "autorenew",
+    "control": "tune",
+    "signal": "graphic_eq"
+}
 
-# Matplotlib等で利用するデフォルト図表スタイル
-BASE_CHART_STYLES: Dict[str, Any] = {
-    "font_family": ["Meiryo", "Yu Gothic", "Hiragino Sans", "Noto Sans CJK JP", "sans-serif"],
-    "font_size_title": 14,
-    "font_size_axis": 10,
-    "font_size_legend": 9,
-    "figure_dpi": 100,
-    "figsize": (10, 6),
-    "transparent_bg": True,
-    "grid_alpha": 0.3,
+# 汎用的な図表スタイル設定
+BASE_CHART_STYLES = {
+    "font_family": ['Meiryo', 'Yu Gothic', 'Meiryo', 'TakaoGothic', 'IPAexGothic', 'IPA Gothic', 'sans-serif'],
+    "font_size_title": 16,
+    "font_size_label": 12,
     "line_width": 2,
     "marker_size": 6,
-    "colors": [
-        MEANING_COLORS["primary"],
-        MEANING_COLORS["success"],
-        MEANING_COLORS["warning"],
-        MEANING_COLORS["danger"],
-        MEANING_COLORS["info"],
-        MEANING_COLORS["accent"]
-    ]
+    "grid_alpha": 0.5,
+    "figure_dpi": 150,      # A4想定
+    "figsize": (7, 5),      # A4想定
+    "transparent_bg": False
 }
 
 # HTMLテーブルのデフォルトスタイル
-BASE_TABLE_STYLES: Dict[str, Any] = {
+BASE_TABLE_STYLES = {
     "class_name": "mkdocs-table",
-    "header_bg_color": MEANING_COLORS["primary"],
-    "header_text_color": "#ffffff",
-    "row_even_bg_color": "#f5f5f5",
-    "row_odd_bg_color": "#ffffff",
-    "border_color": "#e0e0e0",
+    "header_bg_color": MEANING_COLORS["info"],
+    "header_text_color": "#FFFFFF",
+    "row_even_bg_color": "#FAFAFA",
+    "row_odd_bg_color": "#F0F0F0",
+    "border_color": "#CCCCCC",
     "border_width": "1px",
     "cell_padding": "8px 12px",
-    "font_size": "14px",
-    "font_family": '"Roboto", "Helvetica", "Arial", sans-serif',
-    "border_radius": "4px",
-    "box_shadow": "0 2px 4px rgba(0,0,0,0.1)"
+    "font_size": "0.9em"
 }
 
-# mkdocs.ymlのベース設定
-MKDOCS_SITE_CONFIG: Dict[str, Any] = {
-    "site_name": "学習資料",
-    "site_description": "MkDocs Materials Generator で生成された学習資料",
-    "site_author": "MkDocs Materials Generator",
-    "docs_dir": "docs",
-    "site_dir": "site",
+# MkDocs設定のベース
+MKDOCS_SITE_CONFIG = {
+    "site_name": "MkDocs Learning Material Generator",
+    "site_description": "インタラクティブな学習資料を自動生成するシステム",
+    "repo_url": "https://github.com/example/mkdocs-learning-material",
+    "repo_name": "mkdocs-learning-material",
     "theme": {
         "name": "material",
-        "language": "ja",
         "palette": {
-            "scheme": "default",
             "primary": "blue",
             "accent": "amber"
         },
         "features": [
             "navigation.tabs",
-            "navigation.top",
-            "navigation.tracking",
             "search.suggest",
-            "search.highlight",
-            "search.share",
             "toc.integrate",
-            "content.code.annotate",
+            "header.autohide",
+            "announce.dismiss",
             "content.tooltips"
         ],
-        "icon": {
-            "repo": "fontawesome/brands/github"
-        }
+        "locale": "ja"
     },
     "markdown_extensions": [
         "admonition",
@@ -104,29 +130,37 @@ MKDOCS_SITE_CONFIG: Dict[str, Any] = {
         "pymdownx.superfences",
         "pymdownx.highlight",
         "pymdownx.tabbed",
+        "pymdownx.tasklist",
         "attr_list",
         "md_in_html",
         "footnotes",
         "tables",
-        "toc",
+        "fenced_code",
         "abbr",
         "pymdownx.snippets",
         "pymdownx.emoji",
-        "pymdownx.arithmatex",
-        "pymdownx.keys",
-        "pymdownx.mark",
-        "pymdownx.critic",
-        "pymdownx.caret",
-        "pymdownx.tilde"
+        "pymdownx.keys"
     ],
     "plugins": [
         "search",
-        "minify"
+        "mermaid2"
+    ],
+    "extra_javascript": [
+        "custom.js",
+        "quiz.js"
+    ],
+    "extra_css": [
+        "custom.css",
+        "custom_dark.css", 
+        "custom_high_contrast.css"
     ],
     "extra": {
-        "social": []
+        # "analytics": {
+        #     "provider": "google",
+        #     "property": "G-XXXXXXXXXX"
+        # }
     }
 }
 
-# 用語集への基本パス
-GLOSSARY_BASE_PATH: str = "glossary.md"
+# 用語集のベースパス
+GLOSSARY_BASE_PATH = "glossary.md"

@@ -1,0 +1,27 @@
+title: "第3章 静的グラフ機能"
+sections:
+  - title: "各種グラフ"
+    contents:
+      - type: chart
+        chart_type: "bar"
+        caption: "棒グラフ (Plotly)"
+        config:
+          use_plotly: true
+          title: "カテゴリ別データ"
+          x_col: "category"
+          y_col: "value"
+        data:
+          category: ["A", "B", "C"]
+          value: [10, 20, 15]
+
+      - type: chart
+        chart_type: "line"
+        caption: "折れ線グラフ (Matplotlib)"
+        config:
+          use_plotly: false
+          title: "時系列データ"
+          x_col: "time"
+          y_col: "value"
+        data:
+          time: [1, 2, 3, 4]
+          value: [5, 8, 6, 10]

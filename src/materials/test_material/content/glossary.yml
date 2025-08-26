@@ -1,0 +1,10 @@
+# 用語集データ
+terms:
+  - term: "Core"
+    definition: "本プロジェクトにおける、学習資料自動生成フレームワークの心臓部。"
+    category: "基本概念"
+    first_chapter: "第1章"
+  - term: "Material"
+    definition: "Core機能を利用して生成される、個別の学習資料のこと。"
+    category: "基本概念"
+    first_chapter: "第1章"

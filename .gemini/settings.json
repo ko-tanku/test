@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"], "timeout": 600000, "trust": false },
+    "deepwiki": { "command": "npx", "args": ["deepwiki-mcp@latest"], "timeout": 600000, "trust": false },
+    "sequential-thinking": { "command": "npx", "args": ["sequential-thinking-mcp@latest"], "timeout": 600000, "trust": false },
+    "serena": { "command": "cmd", "args": ["/C", "C:\\mcp\\serena\\run-serena.cmd"], "timeout": 600000, "trust": false },
+    "filesystem": { "command": "npx", "args": ["@modelcontextprotocol/server-filesystem", "~/"], "timeout": 600000, "trust": false },
+    "context7": { "command": "npx", "args": ["@upstash/context7-mcp@latest"], "timeout": 600000, "trust": false }
+  },
+  "selectedAuthType": "oauth-personal"
+}

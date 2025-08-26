@@ -1,0 +1,28 @@
+# 教材全体の基本設定とメタデータを定義します。
+site_name: "Core機能テスト教材"
+author: "Gemini"
+theme:
+  primary_color: "indigo"
+  accent_color: "pink"
+# ラーニングパス用のメタデータ
+prerequisites: []
+next_steps: []
+# ページに付与する共通タグ
+tags:
+  - core-test
+  - example
+
+# ナビゲーション構造
+navigation:
+  - "ホーム": "index.md"
+  - "テスト教材":
+      - "概要": "{{ material_name }}/documents/index.md"
+      - "第1章": "{{ material_name }}/documents/chapter01.md"
+      - "第2章": "{{ material_name }}/documents/chapter02.md"
+      - "第3章": "{{ material_name }}/documents/chapter03.md"
+      - "第4章": "{{ material_name }}/documents/chapter04.md"
+      - "第5章": "{{ material_name }}/documents/chapter05.md"
+      - "第6章": "{{ material_name }}/documents/chapter06.md"
+      - "用語集": "glossary.md"
+      - "FAQ": "faq.md"
+      - "TIPS": "tips.md"

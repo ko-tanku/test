@@ -1,0 +1,22 @@
+# 全ての種類のクイズのテストデータを定義します。
+quizzes:
+  - type: single_choice_quiz
+    quiz_id: "scq_001"
+    question: "このプロジェクトで最も重要なディレクトリは？"
+    options: ["docs", "src/core", "src/materials"]
+    correct: 1
+    explanation: "`src/core`は再利用可能なフレームワークの中核であり、最も重要です。"
+
+  - type: multiple_choice_quiz
+    quiz_id: "mcq_001"
+    question: "`core`の責務として正しいものを全て選んでください。"
+    options: ["HTML生成", "データ定義", "デザイン調整", "ファイル操作"]
+    correct_answers: [0, 3]
+    explanation: "HTML生成やファイル操作はCoreの責務ですが、データ定義やデザイン調整は各Materialが担当します。"
+
+  - type: categorization_quiz
+    quiz_id: "catq_001"
+    question: "以下のファイルを適切なカテゴリに分類してください。"
+    categories: ["データ層", "ロジック層"]
+    items: ["config.yml", "contents.py", "chapter1.yml", "main.py"]
+    correct_mapping: [0, 1, 0, 1] # itemsの各要素がどのcategoriesに属するか

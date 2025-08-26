@@ -1,0 +1,102 @@
+title: "第4章 高度なビジュアル要素とインタラクション"
+sections:
+  - title: "1. Mermaid.jsによる図表作成"
+    contents:
+      - type: text
+        text: "Mermaid構文から、フローチャートやシーケンス図を直接生成する機能のテストです。"
+      - type: mermaid
+        title: "基本的なフローチャート"
+        graph: |
+          graph TD;
+              A[Start] --> B{Is it working?};
+              B -->|Yes| C[Great!];
+              B -->|No| D[Check logs];
+
+  - title: "2. インタラクティブグラフ (Plotly)"
+    contents:
+      - type: text
+        text: "ユーザーが操作できるインタラクティブなグラフのテストです。これらはPlotly.jsを利用して描画されます。"
+      - type: chart
+        chart_type: interactive
+        caption: "状態遷移グラフ：ボタンをクリックすると、表示されるデータが切り替わります。"
+        config:
+          interactive_type: state_transition
+          title: "状態遷移デモ"
+        data:
+          states:
+            - name: "状態A"
+              x: [1, 2, 3]
+              y: [2, 5, 3]
+            - name: "状態B"
+              x: [1, 2, 3]
+              y: [4, 1, 7]
+
+      - type: chart
+        chart_type: interactive
+        caption: "ドロップダウンフィルタ：ドロップダウンメニューから表示するデータセットを選択できます。"
+        config:
+          interactive_type: dropdown_filter
+        data:
+          datasets:
+            "データセット1":
+              x: [1, 2, 3, 4]
+              y: [10, 11, 12, 13]
+            "データセット2":
+              x: [1, 2, 3, 4]
+              y: [15, 12, 10, 9]
+
+  - title: "3. アニメーションGIF"
+    contents:
+      - type: text
+        text: "複数のデータフレームからアニメーションGIFを生成する機能のテストです。"
+      - type: chart
+        chart_type: animation
+        caption: "データ変化のアニメーション"
+        config:
+          filename: "simple_animation.gif"
+          fps: 2
+          xlabel: "X軸"
+          ylabel: "Y軸"
+          xlim: [0, 5]
+          ylim: [0, 15]
+        data:
+          frames:
+            - type: line
+              title: "フレーム1"
+              x: [1, 2, 3]
+              y: [2, 5, 3]
+            - type: line
+              title: "フレーム2"
+              x: [1, 2, 3]
+              y: [8, 4, 10]
+            - type: line
+              title: "フレーム3"
+              x: [1, 2, 3]
+              y: [12, 9, 14]
+
+  - title: "4. その他のCore機能"
+    contents:
+      - type: text
+        text: "新しく追加されたCore機能の呼び出しテストです。"
+      - type: admonition
+        admonition_type: note
+        title: "学習オブジェクトの呼び出し"
+        text: "↓ここに`sample_object.yml`の内容が展開されるはずです。"
+      - type: learning_object
+        id: sample_object
+      - type: horizontal_rule
+      - type: feedback_form
+        form_url: "https://docs.google.com/forms/d/e/your_form_id/viewform?usp=sf_link"
+        title: "この章の理解度アンケート"
+        description: "この章の内容は分かりやすかったですか？改善のため、ぜひご意見をお聞かせください。"
+
+  - title: "5. クイズ機能テスト"
+    contents:
+      - type: text
+        text: "このセクションでは、クイズ機能の動作を確認します。"
+      - type: single_choice_quiz
+        quiz_id: "ch4_quiz_001"
+        question: "この章で扱った図表ライブラリはどれですか？"
+        options: ["Matplotlib", "Plotly", "Seaborn", "全て"]
+        correct: 1 # Plotly
+        explanation: "この章では主にPlotlyを使ったインタラクティブグラフを扱いました。"

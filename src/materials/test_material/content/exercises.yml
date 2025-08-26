@@ -1,0 +1,6 @@
+exercises:
+  ch5_ex1:
+    difficulty: "easy"
+    question: "1+1は？"
+    answer: "2"
+    explanation: "基本的な算数です。"

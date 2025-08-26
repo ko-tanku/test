@@ -1,0 +1,29 @@
+title: "第5章 リッチコンテンツと独自機能"
+sections:
+  - title: "1. 要約と推薦"
+    contents:
+      - type: summary
+        title: "この章のまとめ"
+        points: ["要点1", "要点2"]
+      - type: recommendations
+        title: "次のおすすめ"
+        items:
+          - text: "Google"
+            link: "https://www.google.com"
+
+  - title: "2. 演習問題"
+    contents:
+      - type: exercise_ref
+        id: ch5_ex1
+
+  - title: "3. 教材固有の独自ジェネレータ呼び出しテスト"
+    contents:
+      - type: text
+        text: "↓ここに、Matplotlibで生成されたグラフとテキストの組み合わせが表示されるはずです。"
+      - type: chart
+        chart_type: custom
+        caption: "電圧安定化グラフ（テスト）"
+        config:
+          plot_function: "draw_voltage_stabilization_graph" # This will be a method in TestMaterialContentManager
+          filename: "voltage_stabilization_graph.html"
+        data: {}

@@ -1,0 +1,14 @@
+title: "第6章 プラットフォーム機能"
+sections:
+  - title: "プラットフォーム機能について"
+    contents:
+      - type: text
+        text: "この教材自体は、総合用語集やラーニングパスといったプラットフォーム機能のテスト対象となります。実際の出力はサイト全体をビルドする際に確認されます。"
+      - type: horizontal_rule
+      - type: heading
+        level: 3
+        text: "学習オブジェクトのテスト"
+      - type: text
+        text: "以下は、`src/learning_objects`から読み込まれた再利用可能なコンテンツです。"
+      - type: learning_object
+        id: "what_is_a_variable"

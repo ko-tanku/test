@@ -1,0 +1,7 @@
+contents:
+  - type: admonition
+    admonition_type: success
+    title: "学習オブジェクトの展開に成功しました！"
+    text: "この内容は `src/learning_objects/sample_object.yml` から動的に読み込まれています。"
+  - type: text
+    text: "このように、複数のページで再利用したいコンテンツ部品を「学習オブジェクト」として管理できます。"

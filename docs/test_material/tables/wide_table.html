@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+        }
+        .content-wrapper {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        
+        
+        <style>
+            #table_横スクロールするテーブル {
+                width: 100%;
+                table-layout: fixed;
+                word-wrap: break-word;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            
+            #table_横スクロールするテーブル th {
+                background-color: #00BCD4;
+                color: #FFFFFF;
+                padding: 8px 12px;
+                text-align: left;
+                font-weight: bold;
+                border: 1px solid #CCCCCC;
+            }
+            
+            #table_横スクロールするテーブル td {
+                padding: 8px 12px;
+                border: 1px solid #CCCCCC;
+            }
+            
+            #table_横スクロールするテーブル tr:nth-child(even) {
+                background-color: #FAFAFA;
+            }
+            
+            #table_横スクロールするテーブル tr:nth-child(odd) {
+                background-color: #F0F0F0;
+            }
+            
+            #table_横スクロールするテーブル {
+                font-size: 0.9em;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+                margin: 20px 0;
+            }
+            
+            .table-title {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #333;
+            }
+        </style>
+        
+        <div class="table-container">
+            <div class="table-title">横スクロールするテーブル</div>
+            <table border="1" class="dataframe mkdocs-table" id="table_横スクロールするテーブル">
+  <thead>
+    <tr style="text-align: right;">
+      <th>列1</th>
+      <th>列2</th>
+      <th>列3</th>
+      <th>列4</th>
+      <th>列5</th>
+      <th>列6</th>
+      <th>列7</th>
+      <th>列8</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+        
+    </div>
+</body>
+</html>

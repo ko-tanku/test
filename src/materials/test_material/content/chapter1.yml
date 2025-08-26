@@ -1,0 +1,52 @@
+title: "第1章 基本的なドキュメント要素"
+sections:
+  - title: "テキストと見出し"
+    contents:
+      - type: heading
+        level: 2
+        text: "これはレベル2の見出しです"
+      - type: text
+        text: "これは通常の段落テキストです。専門用語「Core」と「Material」にはツールチップが表示されるはずです。"
+        terms: "第1章" # 第1章に関連する用語を参照
+      - type: horizontal_rule
+
+  - title: "リストと引用"
+    contents:
+      - type: list
+        list_type: "unordered"
+        items: ["順不同リスト1", "順不同リスト2"]
+      - type: list
+        list_type: "ordered"
+        items: ["順序付きリスト1", "順序付きリスト2"]
+      - type: quote
+        text: "これは引用ブロックです。
+複数行にわたる引用も可能です。"
+
+  - title: "コードブロック"
+    contents:
+      - type: code
+        lang: "python"
+        code: |
+          def hello():
+              print("Hello, World!")
+      - type: code_with_output
+        lang: "bash"
+        code: "echo 'Hello'"
+        output: "Hello"
+        output_label: "実行結果"
+
+  - title: "Admonitionとタブ"
+    contents:
+      - type: admonition
+        admonition_type: "note"
+        title: "ノート"
+        text: "これはノートタイプのAdmonitionです。"
+      - type: admonition
+        admonition_type: "warning"
+        title: "警告（折りたたみ可能）"
+        text: "これは折りたたみ可能な警告です。"
+        collapsible: true
+      - type: tabs
+        tabs_data:
+          "タブ1": "これはタブ1のコンテンツです。"
+          "タブ2": "これはタブ2のコンテンツです。"

@@ -1,0 +1,28 @@
+title: "第2章 テーブル機能"
+sections:
+  - title: "基本的なテーブル"
+    contents:
+      - type: table
+        table_type: "basic"
+        title: "基本テーブル"
+        headers: ["ID", "名前", "役割"]
+        rows:
+          - [1, "Core", "フレームワーク"]
+          - [2, "Material", "教材"]
+
+  - title: "比較表と幅広テーブル"
+    contents:
+      - type: table
+        table_type: "comparison"
+        title: "機能比較"
+        categories: ["機能A", "機能B"]
+        items: ["速度", "拡張性"]
+        data:
+          - ["速い", "普通"]
+          - ["高い", "最高"]
+      - type: table
+        table_type: "wide"
+        title: "横スクロールするテーブル"
+        headers: ["列1", "列2", "列3", "列4", "列5", "列6", "列7", "列8"]
+        rows:
+          - [1, 2, 3, 4, 5, 6, 7, 8]
