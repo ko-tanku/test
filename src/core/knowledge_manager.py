@@ -8,6 +8,10 @@ from typing import List, Dict, Optional, Any
 from dataclasses import dataclass, field
 
 from .utils import slugify
+<<<<<<< HEAD
+=======
+from .document_builder import DocumentBuilder
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 from .config import FILE_NAMING_PATTERNS
 
 logger = logging.getLogger(__name__)
@@ -62,6 +66,7 @@ class KnowledgeManager:
         self.terms: Dict[str, Term] = {}
         self.faq_items: List[FaqItem] = []
         self.tip_items: List[TipItem] = []
+<<<<<<< HEAD
         self.term_usage: Dict[str, List[Dict[str, str]]] = {}
         self.doc_builder = None
         
@@ -71,6 +76,9 @@ class KnowledgeManager:
             from .document_builder import DocumentBuilder
             self.doc_builder = DocumentBuilder(self.output_dir)
         return self.doc_builder
+=======
+        self.doc_builder = DocumentBuilder(output_dir)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
     def register_term(self, term_obj: Term):
         """
@@ -133,6 +141,7 @@ class KnowledgeManager:
         """
         self.tip_items.append(tip_item)
         logger.debug(f"TIPS項目を登録しました: {tip_item.title}")
+<<<<<<< HEAD
 
     def record_term_usage(self, term_name: str, chapter_title: str, chapter_path: str, anchor_id: str):
         """
@@ -153,6 +162,8 @@ class KnowledgeManager:
             "anchor": anchor_id
         })
         logger.debug(f"用語の使用箇所を記録: {term_name} in {chapter_path}#{anchor_id}")
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
     def get_term_definition(self, term_name: str) -> Optional[str]:
         """
@@ -210,11 +221,19 @@ class KnowledgeManager:
         Returns:
             生成されたファイルのパス
         """
+<<<<<<< HEAD
         self._get_doc_builder().clear_content()
         
         # タイトル
         self._get_doc_builder().add_heading("用語集", 1)
         self._get_doc_builder().add_paragraph(
+=======
+        self.doc_builder.clear_content()
+        
+        # タイトル
+        self.doc_builder.add_heading("用語集", 1)
+        self.doc_builder.add_paragraph(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             "本資料で使用される専門用語の定義と説明をまとめています。"
         )
         
@@ -227,11 +246,16 @@ class KnowledgeManager:
         
         # カテゴリごとに表示
         for category, terms in sorted(categories.items()):
+<<<<<<< HEAD
             self._get_doc_builder().add_heading(category, 2)
+=======
+            self.doc_builder.add_heading(category, 2)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             
             # 用語をアルファベット順にソート
             for term in sorted(terms, key=lambda t: t.term):
                 # アンカーリンク
+<<<<<<< HEAD
                 self._get_doc_builder().add_raw_markdown(f'<a id="{term.slug}"></a>')
                 
                 # 用語名
@@ -243,6 +267,19 @@ class KnowledgeManager:
                 # 初出章
                 if term.first_chapter:
                     self._get_doc_builder().add_paragraph(
+=======
+                self.doc_builder.add_raw_markdown(f'<a id="{term.slug}"></a>')
+                
+                # 用語名
+                self.doc_builder.add_heading(term.term, 3)
+                
+                # 定義
+                self.doc_builder.add_paragraph(f"**定義:** {term.definition}")
+                
+                # 初出章
+                if term.first_chapter:
+                    self.doc_builder.add_paragraph(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                         f"**初出章:** {term.first_chapter}"
                     )
                 
@@ -256,6 +293,7 @@ class KnowledgeManager:
                         else:
                             related_links.append(related)
                     
+<<<<<<< HEAD
                     self._get_doc_builder().add_paragraph(
                         f"**関連用語:** {', '.join(related_links)}"
                     )
@@ -286,6 +324,24 @@ class KnowledgeManager:
         # ファイル保存
         filename = FILE_NAMING_PATTERNS["md_glossary"]
         return self._get_doc_builder().save_markdown(filename)
+=======
+                    self.doc_builder.add_paragraph(
+                        f"**関連用語:** {', '.join(related_links)}"
+                    )
+                
+                # 文脈表示
+                if term.context_snippets:
+                    self.doc_builder.add_paragraph("**使用例:**")
+                    for snippet in term.context_snippets[:3]:  # 最大3つまで
+                        self.doc_builder.add_quote(snippet)
+                
+                # 区切り線
+                self.doc_builder.add_horizontal_rule()
+        
+        # ファイル保存
+        filename = FILE_NAMING_PATTERNS["md_glossary"]
+        return self.doc_builder.save_markdown(filename)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
     def generate_faq_markdown(self) -> Path:
         """
@@ -294,11 +350,19 @@ class KnowledgeManager:
         Returns:
             生成されたファイルのパス
         """
+<<<<<<< HEAD
         self._get_doc_builder().clear_content()
         
         # タイトル
         self._get_doc_builder().add_heading("よくある質問（FAQ）", 1)
         self._get_doc_builder().add_paragraph(
+=======
+        self.doc_builder.clear_content()
+        
+        # タイトル
+        self.doc_builder.add_heading("よくある質問（FAQ）", 1)
+        self.doc_builder.add_paragraph(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             "学習者からよく寄せられる質問とその回答をまとめています。"
         )
         
@@ -316,10 +380,17 @@ class KnowledgeManager:
         
         # カテゴリごとに表示
         for category, faqs in sorted(categories.items()):
+<<<<<<< HEAD
             self._get_doc_builder().add_heading(category, 2)
             
             for faq in faqs:
                 self._get_doc_builder().add_faq_item(
+=======
+            self.doc_builder.add_heading(category, 2)
+            
+            for faq in faqs:
+                self.doc_builder.add_faq_item(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                     faq.question, 
                     faq.answer, 
                     collapsible=True
@@ -328,17 +399,28 @@ class KnowledgeManager:
         # カテゴリなしの項目
         if uncategorized:
             if categories:  # 他にカテゴリがある場合
+<<<<<<< HEAD
                 self._get_doc_builder().add_heading("その他", 2)
             
             for faq in uncategorized:
                 self._get_doc_builder().add_faq_item(
+=======
+                self.doc_builder.add_heading("その他", 2)
+            
+            for faq in uncategorized:
+                self.doc_builder.add_faq_item(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                     faq.question, 
                     faq.answer, 
                     collapsible=True
                 )
         
         # ファイル保存
+<<<<<<< HEAD
         return self._get_doc_builder().save_markdown("faq.md")
+=======
+        return self.doc_builder.save_markdown("faq.md")
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
     def generate_tips_markdown(self) -> Path:
         """
@@ -347,11 +429,19 @@ class KnowledgeManager:
         Returns:
             生成されたファイルのパス
         """
+<<<<<<< HEAD
         self._get_doc_builder().clear_content()
         
         # タイトル
         self._get_doc_builder().add_heading("学習のヒント（TIPS）", 1)
         self._get_doc_builder().add_paragraph(
+=======
+        self.doc_builder.clear_content()
+        
+        # タイトル
+        self.doc_builder.add_heading("学習のヒント（TIPS）", 1)
+        self.doc_builder.add_paragraph(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             "効率的な学習のためのヒントやコツをまとめています。"
         )
         
@@ -369,10 +459,17 @@ class KnowledgeManager:
         
         # カテゴリごとに表示
         for category, tips in sorted(categories.items()):
+<<<<<<< HEAD
             self._get_doc_builder().add_heading(category, 2)
             
             for tip in tips:
                 self._get_doc_builder().add_tip_item(
+=======
+            self.doc_builder.add_heading(category, 2)
+            
+            for tip in tips:
+                self.doc_builder.add_tip_item(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                     tip.title,
                     tip.content,
                     collapsible=True
@@ -381,14 +478,25 @@ class KnowledgeManager:
         # カテゴリなしの項目
         if uncategorized:
             if categories:  # 他にカテゴリがある場合
+<<<<<<< HEAD
                 self._get_doc_builder().add_heading("その他", 2)
             
             for tip in uncategorized:
                 self._get_doc_builder().add_tip_item(
+=======
+                self.doc_builder.add_heading("その他", 2)
+            
+            for tip in uncategorized:
+                self.doc_builder.add_tip_item(
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                     tip.title,
                     tip.content,
                     collapsible=True
                 )
         
         # ファイル保存
+<<<<<<< HEAD
         return self._get_doc_builder().save_markdown("tips.md")
+=======
+        return self.doc_builder.save_markdown("tips.md")
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

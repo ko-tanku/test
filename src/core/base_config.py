@@ -142,8 +142,12 @@ MKDOCS_SITE_CONFIG = {
         "pymdownx.keys"
     ],
     "plugins": [
+<<<<<<< HEAD
         "search",
         "mermaid2"
+=======
+        "search"
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     ],
     "extra_javascript": [
         "custom.js",

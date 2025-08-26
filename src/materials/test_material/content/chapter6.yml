@@ -4,6 +4,7 @@ sections:
     contents:
       - type: text
         text: "この教材自体は、総合用語集やラーニングパスといったプラットフォーム機能のテスト対象となります。実際の出力はサイト全体をビルドする際に確認されます。"
+<<<<<<< HEAD
       - type: horizontal_rule
       - type: heading
         level: 3
@@ -12,3 +13,5 @@ sections:
         text: "以下は、`src/learning_objects`から読み込まれた再利用可能なコンテンツです。"
       - type: learning_object
         id: "what_is_a_variable"
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

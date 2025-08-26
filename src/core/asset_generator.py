@@ -380,6 +380,7 @@ body {{
     font-weight: 500;
 }
 
+<<<<<<< HEAD
 .custom-tooltip:hover {
     /* ホバー時のスタイルは維持しつつ、表示ロジックはJSに委ねる */
 }
@@ -387,11 +388,23 @@ body {{
 /* JS制御ツールチップのスタイル */
 .tooltip-popup {
     position: fixed; /* Viewport基準で配置 */
+=======
+.custom-tooltip:hover { border-bottom-color: transparent;
+}
+
+/* CSSベースのツールチップ（フォールバック） */
+.custom-tooltip::before { content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     background: #263238;
     color: white;
     padding: 8px 12px;
     border-radius: 4px;
     font-size: 14px;
+<<<<<<< HEAD
     white-space: pre-wrap;
     word-wrap: break-word;
     min-width: 200px;
@@ -406,6 +419,18 @@ body {{
 
 .tooltip-popup.visible {
     opacity: 1;
+=======
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    pointer-events: none;
+}
+
+.custom-tooltip:hover::before { opacity: 1;
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     visibility: visible;
 }
 
@@ -868,7 +893,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initCustomTooltips();
     initQuizComponents();
     initMermaidFallback();
+<<<<<<< HEAD
     initResponsiveElements(); // iframeの高さ調整を初期化
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 });
 
 function initCustomTooltips() {
@@ -1002,6 +1030,7 @@ function initMultipleChoice(quiz) {
 }
 
 function initMermaidFallback() {
+<<<<<<< HEAD
     // mkdocs-mermaid2-pluginがMermaid.jsの読み込みを管理する。
     // この関数は、ページ遷移後などに再レンダリングが必要な場合に備えて残す。
     if (typeof mermaid !== 'undefined') {
@@ -1010,6 +1039,35 @@ function initMermaidFallback() {
     } else {
         console.warn('Mermaid.jsが見つかりません。mkdocs-mermaid2-pluginが有効か確認してください。');
     }
+=======
+    // Mermaid初期化の強化版
+    setTimeout(function() {
+        if (typeof mermaid !== 'undefined') {
+            console.log('Mermaid.jsが利用可能です。再初期化を実行します。');
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+            mermaid.init();
+        } else {
+            console.log('Mermaid.jsが読み込まれていません。手動で初期化を試みます。');
+            
+            // Mermaid.jsを動的に読み込む
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js';
+            script.onload = function() {
+                mermaid.initialize({ 
+                    startOnLoad: true,
+                    theme: 'default',
+                    securityLevel: 'loose'
+                });
+                mermaid.init();
+            };
+            document.head.appendChild(script);
+        }
+    }, 500);
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 }
 
 // レスポンシブ要素の初期化
@@ -1198,6 +1256,7 @@ window.MkDocsUtils = {
         });
     }
     
+<<<<<<< HEAD
     // ツールチップ機能（クリックベース、自動位置調整付き）
     function initClickableTooltips() {
         const HIDE_ALL_EVENT = 'hide-all-tooltips';
@@ -1267,12 +1326,17 @@ window.MkDocsUtils = {
         });
     }
 
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     // 初期化
     document.addEventListener('DOMContentLoaded', function() {
         initAccordions();
         initTabs();
         initQuizzes();
+<<<<<<< HEAD
         initClickableTooltips(); // 新しいツールチップ初期化関数を呼び出し
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     });
     
     // グローバル関数として公開

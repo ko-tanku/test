@@ -60,7 +60,10 @@ class BaseContentManager(ABC):
         self.chart_gen = ChartGenerator(self.colors, self.chart_styles)
         self.table_gen = TableGenerator(self.colors, self.table_styles)
         self.knowledge_mgr = KnowledgeManager(self.output_base_dir)
+<<<<<<< HEAD
         self.exercises: Dict[str, Dict[str, Any]] = {}
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 
         # Jinja2環境の初期化
         template_dir = Path(__file__).parent.parent / "materials" / material_name / "templates"
@@ -227,8 +230,12 @@ class BaseContentManager(ABC):
         self.doc_builder.clear_content()
 
         # タイトル
+<<<<<<< HEAD
         chapter_title = chapter_data.get('title', '')
         self.doc_builder.add_heading(chapter_title, 1)
+=======
+        self.doc_builder.add_heading(chapter_data.get('title', ''), 1)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 
         # 概要
         if 'overview' in chapter_data:
@@ -242,6 +249,7 @@ class BaseContentManager(ABC):
             self._process_content_list(
                 section.get('contents', []),
                 charts_dir,
+<<<<<<< HEAD
                 tables_dir,
                 chapter_title,
                 filename
@@ -250,6 +258,11 @@ class BaseContentManager(ABC):
         # フィードバックフォームを追加
         self.doc_builder.add_feedback_form("https://docs.google.com/forms/d/e/1FAIpQLSdzs_12345/viewform?usp=sf_link")
 
+=======
+                tables_dir
+            )
+
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         return self.doc_builder.save_markdown(filename)
 
     def _create_chapter_template(
@@ -323,7 +336,11 @@ class BaseContentManager(ABC):
 
             return chapter_path
 
+<<<<<<< HEAD
     def _process_content_list(self, contents: List[Dict[str, Any]], charts_dir: Path, tables_dir: Path, chapter_title: str, chapter_path: str):
+=======
+    def _process_content_list(self, contents: List[Dict[str, Any]], charts_dir: Path, tables_dir: Path):
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         """
         コンテンツリストを処理してMarkdownに変換
 
@@ -331,8 +348,11 @@ class BaseContentManager(ABC):
             contents: コンテンツ要素のリスト
             charts_dir: 図表の出力ディレクトリ
             tables_dir: 表の出力ディレクトリ
+<<<<<<< HEAD
             chapter_title: 現在の章のタイトル
             chapter_path: 現在の章のファイルパス
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         """
         for item in contents:
             content_type = item.get('type')
@@ -342,6 +362,7 @@ class BaseContentManager(ABC):
 
             elif content_type == 'text_with_tooltips':
                 text = item.get('text', '')
+<<<<<<< HEAD
                 terms_key = item.get('terms', chapter_title)
                 terms_info = self._get_chapter_terms(terms_key)
                 self.doc_builder.add_paragraph_with_tooltips(
@@ -351,6 +372,13 @@ class BaseContentManager(ABC):
                     chapter_title,
                     chapter_path
                 )
+=======
+                terms = item.get('terms', {})
+                # termsが文字列（章タイトル）の場合は、その章の用語を取得
+                if isinstance(terms, str):
+                    terms = self._get_chapter_terms(terms)
+                self.doc_builder.add_paragraph_with_tooltips(text, terms)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 
             elif content_type == 'heading':
                 text = item.get('text', '')
@@ -411,11 +439,15 @@ class BaseContentManager(ABC):
                 quiz_data = item.get('quiz_data', item)  # デフォルトでアイテム自体を使用
                 logger.info(f"複数選択クイズを処理: {quiz_data.get('quiz_id', 'ID不明')}")
                 self.doc_builder.add_multiple_choice_quiz(quiz_data)
+<<<<<<< HEAD
 
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             elif content_type == 'exercises':
                 question_data = item.get('question_data', {})
                 self.doc_builder.add_exercise_question(question_data)
 
+<<<<<<< HEAD
             elif content_type == 'exercise_ref':
                 exercise_id = item.get('id')
                 if exercise_id and exercise_id in self.exercises:
@@ -423,6 +455,8 @@ class BaseContentManager(ABC):
                 else:
                     logger.warning(f"演習問題IDが見つかりません: {exercise_id}")
 
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             elif content_type == 'image':
                 alt_text = item.get('alt_text', '')
                 image_path = Path(item.get('path', ''))
@@ -464,11 +498,19 @@ class BaseContentManager(ABC):
                 self.doc_builder.add_mermaid_block(graph_string, title)
 
             elif content_type == 'learning_object':
+<<<<<<< HEAD
                 self._expand_learning_object(item, charts_dir, tables_dir, chapter_title, chapter_path)
 
 
 
     def _expand_learning_object(self, item: Dict[str, Any], charts_dir: Path, tables_dir: Path, chapter_title: str, chapter_path: str):
+=======
+                self._expand_learning_object(item, charts_dir, tables_dir)
+
+
+
+    def _expand_learning_object(self, item: Dict[str, Any], charts_dir: Path, tables_dir: Path):
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         """
         学習オブジェクトIDを解決し、その内容を展開する。
         
@@ -476,8 +518,11 @@ class BaseContentManager(ABC):
             item: 学習オブジェクトの参照情報（例: {'type': 'learning_object', 'id': 'intro_to_pointer'}）
             charts_dir: 図表の出力ディレクトリ
             tables_dir: 表の出力ディレクトリ
+<<<<<<< HEAD
             chapter_title: 現在の章のタイトル
             chapter_path: 現在の章のファイルパス
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         """
         object_id = item.get('id')
         if not object_id:
@@ -499,7 +544,11 @@ class BaseContentManager(ABC):
             # 学習オブジェクトのコンテンツリストを処理（再帰呼び出し）
             # これにより、学習オブジェクト内に別の学習オブジェクトをネストすることも可能になる
             object_contents = learning_object_data.get('contents', [])
+<<<<<<< HEAD
             self._process_content_list(object_contents, charts_dir, tables_dir, chapter_title, chapter_path)
+=======
+            self._process_content_list(object_contents, charts_dir, tables_dir)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 
         except Exception as e:
             logger.error(f"学習オブジェクトの読み込みまたは展開中にエラーが発生しました: {e}")
@@ -539,6 +588,7 @@ class BaseContentManager(ABC):
 
             if chart_type == 'custom':
                 # カスタム描画関数による図表
+<<<<<<< HEAD
                 plot_function_name = config.get('plot_function')
                 if plot_function_name:
                     # 文字列関数名を実際の関数オブジェクトに解決
@@ -551,6 +601,13 @@ class BaseContentManager(ABC):
                         logger.error(f"カスタム描画関数 '{plot_function_name}' が見つかりません")
                         # デフォルトのサンプル図表を生成
                         chart_path = self._generate_default_sample_chart(filename, output_dir)
+=======
+                plot_function = config.get('plot_function')
+                if plot_function:
+                    chart_path = self.chart_gen.create_custom_figure(
+                        plot_function, filename, output_dir=output_dir
+                    )
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                 else:
                     logger.warning("カスタムチャートに描画関数が指定されていません")
                     return
@@ -784,6 +841,7 @@ class BaseContentManager(ABC):
 
         except Exception as e:
             logger.error(f"表処理中にエラーが発生しました: {e}")
+<<<<<<< HEAD
             logger.error(f"表タイプ: {table_type}, 設定: {table_config}")
     
     def _resolve_custom_function(self, function_name: str) -> Optional[Callable]:
@@ -844,3 +902,6 @@ class BaseContentManager(ABC):
         except Exception as e:
             logger.error(f"デフォルトサンプル図表の生成中にエラー: {e}")
             raise
+=======
+            logger.error(f"表タイプ: {table_type}, 設定: {table_config}")
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

@@ -30,8 +30,15 @@ def hello():
 echo 'Hello'
 ```
 
+<<<<<<< HEAD
 !!! info "実行結果"
     Hello
+=======
+!!! success "実行結果"
+    ```
+    Hello
+    ```
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 
 ## Admonitionとタブ
 
@@ -46,6 +53,9 @@ echo 'Hello'
 
 === "タブ2"
     これはタブ2のコンテンツです。
+<<<<<<< HEAD
 
 ??? info "フィードバック"
     この章についてのご意見・ご質問がございましたら、[こちらのフォーム](https://docs.google.com/forms/d/e/1FAIpQLSdzs_12345/viewform?usp=sf_link)からお聞かせください。
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

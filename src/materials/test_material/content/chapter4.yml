@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+# C:\Users\subka\Documents\my-project\src\materials\test_material\content\chapter4.yml
+
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 title: "第4章 高度なビジュアル要素とインタラクション"
 sections:
   - title: "1. Mermaid.jsによる図表作成"
@@ -89,6 +94,7 @@ sections:
         form_url: "https://docs.google.com/forms/d/e/your_form_id/viewform?usp=sf_link"
         title: "この章の理解度アンケート"
         description: "この章の内容は分かりやすかったですか？改善のため、ぜひご意見をお聞かせください。"
+<<<<<<< HEAD
 
   - title: "5. クイズ機能テスト"
     contents:
@@ -100,3 +106,5 @@ sections:
         options: ["Matplotlib", "Plotly", "Seaborn", "全て"]
         correct: 1 # Plotly
         explanation: "この章では主にPlotlyを使ったインタラクティブグラフを扱いました。"
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

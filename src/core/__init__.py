@@ -1,8 +1,13 @@
 """
+<<<<<<< HEAD
 統一コンポーネントシステム - Core モジュール
 
 React風宣言的コンポーネントシステムのメインエントリーポイントです。
 既存モジュールとの互換性を保ちつつ、新しいコンポーネントシステムを提供します。
+=======
+coreパッケージの初期化
+主要モジュールを外部に公開
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 """
 
 # 既存モジュール（後方互換性のため）
@@ -48,7 +53,10 @@ initialize_component_system()
 
 # 公開API
 __all__ = [
+<<<<<<< HEAD
     # 既存モジュール（後方互換性）
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     'base_config',
     'config',
     'utils',
@@ -56,6 +64,7 @@ __all__ = [
     'chart_generator',
     'table_generator',
     'knowledge_manager',
+<<<<<<< HEAD
     'content_manager',
     
     # 新しいコンポーネントシステム
@@ -71,4 +80,7 @@ __all__ = [
     'validate_content_spec',
     'load_spec_from_yaml',
     'initialize_component_system'
+=======
+    'content_manager'
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 ]

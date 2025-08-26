@@ -38,6 +38,7 @@ class ChartGenerator:
         self.styles = styles or BASE_CHART_STYLES
         
         # 日本語フォント設定を適用
+<<<<<<< HEAD
         apply_matplotlib_japanese_font(self.styles.get("font_family"))
         
         # Seabornのスタイル設定
@@ -58,6 +59,16 @@ class ChartGenerator:
             'scrollZoom': False,
             'doubleClick': False
         }
+=======
+        apply_matplotlib_japanese_font(self.styles.get("font_family"))
+        
+        # Seabornのスタイル設定
+        sns.set_style("whitegrid")
+        sns.set_palette("husl")
+        
+        # 日本語フォント設定を適用
+        apply_matplotlib_japanese_font(self.styles.get("font_family"))
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
     def _save_mpl_figure_to_html(
         self, fig: plt.Figure, output_path: Path, embed_png: bool = True
@@ -194,7 +205,11 @@ class ChartGenerator:
                 fig.write_html(
                     output_path,
                     include_plotlyjs='cdn',
+<<<<<<< HEAD
                     config=self.plotly_config
+=======
+                    config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                 )
                 
             else:
@@ -286,7 +301,11 @@ class ChartGenerator:
                 fig.write_html(
                     output_path,
                     include_plotlyjs='cdn',
+<<<<<<< HEAD
                     config=self.plotly_config
+=======
+                    config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                 )
                 
             else:
@@ -385,7 +404,11 @@ class ChartGenerator:
             plotly_figure.write_html(
                 output_path,
                 include_plotlyjs='cdn',
+<<<<<<< HEAD
                 config=self.plotly_config
+=======
+                config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             )
             
             logger.info(f"インタラクティブ図表を保存しました: {output_path}")
@@ -496,7 +519,11 @@ class ChartGenerator:
                 fig.write_html(
                     output_path,
                     include_plotlyjs='cdn',
+<<<<<<< HEAD
                     config=self.plotly_config
+=======
+                    config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                 )
             else:
                 fig, ax = plt.subplots(figsize=self.styles["figsize"])
@@ -558,7 +585,11 @@ class ChartGenerator:
                 fig.write_html(
                     output_path,
                     include_plotlyjs='cdn',
+<<<<<<< HEAD
                     config=self.plotly_config
+=======
+                    config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                 )
             else:
                 fig, ax = plt.subplots(figsize=(6, 6))
@@ -639,7 +670,11 @@ class ChartGenerator:
             fig.write_html(
                 output_path,
                 include_plotlyjs='cdn',
+<<<<<<< HEAD
                 config=self.plotly_config
+=======
+                config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             )
             
             return output_path
@@ -710,7 +745,11 @@ class ChartGenerator:
             fig.write_html(
                 output_path,
                 include_plotlyjs='cdn',
+<<<<<<< HEAD
                 config=self.plotly_config
+=======
+                config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             )
             
             return output_path
@@ -772,7 +811,10 @@ class ChartGenerator:
                 sliders=sliders,
                 xaxis_title=config.get('xlabel', ''),
                 yaxis_title=config.get('ylabel', ''),
+<<<<<<< HEAD
                 yaxis_range=config.get('yaxis_range'),  # Y軸の範囲を固定
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
                 width=None,
                 height=450,
                 margin=dict(l=50, r=50, t=50, b=100)
@@ -781,7 +823,11 @@ class ChartGenerator:
             fig.write_html(
                 output_path,
                 include_plotlyjs='cdn',
+<<<<<<< HEAD
                 config=self.plotly_config
+=======
+                config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             )
             
             return output_path
@@ -836,7 +882,11 @@ class ChartGenerator:
             fig.write_html(
                 output_path,
                 include_plotlyjs='cdn',
+<<<<<<< HEAD
                 config=self.plotly_config
+=======
+                config={'responsive': True}
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
             )
             
             return output_path
@@ -917,4 +967,8 @@ class ChartGenerator:
                 
         except Exception as e:
             logger.error(f"アニメーションデータからのGIF生成中にエラーが発生しました: {e}")
+<<<<<<< HEAD
             raise
+=======
+            raise
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

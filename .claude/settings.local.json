@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+<<<<<<< HEAD
       "Bash(python:*)",
       "Bash(start /b mkdocs serve)",
       "Bash(mkdocs serve:*)",
@@ -15,5 +16,24 @@
     ],
     "deny": [],
     "ask": []
+=======
+      "Bash(mkdir:*)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(grep:*)",
+      "Bash(cp:*)",
+      "Bash(mkdocs serve:*)",
+      "Bash(powershell:*)",
+      "WebSearch",
+      "Bash(rm:*)",
+      "Bash(mv:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\c\\Users\\subka\\Documents\\my-project\\test\\src\\materials",
+      "C:\\c\\Users\\subka\\Documents\\my-project"
+    ]
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
   }
 }

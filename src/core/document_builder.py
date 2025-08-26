@@ -8,6 +8,7 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from html import escape
+<<<<<<< HEAD
 import json # 追加
 
 from .utils import (
@@ -18,6 +19,14 @@ from .utils import (
 from .config import MATERIAL_ICONS
 from .knowledge_manager import KnowledgeManager
 from .learning_analyzer import LearningAnalyzer
+=======
+
+from .utils import (
+    generate_admonition_markdown,
+    generate_tabbed_markdown
+)
+from .config import MATERIAL_ICONS
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +45,7 @@ class DocumentBuilder:
         self.content_buffer = []
         
     def clear_content(self):
+<<<<<<< HEAD
         """
         現在構築中のMarkdownコンテンツの内部バッファをクリア
         """
@@ -48,6 +58,18 @@ class DocumentBuilder:
         Returns:
             Markdownコンテンツ文字列
         """
+=======
+        """現在構築中のMarkdownコンテンツの内部バッファをクリア"""
+        self.content_buffer = []
+        
+    def get_content(self) -> str:
+        """
+        構築された現在のMarkdownコンテンツを文字列として返す
+        
+        Returns:
+            Markdownコンテンツ文字列
+        """
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         return '\n'.join(self.content_buffer)
         
     def save_markdown(self, filename: str) -> Path:
@@ -73,6 +95,7 @@ class DocumentBuilder:
         
         return file_path
         
+<<<<<<< HEAD
     def _escape_js_string(self, s: str) -> str:
         """
         JavaScript文字列リテラル用に文字列をエスケープする
@@ -83,6 +106,10 @@ class DocumentBuilder:
 
     def add_heading(self, text: str, level: int):
         """
+=======
+    def add_heading(self, text: str, level: int):
+        """
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         Markdownの見出しを追加
         
         Args:
@@ -110,6 +137,7 @@ class DocumentBuilder:
         self.content_buffer.append("")
         
     def add_paragraph_with_tooltips(
+<<<<<<< HEAD
         self, 
         text: str, 
         terms_info: Dict[str, Dict[str, str]],
@@ -130,10 +158,27 @@ class DocumentBuilder:
         # 既存のMarkdownリンクを保護
         link_pattern = r'\[([^\]]+)\]\([^)]+\)'
         protected_links = []
+=======
+        self, text: str, terms_info: Dict[str, Dict[str, str]]
+    ):
+        """
+        専門用語にツールチップを付与した段落を追加
+        
+        Args:
+            text: 段落のテキスト
+            terms_info: 用語情報の辞書 {用語: {"tooltip_text": "ツールチップ内容"}}
+        """
+        # 既存のMarkdownリンクを保護するためのパターン
+        link_pattern = r'\[([^\]]+)\]\([^)]+\)'
+        protected_links = []
+        
+        # 既存のリンクを一時的に置換
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         def protect_link(match):
             protected_links.append(match.group(0))
             return f"__PROTECTED_LINK_{len(protected_links) - 1}__"
         
+<<<<<<< HEAD
         processed_text = re.sub(link_pattern, protect_link, text)
 
         used_terms = set()
@@ -175,6 +220,31 @@ class DocumentBuilder:
 </div>"""
         self.add_raw_markdown(final_html)
         self.add_raw_markdown("") # 末尾に改行を追加
+=======
+        text_with_protected_links = re.sub(link_pattern, protect_link, text)
+        
+        # 用語をツールチップ付きリンクに置換
+        for term, info in terms_info.items():
+            tooltip_text = info.get("tooltip_text", "")
+            # HTMLエスケープ
+            escaped_tooltip = escape(tooltip_text)
+            # 改行を&#10;に置換
+            escaped_tooltip = escaped_tooltip.replace('\n', '&#10;')
+
+            # 正確な用語の文字列をマッチさせ、初回のみ置換
+            pattern = re.escape(term)
+            replacement = f'<span class="custom-tooltip" data-tooltip="{escaped_tooltip}">{term}</span>'
+            text_with_protected_links = re.sub(
+                pattern, replacement, text_with_protected_links, count=1
+            )
+        
+        # 保護していたリンクを復元
+        for i, protected_link in enumerate(protected_links):
+            text_with_protected_links = text_with_protected_links.replace(
+                f"__PROTECTED_LINK_{i}__", protected_link
+            )
+        self.add_raw_markdown(text_with_protected_links)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
     def add_code_block(self, code: str, lang: str = "python"):
         """
@@ -295,9 +365,13 @@ class DocumentBuilder:
         self.content_buffer.append(tabbed_md)
         
     def add_horizontal_rule(self):
+<<<<<<< HEAD
         """
         水平線を追加
         """
+=======
+        """水平線を追加"""
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         self.content_buffer.append("---")
         self.content_buffer.append("")
         
@@ -361,6 +435,7 @@ class DocumentBuilder:
         html_content += f'<div class="single-choice-result"></div>'
         html_content += f'</div>'
         
+<<<<<<< HEAD
         html_content += '<script>'
         html_content += 'window.quizData = window.quizData || { quizzes: {} };'
         html_content += f'window.quizData.quizzes["{quiz_id}"] = {{'
@@ -375,6 +450,22 @@ class DocumentBuilder:
     def add_categorization_quiz(self, quiz_data: Dict[str, Any]):
         """
         カテゴリ分けクイズを追加
+=======
+        html_content += f'<script>'
+        html_content += f'window.singleChoiceData = window.singleChoiceData || {{}};'
+        html_content += f'window.singleChoiceData["{quiz_id}"] = {{'
+        html_content += f'"correct": {quiz_data.get("correct", 0)},'
+        html_content += f'"explanation": "{quiz_data.get("explanation", "")}"'
+        html_content += f'}};'
+        html_content += f'</script>'
+
+        self.content_buffer.append(html_content)
+        self.content_buffer.append("")
+
+    def add_categorization_quiz(self, quiz_data: Dict[str, Any]):
+        """
+        カテゴリ分けクイズを追加（ドラッグ&ドロップ）
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
         Args:
             quiz_data: クイズデータの辞書
@@ -382,6 +473,7 @@ class DocumentBuilder:
         quiz_id = quiz_data.get('quiz_id', quiz_data.get('id', 'categorization-quiz'))
         
         html_content = f'<div class="quiz-container categorization-quiz" data-quiz-id="{quiz_id}">'
+<<<<<<< HEAD
         html_content += f'<h3 class="quiz-title">クイズ</h3>'
         html_content += f'<p class="quiz-question"><strong>問題:</strong> {quiz_data["question"]}</p>'
         html_content += f'<div class="quiz-items">'
@@ -418,6 +510,48 @@ class DocumentBuilder:
     def add_multiple_choice_quiz(self, quiz_data: Dict[str, Any]):
         """
         複数選択クイズを追加
+=======
+        html_content += f'<h3 class="quiz-title">カテゴリ分けクイズ</h3>'
+        html_content += f'<p class="quiz-question"><strong>問題:</strong> {quiz_data["question"]}</p>'
+        
+        html_content += f'<div class="quiz-categories"><strong>カテゴリ:</strong><ul>'
+        for category in quiz_data['categories']:
+            html_content += f'<li>{category}</li>'
+        html_content += f'</ul></div>'
+        
+        html_content += f'<div class="quiz-items">'
+        html_content += f'<h4>項目をドラッグして適切なカテゴリに分類してください：</h4>'
+        html_content += f'<div class="draggable-items">'
+        
+        for i, item in enumerate(quiz_data['items']):
+            html_content += f'<div class="draggable-item" id="draggable-item-{quiz_id}-{i}" data-item="{i}" draggable="true">{item}</div>'
+        
+        html_content += f'</div></div>'
+        html_content += f'<div class="drop-zones">'
+        
+        for i, category in enumerate(quiz_data['categories']):
+            html_content += f'<div class="drop-zone">'
+            html_content += f'<h4>{category}</h4>'
+            html_content += f'<div class="drop-area" data-category="{i}">ここにドロップしてください</div>'
+            html_content += f'</div>'
+        
+        html_content += f'</div>'
+        html_content += f'<button class="check-categorization" onclick="checkCategorization(\'{quiz_id}\')">答えを確認</button>'
+        html_content += f'<div class="categorization-result"></div>'
+        html_content += f'</div>'
+        
+        html_content += f'<script>'
+        html_content += f'window.categorizationData = window.categorizationData || {{}};'
+        html_content += f'window.categorizationData["{quiz_id}"] = {quiz_data.get("correct_answers", quiz_data.get("correct_mapping", []))};'
+        html_content += f'</script>'
+        
+        self.content_buffer.append(html_content)
+        self.content_buffer.append("")
+
+    def add_multiple_choice_quiz(self, quiz_data: Dict[str, Any]):
+        """
+        複数選択クイズを追加（複数の正解を選択）
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
         Args:
             quiz_data: クイズデータの辞書
@@ -425,14 +559,21 @@ class DocumentBuilder:
         quiz_id = quiz_data.get('quiz_id', quiz_data.get('id', 'multiple-choice-quiz'))
         
         html_content = f'<div class="quiz-container multiple-choice-quiz" data-quiz-id="{quiz_id}">'
+<<<<<<< HEAD
         html_content += f'<h3 class="quiz-title">クイズ</h3>'
         html_content += f'<p class="quiz-question"><strong>問題:</strong> {quiz_data["question"]}</p>'
+=======
+        html_content += f'<h3 class="quiz-title">複数選択クイズ</h3>'
+        html_content += f'<p class="quiz-question"><strong>問題:</strong> {quiz_data["question"]}</p>'
+        html_content += f'<p class="quiz-instruction"><strong>複数の選択肢から正解を全て選んでください</strong></p>'
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         html_content += f'<div class="quiz-options">'
         
         for i, option in enumerate(quiz_data['options']):
             html_content += f'<label class="option-label"><input type="checkbox" name="{quiz_id}" value="{i}"><span class="option-text">{option}</span></label><br>'
         
         html_content += f'</div>'
+<<<<<<< HEAD
         html_content += f'<button class="check-multiple-choice" onclick="checkMultipleChoice(\'{quiz_id}\')">回答をチェック</button>'
         html_content += f'<div class="multiple-choice-result"></div>'
         html_content += f'</div>'
@@ -509,6 +650,61 @@ class DocumentBuilder:
     def add_faq_item(self, question: str, answer: str, collapsible: bool = False):
         """
         FAQ項目をAdmonitionとして追加
+=======
+        html_content += f'<button class="check-multiple-choice" onclick="checkMultipleChoice(\'{quiz_id}\')">答えを確認</button>'
+        html_content += f'<div class="multiple-choice-result"></div>'
+        html_content += f'</div>'
+        
+        html_content += f'<script>'
+        html_content += f'window.multipleChoiceData = window.multipleChoiceData || {{}};'
+        html_content += f'window.multipleChoiceData["{quiz_id}"] = {{'
+        html_content += f'"correct": {quiz_data.get("correct_answers", quiz_data.get("correct_indices", []))},'
+        html_content += f'"explanation": "{quiz_data.get("explanation", "")}"'
+        html_content += f'}};'
+        html_content += f'</script>'
+        
+        self.content_buffer.append(html_content)
+        self.content_buffer.append("")
+        
+    def add_exercise_question(self, exercise_data: Dict[str, Any]):
+        """
+        演習問題を統一フォーマットで追加
+        
+        Args:
+            exercise_data: 演習問題データの辞書
+        """
+        difficulty_map = {
+            'easy': ('tip', '初級'),
+            'medium': ('question', '中級'),
+            'hard': ('warning', '上級')
+        }
+        
+        difficulty = exercise_data.get('difficulty', 'medium')
+        adm_type, difficulty_label = difficulty_map.get(difficulty, ('question', '中級'))
+        
+        lines = []
+        lines.append(f"!!! {adm_type} \"演習問題（{difficulty_label}）\"")
+        lines.append(f"    **問題**: {exercise_data.get('question', '')}")
+        lines.append("")
+        
+        # 解答（折りたたみ式）
+        if 'answer' in exercise_data:
+            lines.append("    ??? success \"解答\"")
+            lines.append(f"        **解答**: {exercise_data.get('answer', '')}")
+            lines.append("")
+        
+        # 解説（折りたたみ式）
+        if 'explanation' in exercise_data:
+            lines.append("    ??? info \"解説\"")
+            lines.append(f"        **解説**: {exercise_data.get('explanation', '')}")
+        
+        self.content_buffer.extend(lines)
+        self.content_buffer.append("")
+        
+    def add_faq_item(self, question: str, answer: str, collapsible: bool = True):
+        """
+        FAQ項目を追加
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
         
         Args:
             question: 質問
@@ -516,6 +712,7 @@ class DocumentBuilder:
             collapsible: 折りたたみ可能にするか
         """
         self.add_admonition("question", question, answer, collapsible)
+<<<<<<< HEAD
 
     def add_tip_item(self, title: str, content: str, collapsible: bool = False):
         """
@@ -791,3 +988,91 @@ class DocumentBuilder:
 </details>
             '''
             self.content_buffer.append(help_html)
+=======
+        
+    def add_tip_item(self, title: str, content: str, collapsible: bool = True):
+        """
+        TIPS項目を追加
+        
+        Args:
+            title: タイトル
+            content: 内容
+            collapsible: 折りたたみ可能にするか
+        """
+        self.add_admonition("tip", title, content, collapsible)
+        
+    def add_code_block_with_static_output(
+        self, code: str, output: str, lang: str = "python", output_label: str = "実行結果"
+    ):
+        """
+        コードブロックと静的な実行結果を追加
+        
+        Args:
+            code: コード
+            output: 実行結果
+            lang: 言語
+            output_label: 出力ラベル
+        """
+        self.add_code_block(code, lang)
+        self.add_admonition("success", output_label, f"```\n{output}\n```", False)
+        
+    def add_summary_section(self, title: str, points: List[str]):
+        """
+        学習の要点（サマリー）セクションを追加
+        
+        Args:
+            title: セクションタイトル
+            points: 要点のリスト
+        """
+        content = "\n".join(f"- {point}" for point in points)
+        self.add_admonition("note", title, content, False)
+        
+    def add_recommendation_section(self, title: str, items: List[Dict[str, str]]):
+        """
+        関連資料や次のステップのレコメンデーションを追加
+        
+        Args:
+            title: セクションタイトル
+            items: レコメンデーション項目のリスト [{"text": "表示テキスト", "link": "URL"}]
+        """
+        lines = []
+        for item in items:
+            text = item.get("text", "")
+            link = item.get("link", "")
+            if link:
+                lines.append(f"- [{text}]({link})")
+            else:
+                lines.append(f"- {text}")
+        
+        content = "\n".join(lines)
+        self.add_admonition("info", title, content, False)
+        
+    def add_mermaid_block(self, graph_string: str, title: Optional[str] = None):
+        """
+        Mermaid図表ブロックを追加
+        
+        Args:
+            graph_string: Mermaid構文の図表定義
+            title: 図表のタイトル（オプション）
+        """
+        if title:
+            self.add_paragraph(f"**{title}**")
+        
+        # Mermaidブロックを追加
+        self.content_buffer.append("```mermaid")
+        self.content_buffer.append(graph_string)
+        self.content_buffer.append("```")
+        self.content_buffer.append("")
+
+    def add_feedback_form(self, form_url: str, title: str = "フィードバックのお願い", description: str = "この学習資料をより良くするために、皆様のご意見をお聞かせください。"):
+        """
+        外部のフィードバックフォームへのリンクを含むセクションを追加する。
+
+        Args:
+            form_url: 埋め込むフォームのURL（Google Formsなど）。
+            title: セクションのタイトル。
+            description: フォームの説明文。
+        """
+        content = f'{description}\n\n<a href="{form_url}" target="_blank" rel="noopener noreferrer" class="md-button md-button--primary">フィードバックを送信する</a>'
+        self.add_admonition("question", title, content, False)
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

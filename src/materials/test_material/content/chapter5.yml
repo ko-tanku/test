@@ -13,12 +13,22 @@ sections:
 
   - title: "2. 演習問題"
     contents:
+<<<<<<< HEAD
       - type: exercise_ref
         id: ch5_ex1
+=======
+      - type: exercises
+        question_data:
+          difficulty: "easy"
+          question: "1+1は？"
+          answer: "2"
+          explanation: "基本的な算数です。"
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 
   - title: "3. 教材固有の独自ジェネレータ呼び出しテスト"
     contents:
       - type: text
+<<<<<<< HEAD
         text: "↓ここに、Matplotlibで生成されたグラフとテキストの組み合わせが表示されるはずです。"
       - type: chart
         chart_type: custom
@@ -27,3 +37,11 @@ sections:
           plot_function: "draw_voltage_stabilization_graph" # This will be a method in TestMaterialContentManager
           filename: "voltage_stabilization_graph.html"
         data: {}
+=======
+        text: "↓ここに、`generators/ascii_art_generator.py`で生成されたアスキーアート画像が表示されるはずです。"
+      - type: custom_generator
+        generator: "ascii_art_generator.generate"
+        params:
+          text: "GEMINI"
+          filename: "gemini_art.png"
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

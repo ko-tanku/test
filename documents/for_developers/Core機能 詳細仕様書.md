@@ -76,6 +76,7 @@ graph TD
 - 用語集、FAQ、TIPSページのMarkdownを生成する。
 - テキスト中の専門用語に、自動でツールチップを付与するHTMLを生成する。
 
+<<<<<<< HEAD
 #### 2.1.2. アーキテクチャ上の重要な実装詳細
 
 **循環インポート問題の解決:**
@@ -92,6 +93,8 @@ def _get_doc_builder(self):
     return self.doc_builder
 ```
 
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 #### 2.1.2. 主要機能と実装詳細
 
 **機能: ツールチップの自動付与**
@@ -155,15 +158,19 @@ def _get_doc_builder(self):
         1.  各メソッドは、`quiz_data`を基に、クイズの骨格となるHTML（`<div class="quiz-container ...">`）を生成する。
         2.  問題文、選択肢（ラジオボタンやチェックボックス）、解答確認ボタンなどがHTMLとして構築される。
         3.  正解や解説といった、答え合わせに必要なデータは、`<script>`タグ内に`window.quizData`のようなグローバルJavaScriptオブジェクトとして埋め込まれる。
+<<<<<<< HEAD
     - **JavaScript生成の安全性:**
         - 2025年8月26日に修正: f-string内での複数行文字列生成でSyntaxErrorが発生していた問題を解決。
         - 現在は文字列の結合方式を採用し、JavaScript埋め込みの際のエスケープ処理を`_escape_js_string()`メソッドで安全に行う。
         - 各行を個別に結合することで、改行や引用符のエスケープ問題を回避。
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     - **スタイルと動作:**
         - **HTMLクラス:** `.quiz-container`, `.quiz-option`, `.correct`, `.incorrect`など。
         - **CSS定義場所:** `asset_generator.py`の`_get_base_css_template()`内で定義。正解・不正解時の背景色などが設定されている。
         - **JSロジック:** `asset_generator.py`の`_get_interactive_js_template()`内で、各クイズの動作ロジック（選択肢の制御、答え合わせ、結果表示など）が定義されている。`checkSingleChoice()`のようなグローバル関数がHTMLの`onclick`属性から呼び出される。
 
+<<<<<<< HEAD
 **機能: フィードバックフォームの生成**
 
 - **目的:** 各章の最後に学習者からのフィードバックを収集するフォームリンクを統一形式で埋め込む。
@@ -176,6 +183,8 @@ def _get_doc_builder(self):
         2. フォームへのリンクを含む定型文をAdmonitionの内容として設定。
         3. デフォルトでは折りたたみ状態（`collapsible=True`）で表示され、ユーザーが必要時にのみ展開できる。
 
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 ---
 ### 2.3. `asset_generator.py`
 
@@ -467,6 +476,7 @@ start /b mkdocs serve
 
 **注意:**
 - このコマンドはWindowsのコマンドプロンプト用です。
+<<<<<<< HEAD
 - バックグラウンドで実行したプロセスを停止するには、タスクマネージャーを開き、`mkdocs.exe`または`python.exe`のプロセスを探して手動で終了させる必要があります。
 
 ### 3.2. 開発時の推奨事項
@@ -494,3 +504,6 @@ start /b mkdocs serve
 - **ビルド確認:** `python src/materials/test_material/main.py`でビルドが正常完了することを確認
 - **動作確認:** `mkdocs serve`でローカルサーバーを起動し、ブラウザで表示・動作を検証
 - **ドキュメント更新:** 実装変更時は対応するドキュメント（本書、`IMPROVEMENT_PROPOSALS.md`等）を必ず更新
+=======
+- バックグラウンドで実行したプロセスを停止するには、タスクマネージャーを開き、`mkdocs.exe`または`python.exe`のプロセスを探して手動で終了させる必要があります。
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

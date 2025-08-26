@@ -1,0 +1,20 @@
+# KnowledgeManagerが利用する用語、FAQ、TIPSのテストデータを定義します。
+terms:
+  - term: "Core"
+    definition: "本プロジェクトにおける、学習資料自動生成フレームワークの心臓部。"
+    category: "基本概念"
+  - term: "Material"
+    definition: "Core機能を利用して生成される、個別の学習資料のこと。"
+    category: "基本概念"
+
+faq:
+  - question: "この教材の目的は何ですか？"
+    answer: "Coreフレームワークの全機能が正しく動作するかを網羅的にテストすることです。"
+  - question: "YAMLファイルは何に使われますか？"
+    answer: "学習コンテンツのデータソースとして利用されます。ロジックとデータを分離するための重要な要素です。"
+
+tips:
+  - title: "デバッグのヒント"
+    content: "もし表示が崩れたら、まずはブラウザの開発者ツールでコンソールエラーを確認してください。"
+  - title: "機能の探し方"
+    content: "`documents/core実装機能一覧.md`を見ると、利用可能な全ての機能を確認できます。"

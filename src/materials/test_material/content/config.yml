@@ -11,6 +11,7 @@ next_steps: []
 tags:
   - core-test
   - example
+<<<<<<< HEAD
 
 # ナビゲーション構造
 navigation:
@@ -26,3 +27,5 @@ navigation:
       - "用語集": "glossary.md"
       - "FAQ": "faq.md"
       - "TIPS": "tips.md"
+=======
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

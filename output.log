@@ -1,0 +1,87 @@
+2025-08-19 21:59:41,667 - __main__ - INFO - テスト資料の生成を開始します...
+2025-08-19 21:59:41,667 - __main__ - INFO - 出力ディレクトリ: docs\test_material
+2025-08-19 21:59:41,667 - src.core.utils - INFO - フォント 'Meiryo' を使用します
+2025-08-19 21:59:41,667 - src.core.utils - INFO - フォント 'Meiryo' を使用します
+2025-08-19 21:59:41,667 - src.core.content_manager - WARNING - テンプレートディレクトリが見つかりません: C:\Users\subka\Documents\my-project\test\test\src\materials\test_material\templates
+2025-08-19 21:59:41,667 - __main__ - INFO - コンテンツを生成中...
+2025-08-19 21:59:41,836 - src.core.chart_generator - INFO - 図表HTMLを保存しました: docs\test_material\charts\matplotlib_line_chart.html
+2025-08-19 21:59:41,974 - src.core.chart_generator - INFO - 図表HTMLを保存しました: docs\test_material\charts\matplotlib_bar_chart.html
+2025-08-19 21:59:42,028 - src.core.chart_generator - INFO - インタラクティブ図表を保存しました: docs\test_material\charts\plotly_trigonometric.html
+2025-08-19 21:59:42,172 - src.core.chart_generator - INFO - 図表HTMLを保存しました: docs\test_material\charts\custom_diagram.html
+2025-08-19 21:59:42,284 - src.core.chart_generator - INFO - 図表HTMLを保存しました: docs\test_material\charts\embedded_system_diagram.html
+2025-08-19 21:59:42,306 - src.core.chart_generator - INFO - インタラクティブ図表を保存しました: docs\test_material\charts\state_transition_demo.html
+2025-08-19 21:59:42,323 - src.core.chart_generator - INFO - インタラクティブ図表を保存しました: docs\test_material\charts\dropdown_filter_demo.html
+2025-08-19 21:59:42,342 - src.core.chart_generator - INFO - インタラクティブ図表を保存しました: docs\test_material\charts\slider_parameter_demo.html
+2025-08-19 21:59:43,712 - src.core.chart_generator - INFO - アニメーションGIFを保存しました: docs\test_material\charts\sine_wave_animation.gif
+2025-08-19 21:59:43,736 - src.core.chart_generator - INFO - インタラクティブ図表を保存しました: docs\test_material\charts\hover_details_demo.html
+C:\Users\subka\Documents\my-project\test\test\src\core\table_generator.py:58: FutureWarning:
+
+DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+
+2025-08-19 21:59:43,739 - src.core.table_generator - INFO - 表HTMLを保存しました: docs\test_material\tables\basic_tools_table.html
+C:\Users\subka\Documents\my-project\test\test\src\core\table_generator.py:58: FutureWarning:
+
+DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+
+2025-08-19 21:59:43,741 - src.core.table_generator - INFO - 比較表HTMLを保存しました: docs\test_material\tables\ssg_comparison_table.html
+2025-08-19 21:59:43,743 - src.core.table_generator - INFO - 表HTMLを保存しました: docs\test_material\tables\project_tasks_table.html
+2025-08-19 21:59:43,746 - src.core.table_generator - INFO - 表HTMLを保存しました: docs\test_material\tables\wide_scrollable_table.html
+2025-08-19 21:59:43,747 - src.core.table_generator - INFO - 表HTMLを保存しました: docs\test_material\tables\monthly_sales_table.html
+2025-08-19 21:59:43,748 - src.core.table_generator - INFO - 表HTMLを保存しました: docs\test_material\tables\features_with_icons_table.html
+2025-08-19 21:59:43,749 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\index.md
+C:\Users\subka\Documents\my-project\test\test\src\core\table_generator.py:58: FutureWarning:
+
+DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+
+2025-08-19 21:59:43,753 - src.core.table_generator - INFO - 比較表HTMLを保存しました: docs\test_material\tables\language_comparison.html
+2025-08-19 21:59:43,754 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\documents\chapter01.md
+2025-08-19 21:59:43,757 - src.core.table_generator - INFO - 表HTMLを保存しました: docs\test_material\tables\embedded_features.html
+2025-08-19 21:59:43,757 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\documents\chapter02.md
+2025-08-19 21:59:43,806 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\documents\chapter03.md
+2025-08-19 21:59:43,809 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\documents\chapter04.md
+2025-08-19 21:59:43,812 - src.core.content_manager - INFO - カテゴリ分けクイズを処理: system-classification
+2025-08-19 21:59:43,812 - src.core.content_manager - INFO - 複数選択クイズを処理: realtime-applications
+2025-08-19 21:59:43,812 - src.core.content_manager - INFO - カテゴリ分けクイズを処理: communication-protocols
+2025-08-19 21:59:43,812 - src.core.content_manager - INFO - 複数選択クイズを処理: microcontroller-features
+2025-08-19 21:59:43,813 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\documents\chapter05.md
+2025-08-19 21:59:43,813 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\documents\chapter06.md
+2025-08-19 21:59:43,813 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\glossary.md
+2025-08-19 21:59:43,814 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\faq.md
+2025-08-19 21:59:43,814 - src.core.document_builder - INFO - Markdownファイルを保存しました: docs\test_material\tips.md
+2025-08-19 21:59:43,814 - __main__ - INFO - 生成されたファイル数: 10
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\index.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\documents\chapter01.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\documents\chapter02.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\documents\chapter03.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\documents\chapter04.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\documents\chapter05.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\documents\chapter06.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\glossary.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\faq.md
+2025-08-19 21:59:43,814 - __main__ - INFO -   - docs\test_material\tips.md
+2025-08-19 21:59:43,814 - __main__ - INFO - アセット機能を使ってmkdocs.ymlを更新中...
+2025-08-19 21:59:43,814 - __main__ - INFO - === アセットファイル生成開始 ===
+2025-08-19 21:59:43,814 - __main__ - INFO - CSSファイルを生成中...
+2025-08-19 21:59:43,815 - src.core.asset_generator - INFO - CSSファイル生成完了: docs\custom.css
+2025-08-19 21:59:43,815 - src.core.asset_generator - INFO - CSSファイル生成完了: docs\custom_dark.css
+2025-08-19 21:59:43,815 - src.core.asset_generator - INFO - CSSファイル生成完了: docs\custom_high_contrast.css
+2025-08-19 21:59:43,815 - __main__ - INFO - JavaScriptファイルを生成中...
+2025-08-19 21:59:43,815 - src.core.asset_generator - INFO - JSファイル生成完了: docs\custom.js
+2025-08-19 21:59:43,816 - src.core.asset_generator - INFO - JSファイル生成完了: docs\quiz.js
+2025-08-19 21:59:43,816 - __main__ - INFO - MkDocs設定を更新中...
+2025-08-19 21:59:43,816 - src.core.mkdocs_manager - INFO - バックアップ作成: C:\Users\subka\Documents\my-project\test\test\mkdocs.yml.backup_2025-08-19_21-59-43
+2025-08-19 21:59:43,819 - src.core.mkdocs_manager - INFO - mkdocs.yml生成完了: C:\Users\subka\Documents\my-project\test\test\mkdocs.yml
+2025-08-19 21:59:43,830 - src.core.mkdocs_manager - INFO - アセットファイルを設定に追加しました
+2025-08-19 21:59:43,830 - __main__ - INFO - 設定を検証中...
+2025-08-19 21:59:43,841 - src.core.asset_generator - INFO - アセットマニフェストを出力: docs\asset_manifest.json
+2025-08-19 21:59:43,841 - __main__ - INFO - === アセットファイル生成完了 ===
+2025-08-19 21:59:43,841 - __main__ - INFO - CSS files: 3
+2025-08-19 21:59:43,841 - __main__ - INFO - JS files: 2
+2025-08-19 21:59:43,841 - __main__ - INFO - MkDocs config: C:\Users\subka\Documents\my-project\test\test\mkdocs.yml
+2025-08-19 21:59:43,841 - __main__ - INFO - Asset manifest: docs\asset_manifest.json
+2025-08-19 21:59:43,841 - __main__ - INFO - テスト資料の生成が完了しました！
+2025-08-19 21:59:43,841 - __main__ - INFO - 
+実行方法:
+2025-08-19 21:59:43,841 - __main__ - INFO -   1. プロジェクトルートで: mkdocs serve
+2025-08-19 21:59:43,841 - __main__ - INFO -   2. ブラウザで: http://127.0.0.1:8000
+2025-08-19 21:59:43,841 - __main__ - INFO -   3. 新機能（第6章）でアセット機能をテスト

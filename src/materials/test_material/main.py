@@ -7,7 +7,11 @@ project_root = Path(__file__).resolve().parents[3]
 sys.path.append(str(project_root))
 
 from src.core.mkdocs_manager import MkDocsManager
+<<<<<<< HEAD
 from src.core.asset_generator import AssetGenerator, AssetType
+=======
+from src.core.asset_generator import AssetGenerator
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
 from src.materials.test_material.contents import TestMaterialContentManager
 
 # ロギング設定
@@ -28,6 +32,7 @@ def main():
     # --- 2. MkDocs設定の生成 ---
     logging.info("mkdocs.ymlを生成しています...")
     mkdocs_mgr = MkDocsManager(project_root)
+<<<<<<< HEAD
     # --- 2a. コンテンツ設定の読み込み ---
     import yaml
     config_data = {}
@@ -51,14 +56,40 @@ def main():
 
     process_nav_placeholders(nav_structure, material_root.name)
     
+=======
+    # TODO: 本来はconfig.ymlからナビゲーション構造を読み込む
+    # 今回はテストのため、静的なナビゲーション構造を定義
+    nav_structure = [
+        {"ホーム": "index.md"}, # サイトのトップレベルのindex.md
+        {
+            "テスト教材": [
+                {"概要": f"{material_root.name}/documents/index.md"}, # 既存のindex.mdを概要として
+                {"第1章": f"{material_root.name}/documents/chapter01.md"},
+                {"第2章": f"{material_root.name}/documents/chapter02.md"},
+                {"第3章": f"{material_root.name}/documents/chapter03.md"},
+                {"第4章": f"{material_root.name}/documents/chapter04.md"},
+                {"第5章": f"{material_root.name}/documents/chapter05.md"},
+                {"第6章": f"{material_root.name}/documents/chapter06.md"},
+                {"用語集": f"{material_root.name}/glossary.md"},
+                {"FAQ": f"{material_root.name}/faq.md"},
+                {"TIPS": f"{material_root.name}/tips.md"},
+            ]
+        }
+    ]
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     mkdocs_mgr.generate_mkdocs_yml(nav_structure)
     logging.info("mkdocs.ymlの生成が完了しました。")
 
     # --- 3. 共通アセットの生成 ---
     logging.info("共通アセットを生成しています...")
     asset_gen = AssetGenerator(output_dir)
+<<<<<<< HEAD
     asset_gen.generate_theme_variations() # テーマ別CSS（default, darkなど）を生成
     asset_gen.generate_asset(AssetType.JAVASCRIPT, 'interactive', 'interactive.js') # インタラクティブJSを生成
+=======
+    # TODO: config.ymlから読み込むようにする
+    # asset_gen.generate_from_templates(material_root / "templates")
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
     logging.info("共通アセットの生成が完了しました。")
 
     # --- 4. コンテンツの生成 ---

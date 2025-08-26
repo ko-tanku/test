@@ -11,5 +11,9 @@ japanize-matplotlib==1.1.3
 PyYAML==6.0.2
 typing_extensions==4.12.2
 imageio==2.35.1
+<<<<<<< HEAD
 pytest==8.3.3
 Pillow==10.4.0
+=======
+pytest==8.3.3
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1

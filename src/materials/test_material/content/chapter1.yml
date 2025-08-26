@@ -7,7 +7,11 @@ sections:
         text: "これはレベル2の見出しです"
       - type: text
         text: "これは通常の段落テキストです。専門用語「Core」と「Material」にはツールチップが表示されるはずです。"
+<<<<<<< HEAD
         terms: "第1章" # 第1章に関連する用語を参照
+=======
+        terms: "terms.yml" # terms.ymlの用語を参照
+>>>>>>> dbde2096846e5b4398413351225cc5f784d336f1
       - type: horizontal_rule
 
   - title: "リストと引用"
